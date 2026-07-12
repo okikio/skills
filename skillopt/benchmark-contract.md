@@ -3,6 +3,17 @@
 Each SkillOpt item provides a prompt, optional repository fixture, required and
 forbidden behaviors, deterministic assertions, and a qualitative rubric.
 
+The exported workspace contains:
+
+- `initial.md`: the trainable root skill document, or both root documents for
+  a composition run;
+- `context.md`: an immutable snapshot of every referenced Markdown document;
+- `data/*.jsonl`: smoke and decision cases separated by lifecycle split.
+
+The rollout prompt must provide `context.md` as read-only supporting material.
+The optimizer may edit `initial.md` only. Reference changes require their own
+bounded optimization run and must not be reconstructed from root-skill patches.
+
 The rollout adapter must:
 
 1. create a fresh copy of the pinned fixture;
@@ -23,4 +34,3 @@ produce a zero safety score.
 Selection uses valid-seen during training and valid-unseen for the external
 candidate gate. Transfer, adversarial, composition, and test-frozen results are
 release evidence and never optimizer feedback.
-

@@ -3,8 +3,9 @@
   "models": [
     {"id":"codex-default","host":"codex","command":["codex","exec","--json","{prompt}"],"enabled":false,"notes":"Enable after authenticating Codex CLI."},
     {"id":"claude-default","host":"claude","command":["claude","-p","--output-format","json","{prompt}"],"enabled":false,"notes":"Enable after authenticating Claude Code."},
+    {"id":"cursor-default","host":"cursor","command":["cursor-agent","--print","{prompt}"],"enabled":false,"notes":"Verify the installed Cursor agent CLI contract before enabling."},
+    {"id":"copilot-default","host":"copilot","command":["copilot","--prompt","{prompt}"],"enabled":false,"notes":"Verify the installed GitHub Copilot CLI contract before enabling."},
     {"id":"pi-default","host":"pi","command":["pi","-p","{prompt}"],"enabled":false,"notes":"Confirm the installed Pi command contract."},
     {"id":"hermes-default","host":"hermes","command":["hermes","chat","--prompt","{prompt}"],"enabled":false,"notes":"Confirm the installed Hermes command contract."}
   ]
 }
-

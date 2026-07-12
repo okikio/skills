@@ -1,18 +1,83 @@
 import { parseArgs } from "@std/cli";
-import { copy, ensureDir } from "@std/fs";
+import { ensureDir, walk } from "@std/fs";
 import { dirname, fromFileUrl, join } from "@std/path";
 import { EvalCaseFileSchema } from "../src/eval_schema.ts";
 
-const args = parseArgs(Deno.args, { string: ["skill"], default: { skill: "deno-software" } });
-if (!["deno-software", "deliver-software"].includes(args.skill)) throw new Error("Unknown skill");
+const args = parseArgs(Deno.args, {
+  string: ["skill"],
+  default: { skill: "deno-software" },
+});
+const skills = args.skill === "composition"
+  ? ["deliver-software", "deno-software"]
+  : [args.skill];
+if (
+  !skills.every((skill) =>
+    ["deno-software", "deliver-software"].includes(skill)
+  )
+) {
+  throw new Error("Unknown skill");
+}
 const root = join(dirname(fromFileUrl(import.meta.url)), "..");
 const destination = join(root, ".skillopt", args.skill);
 await ensureDir(join(destination, "data"));
-await copy(join(root, "skills", args.skill, "SKILL.md"), join(destination, "initial.md"), { overwrite: true });
-const parsed = EvalCaseFileSchema.parse(JSON.parse(await Deno.readTextFile(join(root, "evals/cases/core.json"))));
-for (const split of ["train", "valid-seen", "valid-unseen", "transfer", "adversarial", "test-frozen"] as const) {
-  const items = parsed.cases.filter((item) => item.skill === args.skill && item.split === split);
-  await Deno.writeTextFile(join(destination, "data", split + ".jsonl"), items.map((item) => JSON.stringify(item)).join("\n") + "\n");
+
+const skillSources = await Promise.all(
+  skills.map((skill) =>
+    Deno.readTextFile(join(root, "skills", skill, "SKILL.md"))
+  ),
+);
+await Deno.writeTextFile(
+  join(destination, "initial.md"),
+  skillSources.join("\n\n---\n\n"),
+);
+
+const context: string[] = [];
+for (const skill of skills) {
+  for await (
+    const entry of walk(join(root, "skills", skill, "references"), {
+      includeDirs: false,
+      match: [/\.md$/],
+    })
+  ) {
+    context.push(
+      `<!-- ${skill}/references/${entry.name} -->\n` +
+        await Deno.readTextFile(entry.path),
+    );
+  }
+}
+await Deno.writeTextFile(
+  join(destination, "context.md"),
+  context.join("\n\n---\n\n"),
+);
+
+const caseFiles = ["core.json", "quality.json", "fixtures.json"];
+const cases = (
+  await Promise.all(
+    caseFiles.map(async (file) =>
+      EvalCaseFileSchema.parse(
+        JSON.parse(
+          await Deno.readTextFile(join(root, "evals/cases", file)),
+        ),
+      ).cases
+    ),
+  )
+).flat();
+for (
+  const split of [
+    "train",
+    "valid-seen",
+    "valid-unseen",
+    "transfer",
+    "adversarial",
+    "test-frozen",
+  ] as const
+) {
+  const items = cases.filter((item) =>
+    item.skill === args.skill && item.split === split
+  );
+  await Deno.writeTextFile(
+    join(destination, "data", split + ".jsonl"),
+    items.map((item) => JSON.stringify(item)).join("\n") + "\n",
+  );
 }
 console.log("Exported SkillOpt workspace: " + destination);
-
