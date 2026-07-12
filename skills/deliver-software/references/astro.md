@@ -1,7 +1,3 @@
----
-description: Write and review Astro UI code for server-first rendering, slots, islands, hydration directives, server islands, actions, scripts, routing, images, styling, view transitions, accessibility, and performance
-applyTo: "**/*.{astro,md,mdx,jsx,tsx,ts,js,css,scss}"
----
 
 # Astro Interface Instructions
 

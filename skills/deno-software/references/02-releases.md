@@ -1,5 +1,19 @@
 # Deno 2.0 through 2.9
 
+## Contents
+
+- 2.0: architectural baseline
+- 2.1: assets, task execution, WebAssembly, LTS
+- 2.2: observability, lint plugins, SQLite, tooling depth
+- 2.3: production compilation, local packages, project speed
+- 2.4: bundle returns, telemetry stabilizes, broader compatibility
+- 2.5: permissions in configuration and test lifecycle
+- 2.6: `deno x` / `dx`, audit, granular permissions, release-age policy
+- 2.7: Temporal, Windows ARM, package overrides
+- 2.8: security repair and project-manager maturity
+- 2.9: migration, dependency inspection, supply-chain defaults, testing, desktop
+- Release-derived rules
+
 The release posts are not a feature dump. Together they describe Deno's
 direction: make existing JavaScript projects easier to run, consolidate project
 tooling, improve compatibility without abandoning security, and turn source code

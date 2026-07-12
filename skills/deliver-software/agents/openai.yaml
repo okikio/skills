@@ -1,12 +1,4 @@
 interface:
-  display_name: Deliver Software
-  short_description: Plan, implement, and verify code thoroughly
-  default_prompt: Use $deliver-software to plan, implement, and verify this codebase
-    change to completion.
-policy:
-  products:
-  - chatgpt
-  - codex
-  - api
-  - atlas
-  allow_implicit_invocation: true
+  display_name: "Deliver Software"
+  short_description: "Plan, implement, and verify software completely"
+  default_prompt: "Use $deliver-software to complete and verify this software task."

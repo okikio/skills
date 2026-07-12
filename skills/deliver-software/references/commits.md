@@ -1,7 +1,3 @@
----
-description: Commit message writing standards for this repo
-applyTo: "**"
----
 
 # Commit messages
 

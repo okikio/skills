@@ -1,7 +1,3 @@
----
-description: Changelog and release note writing standards for this repo
-applyTo: "**"
----
 
 # Changelog writing
 

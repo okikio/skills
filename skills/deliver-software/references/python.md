@@ -1,7 +1,3 @@
----
-description: Cross-project Python standards
-applyTo: "**/*.py"
----
 
 # Python Rules
 

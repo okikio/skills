@@ -9,6 +9,7 @@ relying on version-sensitive flags.
 | `deno task`           | Run configured Deno or package scripts                                                |
 | `deno add` / `remove` | Change declared dependencies                                                          |
 | `deno install`        | Materialize project dependencies / install executable depending on mode and arguments |
+| `deno ci`             | Recreate dependencies strictly from a current lockfile for CI                         |
 | `deno update`         | Update project dependencies                                                           |
 | `deno upgrade`        | Upgrade the Deno runtime                                                              |
 | `deno list`           | Inspect declared/resolved dependencies                                                |
@@ -26,12 +27,17 @@ relying on version-sensitive flags.
 | `deno compile`        | Produce standalone executables                                                        |
 | `deno desktop`        | Produce desktop applications; experimental in 2.9                                     |
 | `deno publish`        | Publish a package to JSR                                                              |
+| `deno pack`           | Create an npm-compatible tarball from a Deno project                                  |
 | `deno deploy`         | Interact with Deno Deploy where applicable                                            |
 
 ## Common distinctions
 
 - `deno update` changes project dependencies; `deno upgrade` changes the
   runtime.
+- `deno ci` requires a current lockfile, removes existing node_modules, and
+  installs reproducibly.
+- `deno publish` targets JSR; `deno pack` creates an npm-compatible tarball
+  that still requires clean npm and Deno consumer tests.
 - `deno list` answers declared/resolved package dependencies; `deno info` is
   oriented around module graph/cache information.
 - source execution, bundling, compilation, and desktop packaging produce

@@ -1,7 +1,3 @@
----
-description: Cross-project test quality standards
-applyTo: "**/*_test.{js,ts,jsx,tsx},**/*.test.{js,ts,jsx,tsx}"
----
 
 # Testing Rules
 

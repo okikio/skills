@@ -1,7 +1,3 @@
----
-description: "Cross-project Markdown and long-form documentation style"
-applyTo: "**/*.md"
----
 
 # Documentation Writing
 

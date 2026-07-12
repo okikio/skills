@@ -1,5 +1,22 @@
 # Dependencies, manifests, imports, and TypeScript configuration
 
+## Contents
+
+- First classify the repository
+- What `deno.jsonc` owns
+- What `package.json` owns
+- `preferPackageJson`
+- Imports are dependency and resolution aliases
+- Scopes
+- Exports are the Deno package boundary
+- JSR versus npm decision model
+- `package.json` dependency guidance
+- Node modules modes
+- Catalogs
+- Lockfiles and package-manager ownership
+- Supported TypeScript configuration
+- Dependency change validation
+
 This reference exists because Deno can consume both Deno-native and Node/npm
 project metadata. The files overlap, but they are not interchangeable. Before
 editing dependencies, decide which file owns each contract.

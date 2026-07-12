@@ -1,7 +1,3 @@
----
-description: Shared delivery workflow rules for delivery agents, research cache notes, and repo-local automation scripts
-applyTo: ".github/agents/*.agent.md,.agents/research/**/*.md,.agents/scripts/**/*.{ts,tsx,js,mjs,mts,md}"
----
 
 # Delivery Workflow
 
@@ -10,13 +6,16 @@ Use these rules for delivery agents, reusable research notes, and repo-local aut
 ## Search and research order
 
 When researching or searching, prefer this order unless the task clearly requires something else:
-1. `.agents/research/`
-2. applicable instruction files, especially `.github/instructions/`
+1. the repository's established research cache, when one exists
+2. applicable instruction files, including `.github/instructions/`
 3. the rest of the codebase
 
 Search local code and reusable notes before inventing new code or repeating external research.
 
-Store a reviewable note under `.agents/research/` whenever you consult external documentation, third-party APIs, or perform non-trivial codebase investigation that produced a non-obvious conclusion.
+When the repository already uses `.agents/research/`, store a reviewable note
+there only when external research produced a durable, non-obvious conclusion
+that future work is likely to reuse. Do not create bookkeeping directories or
+research files merely because this reference mentions them.
 
 Keep research notes reusable, but do not compress away the details that motivated the search.
 
@@ -55,7 +54,10 @@ Do not default to terminal-driven exploration when workspace tools can do the jo
 
 ## Script policy
 
-For repetitive bulk edits or other writing-oriented automation, prefer reviewable Deno + TypeScript scripts under `.agents/scripts/`.
+For repetitive bulk edits or other writing-oriented automation, prefer a
+reviewable script in the repository's established automation location. Use Deno
+and TypeScript when they fit the repository; do not introduce Deno into an
+unrelated project solely for a temporary edit.
 
 Feel free to use `jsr:` and `npm:` packages when they improve clarity, safety, or reviewability.
 
@@ -95,10 +97,14 @@ For runnable deliverables such as CLIs, jobs, migrations, generators, servers, o
 
 Verification is binary at the end: either the capability works and is proven, or the task is blocked.
 
-If the capability cannot be run due to missing environment, credentials, or infrastructure, document the exact blocker in a progress note under `.agents/progress/`, list the verification steps that would be needed, and surface the block explicitly to the requester rather than marking the task done.
+If the capability cannot run because of missing environment, credentials, or
+infrastructure, report the exact blocker and remaining verification steps.
+Write a repository progress note only when the repository already uses that
+mechanism or the user requests a durable handoff.
 
 Plan completion is also binary at the end: either the plan coverage is complete and reviewed, or the task is blocked.
 
 ## Progress notes
 
-You may write progress notes under `.agents/progress/` for long-running work, but progress notes are bookkeeping only. They never replace finishing the work.
+You may use the repository's established progress mechanism for long-running
+work, but progress notes are bookkeeping only. They never replace completion.

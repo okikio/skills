@@ -1,7 +1,3 @@
----
-description: Write and review browser-facing interfaces for accessibility, composition, async states, layout, styling, performance, hydration safety, i18n, and product readiness
-applyTo: "**/*.{html,css,scss,js,jsx,ts,tsx,astro,md,mdx}"
----
 
 # Web Interface Guidelines
 

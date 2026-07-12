@@ -1,7 +1,3 @@
----
-description: Write and review React UI code for composition, rendering, state ownership, forms, async behavior, transitions, Suspense, effects, portals, hydration, styling, accessibility, and performance
-applyTo: "**/*.{jsx,tsx}"
----
 
 # React Interface Instructions
 

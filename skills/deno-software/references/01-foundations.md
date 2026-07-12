@@ -1,5 +1,16 @@
 # Deno foundations
 
+## Contents
+
+- Deno is an integrated JavaScript system
+- Runtime API selection
+- TypeScript
+- Side effects and entrypoints
+- Cancellation and cleanup
+- Errors
+- Configuration
+- Minimum runtime
+
 ## Deno is an integrated JavaScript system
 
 Treat Deno as a runtime, package manager, task runner, formatter, linter, type

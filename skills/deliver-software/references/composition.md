@@ -1,10 +1,3 @@
----
-title: Compose Framework Primitives, Not Renderer-shaped APIs
-impact: HIGH
-description: preserves composition-first component APIs across React, Solid, and Astro without flattening their different runtime models
-tags: composition, jsx, react, solid, astro, slots, children, signals, context, control-flow, design-systems
-applyTo: "**/*.md,**/*.{js,ts},**/*.{jsx,tsx},**/*.astro"
----
 
 ## Compose Framework Primitives, Not Renderer-shaped APIs
 

@@ -1,7 +1,3 @@
----
-description: Cross-project TSDoc and code comment writing style
-applyTo: "**/*.ts,**/*.tsx"
----
 
 # TSDoc and Comments
 

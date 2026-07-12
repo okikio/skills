@@ -1,7 +1,3 @@
----
-description: Code review standards for this repo
-applyTo: "**"
----
 
 # Code Review
 

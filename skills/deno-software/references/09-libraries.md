@@ -1,5 +1,23 @@
 # Deno libraries, private packages, JSR, npm, and publication
 
+## Contents
+
+- Distribution models
+- JSR package contract
+- Private Deno workspace packages
+- Public API design
+- JSR versus npm for authors
+- Dual-publication contract
+- Publication inclusion
+- `deno publish` workflow
+- Workspace publication
+- Interdependent package release
+- Private npm publication
+- npm package validation
+- Semver and breaking changes
+- Clean-consumer fixtures
+- Publication review checklist
+
 Publishing begins with deciding who consumes the package and through which
 registry. Do not conflate a workspace package, a private package, a JSR package,
 and an npm package.
@@ -261,7 +279,10 @@ inline in package metadata.
 Before npm publication:
 
 - run the actual build;
-- inspect the packed tarball with the package manager's pack command;
+- run `deno pack --dry-run` when the Deno project owns the npm package;
+- create the tarball with `deno pack`, then inspect its exact contents;
+- use the npm package manager's pack command when package.json-first tooling
+  owns the npm artifact;
 - install the tarball into a clean Node consumer;
 - install or consume it with Deno when Deno compatibility is promised;
 - test all `exports` conditions and subpaths;

@@ -1,7 +1,3 @@
----
-description: Cross-project benchmarking standards
-applyTo: "**/*_bench.{js,ts,jsx,tsx},**/*bench*.{js,ts,jsx,tsx}"
----
 
 # Benchmarking Rules
 

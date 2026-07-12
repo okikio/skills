@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 /**
  * Performs a conservative, read-only audit of a Deno or hybrid repository.
  *
@@ -6,18 +8,20 @@
  * are prompts for review, not guaranteed defects.
  */
 
-interface AuditFinding {
-  readonly level: "info" | "warning";
-  readonly code: string;
-  readonly message: string;
-}
+const AuditFindingSchema = z.object({
+  level: z.enum(["info", "warning"]),
+  code: z.string(),
+  message: z.string(),
+});
+type AuditFinding = z.infer<typeof AuditFindingSchema>;
 
-interface AuditReport {
-  readonly root: string;
-  readonly mode: "deno-native" | "package-json-first" | "hybrid" | "unknown";
-  readonly files: readonly string[];
-  readonly findings: readonly AuditFinding[];
-}
+const AuditReportSchema = z.object({
+  root: z.string(),
+  manifestShape: z.enum(["deno-only", "package-only", "both", "none"]),
+  files: z.array(z.string()),
+  findings: z.array(AuditFindingSchema),
+});
+type AuditReport = z.infer<typeof AuditReportSchema>;
 
 const decoder = new TextDecoder();
 
@@ -58,14 +62,14 @@ async function walk(root: string, depth = 0): Promise<string[]> {
   return output;
 }
 
-function detectMode(
+function detectManifestShape(
   hasDeno: boolean,
   hasPackage: boolean,
-): AuditReport["mode"] {
-  if (hasDeno && hasPackage) return "hybrid";
-  if (hasDeno) return "deno-native";
-  if (hasPackage) return "package-json-first";
-  return "unknown";
+): AuditReport["manifestShape"] {
+  if (hasDeno && hasPackage) return "both";
+  if (hasDeno) return "deno-only";
+  if (hasPackage) return "package-only";
+  return "none";
 }
 
 async function audit(root: string): Promise<AuditReport> {
@@ -133,15 +137,15 @@ async function audit(root: string): Promise<AuditReport> {
     });
   }
 
-  return {
+  return AuditReportSchema.parse({
     root,
-    mode: detectMode(hasDeno, hasPackage),
+    manifestShape: detectManifestShape(hasDeno, hasPackage),
     files: files.filter((file) =>
       /(?:deno\.jsonc?|package\.json|lock|_test\.|\.test\.|\.spec\.|\.github\/workflows)/
         .test(file)
     ),
     findings,
-  };
+  });
 }
 
 if (import.meta.main) {

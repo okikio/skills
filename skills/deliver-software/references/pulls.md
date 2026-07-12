@@ -1,7 +1,3 @@
----
-description: PR title, description, and design note standards for this repo
-applyTo: "**"
----
 
 # Pull Requests
 

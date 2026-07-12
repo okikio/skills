@@ -1,5 +1,19 @@
 # Security, permission sets, and private dependencies
 
+## Contents
+
+- Permission categories
+- Named permission sets
+- Value forms
+- Permission sets versus tasks
+- Permission design workflow
+- Special considerations by category
+- Test, benchmark, and compile permissions
+- Private npm registries
+- Private source modules and repositories
+- Supply-chain controls
+- Security review checklist
+
 Deno permissions are executable capabilities. They are part of an entrypoint's
 public operational contract and must be reviewed like network ports, database
 roles, or filesystem mounts.
@@ -101,9 +115,12 @@ Interpretation:
 
 - `allow` grants scoped access;
 - `deny` explicitly blocks matching access and takes precedence over grants;
-- `ignore` suppresses permission prompts for matching denied access and is
-  useful when optional probing is expected;
-- an ignored denial still does not grant access.
+- `ignore` is supported for read and environment permissions; ignored
+  operations are silently ignored instead of throwing;
+- use it only when the application deliberately treats that missing read or
+  environment value as optional;
+- do not describe `ignore` as a general prompt-suppression control or use it
+  for permission categories that do not support it.
 
 Verify exact current precedence and accepted scope syntax using the Deno config
 reference when designing a security boundary.

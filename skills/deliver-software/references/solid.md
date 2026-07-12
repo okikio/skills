@@ -1,7 +1,3 @@
----
-description: Write and review Solid UI code for fine-grained reactivity, owners, roots, async resources, transitions, Suspense, errors, events, forms, portals, hydration, styling, accessibility, and performance
-applyTo: "**/*.{jsx,tsx}"
----
 
 # Solid Interface Instructions
 

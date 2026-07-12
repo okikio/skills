@@ -1,4 +1,18 @@
-# Shared Copilot Instructions
+# Shared engineering defaults
+
+## Contents
+
+- What this file is for
+- Core engineering stance
+- Naming and runtime shape principles
+- Boundary honesty
+- JavaScript and TypeScript defaults
+- Writing and explanation style
+- Comments, docs, and TSDoc
+- Performance and optimization policy
+- Safety and correctness defaults
+- Validation mindset
+- Default operating mode
 
 ## What this file is for
 

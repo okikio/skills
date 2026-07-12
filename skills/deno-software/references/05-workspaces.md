@@ -1,5 +1,23 @@
 # Workspaces and monorepos
 
+## Contents
+
+- Supported member shapes
+- Root declaration
+- Workspace member identity
+- Deno members versus npm members
+- Workspace protocol
+- Root and member configuration matrix
+- Imports and dependency ownership
+- Tasks and working directories
+- Type checking in workspaces
+- Tests, formatting, and linting
+- Publishing workspace packages
+- Private workspace packages
+- Containerization and deployment
+- Cross-package refactor procedure
+- Workspace audit checklist
+
 Deno workspaces can contain Deno-first packages, Node-first packages, and hybrid
 packages. Treat a workspace as a resolver and tooling scope, not merely a list
 of directories.

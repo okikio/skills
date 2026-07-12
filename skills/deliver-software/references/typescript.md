@@ -1,7 +1,3 @@
----
-description: Cross-project Deno + TypeScript standards
-applyTo: "**/*.ts,**/*.tsx"
----
 
 # TypeScript / Deno Rules
 

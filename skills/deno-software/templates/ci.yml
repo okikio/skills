@@ -12,7 +12,7 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.9.0
-      - run: deno install --frozen
+      - run: deno ci
       - run: deno fmt --check
       - run: deno lint
       - run: deno check src/mod.ts

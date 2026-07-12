@@ -1,7 +1,3 @@
----
-description: ASCII diagram guidance for docs, TSDoc, and explanatory comments
-applyTo: "**/*.md,**/*.{js,ts},**/*.{jsx,tsx},**/*.astro"
----
 
 # ASCII Diagrams
 

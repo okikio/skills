@@ -42,6 +42,7 @@ framework's reference.
 | --- | --- |
 | Code, architecture, API design, refactor, or migration | [general.md](references/general.md) |
 | Substantial plan, implementation, refactor, migration, completion audit, or multi-surface change | [workflow.md](references/workflow.md) and [delivery.md](references/delivery.md) |
+| Refactor, migration, cutover, compatibility window, or legacy removal | [refactors.md](references/refactors.md) |
 | Deno, TypeScript, or TSX | [typescript.md](references/typescript.md) |
 | Python | [python.md](references/python.md) |
 | Tests or test design | [testing.md](references/testing.md) |
@@ -52,6 +53,7 @@ framework's reference.
 | Commit messages or commit plans | [commits.md](references/commits.md) |
 | Pull request titles, descriptions, or merge summaries | [pulls.md](references/pulls.md) |
 | Changelogs or release notes | [changes.md](references/changes.md) |
+| Package or product release execution | [releases.md](references/releases.md) |
 | ASCII diagrams in docs, comments, or explanations | [diagrams.md](references/diagrams.md) |
 | Any browser-facing interface | [web.md](references/web.md) |
 | React, Next.js, Remix, or React Router UI | [react.md](references/react.md) |
@@ -182,6 +184,12 @@ Run the actual CLI, server workflow, migration, generator, job, UI interaction,
 or other user-facing capability whenever the environment permits it. Record the
 exact workflow and observed behavior. Use tests and static checks as supporting
 evidence, not substitutes for an executable workflow that can be run.
+
+Before verification mutates state, identify the exact target, data and
+credential owner, external messages or charges, reversibility, rollback,
+cleanup, and whether the request authorizes that consequence. A request to
+change migration, deployment, release, notification, or billing code does not
+implicitly authorize running it against ambient production credentials.
 
 If the capability cannot be run, name the concrete blocker and the remaining
 verification steps. Never label an unrun capability verified.
