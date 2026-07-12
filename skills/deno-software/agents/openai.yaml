@@ -1,0 +1,18 @@
+interface:
+  display_name: deno software
+  short_description: Deliver complete Deno 2 software. Use for Deno repositories,
+    deno.json or deno.jsonc, Deno workspaces, JSR packages, Node projects adopting
+    Deno, CLIs, servers, libraries, scripts, compiled binaries, desktop apps, migrations,
+    refactors, reviews, debugging, testing, benchmarking, publishing, CI, security,
+    permissions, dependency management, and architecture decisions. Inspects the repository
+    first, chooses the correct Deno/package mode, implements the whole change, removes
+    obsolete paths, and validates behavior with current Deno tooling.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
