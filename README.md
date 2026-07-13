@@ -5,15 +5,21 @@ agents.
 
 ## Skills
 
-- `deliver-software` carries substantial software work from repository
-  discovery through implementation, cleanup, validation, and executable
-  verification.
+- `deliver-software` carries substantial software work from repository discovery
+  through implementation, cleanup, validation, and executable verification.
 - `deno-software` adds current Deno-specific repository, dependency,
   compatibility, security, quality, publication, and artifact guidance.
+- `explore-ecosystems` maps monorepos, sibling packages, coordinated
+  repositories, plugins, adapters, integrations, and deliberate exclusions.
+- `build-clis`, `build-web`, `build-apis`, `build-workflows`, `build-data`, and
+  `build-devtools` apply that research to focused engineering workflows.
+- `use-okikio` grounds Okikio packages and project patterns in local and
+  primary-source evidence.
 
 The skills are independently installable and deliberately composable.
-`deliver-software` owns the general delivery lifecycle. `deno-software` owns
-only the Deno specialization when both are active.
+`deliver-software` owns the lifecycle, `deno-software` owns Deno contracts,
+`explore-ecosystems` owns dependency topology, and focused skills own workflow
+architecture and verification criteria.
 
 ## Install
 
@@ -38,9 +44,9 @@ The repository evaluates five distinct capabilities:
 4. outcome: whether the resulting repository or answer passes its verifier;
 5. efficiency: token, reference, tool-call, latency, and duplication cost.
 
-Results must compare no-skill, individual-skill, and composed-skill variants.
-An optimized candidate is never promoted solely because an LLM judge prefers
-its prose.
+Results must compare no-skill, individual-skill, and composed-skill variants. An
+optimized candidate is never promoted solely because an LLM judge prefers its
+prose.
 
 ## Development
 
@@ -53,10 +59,9 @@ deno task test
 ```
 
 Cross-model runs require the provider commands configured in
-`evals/models.json`. Credentials remain in the environment and are never
-written to fixtures, traces, or reports.
+`evals/models.json`. Credentials remain in the environment and are never written
+to fixtures, traces, or reports.
 
 SkillOpt is kept as a separately reproducible optimization layer. See
 `skillopt/README.md`. Generated candidates are review artifacts, not source
 files, until they pass held-out, cross-model, composition, and safety gates.
-

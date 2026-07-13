@@ -1,15 +1,19 @@
-
 # React Interface Instructions
 
-Use React for stateful interface regions, component libraries, application workflows, and interactive islands where React owns the client runtime.
+Use React for stateful interface regions, component libraries, application
+workflows, and interactive islands where React owns the client runtime.
 
-Apply the universal web interface guidelines first. Use this file for React, Next.js, Remix, React Router, or React-compatible JSX UI code.
+Apply the universal web interface guidelines first. Use this file for React,
+Next.js, Remix, React Router, or React-compatible JSX UI code.
 
-Do not apply React render-cycle rules to Solid components or Astro-only `.astro` markup.
+Do not apply React render-cycle rules to Solid components or Astro-only `.astro`
+markup.
 
 ## Mental model
 
-React renders component functions from props, state, and context. Each render is a snapshot. Event handlers, effects, memoized values, and async callbacks close over the render that created them.
+React renders component functions from props, state, and context. Each render is
+a snapshot. Event handlers, effects, memoized values, and async callbacks close
+over the render that created them.
 
 Write React so that:
 
@@ -20,7 +24,8 @@ Write React so that:
 - Components preserve native HTML semantics.
 - Server and client boundaries are intentional.
 
-Default to React 19 patterns for new code unless the project is pinned to React 18 or earlier.
+Default to React 19 patterns for new code unless the project is pinned to React
+18 or earlier.
 
 ## Work in priority order
 
@@ -28,10 +33,12 @@ When writing or reviewing React, reason in this order:
 
 1. Preserve native web semantics through component abstractions.
 2. Keep render pure, cheap, and deterministic.
-3. Keep state ownership clear: local, URL, server, form, external store, transition, or context state.
+3. Keep state ownership clear: local, URL, server, form, external store,
+   transition, or context state.
 4. Use composition instead of boolean configuration.
 5. Keep effects limited to external synchronization.
-6. Model async work, pending state, error recovery, and Suspense boundaries deliberately.
+6. Model async work, pending state, error recovery, and Suspense boundaries
+   deliberately.
 7. Preserve identity for lists, keys, IDs, refs, focus, and retained state.
 8. Keep server rendering, hydration, and client boundaries stable.
 9. Use memoization only when it protects real work or stable identity.
@@ -56,7 +63,7 @@ Avoid:
   showFormatting
   showAttachments
   renderFooter={() => <ThreadFooter />}
-/>
+/>;
 ```
 
 Prefer:
@@ -72,63 +79,66 @@ Prefer:
       <Composer.Submit />
     </Composer.Footer>
   </Composer.Frame>
-</ThreadComposer.Provider>
+</ThreadComposer.Provider>;
 ```
 
 Use render props only when the parent must provide data back to the child.
 
 ```tsx
 // Acceptable: the parent owns item iteration and gives item data to the child.
-<List items={items} renderItem={(item) => <ProductRow product={item} />} />
+<List items={items} renderItem={(item) => <ProductRow product={item} />} />;
 ```
 
 For static regions, use children or named compound components instead.
 
 ## Use compound components when descendants share state
 
-Use compound components when a family of components shares state, actions, IDs, refs, or metadata.
+Use compound components when a family of components shares state, actions, IDs,
+refs, or metadata.
 
-Keep the provider boundary explicit. Components that need shared state do not need to be visually nested inside the root frame, but they must be inside the provider.
+Keep the provider boundary explicit. Components that need shared state do not
+need to be visually nested inside the root frame, but they must be inside the
+provider.
 
 ```tsx
-import { createContext, use, useMemo, useState, type ReactNode } from "react"
+import { createContext, type ReactNode, use, useMemo, useState } from "react";
 
 type SearchState = {
-  query: string
-  isPending: boolean
-}
+  query: string;
+  isPending: boolean;
+};
 
 type SearchActions = {
-  setQuery: (query: string) => void
-  submit: () => void
-}
+  setQuery: (query: string) => void;
+  submit: () => void;
+};
 
 type SearchMeta = {
-  inputId: string
-  errorId: string
-}
+  inputId: string;
+  errorId: string;
+};
 
 type SearchContextValue = {
-  state: SearchState
-  actions: SearchActions
-  meta: SearchMeta
-}
+  state: SearchState;
+  actions: SearchActions;
+  meta: SearchMeta;
+};
 
-const SearchContext = createContext<SearchContextValue | null>(null)
+const SearchContext = createContext<SearchContextValue | null>(null);
 
 function useSearch() {
-  const value = use(SearchContext)
+  const value = use(SearchContext);
 
   if (!value) {
-    throw new Error("Search components must be used inside Search.Provider")
+    throw new Error("Search components must be used inside Search.Provider");
   }
 
-  return value
+  return value;
 }
 
 function SearchProvider(props: { children: ReactNode }) {
-  const [query, setQuery] = useState("")
-  const [isPending, setIsPending] = useState(false)
+  const [query, setQuery] = useState("");
+  const [isPending, setIsPending] = useState(false);
 
   const value = useMemo<SearchContextValue>(
     () => ({
@@ -136,19 +146,19 @@ function SearchProvider(props: { children: ReactNode }) {
       actions: {
         setQuery,
         submit() {
-          setIsPending(true)
+          setIsPending(true);
         },
       },
       meta: { inputId: "search-input", errorId: "search-error" },
     }),
     [query, isPending],
-  )
+  );
 
-  return <SearchContext value={value}>{props.children}</SearchContext>
+  return <SearchContext value={value}>{props.children}</SearchContext>;
 }
 
 function SearchInput() {
-  const { state, actions, meta } = useSearch()
+  const { state, actions, meta } = useSearch();
 
   return (
     <input
@@ -157,30 +167,34 @@ function SearchInput() {
       value={state.query}
       onChange={(event) => actions.setQuery(event.currentTarget.value)}
     />
-  )
+  );
 }
 ```
 
 Review this pattern by checking:
 
-- The context value exposes state, actions, and meta rather than implementation details.
-- Consumers read the context through a typed helper with a clear missing-provider error.
+- The context value exposes state, actions, and meta rather than implementation
+  details.
+- Consumers read the context through a typed helper with a clear
+  missing-provider error.
 - Provider values are memoized when consumers are memoized or expensive.
-- State ownership is not hidden inside a leaf component that siblings need to coordinate with.
+- State ownership is not hidden inside a leaf component that siblings need to
+  coordinate with.
 
 ## Keep component identity stable
 
-Do not define component functions inside another component unless you intentionally want a new component type on every render.
+Do not define component functions inside another component unless you
+intentionally want a new component type on every render.
 
 Avoid:
 
 ```tsx
 function Page() {
   function Toolbar() {
-    return <button type="button">Refresh</button>
+    return <button type="button">Refresh</button>;
   }
 
-  return <Toolbar />
+  return <Toolbar />;
 }
 ```
 
@@ -188,15 +202,16 @@ Prefer:
 
 ```tsx
 function Toolbar() {
-  return <button type="button">Refresh</button>
+  return <button type="button">Refresh</button>;
 }
 
 function Page() {
-  return <Toolbar />
+  return <Toolbar />;
 }
 ```
 
-Nested component definitions can remount stateful children, lose focus, recreate effects, and make memoization ineffective.
+Nested component definitions can remount stateful children, lose focus, recreate
+effects, and make memoization ineffective.
 
 ## Use React 19 intentionally
 
@@ -209,7 +224,7 @@ For React 19 and newer:
 
 ```tsx
 function TextField({ ref, ...props }: React.ComponentProps<"input">) {
-  return <input ref={ref} {...props} />
+  return <input ref={ref} {...props} />;
 }
 ```
 
@@ -223,13 +238,13 @@ Avoid:
 
 ```tsx
 function CartSummary({ items }: { items: CartItem[] }) {
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    setTotal(items.reduce((sum, item) => sum + item.price, 0))
-  }, [items])
+    setTotal(items.reduce((sum, item) => sum + item.price, 0));
+  }, [items]);
 
-  return <p>{total}</p>
+  return <p>{total}</p>;
 }
 ```
 
@@ -237,12 +252,13 @@ Prefer:
 
 ```tsx
 function CartSummary({ items }: { items: CartItem[] }) {
-  const total = items.reduce((sum, item) => sum + item.price, 0)
-  return <p>{total}</p>
+  const total = items.reduce((sum, item) => sum + item.price, 0);
+  return <p>{total}</p>;
 }
 ```
 
-Use `useMemo` only when the derivation is expensive or the stable identity matters for downstream memoization.
+Use `useMemo` only when the derivation is expensive or the stable identity
+matters for downstream memoization.
 
 ## Choose the right state owner
 
@@ -256,9 +272,11 @@ Before adding state, identify what kind of state it is:
 - Transition state: non-urgent UI updates.
 - Context state: state shared by a component family.
 
-Keep state as close as possible to its real owner, but lift it when siblings or descendants need to coordinate.
+Keep state as close as possible to its real owner, but lift it when siblings or
+descendants need to coordinate.
 
-Avoid copying props into state unless there is an explicit reset or draft workflow.
+Avoid copying props into state unless there is an explicit reset or draft
+workflow.
 
 ## Handle events with native semantics
 
@@ -271,46 +289,52 @@ Ensure:
 - Form submit uses form semantics.
 - Event handlers use `event.currentTarget` when reading from the bound element.
 - Prevent default only when replacing native behavior intentionally.
-- Async handlers guard stale state when user intent can change before the promise resolves.
+- Async handlers guard stale state when user intent can change before the
+  promise resolves.
 
 ```tsx
 function SaveButton({ onSave }: { onSave: () => Promise<void> }) {
-  const [pending, setPending] = useState(false)
+  const [pending, setPending] = useState(false);
 
   return (
     <button
       type="button"
       disabled={pending}
       onClick={async () => {
-        setPending(true)
+        setPending(true);
         try {
-          await onSave()
+          await onSave();
         } finally {
-          setPending(false)
+          setPending(false);
         }
       }}
     >
       {pending ? "Saving..." : "Save"}
     </button>
-  )
+  );
 }
 ```
 
 ## Design forms with pending, validation, and recovery
 
-Use native forms first. Add React state where the workflow needs live validation, dependent UI, optimistic mutation, or pending display.
+Use native forms first. Add React state where the workflow needs live
+validation, dependent UI, optimistic mutation, or pending display.
 
-When using React 19 form features, ensure Actions, pending state, optimistic state, and server functions preserve progressive behavior where the framework supports it.
+When using React 19 form features, ensure Actions, pending state, optimistic
+state, and server functions preserve progressive behavior where the framework
+supports it.
 
 ```tsx
-function ProfileForm({ action }: { action: (formData: FormData) => Promise<void> }) {
+function ProfileForm(
+  { action }: { action: (formData: FormData) => Promise<void> },
+) {
   return (
     <form action={action}>
       <label htmlFor="display-name">Display name</label>
       <input id="display-name" name="displayName" autoComplete="name" />
       <SubmitButton />
     </form>
-  )
+  );
 }
 ```
 
@@ -318,7 +342,7 @@ When using controlled fields, keep per-keystroke work cheap.
 
 ```tsx
 function SearchField() {
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState("");
 
   return (
     <input
@@ -327,7 +351,7 @@ function SearchField() {
       value={query}
       onChange={(event) => setQuery(event.currentTarget.value)}
     />
-  )
+  );
 }
 ```
 
@@ -342,29 +366,33 @@ Review forms for:
 
 ## Preserve list identity with keys
 
-Keys must represent stable item identity, not array position, when order can change.
+Keys must represent stable item identity, not array position, when order can
+change.
 
 Avoid:
 
 ```tsx
-{items.map((item, index) => (
-  <CartRow key={index} item={item} />
-))}
+{
+  items.map((item, index) => <CartRow key={index} item={item} />);
+}
 ```
 
 Prefer:
 
 ```tsx
-{items.map((item) => (
-  <CartRow key={item.id} item={item} />
-))}
+{
+  items.map((item) => <CartRow key={item.id} item={item} />);
+}
 ```
 
-Review lists by testing insert, remove, sort, filter, reorder, and pagination. Focus, input state, animation state, and optimistic updates should stay attached to the right item.
+Review lists by testing insert, remove, sort, filter, reorder, and pagination.
+Focus, input state, animation state, and optimistic updates should stay attached
+to the right item.
 
 ## Use IDs and refs for identity, not state escape hatches
 
-Use stable IDs for labels, descriptions, controls, and error messages. Use framework or project helpers when server rendering requires stable IDs.
+Use stable IDs for labels, descriptions, controls, and error messages. Use
+framework or project helpers when server rendering requires stable IDs.
 
 Use refs for DOM integration:
 
@@ -373,11 +401,12 @@ Use refs for DOM integration:
 - Imperative browser APIs.
 - Third-party widgets.
 
-Avoid refs for reading component state on submit when state should be lifted or stored in the form.
+Avoid refs for reading component state on submit when state should be lifted or
+stored in the form.
 
 ```tsx
 function FocusableInput() {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -386,7 +415,7 @@ function FocusableInput() {
         Focus input
       </button>
     </>
-  )
+  );
 }
 ```
 
@@ -411,27 +440,31 @@ Every effect should answer:
 
 ```tsx
 useEffect(() => {
-  const controller = new AbortController()
+  const controller = new AbortController();
 
-  window.addEventListener("resize", handleResize, { signal: controller.signal })
+  window.addEventListener("resize", handleResize, {
+    signal: controller.signal,
+  });
 
-  return () => controller.abort()
-}, [])
+  return () => controller.abort();
+}, []);
 ```
 
-Avoid effect chains that copy state from one place to another when render calculation, event handlers, or derived values would be clearer.
+Avoid effect chains that copy state from one place to another when render
+calculation, event handlers, or derived values would be clearer.
 
 ## Model async UI, transitions, and scheduling
 
 Async UI should distinguish pending work from completed state.
 
-Use transitions for non-urgent UI updates that should not block urgent input. Do not use transitions for controlled text input updates.
+Use transitions for non-urgent UI updates that should not block urgent input. Do
+not use transitions for controlled text input updates.
 
 ```tsx
 function ProductSearch() {
-  const [query, setQuery] = useState("")
-  const [resultsQuery, setResultsQuery] = useState("")
-  const [isPending, startTransition] = useTransition()
+  const [query, setQuery] = useState("");
+  const [resultsQuery, setResultsQuery] = useState("");
+  const [isPending, startTransition] = useTransition();
 
   return (
     <>
@@ -439,15 +472,15 @@ function ProductSearch() {
         type="search"
         value={query}
         onChange={(event) => {
-          const next = event.currentTarget.value
-          setQuery(next)
-          startTransition(() => setResultsQuery(next))
+          const next = event.currentTarget.value;
+          setQuery(next);
+          startTransition(() => setResultsQuery(next));
         }}
       />
       {isPending && <p>Updating results...</p>}
       <Results query={resultsQuery} />
     </>
-  )
+  );
 }
 ```
 
@@ -455,43 +488,47 @@ Guard against stale async results overwriting newer user intent.
 
 ```tsx
 useEffect(() => {
-  const controller = new AbortController()
+  const controller = new AbortController();
 
   fetchResults(query, { signal: controller.signal })
     .then(setResults)
     .catch((error) => {
-      if (error.name !== "AbortError") setError(error)
-    })
+      if (error.name !== "AbortError") setError(error);
+    });
 
-  return () => controller.abort()
-}, [query])
+  return () => controller.abort();
+}, [query]);
 ```
 
 ## Place Suspense and error boundaries around recoverable regions
 
-Use Suspense for meaningful loading regions, not as a blanket replacement for the entire app when stable layout can remain visible.
+Use Suspense for meaningful loading regions, not as a blanket replacement for
+the entire app when stable layout can remain visible.
 
 ```tsx
 <DashboardShell>
   <Suspense fallback={<PanelSkeleton label="Loading invoices" />}>
     <InvoicePanel />
   </Suspense>
-</DashboardShell>
+</DashboardShell>;
 ```
 
-Use error boundaries around product recovery regions. The fallback should explain what failed and offer a reset, retry, or navigation path when possible.
+Use error boundaries around product recovery regions. The fallback should
+explain what failed and offer a reset, retry, or navigation path when possible.
 
 Avoid full-page fallbacks that hide navigation or stable context unnecessarily.
 
 ## Use portals without losing focus or accessibility
 
-Portals are appropriate for overlays, modals, popovers, tooltips, and layered UI that needs to escape clipping or stacking context.
+Portals are appropriate for overlays, modals, popovers, tooltips, and layered UI
+that needs to escape clipping or stacking context.
 
 When using portals, ensure:
 
 - The logical owner still controls open state.
 - Focus is moved and restored correctly.
-- Background content is inert or otherwise inaccessible when modal behavior requires it.
+- Background content is inert or otherwise inaccessible when modal behavior
+  requires it.
 - Escape, outside click, and route changes have defined behavior.
 - Stacking and scroll locking are deliberate.
 - The portal content has the right accessible name and description.
@@ -505,12 +542,13 @@ When using portals, ensure:
       <button type="button" onClick={() => setOpen(false)}>Close</button>
     </Dialog.Content>
   </Dialog.Portal>
-</Dialog.Root>
+</Dialog.Root>;
 ```
 
 ## Keep server and client boundaries explicit
 
-For frameworks with server components or route loaders, keep browser-only code out of server-only modules.
+For frameworks with server components or route loaders, keep browser-only code
+out of server-only modules.
 
 Ensure:
 
@@ -519,13 +557,15 @@ Ensure:
 - Client components are as narrow as possible.
 - Serializable props cross server-client boundaries.
 - Secrets, tokens, and privileged data never enter client bundles.
-- Random IDs, dates, locale output, media query values, and viewport values cannot create accidental hydration mismatch.
+- Random IDs, dates, locale output, media query values, and viewport values
+  cannot create accidental hydration mismatch.
 
 Hydration warnings need a concrete root cause and a narrow fix.
 
 ## Style React components through state and semantics
 
-Expose `className`, style, refs, data attributes, and accessibility props when wrapper components need to be reusable.
+Expose `className`, style, refs, data attributes, and accessibility props when
+wrapper components need to be reusable.
 
 Keep visual state tied to real state:
 
@@ -537,22 +577,25 @@ Keep visual state tied to real state:
   className={cn("view-button", selected && "view-button--selected")}
 >
   List view
-</button>
+</button>;
 ```
 
-Avoid class strings so complex that state relationships become unreadable. Use a project variant helper when it clarifies the state map.
+Avoid class strings so complex that state relationships become unreadable. Use a
+project variant helper when it clarifies the state map.
 
 ## Use memoization as a tool, not a default
 
-Use `memo`, `useMemo`, and `useCallback` when they protect a measured cost, stabilize identity for a memoized child, or prevent unnecessary expensive work.
+Use `memo`, `useMemo`, and `useCallback` when they protect a measured cost,
+stabilize identity for a memoized child, or prevent unnecessary expensive work.
 
-Avoid using memoization to hide impure render logic or unstable component API design.
+Avoid using memoization to hide impure render logic or unstable component API
+design.
 
 ```tsx
 const visibleItems = useMemo(
   () => expensiveFilter(items, query),
   [items, query],
-)
+);
 ```
 
 Review performance by looking for:

@@ -7,6 +7,9 @@ try {
 }
 const source = await readFile("src/index.ts", "utf8");
 const docs = await readFile("docs.md", "utf8");
-if (/legacy/.test(source + docs)) throw new Error("legacy mental model remains");
-if (!/modern/.test(source + docs)) throw new Error("modern replacement missing");
-
+if (/legacy/.test(source + docs)) {
+  throw new Error("legacy mental model remains");
+}
+if (!/modern/.test(source + docs)) {
+  throw new Error("modern replacement missing");
+}

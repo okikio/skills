@@ -5,8 +5,8 @@ forbidden behaviors, deterministic assertions, and a qualitative rubric.
 
 The exported workspace contains:
 
-- `initial.md`: the trainable root skill document, or both root documents for
-  a composition run;
+- `initial.md`: the trainable root skill document, or both root documents for a
+  composition run;
 - `context.md`: an immutable snapshot of every referenced Markdown document;
 - `data/*.jsonl`: smoke and decision cases separated by lifecycle split.
 

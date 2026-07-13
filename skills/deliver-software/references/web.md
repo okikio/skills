@@ -1,15 +1,20 @@
-
 # Web Interface Guidelines
 
-Use these instructions for any user-facing browser interface, regardless of whether the implementation uses Astro, React, Solid, or plain HTML.
+Use these instructions for any user-facing browser interface, regardless of
+whether the implementation uses Astro, React, Solid, or plain HTML.
 
-Use this file as the universal layer. When writing or reviewing framework-specific code, apply this file first, then apply the Astro, React, or Solid instruction file.
+Use this file as the universal layer. When writing or reviewing
+framework-specific code, apply this file first, then apply the Astro, React, or
+Solid instruction file.
 
-Do not apply this file to backend-only code, commit messages, changelog entries, or source-level TSDoc unless the task is specifically about browser-facing behavior.
+Do not apply this file to backend-only code, commit messages, changelog entries,
+or source-level TSDoc unless the task is specifically about browser-facing
+behavior.
 
 ## Default stance
 
-Build the smallest durable interface that preserves semantics, accessibility, performance, and clear state ownership.
+Build the smallest durable interface that preserves semantics, accessibility,
+performance, and clear state ownership.
 
 Prefer:
 
@@ -20,14 +25,17 @@ Prefer:
 - Progressive enhancement before client-only rendering.
 - Real loading, empty, error, pending, and success states before happy-path UI.
 - URL state for shareable navigation state.
-- Clear focus behavior for every interaction that opens, closes, hides, disables, or moves content.
+- Clear focus behavior for every interaction that opens, closes, hides,
+  disables, or moves content.
 
-Avoid abstractions that hide structure, state ownership, accessibility semantics, or framework boundaries.
+Avoid abstractions that hide structure, state ownership, accessibility
+semantics, or framework boundaries.
 
 For complex interface workflows, document or model the full user-visible
 lifecycle instead of reducing it to a happy-path component tree. Good UI
 architecture shows who owns state, which region can be loading or stale, how
-errors recover, where focus moves, and what happens during cleanup or navigation.
+errors recover, where focus moves, and what happens during cleanup or
+navigation.
 
 ## Work in priority order
 
@@ -43,7 +51,8 @@ When writing or reviewing an interface, reason in this order:
 8. Performance, bundle cost, and browser work.
 9. Tests, examples, and maintainability.
 
-This order matters. A polished component that breaks form submission, focus order, or browser navigation is not ready.
+This order matters. A polished component that breaks form submission, focus
+order, or browser navigation is not ready.
 
 ## Design composition before props
 
@@ -67,7 +76,7 @@ Avoid boolean props for structural variation.
   showSort
   showFooter
   renderResult={(result) => <ResultCard result={result} />}
-/>
+/>;
 ```
 
 Prefer named regions and explicit composition.
@@ -89,23 +98,27 @@ Prefer named regions and explicit composition.
       <ResultList />
     </SearchPanel.Results>
   </SearchPanel.Root>
-</SearchPanel.Provider>
+</SearchPanel.Provider>;
 ```
 
 The exact syntax should be native to the framework:
 
-- In React, use children, compound components, and context when descendants share state.
-- In Solid, use children, context, signals, accessors, stores, and Solid control flow.
-- In Astro, use default and named slots. Hydrate only the interactive island that needs browser state.
+- In React, use children, compound components, and context when descendants
+  share state.
+- In Solid, use children, context, signals, accessors, stores, and Solid control
+  flow.
+- In Astro, use default and named slots. Hydrate only the interactive island
+  that needs browser state.
 
 ## Use examples to prove the API
 
-Every reusable interface pattern should include at least one usage example that proves the API works in context.
+Every reusable interface pattern should include at least one usage example that
+proves the API works in context.
 
-For stateful or async interface patterns, prefer examples that show the lifecycle
-through named regions rather than a compressed one-line composition. Include
-loading, stale, empty, error, retry, success, and cleanup paths when those states
-are part of the contract.
+For stateful or async interface patterns, prefer examples that show the
+lifecycle through named regions rather than a compressed one-line composition.
+Include loading, stale, empty, error, retry, success, and cleanup paths when
+those states are part of the contract.
 
 The example should show:
 
@@ -123,9 +136,12 @@ Avoid examples that only show the happy path.
   <SearchExperience.Root>
     <SearchExperience.Form />
     <SearchExperience.Status />
-    <SearchExperience.Results empty={<EmptyResults />} error={<SearchError />} />
+    <SearchExperience.Results
+      empty={<EmptyResults />}
+      error={<SearchError />}
+    />
   </SearchExperience.Root>
-</SearchExperience.Provider>
+</SearchExperience.Provider>;
 ```
 
 ## Preserve native HTML first
@@ -141,7 +157,8 @@ Use:
 - `<fieldset>` and `<legend>` for grouped controls.
 - Proper heading order for document structure.
 - `<ul>`, `<ol>`, and `<li>` for real lists.
-- `<dialog>` only when the native dialog behavior fits the product and is implemented accessibly.
+- `<dialog>` only when the native dialog behavior fits the product and is
+  implemented accessibly.
 
 Avoid:
 
@@ -157,13 +174,16 @@ Prefer:
 <a href="/settings">Settings</a>
 ```
 
-Use ARIA to clarify semantics that cannot be expressed natively. Do not use ARIA to disguise the wrong element.
+Use ARIA to clarify semantics that cannot be expressed natively. Do not use ARIA
+to disguise the wrong element.
 
 ## Make keyboard and focus behavior explicit
 
-Any interactive component must work with keyboard, pointer, touch, screen readers, browser zoom, and reduced motion.
+Any interactive component must work with keyboard, pointer, touch, screen
+readers, browser zoom, and reduced motion.
 
-For overlays, dialogs, menus, popovers, comboboxes, tabs, and custom controls, ensure:
+For overlays, dialogs, menus, popovers, comboboxes, tabs, and custom controls,
+ensure:
 
 - Opening moves focus intentionally when the pattern requires it.
 - Closing restores focus to a useful trigger or next task location.
@@ -183,7 +203,7 @@ Example modal review target:
     <button type="button" onClick={() => setOpen(false)}>Cancel</button>
     <button type="submit">Delete project</button>
   </Modal.Actions>
-</Modal>
+</Modal>;
 ```
 
 Review the example by asking:
@@ -196,7 +216,8 @@ Review the example by asking:
 
 ## Design forms as workflows
 
-Forms are not only inputs. They are submission workflows with validation, pending state, recovery, and browser behavior.
+Forms are not only inputs. They are submission workflows with validation,
+pending state, recovery, and browser behavior.
 
 When writing a form, ensure:
 
@@ -217,7 +238,7 @@ Avoid:
   <input placeholder="Email" />
   {error && <Toast>{error}</Toast>}
   <button>Submit</button>
-</form>
+</form>;
 ```
 
 Prefer:
@@ -235,14 +256,16 @@ Prefer:
   />
   {emailError && <p id="email-error">{emailError}</p>}
   <button type="submit" disabled={isSubmitting}>Create account</button>
-</form>
+</form>;
 ```
 
-Use client-side validation to improve feedback, not to replace server validation.
+Use client-side validation to improve feedback, not to replace server
+validation.
 
 ## Model data states before rendering data
 
-For every data-driven interface, design these states before writing the visual layout:
+For every data-driven interface, design these states before writing the visual
+layout:
 
 - Initial state.
 - Loading state.
@@ -253,7 +276,8 @@ For every data-driven interface, design these states before writing the visual l
 - Refreshing or stale state.
 - Success state after mutation.
 
-Avoid hiding stable UI behind full-page spinners when only one region is loading.
+Avoid hiding stable UI behind full-page spinners when only one region is
+loading.
 
 ```tsx
 <SearchResults>
@@ -262,16 +286,18 @@ Avoid hiding stable UI behind full-page spinners when only one region is loading
   <SearchResults.Empty />
   <SearchResults.Error />
   <SearchResults.RefreshIndicator />
-</SearchResults>
+</SearchResults>;
 ```
 
-Make error messages actionable. Say what failed, what is preserved, and what the user can do next.
+Make error messages actionable. Say what failed, what is preserved, and what the
+user can do next.
 
 ## Keep server, client, and hydration boundaries safe
 
 Do not let browser-only behavior leak into server-rendered output.
 
-Avoid reading these during server render unless the framework provides a safe abstraction:
+Avoid reading these during server render unless the framework provides a safe
+abstraction:
 
 - `window`
 - `document`
@@ -297,9 +323,11 @@ Hydration mismatches are bugs unless there is a narrow, documented reason.
 
 ## Put navigation state in the URL when it should be shareable
 
-Use URL state for filters, tabs, pages, search queries, selected entities, sort order, and any state the user expects to share, bookmark, refresh, or restore.
+Use URL state for filters, tabs, pages, search queries, selected entities, sort
+order, and any state the user expects to share, bookmark, refresh, or restore.
 
-Use local component state for ephemeral UI such as open menus, temporary drafts, hover state, and focus state.
+Use local component state for ephemeral UI such as open menus, temporary drafts,
+hover state, and focus state.
 
 Example:
 
@@ -307,7 +335,8 @@ Example:
 /products?q=paperback&sort=newest&page=2
 ```
 
-This is better than hiding the query, sort, and page inside local state when the page itself represents search results.
+This is better than hiding the query, sort, and page inside local state when the
+page itself represents search results.
 
 ## Build resilient layouts
 
@@ -371,7 +400,7 @@ Do not show a visual state without the matching semantic or interaction state.
   data-state={isSelected ? "selected" : "idle"}
 >
   Grid view
-</button>
+</button>;
 ```
 
 ## Use motion as interaction feedback, not decoration by default
@@ -381,10 +410,12 @@ Animation must preserve usability.
 Ensure:
 
 - Reduced-motion preferences are respected.
-- Motion has a functional purpose, such as continuity, spatial orientation, feedback, or affordance.
+- Motion has a functional purpose, such as continuity, spatial orientation,
+  feedback, or affordance.
 - Enter and exit states handle interruption.
 - Animated hidden content is not focusable.
-- Drag, touch, wheel, and pointer interactions preserve native behavior unless overridden intentionally.
+- Drag, touch, wheel, and pointer interactions preserve native behavior unless
+  overridden intentionally.
 - Layout animation does not fight browser scroll or focus.
 
 Example:
@@ -416,7 +447,7 @@ For icons:
 ```tsx
 <button type="button" aria-label="Open settings">
   <SettingsIcon aria-hidden="true" />
-</button>
+</button>;
 ```
 
 ## Keep performance tied to user experience
@@ -446,10 +477,14 @@ Prefer:
 - Errors that identify what failed and whether user input was preserved.
 - Loading text that describes what is loading.
 
-Avoid generic text like `Submit`, `Error`, or `Something went wrong` when the product can be more specific.
+Avoid generic text like `Submit`, `Error`, or `Something went wrong` when the
+product can be more specific.
 
 ```tsx
-<p role="alert">We could not save your billing address. Your changes are still here. Try again.</p>
+<p role="alert">
+  We could not save your billing address. Your changes are still here. Try
+  again.
+</p>;
 ```
 
 ## Design for localization from the start
@@ -467,14 +502,15 @@ Ensure:
 Avoid:
 
 ```tsx
-<p>{count} result(s) found</p>
+<p>{count} result(s) found</p>;
 ```
 
 Prefer a project i18n helper that handles plurals.
 
 ## Comments and docs
 
-Add comments only when they explain intent, constraints, or non-obvious behavior.
+Add comments only when they explain intent, constraints, or non-obvious
+behavior.
 
 Use comments for:
 
@@ -508,8 +544,10 @@ Prefer tests that interact through labels, roles, and visible text.
 
 When reviewing an interface, report findings by severity:
 
-- `[BLOCKER]`: prevents task completion, breaks accessibility, risks data loss, creates severe hydration/runtime failure, or exposes sensitive data.
-- `[IMPORTANT]`: likely user-facing bug, maintainability issue, performance problem, state ownership issue, or missing meaningful state.
+- `[BLOCKER]`: prevents task completion, breaks accessibility, risks data loss,
+  creates severe hydration/runtime failure, or exposes sensitive data.
+- `[IMPORTANT]`: likely user-facing bug, maintainability issue, performance
+  problem, state ownership issue, or missing meaningful state.
 - `[NIT]`: clarity, naming, small style consistency, or optional cleanup.
 
 For every finding, include:

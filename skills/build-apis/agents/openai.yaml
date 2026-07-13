@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Apis"
+  short_description: "Research and apply build apis."
+  default_prompt: "Use this skill to build apis with current source-backed decisions."

@@ -19,9 +19,8 @@ metadata:
 This skill owns Deno-specific contracts. When deliver-software is also
 available, let it own the general delivery lifecycle. Apply this skill as the
 Deno specialization and do not repeat discovery, planning, cleanup, validation,
-verification, or reporting stages. When used alone, retain the complete
-workflow by loading
-[the standalone fallback](references/16-standalone.md).
+verification, or reporting stages. When used alone, retain the complete workflow
+by loading [the standalone fallback](references/16-standalone.md).
 
 Deliver working software, not Deno-flavoured snippets.
 
@@ -37,26 +36,26 @@ For ambiguous or high-risk decisions, read
 [decision cases](references/15-decision-cases.md).
 
 Read only the references needed for the task. Always read
-`references/01-foundations.md` and `references/03-repository-discovery.md`
-for substantive repository work. Read release history only when version
+`references/01-foundations.md` and `references/03-repository-discovery.md` for
+substantive repository work. Read release history only when version
 availability, stability, migration timing, or a recently changed contract could
 affect the decision.
 
-| Task                                    | Required references                                                 |
-| --------------------------------------- | ------------------------------------------------------------------- |
-| Any substantive repository task         | `01-foundations.md`, `03-repository-discovery.md`                   |
-| Versions, stability, recent features    | `02-releases.md`                                                      |
-| Dependencies, manifests, imports, TS    | `04-packages.md`                                                    |
-| Workspaces or monorepos                 | `05-workspaces.md`                                                  |
-| Permissions, secrets, subprocesses      | `06-security.md`                                                    |
-| Tests, CI, coverage, benchmarks         | `07-quality.md`                                                     |
-| Node migration or npm compatibility     | `08-node-compatibility.md`                                          |
-| Libraries, private packages, publishing | `09-libraries.md`                                                   |
-| CLI, server, bundle, compile, desktop   | `10-artifacts.md`                                                   |
-| Refactors, reviews, debugging           | `11-delivery-playbooks.md`                                          |
-| Final verification                      | `12-verification.md`                                                |
-| Ambiguous classification or edge case   | `15-decision-cases.md`                                              |
-| Lifecycle when deliver-software is unavailable | `16-standalone.md`                                           |
+| Task                                           | Required references                               |
+| ---------------------------------------------- | ------------------------------------------------- |
+| Any substantive repository task                | `01-foundations.md`, `03-repository-discovery.md` |
+| Versions, stability, recent features           | `02-releases.md`                                  |
+| Dependencies, manifests, imports, TS           | `04-packages.md`                                  |
+| Workspaces or monorepos                        | `05-workspaces.md`                                |
+| Permissions, secrets, subprocesses             | `06-security.md`                                  |
+| Tests, CI, coverage, benchmarks                | `07-quality.md`                                   |
+| Node migration or npm compatibility            | `08-node-compatibility.md`                        |
+| Libraries, private packages, publishing        | `09-libraries.md`                                 |
+| CLI, server, bundle, compile, desktop          | `10-artifacts.md`                                 |
+| Refactors, reviews, debugging                  | `11-delivery-playbooks.md`                        |
+| Final verification                             | `12-verification.md`                              |
+| Ambiguous classification or edge case          | `15-decision-cases.md`                            |
+| Lifecycle when deliver-software is unavailable | `16-standalone.md`                                |
 
 Use `references/13-command-reference.md` to confirm command intent. Use current
 official documentation when a command, option, API, stability status, or
@@ -133,7 +132,6 @@ change.
 10. **Keep runtime and data contracts aligned.** For external, persisted,
     configuration, or cross-process data, prefer Zod v4 schemas/codecs as the
     source of truth and infer TypeScript types.
-
 
 ## Output quality contract
 

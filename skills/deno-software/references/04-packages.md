@@ -21,6 +21,13 @@ This reference exists because Deno can consume both Deno-native and Node/npm
 project metadata. The files overlap, but they are not interchangeable. Before
 editing dependencies, decide which file owns each contract.
 
+Before treating the first npm, JSR, or workspace package found as the complete
+capability, inspect its owning repository, workspace members, organization,
+official adapters, plugins, and companion repositories. Classify relationships
+with evidence and select only relevant siblings. This reference continues to own
+Deno manifest placement, imports/exports, lockfiles, permissions, runtime
+compatibility, and publication.
+
 ## First classify the repository
 
 Record one mode before making changes:

@@ -5,12 +5,14 @@ import { EvalCaseFileSchema, ModelRegistrySchema } from "../src/eval_schema.ts";
 const root = join(dirname(fromFileUrl(import.meta.url)), "..");
 const errors: string[] = [];
 const ids = new Set<string>();
+let skillCount = 0;
 for await (
   const entry of walk(join(root, "skills"), {
     includeDirs: false,
     match: [/SKILL\.md$/],
   })
 ) {
+  skillCount++;
   const source = await Deno.readTextFile(entry.path);
   const directory = entry.path.split("/").at(-2);
   const name = source.match(/^name:\s*(.+)$/m)?.[1]?.trim();
@@ -57,4 +59,7 @@ if (errors.length) {
   console.error(errors.join("\n"));
   Deno.exit(1);
 }
-console.log("Validated 2 skills and " + ids.size + " evaluation cases.");
+console.log(
+  "Validated " + skillCount + " skills and " + ids.size +
+    " evaluation cases.",
+);

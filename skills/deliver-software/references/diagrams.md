@@ -1,10 +1,10 @@
-
 # ASCII Diagrams
 
 Use ASCII diagrams when prose alone would make structure, flow, hierarchy,
 ownership, state, or time harder to understand.
 
 Good uses:
+
 - parser pipelines
 - tree and hierarchy layouts
 - state transitions
@@ -25,6 +25,7 @@ chaptered diagram over a tiny pipeline when the tiny pipeline hides why the
 system behaves the way it does.
 
 Always pair a diagram with prose that explains:
+
 - what the reader is looking at
 - why it matters
 - how to read it
@@ -32,6 +33,7 @@ Always pair a diagram with prose that explains:
 
 A useful diagram is a reasoning tool, not decoration. It should help the reader
 answer questions such as:
+
 - what starts this flow?
 - what happens next?
 - who owns this step?
@@ -43,14 +45,14 @@ answer questions such as:
 
 Choose one primary job before drawing:
 
-| Diagram job | Use when the reader needs to understand |
-| --- | --- |
-| Concept map | The important nouns and how they relate. |
-| Component map | Which modules, services, runtimes, or UI regions own behavior. |
-| Data flow | How a shape changes as it moves through stages. |
-| Lifecycle walkthrough | What happens over time from trigger to cleanup. |
-| State machine | Which states exist and which transitions are legal. |
-| Failure path | How retries, fallbacks, cancellation, and recovery work. |
+| Diagram job              | Use when the reader needs to understand                         |
+| ------------------------ | --------------------------------------------------------------- |
+| Concept map              | The important nouns and how they relate.                        |
+| Component map            | Which modules, services, runtimes, or UI regions own behavior.  |
+| Data flow                | How a shape changes as it moves through stages.                 |
+| Lifecycle walkthrough    | What happens over time from trigger to cleanup.                 |
+| State machine            | Which states exist and which transitions are legal.             |
+| Failure path             | How retries, fallbacks, cancellation, and recovery work.        |
 | Storage or revision flow | How persisted state is written, compared, invalidated, or read. |
 
 Do not use a component map when the real question is lifecycle order. Do not use
@@ -104,6 +106,7 @@ CLEANUP
 ```
 
 A useful chapter answers:
+
 - what starts this stage
 - who owns this stage
 - what data enters
@@ -302,14 +305,16 @@ Client component
 ## Readability rules
 
 Prefer diagrams that stay readable in plain text editors and code review diffs.
-Use Unicode box drawing only when the target project and review surface render it
-clearly. Plain `|`, `+`, `-`, and `->` are safer when portability matters.
+Use Unicode box drawing only when the target project and review surface render
+it clearly. Plain `|`, `+`, `-`, and `->` are safer when portability matters.
 
 For large diagrams:
+
 - keep one dominant reading direction
 - use chapter dividers for major lifecycle changes
 - keep labels short but specific
 - align branches so the merge point is visible
 - show representative shapes only at important handoffs
-- explain omitted detail in prose instead of squeezing everything into the diagram
+- explain omitted detail in prose instead of squeezing everything into the
+  diagram
 - split into multiple diagrams only when each diagram has a distinct job

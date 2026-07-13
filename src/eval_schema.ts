@@ -3,6 +3,14 @@ import { z } from "zod";
 export const SkillNameSchema = z.enum([
   "deliver-software",
   "deno-software",
+  "explore-ecosystems",
+  "build-clis",
+  "build-web",
+  "build-apis",
+  "build-workflows",
+  "build-data",
+  "build-devtools",
+  "use-okikio",
   "composition",
 ]);
 export const EvalKindSchema = z.enum([
@@ -67,6 +75,7 @@ export const EvalCaseSchema = z.object({
   rationale: z.string().min(8),
 });
 export type EvalCase = z.infer<typeof EvalCaseSchema>;
+export type Assertion = z.infer<typeof AssertionSchema>;
 export const EvalCaseFileSchema = z.object({
   schemaVersion: z.literal(1),
   cases: z.array(EvalCaseSchema).min(1),

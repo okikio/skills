@@ -1,5 +1,5 @@
 import { parseArgs } from "@std/cli";
-import { ensureDir, walk } from "@std/fs";
+import { copy, ensureDir, walk } from "@std/fs";
 import { dirname, fromFileUrl, join } from "@std/path";
 import { EvalCaseFileSchema } from "../src/eval_schema.ts";
 
@@ -10,14 +10,14 @@ const args = parseArgs(Deno.args, {
 const skills = args.skill === "composition"
   ? ["deliver-software", "deno-software"]
   : [args.skill];
-if (
-  !skills.every((skill) =>
-    ["deno-software", "deliver-software"].includes(skill)
-  )
-) {
-  throw new Error("Unknown skill");
-}
 const root = join(dirname(fromFileUrl(import.meta.url)), "..");
+for (const skill of skills) {
+  try {
+    await Deno.stat(join(root, "skills", skill, "SKILL.md"));
+  } catch {
+    throw new Error("Unknown skill: " + skill);
+  }
+}
 const destination = join(root, ".skillopt", args.skill);
 await ensureDir(join(destination, "data"));
 
@@ -30,6 +30,14 @@ await Deno.writeTextFile(
   join(destination, "initial.md"),
   skillSources.join("\n\n---\n\n"),
 );
+
+for (const skill of skills) {
+  await copy(
+    join(root, "skills", skill),
+    join(destination, "skills", skill),
+    { overwrite: true },
+  );
+}
 
 const context: string[] = [];
 for (const skill of skills) {
@@ -50,7 +58,13 @@ await Deno.writeTextFile(
   context.join("\n\n---\n\n"),
 );
 
-const caseFiles = ["core.json", "quality.json", "fixtures.json"];
+const caseFiles: string[] = [];
+for await (
+  const entry of walk(join(root, "evals", "cases"), {
+    includeDirs: false,
+    match: [/\.json$/],
+  })
+) caseFiles.push(entry.name);
 const cases = (
   await Promise.all(
     caseFiles.map(async (file) =>
@@ -69,7 +83,6 @@ for (
     "valid-unseen",
     "transfer",
     "adversarial",
-    "test-frozen",
   ] as const
 ) {
   const items = cases.filter((item) =>

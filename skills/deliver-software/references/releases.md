@@ -3,8 +3,8 @@
 ## Authority and scope
 
 A release changes external state. Preparing a release, proving readiness, and
-publishing are separate actions. Do not publish, push tags, deploy, notify users,
-or mutate registries unless the request authorizes that action.
+publishing are separate actions. Do not publish, push tags, deploy, notify
+users, or mutate registries unless the request authorizes that action.
 
 Identify the product or package, version source of truth, target registries or
 environments, workspace release set, supported upgrade paths, and rollback or
@@ -43,14 +43,13 @@ digests, URLs, and registry states. Install or fetch the released artifact from
 its public target into a clean consumer and run a real supported workflow.
 
 If one target succeeds and another fails, report a partial release. Choose a
-forward fix, deprecation, or follow-up version based on registry immutability and
-consumer impact. Do not report the release as successful because one target
+forward fix, deprecation, or follow-up version based on registry immutability
+and consumer impact. Do not report the release as successful because one target
 completed.
 
 ## Post-release
 
 Verify availability, installation, startup, migrations, telemetry, and
 documented examples. Preserve provenance and release evidence. Communicate
-breaking changes and recovery steps when user-facing release communication is
-in scope.
-
+breaking changes and recovery steps when user-facing release communication is in
+scope.

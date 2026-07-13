@@ -2,27 +2,40 @@
 
 ## Complete refactor
 
-Inventory what must exist and what must disappear. Trace entrypoints, implementations, consumers, exports, registration, configuration, tests, fixtures, docs, examples, generated output, dependencies, flags, aliases, and shims. Search obsolete names afterward. Passing tests do not prove cleanup.
+Inventory what must exist and what must disappear. Trace entrypoints,
+implementations, consumers, exports, registration, configuration, tests,
+fixtures, docs, examples, generated output, dependencies, flags, aliases, and
+shims. Search obsolete names afterward. Passing tests do not prove cleanup.
 
 ## Behavior-preserving migration
 
-Record inputs, outputs, errors, side effects, ordering, persistence, concurrency, permissions, public types, and performance constraints. Keep intentional behavior changes separate from structural work.
+Record inputs, outputs, errors, side effects, ordering, persistence,
+concurrency, permissions, public types, and performance constraints. Keep
+intentional behavior changes separate from structural work.
 
 ## Dirty worktree
 
-Inspect status and relevant diffs. Preserve unrelated work. If user changes overlap and safe integration is unclear, report the exact overlap rather than erasing it.
+Inspect status and relevant diffs. Preserve unrelated work. If user changes
+overlap and safe integration is unclear, report the exact overlap rather than
+erasing it.
 
 ## Diagnose only
 
-Use read-only inspection and reproducible checks. Identify the earliest divergence, evidence, and uncertainty. Explain a justified fix without applying it.
+Use read-only inspection and reproducible checks. Identify the earliest
+divergence, evidence, and uncertainty. Explain a justified fix without applying
+it.
 
 ## Validation and verification
 
-Validation proves internal properties. Verification runs the actual CLI, request, migration, artifact, browser interaction, deployment check, or downstream consumer. If it cannot run, name the blocker and remaining steps.
+Validation proves internal properties. Verification runs the actual CLI,
+request, migration, artifact, browser interaction, deployment check, or
+downstream consumer. If it cannot run, name the blocker and remaining steps.
 
 ## Connected systems
 
-Expand inspection when a framework, deployment target, database, browser, or consumer controls correctness. Read current primary docs and source when that contract changes the design.
+Expand inspection when a framework, deployment target, database, browser, or
+consumer controls correctness. Read current primary docs and source when that
+contract changes the design.
 
 ## Authorized modes
 

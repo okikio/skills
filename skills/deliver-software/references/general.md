@@ -1,73 +1,150 @@
 # Base Engineering Instructions
 
-Use a principles-first style. The goal is not just to make the code work, but to make it feel obvious, predictable, explainable, easy to self-serve, and easy to trust.
+Use a principles-first style. The goal is not just to make the code work, but to
+make it feel obvious, predictable, explainable, easy to self-serve, and easy to
+trust.
 
-Prefer JavaScript-native constructs and runtime shapes whenever JavaScript already expresses the idea clearly. Use TypeScript to describe and sharpen JavaScript, not to replace it with extra ceremony. Avoid TypeScript-only syntax when JavaScript already carries the intent well. For example, do not add `public` by default, prefer `#private` when real private state is needed and supported, and use `protected` only when inheritance genuinely requires it.
+Prefer JavaScript-native constructs and runtime shapes whenever JavaScript
+already expresses the idea clearly. Use TypeScript to describe and sharpen
+JavaScript, not to replace it with extra ceremony. Avoid TypeScript-only syntax
+when JavaScript already carries the intent well. For example, do not add
+`public` by default, prefer `#private` when real private state is needed and
+supported, and use `protected` only when inheritance genuinely requires it.
 
-Let the role of the code decide its shape. Do not blindly force one naming rule onto every construct. When naming rules conflict, apply them in this order: (1) mirror the boundary you are modeling, (2) preserve the data-versus-behavior distinction, (3) fall back to the construct kind.
+Let the role of the code decide its shape. Do not blindly force one naming rule
+onto every construct. When naming rules conflict, apply them in this order: (1)
+mirror the boundary you are modeling, (2) preserve the data-versus-behavior
+distinction, (3) fall back to the construct kind.
 
-If a type must simultaneously satisfy an external contract and an internal domain interface, always define two separate types: one mirroring the external shape and one using internal naming. Map between them explicitly at the boundary. Never reuse a boundary type as a domain type, even when their shapes are identical at a point in time.
+If a type must simultaneously satisfy an external contract and an internal
+domain interface, always define two separate types: one mirroring the external
+shape and one using internal naming. Map between them explicitly at the
+boundary. Never reuse a boundary type as a domain type, even when their shapes
+are identical at a point in time.
 
 Make data look like data, and make behavior look like behavior.
 
-Use `snake_case` for fields in plain records, normalized payloads, persistence-oriented fields, schema-like data, and other shapes that are primarily stable data.
+Use `snake_case` for fields in plain records, normalized payloads,
+persistence-oriented fields, schema-like data, and other shapes that are
+primarily stable data.
 
-Use `camelCase` for functions, methods, variables, parameters, getters, setters, class properties, and other runtime behavior. If a class property intentionally stores stable record data, let the data rule win for that property; for example, `class UserRow { user_id: string; refreshToken(): void }` keeps `user_id` as data and `refreshToken` as behavior.
+Use `camelCase` for functions, methods, variables, parameters, getters, setters,
+class properties, and other runtime behavior. If a class property intentionally
+stores stable record data, let the data rule win for that property; for example,
+`class UserRow { user_id: string; refreshToken(): void }` keeps `user_id` as
+data and `refreshToken` as behavior.
 
-Use `PascalCase` for classes, interfaces, types, and other major abstractions. If an interface or type models a plain record, its fields should follow the plain-record style. If it models a behavioral or class-like API, its members should follow that API style.
+Use `PascalCase` for classes, interfaces, types, and other major abstractions.
+If an interface or type models a plain record, its fields should follow the
+plain-record style. If it models a behavioral or class-like API, its members
+should follow that API style.
 
 Use `UPPER_SNAKE_CASE` for true constants and environment variables.
 
-At boundaries, keep naming honest. Mirror the naming used by external APIs, libraries, file formats, protocols, or other systems while you are still at the boundary. When an external API uses `camelCase` for its payload fields, keep `camelCase` in the boundary type that mirrors that API. Apply `snake_case` only when normalizing those fields into the internal domain model. Normalize into the project’s internal naming style only once data crosses into the project’s own domain model. Do not blur boundary types and internal types together.
+At boundaries, keep naming honest. Mirror the naming used by external APIs,
+libraries, file formats, protocols, or other systems while you are still at the
+boundary. When an external API uses `camelCase` for its payload fields, keep
+`camelCase` in the boundary type that mirrors that API. Apply `snake_case` only
+when normalizing those fields into the internal domain model. Normalize into the
+project’s internal naming style only once data crosses into the project’s own
+domain model. Do not blur boundary types and internal types together.
 
-Prefer the shortest name that still communicates the real intent. Do not make names longer just to sound explicit. Add more words only when they remove real ambiguity. Favor names that stay visually light and easy to scan.
+Prefer the shortest name that still communicates the real intent. Do not make
+names longer just to sound explicit. Add more words only when they remove real
+ambiguity. Favor names that stay visually light and easy to scan.
 
-Treat files as part of the design. Use a leading underscore, such as `_utils.ts` or `_helpers.ts`, for support modules and helper modules that are not the primary entry point for understanding a feature. Do not use this convention for entry points, adapters, or infrastructure files that are primary to their own concern. The underscore marks the file as secondary, not forbidden.
+Treat files as part of the design. Use a leading underscore, such as `_utils.ts`
+or `_helpers.ts`, for support modules and helper modules that are not the
+primary entry point for understanding a feature. Do not use this convention for
+entry points, adapters, or infrastructure files that are primary to their own
+concern. The underscore marks the file as secondary, not forbidden.
 
-Prefer JavaScript-native representations over TypeScript-only constructs when both can express the same idea clearly. For named finite value sets, prefer constant objects plus derived types over TypeScript `enum`. Keep the runtime shape plain and make the type derive from the runtime source of truth.
+Prefer JavaScript-native representations over TypeScript-only constructs when
+both can express the same idea clearly. For named finite value sets, prefer
+constant objects plus derived types over TypeScript `enum`. Keep the runtime
+shape plain and make the type derive from the runtime source of truth.
 
-Prefer plain, cheap, inspectable runtime structures. For membership checks, default to plain object literals when simple key existence is all that is needed and prototype keys are not a concern. Use `Object.create(null)` for dictionary-style lookup tables when you need prototype-free semantics or want to avoid collisions with inherited keys. Freeze static lookup tables when immutability helps communicate intent and prevent accidental drift. For simple dense numeric or byte-range checks, prefer `Uint8Array`. Still choose the structure that best matches the real problem when semantics matter more than micro-optimization.
+Prefer plain, cheap, inspectable runtime structures. For membership checks,
+default to plain object literals when simple key existence is all that is needed
+and prototype keys are not a concern. Use `Object.create(null)` for
+dictionary-style lookup tables when you need prototype-free semantics or want to
+avoid collisions with inherited keys. Freeze static lookup tables when
+immutability helps communicate intent and prevent accidental drift. For simple
+dense numeric or byte-range checks, prefer `Uint8Array`. Still choose the
+structure that best matches the real problem when semantics matter more than
+micro-optimization.
 
-Allow deliberate complexity only when you can state (a) the specific runtime cost it reduces, (b) the measured or well-understood magnitude of that cost in the target workload, and (c) why the readability or maintenance tradeoff is acceptable. If you cannot state all three, prefer the simpler form.
+Allow deliberate complexity only when you can state (a) the specific runtime
+cost it reduces, (b) the measured or well-understood magnitude of that cost in
+the target workload, and (c) why the readability or maintenance tradeoff is
+acceptable. If you cannot state all three, prefer the simpler form.
 
-When code becomes less straightforward because of performance, memory, allocation, caching, batching, scheduling, I/O, concurrency, or other systems concerns, treat that as a design decision that must be explained. Do not introduce cleverness silently.
+When code becomes less straightforward because of performance, memory,
+allocation, caching, batching, scheduling, I/O, concurrency, or other systems
+concerns, treat that as a design decision that must be explained. Do not
+introduce cleverness silently.
 
-Write documentation, comments, and TSDoc to explain intent, constraints, assumptions, tradeoffs, and behavior that are not easy to infer from a quick read.
+Write documentation, comments, and TSDoc to explain intent, constraints,
+assumptions, tradeoffs, and behavior that are not easy to infer from a quick
+read.
 
-A reader should be able to complete the task using the docs without guessing missing commands, hidden assumptions, unstated prerequisites, or external project knowledge.
+A reader should be able to complete the task using the docs without guessing
+missing commands, hidden assumptions, unstated prerequisites, or external
+project knowledge.
 
 Good explanatory writing should make clear:
+
 - what problem is being solved
 - what is being done
 - why this approach matters
 - what it enables going forward
 
-When explaining how something works, focus on the parts that are genuinely hard to grasp from the code alone. This includes:
+When explaining how something works, focus on the parts that are genuinely hard
+to grasp from the code alone. This includes:
+
 - binary parsing, encoding, offsets, and low-level data handling
 - regular expressions and tricky matching behavior
 - complex array or object transformations
 - normalization and boundary conversion logic
-- external I/O and interactions with filesystems, networks, processes, or databases
+- external I/O and interactions with filesystems, networks, processes, or
+  databases
 - concurrency, scheduling, coordination, cancellation, and lifecycle management
 - caching, pooling, and allocation-sensitive code
 - invariants, assumptions, failure modes, and edge cases
 - performance-sensitive code and deliberate optimizations
 
-Do not waste comments on code that already reads clearly. Do not narrate every assignment, loop, or obvious control-flow step. Comments should earn their keep by surfacing reasoning, tradeoffs, hidden constraints, workload assumptions, or behavior that a careful reader would otherwise have to reverse-engineer.
+Do not waste comments on code that already reads clearly. Do not narrate every
+assignment, loop, or obvious control-flow step. Comments should earn their keep
+by surfacing reasoning, tradeoffs, hidden constraints, workload assumptions, or
+behavior that a careful reader would otherwise have to reverse-engineer.
 
-When code is made less straightforward for performance or systems reasons, explain the full chain clearly:
+When code is made less straightforward for performance or systems reasons,
+explain the full chain clearly:
+
 - what the optimization is
 - how it works mechanically
 - what runtime cost it reduces
 - why that cost matters in this specific workload or code path
 - why the gain is worth the added readability or maintenance cost
 
-Explain performance decisions in terms of the real workload and access pattern, not vague claims like "this is faster" or "this is more efficient".
+Explain performance decisions in terms of the real workload and access pattern,
+not vague claims like "this is faster" or "this is more efficient".
 
-Use familiar language by default. When a technical term is worth keeping, explain the concrete behavior first, then introduce the term only if it still helps. Ground abstract ideas in a real behavior, cost, failure mode, input/output shape, or downstream effect.
+Use familiar language by default. When a technical term is worth keeping,
+explain the concrete behavior first, then introduce the term only if it still
+helps. Ground abstract ideas in a real behavior, cost, failure mode,
+input/output shape, or downstream effect.
 
-Prefer code and prose that teach as they go. A careful reader should be able to understand not only what the code does, but why it takes this shape and what future work it is preparing for.
+Prefer code and prose that teach as they go. A careful reader should be able to
+understand not only what the code does, but why it takes this shape and what
+future work it is preparing for.
 
-Default to explicitness, high signal, correctness, maintainability, standards alignment, and least privilege. Do not invent files, APIs, config, behavior, or guarantees that are not visible in the code or task. If something is unclear, state the assumption and give a concrete verification step.
+Default to explicitness, high signal, correctness, maintainability, standards
+alignment, and least privilege. Do not invent files, APIs, config, behavior, or
+guarantees that are not visible in the code or task. If something is unclear,
+state the assumption and give a concrete verification step.
 
-When modifying existing code that contains a stated assumption that no longer holds, let the developer know so their mental model reflects the current reality before completing the task. Do not leave a documented assumption that contradicts the updated code.
+When modifying existing code that contains a stated assumption that no longer
+holds, let the developer know so their mental model reflects the current reality
+before completing the task. Do not leave a documented assumption that
+contradicts the updated code.

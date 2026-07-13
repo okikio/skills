@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explore Ecosystems"
+  short_description: "Research and apply explore ecosystems."
+  default_prompt: "Use this skill to explore ecosystems with current source-backed decisions."

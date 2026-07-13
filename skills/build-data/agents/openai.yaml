@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Data"
+  short_description: "Research and apply build data."
+  default_prompt: "Use this skill to build data with current source-backed decisions."

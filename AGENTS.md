@@ -1,7 +1,7 @@
 # Repository instructions
 
-Treat `skills/*/SKILL.md` and their references as production agent behavior.
-Do not optimize wording without measuring behavior.
+Treat `skills/*/SKILL.md` and their references as production agent behavior. Do
+not optimize wording without measuring behavior.
 
 - Preserve the portable Agent Skills contract.
 - Define all structured data with Zod v4 schemas and infer TypeScript types.
@@ -13,4 +13,3 @@ Do not optimize wording without measuring behavior.
 - Never promote SkillOpt output automatically.
 - Separate reference-only freshness updates from behavioral changes.
 - Record checks actually run; never imply unavailable model runs passed.
-

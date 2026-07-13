@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Devtools"
+  short_description: "Research and apply build devtools."
+  default_prompt: "Use this skill to build devtools with current source-backed decisions."

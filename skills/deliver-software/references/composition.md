@@ -1,4 +1,3 @@
-
 ## Compose Framework Primitives, Not Renderer-shaped APIs
 
 Design the component API around **semantic regions and state boundaries**, then
@@ -25,11 +24,11 @@ not the same:
 The shared rule is **composition over configuration**. The implementation must
 stay native to the renderer.
 
-Composition examples should be detailed enough to reveal ownership and lifecycle.
-Do not compress a complex pattern into a tiny component tree when the important
-part is where state lives, how descendants consume it, how async states recover,
-or how cleanup happens. Prefer chaptered examples or staged diagrams when the
-pattern crosses framework, server/client, or owner boundaries.
+Composition examples should be detailed enough to reveal ownership and
+lifecycle. Do not compress a complex pattern into a tiny component tree when the
+important part is where state lives, how descendants consume it, how async
+states recover, or how cleanup happens. Prefer chaptered examples or staged
+diagrams when the pattern crosses framework, server/client, or owner boundaries.
 
 ## Incorrect: renderer-shaped configuration API
 
@@ -47,7 +46,7 @@ pattern crosses framework, server/client, or owner boundaries.
   renderMedia={() => <ProductImage product={product} />}
   renderActions={() => <AddToCart product={product} />}
   renderFooter={() => <ShippingEstimate product={product} />}
-/>
+/>;
 ```
 
 This API mixes layout regions, state mode, HTML element choice, interactivity,
@@ -68,7 +67,7 @@ Start with a renderer-neutral composition contract:
   <ProductCard.Actions>
     <AddToCart />
   </ProductCard.Actions>
-</ProductCard.Root>
+</ProductCard.Root>;
 ```
 
 Then implement that contract differently per framework.
@@ -81,44 +80,46 @@ not need to be visually nested inside the root frame, but they do need to be
 inside the provider.
 
 ```tsx
-import { createContext, memo, use, useMemo, useState } from "react"
+import { createContext, memo, use, useMemo, useState } from "react";
 
 type ProductCardState = {
-  product: Product
-  selectedVariantId: string | null
-}
+  product: Product;
+  selectedVariantId: string | null;
+};
 
 type ProductCardActions = {
-  selectVariant: (variantId: string) => void
-}
+  selectVariant: (variantId: string) => void;
+};
 
 type ProductCardContextValue = {
-  state: ProductCardState
-  actions: ProductCardActions
-}
+  state: ProductCardState;
+  actions: ProductCardActions;
+};
 
-const ProductCardContext = createContext<ProductCardContextValue | null>(null)
+const ProductCardContext = createContext<ProductCardContextValue | null>(null);
 
 function useProductCard() {
-  const value = use(ProductCardContext)
+  const value = use(ProductCardContext);
 
   if (!value) {
-    throw new Error("ProductCard components must be used inside ProductCard.Provider")
+    throw new Error(
+      "ProductCard components must be used inside ProductCard.Provider",
+    );
   }
 
-  return value
+  return value;
 }
 
 function ProductCardProvider({
   product,
   children,
 }: {
-  product: Product
-  children: React.ReactNode
+  product: Product;
+  children: React.ReactNode;
 }) {
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(
     product.defaultVariantId,
-  )
+  );
 
   const value = useMemo<ProductCardContextValue>(
     () => ({
@@ -126,36 +127,36 @@ function ProductCardProvider({
       actions: { selectVariant: setSelectedVariantId },
     }),
     [product, selectedVariantId],
-  )
+  );
 
   return (
     <ProductCardContext value={value}>
       {children}
     </ProductCardContext>
-  )
+  );
 }
 
 function ProductCardRoot({ children }: { children: React.ReactNode }) {
-  return <article className="product-card">{children}</article>
+  return <article className="product-card">{children}</article>;
 }
 
 function ProductCardTitle() {
   const {
     state: { product },
-  } = useProductCard()
+  } = useProductCard();
 
-  return <h2>{product.name}</h2>
+  return <h2>{product.name}</h2>;
 }
 
 const ProductCardVariantButton = memo(function ProductCardVariantButton({
   variant,
 }: {
-  variant: ProductVariant
+  variant: ProductVariant;
 }) {
   const {
     state: { selectedVariantId },
     actions: { selectVariant },
-  } = useProductCard()
+  } = useProductCard();
 
   return (
     <button
@@ -165,11 +166,11 @@ const ProductCardVariantButton = memo(function ProductCardVariantButton({
     >
       {variant.name}
     </button>
-  )
-})
+  );
+});
 
 function ProductCardActions({ children }: { children: React.ReactNode }) {
-  return <footer className="product-card__actions">{children}</footer>
+  return <footer className="product-card__actions">{children}</footer>;
 }
 
 export const ProductCard = {
@@ -178,7 +179,7 @@ export const ProductCard = {
   Title: ProductCardTitle,
   VariantButton: ProductCardVariantButton,
   Actions: ProductCardActions,
-}
+};
 ```
 
 Usage:
@@ -194,7 +195,7 @@ Usage:
       <AddToCart productId={product.id} />
     </ProductCard.Actions>
   </ProductCard.Root>
-</ProductCard.Provider>
+</ProductCard.Provider>;
 ```
 
 ### React rules
@@ -205,16 +206,18 @@ Usage:
 2. **Use context for shared component state, but keep the context value stable
    when children are memoized or expensive.** Use `useMemo` when the provider
    value would otherwise create a new object on every render.
-3. **Do not store derived state in effects.** Compute cheap derived values during
-   render and use `useMemo` only for expensive pure derivations.
+3. **Do not store derived state in effects.** Compute cheap derived values
+   during render and use `useMemo` only for expensive pure derivations.
 4. **Do not overuse `React.Children` introspection.** It can be useful for
    narrow transforms, but it does not see the rendered output of child
    components and can make composition fragile.
-5. **Use render props only when the parent must provide data back to the child.**
-   For layout regions, prefer normal children or compound subcomponents.
-6. **Preserve rendered semantics.** A navigational child should render an anchor;
-   an action child should render a button. Use project composition primitives,
-   such as `asChild`, only when they preserve the correct rendered element.
+5. **Use render props only when the parent must provide data back to the
+   child.** For layout regions, prefer normal children or compound
+   subcomponents.
+6. **Preserve rendered semantics.** A navigational child should render an
+   anchor; an action child should render a button. Use project composition
+   primitives, such as `asChild`, only when they preserve the correct rendered
+   element.
 7. **In React 19+, prefer `ref` as a normal prop and `<Context value={...}>` for
    providers.** Keep older React compatibility in a separate rule when needed.
 
@@ -230,53 +233,55 @@ functions. Do not convert signals into stale values while composing children.
 
 ```tsx
 import {
-  For,
-  Show,
+  type Accessor,
   children,
   createContext,
   createMemo,
   createSignal,
-  splitProps,
-  useContext,
-  type Accessor,
+  For,
   type JSX,
   type Setter,
+  Show,
+  splitProps,
+  useContext,
   type ValidComponent,
-} from "solid-js"
-import { Dynamic } from "solid-js/web"
+} from "solid-js";
+import { Dynamic } from "solid-js/web";
 
 type ProductCardContextValue = {
-  product: Accessor<Product>
-  selectedVariantId: Accessor<string | null>
-  setSelectedVariantId: Setter<string | null>
-  selectedVariant: Accessor<ProductVariant | undefined>
-}
+  product: Accessor<Product>;
+  selectedVariantId: Accessor<string | null>;
+  setSelectedVariantId: Setter<string | null>;
+  selectedVariant: Accessor<ProductVariant | undefined>;
+};
 
-const ProductCardContext = createContext<ProductCardContextValue>()
+const ProductCardContext = createContext<ProductCardContextValue>();
 
 function useProductCard() {
-  const value = useContext(ProductCardContext)
+  const value = useContext(ProductCardContext);
 
   if (!value) {
-    throw new Error("ProductCard components must be used inside ProductCard.Provider")
+    throw new Error(
+      "ProductCard components must be used inside ProductCard.Provider",
+    );
   }
 
-  return value
+  return value;
 }
 
 function ProductCardProvider(props: {
-  product: Product
-  children: JSX.Element
+  product: Product;
+  children: JSX.Element;
 }) {
   const [selectedVariantId, setSelectedVariantId] = createSignal<string | null>(
     props.product.defaultVariantId,
-  )
+  );
 
-  const product = () => props.product
+  const product = () => props.product;
 
   const selectedVariant = createMemo(() =>
-    product().variants.find((variant) => variant.id === selectedVariantId()),
-  )
+    product().variants.find((variant) => variant.id === selectedVariantId())
+  );
 
   return (
     <ProductCardContext.Provider
@@ -289,36 +294,36 @@ function ProductCardProvider(props: {
     >
       {props.children}
     </ProductCardContext.Provider>
-  )
+  );
 }
 
 function ProductCardRoot<T extends ValidComponent = "article">(
   props: {
-    as?: T
-    children: JSX.Element
+    as?: T;
+    children: JSX.Element;
   } & JSX.IntrinsicElements["article"],
 ) {
-  const [local, others] = splitProps(props, ["as", "children", "class"])
+  const [local, others] = splitProps(props, ["as", "children", "class"]);
 
   return (
     <Dynamic
       component={local.as ?? "article"}
-      class={['product-card', local.class].filter(Boolean).join(' ')}
+      class={["product-card", local.class].filter(Boolean).join(" ")}
       {...others}
     >
       {local.children}
     </Dynamic>
-  )
+  );
 }
 
 function ProductCardTitle() {
-  const card = useProductCard()
+  const card = useProductCard();
 
-  return <h2>{card.product().name}</h2>
+  return <h2>{card.product().name}</h2>;
 }
 
 function ProductCardVariantList() {
-  const card = useProductCard()
+  const card = useProductCard();
 
   return (
     <Show when={card.product().variants.length > 0}>
@@ -338,13 +343,13 @@ function ProductCardVariantList() {
         </For>
       </ul>
     </Show>
-  )
+  );
 }
 
 function ProductCardActions(props: { children: JSX.Element }) {
-  const resolved = children(() => props.children)
+  const resolved = children(() => props.children);
 
-  return <footer class="product-card__actions">{resolved()}</footer>
+  return <footer class="product-card__actions">{resolved()}</footer>;
 }
 
 export const ProductCard = {
@@ -353,7 +358,7 @@ export const ProductCard = {
   Title: ProductCardTitle,
   VariantList: ProductCardVariantList,
   Actions: ProductCardActions,
-}
+};
 ```
 
 Usage:
@@ -367,7 +372,7 @@ Usage:
       <AddToCart productId={product.id} />
     </ProductCard.Actions>
   </ProductCard.Root>
-</ProductCard.Provider>
+</ProductCard.Provider>;
 ```
 
 ### Solid rules
@@ -390,8 +395,8 @@ Usage:
    Prefer it over ad-hoc conditional branches when the only change is the root
    element or component type.
 8. **Keep owner and lifetime boundaries explicit.** Context lookup and cleanup
-   are tied to Solid’s owner tree. Do not retain UI beyond the owner that created
-   the signals, context, or resources it depends on.
+   are tied to Solid’s owner tree. Do not retain UI beyond the owner that
+   created the signals, context, or resources it depends on.
 9. **Prefer `class` and `classList` for Solid-native class composition.** Use a
    project class helper only when variant merging or Tailwind conflict handling
    actually matters.
@@ -474,15 +479,15 @@ import AddToCartIsland from "./AddToCartIsland.tsx"
 
 ## Cross-framework decision table
 
-| Need | React | Solid | Astro |
-| --- | --- | --- | --- |
-| Static named regions | Children or named subcomponents | Children or named subcomponents | Default and named slots |
-| Shared interactive state | Context provider + hooks | Context provider + signals/accessors | Hydrated island containing React/Solid provider |
-| Polymorphic root element | `as`/`asChild` pattern if project supports it | `<Dynamic component={...} />` | Pick the element in `.astro`; avoid client hydration |
-| Dynamic list region | `.map()` with stable keys | `<For>` or `<Index>` | Render server-side list, or island if interactive |
-| Conditional region | conditional JSX | `<Show>`, `<Switch>`, `<Match>` | slot presence, frontmatter branch, or island |
-| Derived values | render calculation or `useMemo` | direct derived signal or `createMemo` | frontmatter calculation or island state |
-| Child inspection | Avoid unless necessary; use `React.Children` carefully | `children()` when normalizing/reusing children | `Astro.slots.has()` or `<slot />` |
+| Need                     | React                                                  | Solid                                          | Astro                                                |
+| ------------------------ | ------------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------------- |
+| Static named regions     | Children or named subcomponents                        | Children or named subcomponents                | Default and named slots                              |
+| Shared interactive state | Context provider + hooks                               | Context provider + signals/accessors           | Hydrated island containing React/Solid provider      |
+| Polymorphic root element | `as`/`asChild` pattern if project supports it          | `<Dynamic component={...} />`                  | Pick the element in `.astro`; avoid client hydration |
+| Dynamic list region      | `.map()` with stable keys                              | `<For>` or `<Index>`                           | Render server-side list, or island if interactive    |
+| Conditional region       | conditional JSX                                        | `<Show>`, `<Switch>`, `<Match>`                | slot presence, frontmatter branch, or island         |
+| Derived values           | render calculation or `useMemo`                        | direct derived signal or `createMemo`          | frontmatter calculation or island state              |
+| Child inspection         | Avoid unless necessary; use `React.Children` carefully | `children()` when normalizing/reusing children | `Astro.slots.has()` or `<slot />`                    |
 
 ## Final checklist
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Clis"
+  short_description: "Research and apply build clis."
+  default_prompt: "Use this skill to build clis with current source-backed decisions."

@@ -7,6 +7,9 @@ try {
 }
 const registry = await readFile("registry.ts", "utf8");
 const generator = await readFile("generate.mjs", "utf8");
-if (/legacy/.test(registry + generator)) throw new Error("generator still emits legacy path");
-if (!/modern/.test(registry + generator)) throw new Error("modern registration missing");
-
+if (/legacy/.test(registry + generator)) {
+  throw new Error("generator still emits legacy path");
+}
+if (!/modern/.test(registry + generator)) {
+  throw new Error("modern registration missing");
+}

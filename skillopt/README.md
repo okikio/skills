@@ -17,4 +17,3 @@ SkillOpt optimizes generated candidates, never the canonical skill in place.
 The optimizer may add, replace, or delete procedural text. Protected material
 includes frontmatter, security rules, source citations, frozen-test isolation,
 cross-skill ownership, and the rule against claiming checks that did not run.
-

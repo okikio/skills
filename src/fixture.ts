@@ -3,6 +3,7 @@ import {
   basename,
   dirname,
   fromFileUrl,
+  isAbsolute,
   join,
   relative,
   resolve,
@@ -14,7 +15,7 @@ const fixtureRoot = join(root, "evals", "fixtures");
 function resolveFixture(name: string): string {
   const source = resolve(fixtureRoot, name);
   const relation = relative(resolve(fixtureRoot), source);
-  if (relation.startsWith("..")) {
+  if (relation === ".." || relation.startsWith("../") || isAbsolute(relation)) {
     throw new Error("Fixture name escapes fixture root");
   }
   return source;

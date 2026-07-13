@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Web"
+  short_description: "Research and apply build web."
+  default_prompt: "Use this skill to build web with current source-backed decisions."

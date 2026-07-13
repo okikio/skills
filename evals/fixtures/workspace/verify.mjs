@@ -7,4 +7,3 @@ if (deno.imports?.["@acme/core"] === "workspace:*") {
 if (pkg.dependencies?.["@acme/core"] !== "workspace:*") {
   throw new Error("package dependency does not own workspace protocol");
 }
-

@@ -335,4 +335,3 @@ correction, and verification.
 5. benchmark under equivalent conditions;
 6. run correctness tests after optimization;
 7. report distributions and environment, not only a single best number.
-

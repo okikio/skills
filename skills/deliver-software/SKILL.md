@@ -13,8 +13,8 @@ and domain-specific verification. Discover once, produce one integrated plan,
 and report one completion verdict. For ambiguous migrations and refactors, read
 [delivery cases](references/cases.md).
 
-Apply a compact routing layer over the bundled engineering instructions. Load the
-base rules first, add only the references relevant to the task, and carry
+Apply a compact routing layer over the bundled engineering instructions. Load
+the base rules first, add only the references relevant to the task, and carry
 delivery work through implementation, cleanup, validation, and real
 verification.
 
@@ -28,38 +28,38 @@ verification.
    editing instead of silently choosing one side.
 4. Read every task and surface reference selected by the routing table. Do not
    load unrelated framework or writing references.
-5. Apply universal references before their specialized layer. For example,
-   apply `web.md` before `solid.md`, and `docs.md` before `diagrams.md` when an
-   ASCII diagram appears in long-form documentation.
+5. Apply universal references before their specialized layer. For example, apply
+   `web.md` before `solid.md`, and `docs.md` before `diagrams.md` when an ASCII
+   diagram appears in long-form documentation.
 
-Do not infer React or Solid from a `.tsx` extension alone. Determine the renderer
-from imports, configuration, and surrounding code, then load only that
+Do not infer React or Solid from a `.tsx` extension alone. Determine the
+renderer from imports, configuration, and surrounding code, then load only that
 framework's reference.
 
 ## Route the task
 
-| Work | Read |
-| --- | --- |
-| Code, architecture, API design, refactor, or migration | [general.md](references/general.md) |
-| Substantial plan, implementation, refactor, migration, completion audit, or multi-surface change | [workflow.md](references/workflow.md) and [delivery.md](references/delivery.md) |
-| Refactor, migration, cutover, compatibility window, or legacy removal | [refactors.md](references/refactors.md) |
-| Deno, TypeScript, or TSX | [typescript.md](references/typescript.md) |
-| Python | [python.md](references/python.md) |
-| Tests or test design | [testing.md](references/testing.md) |
-| Benchmarks or performance claims | [benchmarks.md](references/benchmarks.md) |
-| TSDoc or source comments | [comments.md](references/comments.md) |
-| Code review or diff findings | [review.md](references/review.md) |
-| Markdown, design notes, architecture docs, guides, or long-form technical prose | [docs.md](references/docs.md) |
-| Commit messages or commit plans | [commits.md](references/commits.md) |
-| Pull request titles, descriptions, or merge summaries | [pulls.md](references/pulls.md) |
-| Changelogs or release notes | [changes.md](references/changes.md) |
-| Package or product release execution | [releases.md](references/releases.md) |
-| ASCII diagrams in docs, comments, or explanations | [diagrams.md](references/diagrams.md) |
-| Any browser-facing interface | [web.md](references/web.md) |
-| React, Next.js, Remix, or React Router UI | [react.md](references/react.md) |
-| Solid or SolidStart UI | [solid.md](references/solid.md) |
-| Astro pages, components, content, scripts, or islands | [astro.md](references/astro.md) |
-| Multi-region component APIs, renderer comparisons, compound components, slots, or cross-framework composition | [composition.md](references/composition.md) |
+| Work                                                                                                          | Read                                                                            |
+| ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Code, architecture, API design, refactor, or migration                                                        | [general.md](references/general.md)                                             |
+| Substantial plan, implementation, refactor, migration, completion audit, or multi-surface change              | [workflow.md](references/workflow.md) and [delivery.md](references/delivery.md) |
+| Refactor, migration, cutover, compatibility window, or legacy removal                                         | [refactors.md](references/refactors.md)                                         |
+| Deno, TypeScript, or TSX                                                                                      | [typescript.md](references/typescript.md)                                       |
+| Python                                                                                                        | [python.md](references/python.md)                                               |
+| Tests or test design                                                                                          | [testing.md](references/testing.md)                                             |
+| Benchmarks or performance claims                                                                              | [benchmarks.md](references/benchmarks.md)                                       |
+| TSDoc or source comments                                                                                      | [comments.md](references/comments.md)                                           |
+| Code review or diff findings                                                                                  | [review.md](references/review.md)                                               |
+| Markdown, design notes, architecture docs, guides, or long-form technical prose                               | [docs.md](references/docs.md)                                                   |
+| Commit messages or commit plans                                                                               | [commits.md](references/commits.md)                                             |
+| Pull request titles, descriptions, or merge summaries                                                         | [pulls.md](references/pulls.md)                                                 |
+| Changelogs or release notes                                                                                   | [changes.md](references/changes.md)                                             |
+| Package or product release execution                                                                          | [releases.md](references/releases.md)                                           |
+| ASCII diagrams in docs, comments, or explanations                                                             | [diagrams.md](references/diagrams.md)                                           |
+| Any browser-facing interface                                                                                  | [web.md](references/web.md)                                                     |
+| React, Next.js, Remix, or React Router UI                                                                     | [react.md](references/react.md)                                                 |
+| Solid or SolidStart UI                                                                                        | [solid.md](references/solid.md)                                                 |
+| Astro pages, components, content, scripts, or islands                                                         | [astro.md](references/astro.md)                                                 |
+| Multi-region component APIs, renderer comparisons, compound components, slots, or cross-framework composition | [composition.md](references/composition.md)                                     |
 
 For compound tasks, combine the relevant rows. A Solid component with tests and
 TSDoc requires `general.md`, `typescript.md`, `testing.md`, `comments.md`,
@@ -99,14 +99,14 @@ capabilities:
 
 Classify the request before choosing a workflow:
 
-| Mode | Authorized behavior |
-| --- | --- |
-| Answer or explain | Inspect only as needed; do not edit or publish |
-| Review or audit | Inspect and report evidence; do not fix findings |
-| Diagnose | Reproduce and identify the cause; do not implement a fix |
-| Plan or design | Inspect, research, compare, and specify; do not implement |
-| Change or build | Implement, clean up, validate, and verify |
-| Publish or release | Mutate external state only when explicitly requested |
+| Mode               | Authorized behavior                                       |
+| ------------------ | --------------------------------------------------------- |
+| Answer or explain  | Inspect only as needed; do not edit or publish            |
+| Review or audit    | Inspect and report evidence; do not fix findings          |
+| Diagnose           | Reproduce and identify the cause; do not implement a fix  |
+| Plan or design     | Inspect, research, compare, and specify; do not implement |
+| Change or build    | Implement, clean up, validate, and verify                 |
+| Publish or release | Mutate external state only when explicitly requested      |
 
 A request to inspect, explain, review, diagnose, or plan does not silently
 authorize implementation. A change request authorizes ordinary in-scope edits
@@ -124,6 +124,15 @@ and what must no longer remain. Enumerate every in-scope deliverable so the work
 cannot silently stop after the first visible slice.
 
 ### 2. Inspect before inventing
+
+Treat every material dependency as an ecosystem-discovery hypothesis. Before
+concluding what a named package can or cannot do, inspect its repository or
+organization, workspace packages, official documentation navigation, adapters,
+plugins, presets, companion repositories, and supported integrations. Classify
+it as a verified monorepo, verified multi-repository ecosystem, verified
+standalone project, or unresolved. Do not claim a relationship or add siblings
+without evidence. When available, use `explore-ecosystems` for this research;
+retain delivery ownership here.
 
 Search in this order when the repository provides each layer:
 
@@ -166,14 +175,15 @@ schemas as contract sources and infer static types from them when the schema
 defines the data shape.
 
 After the first substantive edit, run the narrowest useful check before widening
-the change. Continue until the full deliverable and required cleanup are present.
+the change. Continue until the full deliverable and required cleanup are
+present.
 
 ### 5. Validate the changed surface
 
-Prove internal soundness with the narrowest checks that cover the changed code or
-document. Depending on the repository, this can include type checking, linting,
-targeted tests, documentation lint, schema checks, deprecation checks, and
-instruction compliance.
+Prove internal soundness with the narrowest checks that cover the changed code
+or document. Depending on the repository, this can include type checking,
+linting, targeted tests, documentation lint, schema checks, deprecation checks,
+and instruction compliance.
 
 Do not equate validation with end-to-end success. A typecheck or unit test can
 prove a contract locally without proving the user's workflow works.
