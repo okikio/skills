@@ -1,4 +1,4 @@
 interface:
-  display_name: "Build Web"
-  short_description: "Research and apply build web."
-  default_prompt: "Use this skill to build web with current source-backed decisions."
+  display_name: "Build Web Systems"
+  short_description: "Classify and coordinate hybrid web work."
+  default_prompt: "Use $build-web to classify and coordinate this cross-surface web system."

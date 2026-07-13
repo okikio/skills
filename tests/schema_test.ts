@@ -1,5 +1,8 @@
-import { assertEquals } from "@std/assert";
+import assert from "node:assert/strict";
 import { EvalCaseFileSchema } from "../src/eval_schema.ts";
+
+const assertEquals: (actual: unknown, expected: unknown) => void =
+  assert.deepEqual;
 
 Deno.test("the core evaluation corpus has unique cases across all split families", async () => {
   const source = JSON.parse(

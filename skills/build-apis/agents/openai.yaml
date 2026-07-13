@@ -1,4 +1,4 @@
 interface:
-  display_name: "Build Apis"
-  short_description: "Research and apply build apis."
-  default_prompt: "Use this skill to build apis with current source-backed decisions."
+  display_name: "Build APIs"
+  short_description: "Build service modules and HTTP APIs."
+  default_prompt: "Use $build-apis to design, implement, or review this API and its service contracts."

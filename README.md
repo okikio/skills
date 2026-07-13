@@ -5,21 +5,38 @@ agents.
 
 ## Skills
 
-- `deliver-software` carries substantial software work from repository discovery
-  through implementation, cleanup, validation, and executable verification.
+- `deliver-software` carries substantial software work from repository
+  discovery through implementation, cleanup, validation, and executable
+  verification.
 - `deno-software` adds current Deno-specific repository, dependency,
   compatibility, security, quality, publication, and artifact guidance.
-- `explore-ecosystems` maps monorepos, sibling packages, coordinated
-  repositories, plugins, adapters, integrations, and deliberate exclusions.
-- `build-clis`, `build-web`, `build-apis`, `build-workflows`, `build-data`, and
-  `build-devtools` apply that research to focused engineering workflows.
-- `use-okikio` grounds Okikio packages and project patterns in local and
-  primary-source evidence.
+- `explore-ecosystems` gives every in-scope dependency a cheap ecosystem identity
+  check, then verifies monorepos, siblings, adapters, plugins, specifications,
+  alternatives, and exclusions deeply for material decisions.
+- `build-clis` owns command language, configuration, output, interaction,
+  cancellation, installed artifacts, and CLI verification.
+- `build-web` classifies hybrid web surfaces and owns shared renderer,
+  component, motion, security, and browser contracts.
+- `build-sites` owns Astro content, marketing, documentation, CMS, feeds, and
+  static/server site delivery.
+- `build-web-apps` owns stateful Solid and TanStack applications, URL/query/local
+  state, sessions, authorization, and product interaction.
+- `build-apis` owns service-module, endpoint, validation, response, middleware,
+  authentication, authorization, and request contracts.
+- `build-workflows` owns durable coordination, workers, queues, timers, signals,
+  checkpoints, recovery, and resumable pipelines.
+- `build-data` owns operational, analytical, search, graph, artifact, query,
+  migration, and projection contracts.
+- `build-devtools` owns toolchains, generators, packaging, releases, performance
+  experiments, and repository hygiene.
+- `use-okikio` provides source-grounded playbooks for Okikio libraries and
+  recurring project patterns without inventing private exports.
 
 The skills are independently installable and deliberately composable.
-`deliver-software` owns the lifecycle, `deno-software` owns Deno contracts,
-`explore-ecosystems` owns dependency topology, and focused skills own workflow
-architecture and verification criteria.
+`deliver-software` owns the general delivery lifecycle. Domain skills own their
+contracts. `explore-ecosystems` owns dependency topology and evidence. A
+composed task performs one repository discovery pass, one plan, and one final
+verdict.
 
 ## Install
 
@@ -44,9 +61,9 @@ The repository evaluates five distinct capabilities:
 4. outcome: whether the resulting repository or answer passes its verifier;
 5. efficiency: token, reference, tool-call, latency, and duplication cost.
 
-Results must compare no-skill, individual-skill, and composed-skill variants. An
-optimized candidate is never promoted solely because an LLM judge prefers its
-prose.
+Results must compare no-skill, individual-skill, and composed-skill variants.
+An optimized candidate is never promoted solely because an LLM judge prefers
+its prose.
 
 ## Development
 
@@ -58,9 +75,10 @@ deno task check
 deno task test
 ```
 
-Cross-model runs require the provider commands configured in
-`evals/models.json`. Credentials remain in the environment and are never written
-to fixtures, traces, or reports.
+Cross-model execution still requires implementing the rollout adapter described
+in `skillopt/benchmark-contract.md` and enabling provider commands from
+`evals/models.json`. Credentials must remain in the environment and never enter
+fixtures, traces, or reports.
 
 SkillOpt is kept as a separately reproducible optimization layer. See
 `skillopt/README.md`. Generated candidates are review artifacts, not source

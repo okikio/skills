@@ -28,3 +28,4 @@ and artifact guidance remains available through selective references.
 
 A measured token reduction awaits real host trajectory telemetry. The line-count
 reduction is structural evidence, not a model-performance claim.
+

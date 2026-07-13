@@ -33,3 +33,4 @@ mandatory bookkeeping after this iteration.
 The UI references remain too large and repetitive. That candidate is deferred
 until renderer-specific fixture cases can measure whether compression loses
 important behavior.
+

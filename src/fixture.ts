@@ -1,15 +1,15 @@
-import { copy, ensureDir } from "@std/fs";
 import {
   basename,
   dirname,
-  fromFileUrl,
   isAbsolute,
   join,
   relative,
   resolve,
-} from "@std/path";
+} from "node:path";
+import { fileURLToPath } from "node:url";
+import { copyDirectory } from "./files.ts";
 
-const root = join(dirname(fromFileUrl(import.meta.url)), "..");
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const fixtureRoot = join(root, "evals", "fixtures");
 
 function resolveFixture(name: string): string {
@@ -32,7 +32,6 @@ export async function prepareFixture(name: string): Promise<string> {
   const target = await Deno.makeTempDir({
     prefix: `skills-${basename(name)}-`,
   });
-  await ensureDir(target);
-  await copy(source, target, { overwrite: false });
+  await copyDirectory(source, target);
   return target;
 }

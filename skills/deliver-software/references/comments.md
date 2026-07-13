@@ -1,9 +1,9 @@
+
 # TSDoc and Comments
 
 ## What comments are for
 
 Comments and TSDoc should explain:
-
 - intent
 - constraints
 - assumptions
@@ -18,7 +18,6 @@ Do not use comments to restate obvious code.
 ## TSDoc defaults
 
 For public APIs, start with:
-
 - what this thing is
 - why it exists
 - what problem it solves for the caller
@@ -26,21 +25,20 @@ For public APIs, start with:
 
 Then explain the high-level approach if the implementation model matters.
 
-Use plain English by default. When a technical term is worth keeping, define it
-in grounded language the first time it matters. Do not stop at a shorter or
-softer paraphrase if the reader still cannot picture the idea in this codebase.
+Use plain English by default.
+When a technical term is worth keeping, define it in grounded language the first time it matters.
+Do not stop at a shorter or softer paraphrase if the reader still cannot picture the idea in this codebase.
 
 ## Section and header discipline in TSDoc
 
-Do not add section headers inside a doc block unless they improve navigation. A
-section label must be specific and useful on its own. If the prose naturally
-continues the same idea, use a transition sentence instead of a header.
+Do not add section headers inside a doc block unless they improve navigation.
+A section label must be specific and useful on its own.
+If the prose naturally continues the same idea, use a transition sentence instead of a header.
 
 ## Grounding complex and abstract ideas
 
-When code is not easy to infer from a quick read, explain it in plain English
-and anchor the explanation in something concrete. This especially applies to:
-
+When code is not easy to infer from a quick read, explain it in plain English and anchor the explanation in something concrete.
+This especially applies to:
 - parser recovery
 - offset math
 - regular expressions
@@ -53,7 +51,6 @@ and anchor the explanation in something concrete. This especially applies to:
 - domain-specific parsing or transformation terms
 
 When useful, include:
-
 - the problem being handled
 - the key invariant and what it protects against
 - the step-by-step logic
@@ -62,16 +59,15 @@ When useful, include:
 - the practical meaning of any jargon that remains
 
 A good explanation answers both of these:
-
 - `What does this term mean?`
 - `What does it mean here, in this code?`
 
 ## Diagram depth in comments and TSDoc
 
-Use diagrams in comments when the local code is hard to understand because
-order, ownership, state transitions, or data-shape changes matter. Do not
-overcompress a multi-step lifecycle into a one-line pipeline when the omitted
-branch, fallback, or cleanup path is the point of the comment.
+Use diagrams in comments when the local code is hard to understand because order,
+ownership, state transitions, or data-shape changes matter. Do not overcompress a
+multi-step lifecycle into a one-line pipeline when the omitted branch, fallback,
+or cleanup path is the point of the comment.
 
 For TSDoc, keep diagrams smaller than long-form documentation, but still large
 enough to preserve the behavior that matters. When the full lifecycle would make
@@ -79,7 +75,6 @@ a doc block hard to scan, move the detailed diagram to Markdown docs and keep a
 short local diagram or link-style reference in the TSDoc.
 
 A useful comment diagram can show:
-
 - the trigger for the local lifecycle
 - the owner of each step
 - the shape that enters and leaves the function
@@ -89,7 +84,6 @@ A useful comment diagram can show:
 
 When a performance optimization makes the code less obvious, explain it clearly.
 State:
-
 - what the optimization is
 - how it works
 - what runtime cost it reduces
@@ -101,17 +95,14 @@ Do not quietly trade readability for speed without documenting the reason.
 ## Examples and diagrams
 
 Use examples for:
-
 - public APIs
 - surprising behavior
 - edge cases
 - config-sensitive behavior
 
-Prefer examples that show a real caller scenario, not a toy snippet with no
-context. Use diagrams only when they make the code easier to understand. For
-lifecycle-heavy code, prefer enough detail to show order, ownership, handoff
-shapes, retries, cleanup, and invalidation. Do not reduce a complex flow to a
-tiny abstract pipeline when the missing detail is what explains the behavior.
+Prefer examples that show a real caller scenario, not a toy snippet with no context.
+Use diagrams only when they make the code easier to understand.
+For lifecycle-heavy code, prefer enough detail to show order, ownership, handoff shapes, retries, cleanup, and invalidation. Do not reduce a complex flow to a tiny abstract pipeline when the missing detail is what explains the behavior.
 Every diagram and example must match the real behavior of the implementation.
 
 ## Anti-patterns
@@ -120,7 +111,5 @@ Every diagram and example must match the real behavior of the implementation.
 - Do not invent generic section labels.
 - Do not restate parameter names without adding meaning.
 - Do not explain obvious syntax while skipping the real reasoning.
-- Do not use comments to compensate for poor naming when renaming would be
-  clearer.
-- Do not write comments that sound more certain than the implementation really
-  is.
+- Do not use comments to compensate for poor naming when renaming would be clearer.
+- Do not write comments that sound more certain than the implementation really is.

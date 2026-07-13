@@ -1,4 +1,4 @@
 interface:
-  display_name: "Build Devtools"
-  short_description: "Research and apply build devtools."
-  default_prompt: "Use this skill to build devtools with current source-backed decisions."
+  display_name: "Build Developer Tools"
+  short_description: "Build toolchains, generators, and releases."
+  default_prompt: "Use $build-devtools to design, implement, or review this developer toolchain."

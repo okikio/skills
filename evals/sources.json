@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "id": "cli-guidebook",
+      "artifact": "productionized-cli-pattern-guidebook-v1.1(1).md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Production CLI architecture and human interface contract",
+      "verifiedDate": "2026-07-13",
+      "sha256": "b5e74d35e97d0fb8ddcb433d191cd2433b12eed1b0cad9466bf48eea48cd8a2e"
+    },
+    {
+      "id": "productionized-cli-guidebook",
+      "artifact": "productionized-cli-pattern-guidebook-v1.1(1).md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Alias retained for existing case provenance",
+      "verifiedDate": "2026-07-13",
+      "sha256": "b5e74d35e97d0fb8ddcb433d191cd2433b12eed1b0cad9466bf48eea48cd8a2e",
+      "duplicateOf": "cli-guidebook"
+    },
+    {
+      "id": "cli-audit",
+      "artifact": "cli-guidelines-audit-and-expansion(1).md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "CLI human interface gaps and ecosystem ownership",
+      "verifiedDate": "2026-07-13",
+      "sha256": "8148f3d434782033d6b45dd3143c3950c0547f01c558d53e208d32c72e1a9f10"
+    },
+    {
+      "id": "kaiju-config-handoff",
+      "artifact": "kaiju-config-resolution-handoff(2).md",
+      "kind": "handoff",
+      "status": "normative",
+      "role": "Authored/patch/runtime configuration and merge decision model",
+      "verifiedDate": "2026-07-13",
+      "sha256": "75d2f5b6318594a07f3ee42a318f953d06b69f0131ec54a41b12eebf7ff4b9a7"
+    },
+    {
+      "id": "when-to-not-use-mermaid",
+      "artifact": "when-to-not-use-mermaid-charts(1).md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Diagram format rejection and complexity signals",
+      "verifiedDate": "2026-07-13",
+      "sha256": "7a18939b17e34e451092903259d0a59313e7b11f48bd1dc4d1b8eef0329b5a26"
+    },
+    {
+      "id": "live-browser-cli",
+      "artifact": "live-browser-cli(41).zip",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "CLI implementation patterns, contradictions, tasks, config, logging, and stages",
+      "verifiedDate": "2026-07-13",
+      "sha256": "13b9282438b11e687262d11f90c627a6fb5847db788a7ddf6325aae65334de33",
+      "claimPaths": ["README.md", "deno.jsonc", "clis/main/src/program.ts", "clis/main/src/shared/logging.ts"]
+    },
+    {
+      "id": "kaiju-website",
+      "artifact": "kaiju-website(6).zip",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "Astro marketing site, Solid islands, Zaidan styles, icons, and WebGL fallbacks",
+      "verifiedDate": "2026-07-13",
+      "sha256": "1fcda20543cc9c1620ae1ba784e7d9a716da76d52fb5696c444718ccf78618fa",
+      "claimPaths": ["src/components/home/FaqSection.astro"]
+    },
+    {
+      "id": "kaiju-site-scope",
+      "artifact": "kaiju-site-scope(17).zip",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "TanStack Solid application, Astro docs, services, auth, billing, and data",
+      "verifiedDate": "2026-07-13",
+      "sha256": "362f490ad770b18bf1a02d8050024782049e6c420097103d21c6bb3b1507b202",
+      "claimPaths": ["apps/frontend/src/routes/(product)/_app/(search)/components/LeadSearchPage.tsx", "apps/frontend/src/routes/(product)/_app/(search)/_queries.ts"],
+      "notes": "Contains no browser-extension implementation"
+    },
+    {
+      "id": "solid-primitives",
+      "artifact": "solid-primitives(2).zip",
+      "kind": "codebase",
+      "status": "executable",
+      "role": "Solid primitive maturity, SSR, ownership, cleanup, and transition contracts",
+      "verifiedDate": "2026-07-13",
+      "sha256": "9346b84beb1dfd88094df78221cc400708228a50e694950e7364c0f1e4b984de"
+    },
+    {
+      "id": "solid-motion-experiments",
+      "artifact": "solid-motion-experiments.zip",
+      "kind": "codebase",
+      "status": "experimental",
+      "role": "Solid motion, presence, SSR/hydration, and capability-status evidence",
+      "verifiedDate": "2026-07-13",
+      "sha256": "04dfde197ec8e2e8761a129e42b4be3cdc7c9b3ddf11c59f4f2229073800613c"
+    },
+    {
+      "id": "thunderstrike-blog",
+      "artifact": "thunderstrike-blog(4).zip",
+      "kind": "codebase",
+      "status": "counterexample",
+      "role": "Astro live CMS mapping plus unsafe webhook and renderer counterexamples",
+      "verifiedDate": "2026-07-13",
+      "sha256": "afefda29d9548be83f1f70aad9b992f0fe033c1bf5bf1091529887b39260a318",
+      "claimPaths": ["src/pages/api/webhook.ts", "src/pages/homepage.astro"]
+    },
+    {
+      "id": "new-finance",
+      "artifact": "new-finance-app(1).zip",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "API, auth, query, data, server, and workflow utilities",
+      "verifiedDate": "2026-07-13",
+      "sha256": "6b184daf86f81e2fbe7271d9df0bed9f32468aaebd44478e38e12046762fba24",
+      "treeDigest": "907d3e7b474f8139fd7dfab26f8b97592568365fbf0082e734fefc4116f4c559",
+      "claimPaths": ["docs/service-module-authoring.md", "docs/workflows-mental-model.md", "utils/auth", "utils/auth/auth.ts", "utils/execution/db.ts", "utils/middleware/validation.ts", "utils/query", "utils/workflows", "utils/workflows/postgres_store.ts"]
+    },
+    {
+      "id": "old-finance",
+      "artifact": "old-finance-app(1).zip",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "Duplicate finance archive retained for provenance testing",
+      "verifiedDate": "2026-07-13",
+      "sha256": "bc4d4c3ed55944326674b854618c8ebddab82c12aa85834a87f484462b56ab9c",
+      "treeDigest": "907d3e7b474f8139fd7dfab26f8b97592568365fbf0082e734fefc4116f4c559",
+      "duplicateOf": "new-finance",
+      "notes": "Relative-path and content hashes are identical"
+    },
+    {
+      "id": "better-auth-integration",
+      "artifact": "better-auth.zip",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "User Better Auth integration monorepo, not upstream Better Auth source",
+      "verifiedDate": "2026-07-13",
+      "sha256": "7da8d175225fa3b776c58d3f7326d706fdc1f269e919fbb1e82ae5e012782822",
+      "treeDigest": "132452608992142fdded76c52b055f9f259e7fbd3ff8535a55e9ce9603f5e469",
+      "claimPaths": ["apps/frontend/src/middleware/active_org.ts"]
+    },
+    {
+      "id": "popmodern",
+      "artifact": "popmodern-platform.zip",
+      "kind": "codebase",
+      "status": "counterexample",
+      "role": "Historical APIs, pipelines, search/graph/data patterns, and drift",
+      "verifiedDate": "2026-07-13",
+      "sha256": "de09a057170fb2703eb974fca0cfe2a30e223e215109b1d9bccf45bcfa1a1157",
+      "claimPaths": ["DATA_PIPELINE.md", "README.md", "infra/mediawiki_ingest/etl_runner.py", "supabase/functions/collections/endpoints/lists/feed/handler.ts"]
+    },
+    {
+      "id": "undent",
+      "artifact": "undent.zip",
+      "kind": "codebase",
+      "status": "executable",
+      "role": "Undent APIs, Unicode widths, generation, packaging, and release patterns",
+      "verifiedDate": "2026-07-13",
+      "sha256": "4debcddd9b14311adc7721f5a504b1240a0ced289405d6fd6a5267cda9f51304",
+      "claimPaths": ["mod.ts", "scripts/build_npm.ts", "scripts/sync_unicode_east_asian_width.ts", "unicode.ts"]
+    },
+    {
+      "id": "wikitext",
+      "artifact": "wikitext.zip",
+      "kind": "codebase",
+      "status": "experimental",
+      "role": "Tokenizer/event/tree/session APIs, experiments, and missing-export counterexample",
+      "verifiedDate": "2026-07-13",
+      "sha256": "4a8b68e454c1dbeb0161a03433dfd85ee88307fce37dc7b756e4fbc3a337377c",
+      "claimPaths": ["deno.json", "experiments/event-shape-study/protocol.md", "mod.ts", "parse.ts", "readme.md", "session.ts"]
+    },
+    {
+      "id": "user-memory",
+      "artifact": "User-provided package and ecosystem memory",
+      "kind": "memory",
+      "status": "unresolved",
+      "role": "Discovery hints for private or unavailable packages",
+      "verifiedDate": "2026-07-13",
+      "claimPaths": ["custom-clickhouse-drizzle"]
+    },
+    {
+      "id": "deno-software",
+      "artifact": "skills/deno-software",
+      "kind": "codebase",
+      "status": "normative",
+      "role": "Deno-specific composition and verification contract",
+      "verifiedDate": "2026-07-13"
+    }
+  ]
+}

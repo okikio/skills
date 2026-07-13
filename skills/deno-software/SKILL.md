@@ -19,8 +19,9 @@ metadata:
 This skill owns Deno-specific contracts. When deliver-software is also
 available, let it own the general delivery lifecycle. Apply this skill as the
 Deno specialization and do not repeat discovery, planning, cleanup, validation,
-verification, or reporting stages. When used alone, retain the complete workflow
-by loading [the standalone fallback](references/16-standalone.md).
+verification, or reporting stages. When used alone, retain the complete
+workflow by loading
+[the standalone fallback](references/16-standalone.md).
 
 Deliver working software, not Deno-flavoured snippets.
 
@@ -36,26 +37,30 @@ For ambiguous or high-risk decisions, read
 [decision cases](references/15-decision-cases.md).
 
 Read only the references needed for the task. Always read
-`references/01-foundations.md` and `references/03-repository-discovery.md` for
-substantive repository work. Read release history only when version
+`references/01-foundations.md` and `references/03-repository-discovery.md`
+for substantive repository work. Read release history only when version
 availability, stability, migration timing, or a recently changed contract could
 affect the decision.
 
-| Task                                           | Required references                               |
-| ---------------------------------------------- | ------------------------------------------------- |
-| Any substantive repository task                | `01-foundations.md`, `03-repository-discovery.md` |
-| Versions, stability, recent features           | `02-releases.md`                                  |
-| Dependencies, manifests, imports, TS           | `04-packages.md`                                  |
-| Workspaces or monorepos                        | `05-workspaces.md`                                |
-| Permissions, secrets, subprocesses             | `06-security.md`                                  |
-| Tests, CI, coverage, benchmarks                | `07-quality.md`                                   |
-| Node migration or npm compatibility            | `08-node-compatibility.md`                        |
-| Libraries, private packages, publishing        | `09-libraries.md`                                 |
-| CLI, server, bundle, compile, desktop          | `10-artifacts.md`                                 |
-| Refactors, reviews, debugging                  | `11-delivery-playbooks.md`                        |
-| Final verification                             | `12-verification.md`                              |
-| Ambiguous classification or edge case          | `15-decision-cases.md`                            |
-| Lifecycle when deliver-software is unavailable | `16-standalone.md`                                |
+When `deliver-software` owns the lifecycle, use repository discovery as the Deno
+evidence checklist inside the shared discovery pass. Do not perform or report a
+second discovery, plan, or completion workflow.
+
+| Task                                    | Required references                                                 |
+| --------------------------------------- | ------------------------------------------------------------------- |
+| Any substantive repository task         | `01-foundations.md`, `03-repository-discovery.md`                   |
+| Versions, stability, recent features    | `02-releases.md`                                                      |
+| Dependencies, manifests, imports, TS    | `04-packages.md`                                                    |
+| Workspaces or monorepos                 | `05-workspaces.md`                                                  |
+| Permissions, secrets, subprocesses      | `06-security.md`                                                    |
+| Tests, CI, coverage, benchmarks         | `07-quality.md`                                                     |
+| Node migration or npm compatibility     | `08-node-compatibility.md`                                          |
+| Libraries, private packages, publishing | `09-libraries.md`                                                   |
+| CLI, server, bundle, compile, desktop   | `10-artifacts.md`                                                   |
+| Refactors, reviews, debugging           | `11-delivery-playbooks.md`                                          |
+| Final verification                      | `12-verification.md`                                                |
+| Ambiguous classification or edge case   | `15-decision-cases.md`                                              |
+| Lifecycle when deliver-software is unavailable | `16-standalone.md`                                           |
 
 Use `references/13-command-reference.md` to confirm command intent. Use current
 official documentation when a command, option, API, stability status, or
@@ -115,23 +120,30 @@ change.
    configuration fields, package behavior, or deployment capabilities.
 3. **Choose the package mode explicitly.** Classify the project as Deno-native,
    package.json-first, or hybrid before editing dependencies.
-4. **Preserve working compatibility.** Existing package.json, npm packages, Node
+4. **Investigate the dependency ecosystem.** For a material dependency, inspect
+   the owning workspace or organization, sibling packages, official adapters,
+   registry metadata, exports, consumers, and version boundaries. Treat
+   monorepo/ecosystem status as a hypothesis to verify, not a fact or a reason to
+   install every sibling. Use `explore-ecosystems` as the evidence owner when it
+   is available.
+5. **Preserve working compatibility.** Existing package.json, npm packages, Node
    APIs, and foreign lockfiles are valid inputs. Do not rewrite them for
    ideological purity.
-5. **Prefer complete changes.** Remove obsolete implementations, exports, tasks,
+6. **Prefer complete changes.** Remove obsolete implementations, exports, tasks,
    docs, tests, dependencies, and compatibility shims made unnecessary by the
    completed change.
-6. **Separate formatting-only changes.** Do not bundle unrelated formatter churn
+7. **Separate formatting-only changes.** Do not bundle unrelated formatter churn
    with behavioral, structural, dependency, naming, or refactoring work.
-7. **Use evidence for claims.** Run the relevant commands. Never report a check
+8. **Use evidence for claims.** Run the relevant commands. Never report a check
    as passing unless it actually passed.
-8. **State stability and version requirements.** Experimental or unstable
+9. **State stability and version requirements.** Experimental or unstable
    surfaces require explicit isolation, version pinning, and fallback planning.
-9. **Use least privilege.** Permissions are part of the application contract,
+10. **Use least privilege.** Permissions are part of the application contract,
    not incidental CLI flags.
-10. **Keep runtime and data contracts aligned.** For external, persisted,
+11. **Keep runtime and data contracts aligned.** For external, persisted,
     configuration, or cross-process data, prefer Zod v4 schemas/codecs as the
     source of truth and infer TypeScript types.
+
 
 ## Output quality contract
 

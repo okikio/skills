@@ -191,6 +191,12 @@
       "kind": "composition",
       "split": "valid-unseen",
       "prompt": "Research and add LogTape packages to a Deno CLI, then implement and verify the result.",
+      "expectedSkills": [
+        "deliver-software",
+        "deno-software",
+        "explore-ecosystems",
+        "build-clis"
+      ],
       "assertions": [{ "kind": "contains", "value": "verify" }],
       "rubric": [
         "Discovers the repository once",

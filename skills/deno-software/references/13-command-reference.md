@@ -36,8 +36,8 @@ relying on version-sensitive flags.
   runtime.
 - `deno ci` requires a current lockfile, removes existing node_modules, and
   installs reproducibly.
-- `deno publish` targets JSR; `deno pack` creates an npm-compatible tarball that
-  still requires clean npm and Deno consumer tests.
+- `deno publish` targets JSR; `deno pack` creates an npm-compatible tarball
+  that still requires clean npm and Deno consumer tests.
 - `deno list` answers declared/resolved package dependencies; `deno info` is
   oriented around module graph/cache information.
 - source execution, bundling, compilation, and desktop packaging produce

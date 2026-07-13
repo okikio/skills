@@ -23,11 +23,12 @@ Replace prose-only gates with executable harness foundations.
 
 The repository still cannot claim measured recall, pass-rate improvement, or
 cross-model transfer. The model runner, host adapters, reference-read capture,
-and a balanced routing corpus remain incomplete. The original 100 cases remain a
-smoke corpus, not an outcome benchmark.
+and a balanced routing corpus remain incomplete. The original 100 cases remain
+a smoke corpus, not an outcome benchmark.
 
 ## Next gate
 
 The next optimization should add balanced positive and negative activation
 minimal pairs, more Deno and delivery fixtures, and real no-skill versus
 individual versus composed trajectories.
+

@@ -1,12 +1,53 @@
-# Ecosystem method
+# Ecosystem investigation worksheet
 
-Classify the target as a verified monorepo, verified multi-repository ecosystem,
-plugin ecosystem, specification ecosystem, standalone project, or unresolved.
-Record claim-level source, verified version/date, relationship, status, role,
-and inclusion or exclusion reason.
+Use this worksheet for a material dependency decision. Omit empty sections only
+when they cannot affect the decision.
 
-Answer which repository owns each package, which siblings solve adjacent work,
-which integrations are first-party, what configuration and exports exist, what
-breaks across runtimes/bundlers/hosts, what duplicates ownership, and which
-failure signature points to which next diagnostic step. Never turn adjacency
-into a compatibility guarantee.
+## Decision
+
+- Task and capability needed:
+- Existing owner in the repository:
+- Candidate under investigation:
+- Decision deadline and acceptable uncertainty:
+
+## Identity
+
+- Exact package, import, product, or protocol:
+- Canonical repository and owner:
+- Installed and latest relevant versions:
+- Runtime, host, license, and maturity:
+- Identity confidence and unresolved ambiguity:
+
+## Topology
+
+- Classification:
+- Workspace packages:
+- First-party sibling repositories:
+- Official adapters and plugins:
+- Community or experimental integrations:
+- Specifications and adjacent systems:
+
+## Capability ownership
+
+| Capability | Current owner | Candidate owner | Decision | Evidence |
+|---|---|---|---|---|
+
+Record explicit exclusions and why they remain excluded. Organization membership
+alone is not an inclusion reason.
+
+## Compatibility and operations
+
+- Supported runtimes and version boundaries:
+- Configuration and generated artifacts:
+- Security and secret boundaries:
+- Failure modes and recovery:
+- Build, bundle, publish, and deployment implications:
+- Migration and rollback:
+
+## Verification
+
+- Source/tests inspected:
+- Minimal workflow run:
+- Clean-consumer or integration check:
+- Claims still inferred rather than observed:
+- Freshness date and primary sources:

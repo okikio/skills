@@ -115,12 +115,12 @@ Interpretation:
 
 - `allow` grants scoped access;
 - `deny` explicitly blocks matching access and takes precedence over grants;
-- `ignore` is supported for read and environment permissions; ignored operations
-  are silently ignored instead of throwing;
+- `ignore` is supported for read and environment permissions; ignored
+  operations are silently ignored instead of throwing;
 - use it only when the application deliberately treats that missing read or
   environment value as optional;
-- do not describe `ignore` as a general prompt-suppression control or use it for
-  permission categories that do not support it.
+- do not describe `ignore` as a general prompt-suppression control or use it
+  for permission categories that do not support it.
 
 Verify exact current precedence and accepted scope syntax using the Deno config
 reference when designing a security boundary.

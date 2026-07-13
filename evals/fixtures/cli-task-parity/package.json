@@ -1,0 +1,8 @@
+{
+  "name": "cli-task-parity",
+  "private": true,
+  "scripts": {
+    "browser:detect": "node commands/browser.mjs",
+    "warc:detect": "node commands/missing-warc.mjs"
+  }
+}

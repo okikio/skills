@@ -11,8 +11,8 @@ to stop being authoritative.
 Trace the current entrypoint through registration, configuration, runtime
 dispatch, persistence, and downstream consumers. Search symbols and runtime
 identifiers, not only filenames. Include generated registries, code generation,
-public exports, package entrypoints, dependencies, file & folder names, folder
-structure, framework discovery, CI, deployment, and documentation.
+public exports, package entrypoints, dependencies, file & folder names, folder structure, framework discovery, CI, deployment, and
+documentation.
 
 Produce two inventories:
 
@@ -46,9 +46,9 @@ repository explicitly treats generated output as authored source.
 ## 4. Implement and close
 
 Change the controlling path, migrate every consumer, regenerate outputs, update
-tests and docs, and remove newly obsolete dependencies and configuration. Search
-the entire repository for old names and behavior. Confirm that the old path is
-unreachable, not merely unused by one test or some older files.
+tests and docs, and remove newly obsolete dependencies and configuration.
+Search the entire repository for old names and behavior. Confirm that the old
+path is unreachable, not merely unused by one test or some older files.
 
 For monorepos, verify downstream packages and external consumer fixtures. For
 data migrations, prove idempotency, mixed-version compatibility, rollback or
@@ -60,3 +60,4 @@ Run focused validation, repository-wide affected gates, the actual capability,
 and at least one clean consumer or clean environment when public contracts
 changed. Compare the implemented result with both inventories. Report any
 approved compatibility residue explicitly rather than hiding it as cleanup.
+

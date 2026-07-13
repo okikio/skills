@@ -3,9 +3,10 @@
 ## Scope
 
 This iteration optimized the instruction and retrieval behavior of
-`deno-software`, `deliver-software`, and their composition. Codex performed the
-target review and optimizer reflection in separated passes within one session.
-This is useful evidence for Codex behavior but is not cross-model evidence.
+`deno-software`, `deliver-software`, and their composition. Codex performed
+the target review and optimizer reflection in separated passes within one
+session. This is useful evidence for Codex behavior but is not cross-model
+evidence.
 
 Microsoft SkillOpt v0.2.0 was cloned and installed successfully. Its packaged
 training runner was not used for model calls because no supported API credential

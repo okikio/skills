@@ -1,24 +1,17 @@
+
 # Astro Interface Instructions
 
-Use Astro for content-heavy, route-level, layout, marketing, documentation, and
-server-rendered interface work. Astro should be the default for pages that do
-not require persistent client-side interaction.
+Use Astro for content-heavy, route-level, layout, marketing, documentation, and server-rendered interface work. Astro should be the default for pages that do not require persistent client-side interaction.
 
-Apply the universal web interface guidelines first. Use this file for Astro
-pages, layouts, content collections, MDX, client scripts, integrations,
-endpoints, and framework components imported into Astro.
+Apply the universal web interface guidelines first. Use this file for Astro pages, layouts, content collections, MDX, client scripts, integrations, endpoints, and framework components imported into Astro.
 
-Do not apply Astro island rules to ordinary React, Solid, or SPA code outside an
-Astro surface.
+Do not apply Astro island rules to ordinary React, Solid, or SPA code outside an Astro surface.
 
 ## Mental model
 
-Astro is server-first. `.astro` components render HTML. Component frontmatter
-runs on the server or at build time, and client JavaScript is not shipped by
-default.
+Astro is server-first. `.astro` components render HTML. Component frontmatter runs on the server or at build time, and client JavaScript is not shipped by default.
 
-Start with HTML, props, and slots. Add a hydrated framework island only when the
-interaction needs client runtime state.
+Start with HTML, props, and slots. Add a hydrated framework island only when the interaction needs client runtime state.
 
 Write Astro so that:
 
@@ -26,10 +19,8 @@ Write Astro so that:
 - Slots express composition and named regions.
 - Islands are narrow and intentional.
 - Hydration directives match the interaction urgency.
-- Client scripts are used only for page-level browser behavior that does not
-  need framework state.
-- Server/client boundaries do not leak secrets, browser APIs, or
-  non-serializable values.
+- Client scripts are used only for page-level browser behavior that does not need framework state.
+- Server/client boundaries do not leak secrets, browser APIs, or non-serializable values.
 
 ## Work in priority order
 
@@ -58,8 +49,7 @@ Use `.astro` for:
 
 Use React or Solid islands only for client-owned interactivity.
 
-Avoid hydrating a card, section, heading, or marketing region just because it is
-a reusable component.
+Avoid hydrating a card, section, heading, or marketing region just because it is a reusable component.
 
 ## Compose with slots and named regions
 
@@ -68,10 +58,8 @@ Astro composition is slot-first.
 Use:
 
 - The default `<slot />` for primary body content.
-- Named slots for stable regions like `media`, `actions`, `aside`, `footer`, or
-  `toolbar`.
-- `Astro.slots.has()` when wrappers should render only if the caller supplied
-  that region.
+- Named slots for stable regions like `media`, `actions`, `aside`, `footer`, or `toolbar`.
+- `Astro.slots.has()` when wrappers should render only if the caller supplied that region.
 - Props for serializable data and variant values.
 
 ```astro
@@ -121,15 +109,11 @@ import AddToCartIsland from "./AddToCartIsland.tsx"
 </ProductCard>
 ```
 
-Do not use render-prop APIs for Astro structure. Astro cannot pass executable
-render props from frontmatter into hydrated framework components as client
-callbacks. Use slots or move the interactive composition into the island.
+Do not use render-prop APIs for Astro structure. Astro cannot pass executable render props from frontmatter into hydrated framework components as client callbacks. Use slots or move the interactive composition into the island.
 
 ## Keep named slots simple across framework islands
 
-When Astro passes named slots into React, Preact, or Solid framework components,
-those named slots become top-level props. Kebab-case slot names become camelCase
-props.
+When Astro passes named slots into React, Preact, or Solid framework components, those named slots become top-level props. Kebab-case slot names become camelCase props.
 
 Prefer simple names:
 
@@ -140,8 +124,7 @@ Prefer simple names:
 </FrameworkCard>
 ```
 
-Avoid slot names that require awkward prop access or hide the rendered
-structure.
+Avoid slot names that require awkward prop access or hide the rendered structure.
 
 ## Hydrate the smallest island
 
@@ -173,15 +156,13 @@ Use directives intentionally:
 - `client:media` when the island is only relevant for a media query.
 - `client:only` only when server rendering is impossible or unsafe.
 
-Review every hydrated component by asking: what user interaction breaks if this
-JavaScript never loads?
+Review every hydrated component by asking: what user interaction breaks if this JavaScript never loads?
 
 ## Keep island state inside the island
 
 Do not force provider or context composition across `.astro` slots.
 
-If multiple interactive regions need shared client state, create one island that
-owns that state and render the interactive regions inside it.
+If multiple interactive regions need shared client state, create one island that owns that state and render the interactive regions inside it.
 
 ```astro
 ---
@@ -206,8 +187,7 @@ Avoid global client stores just to coordinate static Astro regions.
 
 ## Use server islands and fallbacks deliberately
 
-Use server islands or deferred rendering when a mostly static page has a
-server-rendered region that can load independently.
+Use server islands or deferred rendering when a mostly static page has a server-rendered region that can load independently.
 
 Ensure:
 
@@ -225,8 +205,7 @@ Example shape:
 </UserSpecificPrice>
 ```
 
-Use this for server-owned personalization, not client interaction that belongs
-in an island.
+Use this for server-owned personalization, not client interaction that belongs in an island.
 
 ## Use forms and actions progressively
 
@@ -240,15 +219,11 @@ Prefer real forms for submissions.
 </form>
 ```
 
-Use Astro actions or endpoint-backed submissions when the route owns the
-mutation. Add a hydrated island only when the form needs client-only behavior
-such as live validation, dependent fields, optimistic previews, or complex
-wizard state.
+Use Astro actions or endpoint-backed submissions when the route owns the mutation. Add a hydrated island only when the form needs client-only behavior such as live validation, dependent fields, optimistic previews, or complex wizard state.
 
 Ensure:
 
-- Submission works or fails gracefully without optional JavaScript when
-  practical.
+- Submission works or fails gracefully without optional JavaScript when practical.
 - Field errors are rendered near fields.
 - Pending state prevents duplicate submission when needed.
 - Failed submission preserves input unless clearing is safer.
@@ -256,8 +231,7 @@ Ensure:
 
 ## Use client scripts for page-level browser behavior
 
-Use Astro `<script>` for small page-level behavior that does not need framework
-state.
+Use Astro `<script>` for small page-level behavior that does not need framework state.
 
 Good uses:
 
@@ -280,8 +254,7 @@ Keep scripts safe across client-side navigation and view transitions:
 </script>
 ```
 
-Do not put product state machines into loose page scripts when a framework
-island would make ownership, cleanup, and testing clearer.
+Do not put product state machines into loose page scripts when a framework island would make ownership, cleanup, and testing clearer.
 
 ## Keep routing, content, and freshness explicit
 
@@ -292,11 +265,9 @@ Match route rendering to the content lifecycle:
 - Deferred server regions for independent server-owned regions.
 - Hydrated islands for client-owned interactions.
 
-For content collections and MDX, keep document structure, headings, links, code
-blocks, and media semantics intact.
+For content collections and MDX, keep document structure, headings, links, code blocks, and media semantics intact.
 
-When data can become stale, define whether the page rebuilds, renders per
-request, revalidates, or fetches inside an island.
+When data can become stale, define whether the page rebuilds, renders per request, revalidates, or fetches inside an island.
 
 ## Use view transitions carefully
 
@@ -331,8 +302,7 @@ import cover from "../assets/cover.png"
 <Image src={cover} alt="Cover art for The Night Market" widths={[320, 640, 960]} />
 ```
 
-For icons, keep decorative icons hidden and give icon-only controls accessible
-names.
+For icons, keep decorative icons hidden and give icon-only controls accessible names.
 
 ## Use scoped CSS and global styles intentionally
 
@@ -358,8 +328,7 @@ Avoid hydrating a framework component only to compute classes.
 
 ## Preserve content safety
 
-Be careful with raw HTML, markdown, MDX, remote content, and user-generated
-content.
+Be careful with raw HTML, markdown, MDX, remote content, and user-generated content.
 
 Ensure:
 
@@ -375,8 +344,7 @@ Avoid mixing trusted and untrusted content paths without a clear boundary.
 
 For server-rendered pages:
 
-- Decide whether errors should produce a route error, inline recovery UI,
-  fallback content, or redirect.
+- Decide whether errors should produce a route error, inline recovery UI, fallback content, or redirect.
 - Avoid blank pages for missing optional data.
 - Use not-found behavior intentionally for missing route entities.
 - Keep stable layout around loading or deferred regions.
@@ -412,8 +380,7 @@ Prefer server-safe defaults and client enhancement:
 
 ## Keep bundle cost visible
 
-Astro's performance advantage comes from not shipping JavaScript by default.
-Preserve that advantage.
+Astro's performance advantage comes from not shipping JavaScript by default. Preserve that advantage.
 
 Review:
 
@@ -470,8 +437,7 @@ Avoid:
 - Render props for Astro composition.
 - Expecting Astro frontmatter functions to become client callbacks.
 - Provider/context composition across `.astro` slots.
-- Global stores for coordination that should be URL state, server state, or one
-  island.
+- Global stores for coordination that should be URL state, server state, or one island.
 - Browser APIs in frontmatter.
 - Scripts that duplicate listeners after navigation.
 - Raw HTML from untrusted sources.

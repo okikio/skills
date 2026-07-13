@@ -1,30 +1,25 @@
+
 # Delivery Workflow
 
-Use these rules for delivery agents, reusable research notes, and repo-local
-automation scripts.
+Use these rules for delivery agents, reusable research notes, and repo-local automation scripts.
 
 ## Search and research order
 
-When researching or searching, prefer this order unless the task clearly
-requires something else:
-
+When researching or searching, prefer this order unless the task clearly requires something else:
 1. the repository's established research cache, when one exists
 2. applicable instruction files, including `.github/instructions/`
 3. the rest of the codebase
 
-Search local code and reusable notes before inventing new code or repeating
-external research.
+Search local code and reusable notes before inventing new code or repeating external research.
 
 When the repository already uses `.agents/research/`, store a reviewable note
 there only when external research produced a durable, non-obvious conclusion
 that future work is likely to reuse. Do not create bookkeeping directories or
 research files merely because this reference mentions them.
 
-Keep research notes reusable, but do not compress away the details that
-motivated the search.
+Keep research notes reusable, but do not compress away the details that motivated the search.
 
 Research notes should preserve exact details when they matter, such as:
-
 - specific API names or method names
 - deprecated symbols and their replacements
 - exact commands, flags, or invocation shapes
@@ -32,17 +27,14 @@ Research notes should preserve exact details when they matter, such as:
 - subtle caveats, exceptions, or migration notes
 - the source that established the conclusion
 
-Prefer compact notes over raw transcripts, but do not shrink away the evidence a
-later agent would need to act correctly.
+Prefer compact notes over raw transcripts, but do not shrink away the evidence a later agent would need to act correctly.
 
 ## Reuse before invention
 
 Before introducing custom implementation work:
-
 - search the codebase for existing patterns, helpers, and abstractions
 - check whether a maintained package already solves the problem
-- use current documentation when library or framework APIs may already cover the
-  need
+- use current documentation when library or framework APIs may already cover the need
 
 Prefer evidence of reuse checks before approving hand-rolled solutions.
 
@@ -51,7 +43,6 @@ Prefer evidence of reuse checks before approving hand-rolled solutions.
 Prefer workspace read, search, symbol, and edit tools first.
 
 Use the terminal mainly for:
-
 - verification
 - tests
 - benchmarks
@@ -59,8 +50,7 @@ Use the terminal mainly for:
 - lint
 - running scripts
 
-Do not default to terminal-driven exploration when workspace tools can do the
-job more directly.
+Do not default to terminal-driven exploration when workspace tools can do the job more directly.
 
 ## Script policy
 
@@ -69,11 +59,9 @@ reviewable script in the repository's established automation location. Use Deno
 and TypeScript when they fit the repository; do not introduce Deno into an
 unrelated project solely for a temporary edit.
 
-Feel free to use `jsr:` and `npm:` packages when they improve clarity, safety,
-or reviewability.
+Feel free to use `jsr:` and `npm:` packages when they improve clarity, safety, or reviewability.
 
 Prefer `jsr:@std/*` modules when they fit the task, especially for:
-
 - filesystem work
 - encodings
 - buffers
@@ -85,15 +73,14 @@ Keep scripts narrow and task-specific.
 
 ## Validation and verification bar
 
-Validation is about the changed surface being internally sound. Verification is
-about the real deliverable actually working.
+Validation is about the changed surface being internally sound.
+Verification is about the real deliverable actually working.
 
 Plan completion is separate from deliverable completion.
 
 A task is not fully done unless you complete both checklists in order.
 
 1. Deliverable checklist
-
 - zero TypeScript issues in the changed surface
 - no deprecated APIs left behind
 - no stale Zod usage when current APIs should be used
@@ -101,27 +88,21 @@ A task is not fully done unless you complete both checklists in order.
 - the real deliverable is complete and verified
 
 2. Plan checklist
-
-- all intended deliverables were identified, tracked, and reviewed against the
-  original goals, requirements, and intent
+- all intended deliverables were identified, tracked, and reviewed against the original goals, requirements, and intent
 - the full plan coverage is complete and reviewed
 
-Do not stop at tests, benchmarks, or lint when the real deliverable can be run
-directly.
+Do not stop at tests, benchmarks, or lint when the real deliverable can be run directly.
 
-For runnable deliverables such as CLIs, jobs, migrations, generators, servers,
-or user-facing workflows, run the actual capability whenever possible.
+For runnable deliverables such as CLIs, jobs, migrations, generators, servers, or user-facing workflows, run the actual capability whenever possible.
 
-Verification is binary at the end: either the capability works and is proven, or
-the task is blocked.
+Verification is binary at the end: either the capability works and is proven, or the task is blocked.
 
 If the capability cannot run because of missing environment, credentials, or
-infrastructure, report the exact blocker and remaining verification steps. Write
-a repository progress note only when the repository already uses that mechanism
-or the user requests a durable handoff.
+infrastructure, report the exact blocker and remaining verification steps.
+Write a repository progress note only when the repository already uses that
+mechanism or the user requests a durable handoff.
 
-Plan completion is also binary at the end: either the plan coverage is complete
-and reviewed, or the task is blocked.
+Plan completion is also binary at the end: either the plan coverage is complete and reviewed, or the task is blocked.
 
 ## Progress notes
 

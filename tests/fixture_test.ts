@@ -1,5 +1,20 @@
-import { assertEquals, assertRejects } from "@std/assert";
+import assert from "node:assert/strict";
 import { prepareFixture } from "../src/fixture.ts";
+
+async function assertRejects(
+  operation: () => Promise<unknown>,
+  errorClass: { [Symbol.hasInstance](value: unknown): boolean },
+  message?: string,
+): Promise<void> {
+  try {
+    await operation();
+  } catch (error) {
+    assert.ok(error instanceof errorClass);
+    if (message) assert.match(String(error), new RegExp(message));
+    return;
+  }
+  assert.fail("Expected operation to reject");
+}
 
 Deno.test("fixture runs are isolated from one another", async () => {
   const first = await prepareFixture("workspace");

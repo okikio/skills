@@ -1,4 +1,4 @@
-import { isAbsolute, normalize, relative, resolve } from "@std/path";
+import { isAbsolute, normalize, relative, resolve } from "node:path";
 import { z } from "zod";
 import type { Assertion } from "./eval_schema.ts";
 
@@ -42,6 +42,7 @@ export async function evaluateAssertion(
   assertion: Assertion,
   output: string,
   fixtureRoot: string,
+  baselineRoot?: string,
 ): Promise<AssertionResult> {
   if (assertion.kind === "contains" || assertion.kind === "not-contains") {
     const source = assertion.caseSensitive ? output : output.toLowerCase();
@@ -68,6 +69,23 @@ export async function evaluateAssertion(
       passed: assertion.kind === "file-exists" ? present : !present,
     };
   }
+  if (
+    assertion.kind === "file-unchanged" || assertion.kind === "file-changed"
+  ) {
+    if (!baselineRoot) {
+      throw new Error(`${assertion.kind} requires a baseline fixture root`);
+    }
+    const current = fixturePath(fixtureRoot, assertion.value);
+    const baseline = fixturePath(baselineRoot, assertion.value);
+    const currentPresent = await exists(current);
+    const baselinePresent = await exists(baseline);
+    const same = currentPresent === baselinePresent && (!currentPresent ||
+      await Deno.readTextFile(current) === await Deno.readTextFile(baseline));
+    return {
+      label: `${assertion.kind}:${assertion.value}`,
+      passed: assertion.kind === "file-unchanged" ? same : !same,
+    };
+  }
   const [command, ...args] = assertion.command;
   if (!command) throw new Error("Command assertion requires an executable");
   const child = new Deno.Command(command, {
@@ -87,12 +105,17 @@ export async function evaluateAssertion(
   }, assertion.timeoutMs);
   const result = await child.output();
   clearTimeout(timer);
-  const evidence = new TextDecoder().decode(
-    result.success ? result.stdout : result.stderr,
-  ).slice(0, 2_000);
+  const stdout = new TextDecoder().decode(result.stdout);
+  const stderr = new TextDecoder().decode(result.stderr);
+  const stdoutMatches = assertion.stdout === undefined ||
+    new RegExp(assertion.stdout, "m").test(stdout);
+  const stderrMatches = assertion.stderr === undefined ||
+    new RegExp(assertion.stderr, "m").test(stderr);
+  const evidence = `${stdout}\n${stderr}`.slice(0, 2_000);
   return {
     label: `command:${assertion.command.join(" ")}`,
-    passed: !timedOut && result.code === assertion.expectedExitCode,
+    passed: !timedOut && result.code === assertion.expectedExitCode &&
+      stdoutMatches && stderrMatches,
     evidence,
   };
 }

@@ -1,4 +1,4 @@
 interface:
-  display_name: "Use Okikio"
-  short_description: "Research and apply use okikio."
-  default_prompt: "Use this skill to use okikio with current source-backed decisions."
+  display_name: "Use Okikio Libraries"
+  short_description: "Use Okikio libraries from verified source."
+  default_prompt: "Use $use-okikio to research and apply the relevant Okikio library or project pattern."
