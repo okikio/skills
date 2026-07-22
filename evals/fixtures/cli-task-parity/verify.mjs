@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import process from "node:process";
 
 const pkg = JSON.parse(await readFile("package.json", "utf8"));
 for (const name of ["browser:detect", "warc:detect", "commoncrawl:detect"]) {

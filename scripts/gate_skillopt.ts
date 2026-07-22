@@ -23,15 +23,18 @@ function sameArray(left: readonly string[], right: readonly string[]): boolean {
 
 const pairing = {
   phase: baseline.phase === candidate.phase,
+  benchmarkId: baseline.benchmarkId === candidate.benchmarkId,
   targetSkill: baseline.targetSkill === candidate.targetSkill,
   host: baseline.host === candidate.host,
   model: baseline.model === candidate.model,
   modelVersion: baseline.modelVersion === candidate.modelVersion,
   adapterVersion: baseline.adapterVersion === candidate.adapterVersion,
-  variantId: baseline.variantId === candidate.variantId,
-  installedSkills: sameArray(
-    [...baseline.installedSkills].sort(),
-    [...candidate.installedSkills].sort(),
+  gitRevision: baseline.gitRevision === candidate.gitRevision,
+  companionSkills: sameArray(
+    baseline.installedSkills.filter((skill) => skill !== baseline.targetSkill)
+      .sort(),
+    candidate.installedSkills.filter((skill) => skill !== candidate.targetSkill)
+      .sort(),
   ),
   caseSetDigest: baseline.caseSetDigest === candidate.caseSetDigest,
   caseIds: sameArray(
@@ -42,6 +45,23 @@ const pairing = {
   repetitions: baseline.repetitions === candidate.repetitions,
   runCount: baseline.runCount === candidate.runCount,
 };
+if (baseline.variantRole !== "baseline") {
+  throw new Error("The baseline report must use variantRole=baseline");
+}
+if (candidate.variantRole !== "candidate") {
+  throw new Error("The candidate report must use variantRole=candidate");
+}
+if (baseline.variantId === candidate.variantId) {
+  throw new Error("Baseline and candidate require distinct variantId values");
+}
+if (baseline.skillRevision === candidate.skillRevision) {
+  throw new Error(
+    "Baseline and candidate require distinct target skill revisions",
+  );
+}
+if (!candidate.installedSkills.includes(candidate.targetSkill)) {
+  throw new Error("The candidate report must install its target skill");
+}
 const pairingFailures = Object.entries(pairing)
   .filter(([, paired]) => !paired)
   .map(([name]) => name);

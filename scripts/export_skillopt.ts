@@ -4,6 +4,7 @@ import {
   type EvalCase,
   EvalCaseFileSchema,
   SkillIdSchema,
+  SkillOptWorkspaceSchema,
 } from "../src/eval_schema.ts";
 import { collectedArguments, stringArgument } from "../src/args.ts";
 import { copyDirectory, walkFiles } from "../src/files.ts";
@@ -18,6 +19,18 @@ const companions = [
 ]
   .filter((value) => value !== targetSkill)
   .sort();
+const references = [...new Set(collectedArguments("reference"))];
+if (references.length > 1) {
+  throw new Error("Optimize one reference at a time for attributable results");
+}
+for (const reference of references) {
+  if (
+    !/^references\/[a-z0-9][a-z0-9._/-]*\.md$/.test(reference) ||
+    reference.split("/").includes("..")
+  ) {
+    throw new Error(`Invalid reference path: ${reference}`);
+  }
+}
 const mode = stringArgument("mode", "optimize");
 if (
   !(["optimize", "evaluate", "release"] as const).includes(
@@ -35,6 +48,13 @@ for (const skill of [targetSkill, ...companions]) {
     await Deno.stat(join(skillRoot, skill, "SKILL.md"));
   } catch {
     throw new Error(`Unknown skill: ${skill}`);
+  }
+}
+for (const reference of references) {
+  try {
+    await Deno.stat(join(skillRoot, targetSkill, reference));
+  } catch {
+    throw new Error(`Unknown target reference: ${reference}`);
   }
 }
 
@@ -91,14 +111,19 @@ const allCases = (
 
 const installed = new Set([targetSkill, ...companions]);
 function targetsSkill(item: EvalCase): boolean {
-  if (item.skill === targetSkill) return true;
-  if (item.skill !== "composition") return false;
-  const signals = new Set([
+  const compositionSkills = new Set([
     ...item.expectedSkills,
-    ...item.tags,
+    ...item.forbiddenSkills,
   ]);
-  return signals.has(targetSkill) &&
-    [...item.expectedSkills].every((skill) => installed.has(skill));
+  const targets = item.skill === targetSkill ||
+    (item.skill === "composition" &&
+      item.expectedSkills.includes(targetSkill) &&
+      [...compositionSkills].every((skill) => installed.has(skill)));
+  if (!targets) return false;
+  if (references.length === 0) return true;
+  return item.requiredReferences.includes(
+    `${targetSkill}/${references[0]}`,
+  );
 }
 
 const allowedSplits = exportMode === "optimize"
@@ -109,6 +134,21 @@ const allowedSplits = exportMode === "optimize"
 const cases = allCases.filter((item) =>
   allowedSplits.has(item.split) && targetsSkill(item)
 );
+
+if (exportMode === "release" && cases.length === 0) {
+  throw new Error(
+    `Release export for ${targetSkill} has no frozen cases for the installed skill set`,
+  );
+}
+if (exportMode === "optimize" && references.length > 0) {
+  for (const split of ["train", "valid-seen"]) {
+    if (!cases.some((item) => item.split === split)) {
+      throw new Error(
+        `${targetSkill}/${references[0]} requires at least one ${split} case`,
+      );
+    }
+  }
+}
 
 for (const split of [...allowedSplits]) {
   const items = cases.filter((item) => item.split === split);
@@ -124,13 +164,46 @@ const caseRecords = await Promise.all(cases.map(async (item) => ({
   id: item.id,
   digest: await digest(JSON.stringify(item)),
 })));
-const manifest = {
+const mutablePaths = exportMode !== "optimize"
+  ? []
+  : references.length === 0
+  ? [`candidate/skills/${targetSkill}/SKILL.md`]
+  : references.map((reference) =>
+    `candidate/skills/${targetSkill}/${reference}`
+  );
+const mutablePathSet = new Set(mutablePaths);
+const immutablePaths: string[] = [];
+for await (const path of walkFiles(join(skillRoot, targetSkill))) {
+  const candidatePath = `candidate/skills/${targetSkill}/${
+    relative(join(skillRoot, targetSkill), path)
+  }`;
+  if (!mutablePathSet.has(candidatePath)) immutablePaths.push(candidatePath);
+}
+for (const skill of companions) {
+  const companionRoot = join(destination, "companions", "skills", skill);
+  for await (const path of walkFiles(companionRoot)) {
+    immutablePaths.push(
+      `companions/skills/${skill}/${relative(companionRoot, path)}`,
+    );
+  }
+}
+const sortedImmutablePaths = [...new Set(immutablePaths)].sort();
+const immutableDigests = Object.fromEntries(
+  await Promise.all(sortedImmutablePaths.map(async (path) => [
+    path,
+    await digest(await Deno.readTextFile(join(destination, path))),
+  ])),
+);
+const manifest = SkillOptWorkspaceSchema.parse({
   schemaVersion: 2,
   mode: exportMode,
+  optimizationUnit: references.length === 0 ? "root-router" : "reference",
   targetSkill,
+  targetReference: references[0],
   companionSkills: companions,
-  mutablePaths: [`candidate/skills/${targetSkill}/SKILL.md`],
-  immutablePaths: companions.map((skill) => `companions/skills/${skill}`),
+  mutablePaths,
+  immutablePaths: sortedImmutablePaths,
+  immutableDigests,
   skillRevisions: Object.fromEntries(
     await Promise.all([targetSkill, ...companions].map(async (skill) => [
       skill,
@@ -141,7 +214,7 @@ const manifest = {
   caseSetDigest: await digest(
     caseRecords.map((item) => `${item.id}:${item.digest}`).sort().join("\n"),
   ),
-};
+});
 await Deno.writeTextFile(
   join(destination, "workspace.json"),
   `${JSON.stringify(manifest, null, 2)}\n`,

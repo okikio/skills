@@ -1,0 +1,771 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "deep-api-service-module-owned-contracts",
+      "title": "Build one complete independently bootable service module",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design an accounts preferences service module from endpoint definition through handler, registries, domain/data seams, one composition root, OpenAPI, standalone boot, and executable requests. It may later trigger workflows but must not invent them now.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/service-modules.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "definition.*handler.*registr|composition root.*(boot|request)"
+        }
+      ],
+      "rubric": [
+        "Assigns every contract one owner",
+        "Proves runtime/OpenAPI/request reachability",
+        "Does not create workflow folders without durable behavior"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance:docs/service-module-authoring.md"],
+      "evidenceStatus": "normative",
+      "tags": ["build-apis", "service-module", "training"],
+      "rationale": "A complete module is a reachable deployment slice, not a definition and handler pair."
+    },
+    {
+      "id": "deep-api-service-module-registry-drift",
+      "title": "Find a documented endpoint missing from the composed service",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Review an API where OpenAPI contains create-import, its definition and handler exist, the group registry omits it, and startup only warns about unmatched handlers. Diagnose the capability honestly and give correction and verification evidence.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/service-modules.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "not.*(reachable|implemented)|missing.*registr"
+        },
+        {
+          "kind": "regex",
+          "value": "startup.*fail|request.*404|registry.*request"
+        }
+      ],
+      "rubric": [
+        "Does not equate OpenAPI with implementation",
+        "Requires registry conformance and an executable request"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-apis", "service-module", "reachability"],
+      "rationale": "Held-out review must detect an unreachable contract despite convincing source files."
+    },
+    {
+      "id": "deep-api-contract-all-sources",
+      "title": "Define complete multi-source request and response contracts",
+      "skill": "build-apis",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Define a PATCH endpoint that reads organization and resource params, repeated query fields, a lowercased conditional header, and JSON. Include validation middleware, typed normalized input, success and problem variants, and OpenAPI compatibility checks.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/contracts.md"],
+      "assertions": [
+        { "kind": "regex", "value": "param.*query.*header.*json" },
+        {
+          "kind": "regex",
+          "value": "response.*(status|header).*problem|OpenAPI"
+        }
+      ],
+      "rubric": [
+        "Keeps transport sources distinct",
+        "Pairs schemas with runtime middleware",
+        "Describes full response variants"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/endpoint",
+        "new-finance:utils/middleware/validation.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": ["build-apis", "contracts", "validation"],
+      "rationale": "Schema-first design still fails when source and response semantics are flattened."
+    },
+    {
+      "id": "deep-api-contract-semantic-break",
+      "title": "Detect a schema-compatible semantic API break",
+      "skill": "build-apis",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A collection endpoint keeps the same OpenAPI schema but changes default ordering, cursor interpretation, count from exact filtered to table estimate, and operationId. Decide compatibility and the release tests required.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/contracts.md"],
+      "assertions": [
+        { "kind": "regex", "value": "semantic.*break|breaking" },
+        { "kind": "regex", "value": "operationId|cursor|count" }
+      ],
+      "rubric": [
+        "Does not rely on schema diff alone",
+        "Names generated-client and behavioral checks"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance:utils/query"],
+      "evidenceStatus": "inferred",
+      "tags": ["build-apis", "contracts", "compatibility"],
+      "rationale": "Held-out coverage protects semantic compatibility, not keyword presence."
+    },
+    {
+      "id": "deep-api-effect-layer-lifetime",
+      "title": "Compose an Effect service graph with owned lifetimes",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Create an Effect architecture for a Hono accounts service using Context.Tag capabilities, typed domain errors, database and provider Layers, Scope/finalizers, validated config, observability, one host runtime, and test Layers.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/effect-services.md"],
+      "assertions": [
+        { "kind": "regex", "value": "Context.Tag|Layer" },
+        { "kind": "regex", "value": "Scope|acquireRelease|finalizer" }
+      ],
+      "rubric": [
+        "Separates success/error/requirements",
+        "Builds resources once",
+        "Maps typed errors at the transport boundary"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["effect-official", "new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["build-apis", "effect", "layers"],
+      "rationale": "The skill should produce an executable dependency and lifetime architecture, not Effect vocabulary."
+    },
+    {
+      "id": "deep-api-effect-runtime-per-request",
+      "title": "Repair a runtime and pool rebuilt per request",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A Hono middleware builds ManagedRuntime.make(AppLive) for every request; AppLive acquires a database pool and telemetry exporter. Tests pass but production connections grow and shutdown hangs. Diagnose and redesign lifetime, cancellation, and tests.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/effect-services.md"],
+      "assertions": [
+        { "kind": "regex", "value": "once.*(host|composition)|host.*once" },
+        { "kind": "regex", "value": "dispose|finaliz|shutdown" }
+      ],
+      "rubric": [
+        "Moves runtime to the composition root",
+        "Connects request cancellation without closing shared resources",
+        "Tests acquisition/finalization counts"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["effect-official"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-apis", "effect", "resource-lifetime"],
+      "rationale": "Held-out resource pressure reveals incorrect Layer ownership."
+    },
+    {
+      "id": "deep-api-auth-organization-scope",
+      "title": "Enforce Better Auth organization policy in server queries",
+      "skill": "build-apis",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Design a Better Auth-backed route for /organizations/:organization_id/imports/:import_id using paired plugins, import-safe construction, exact mount/cookie settings, membership policy, and a server-owned scoped database query.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/auth.md"],
+      "assertions": [
+        { "kind": "regex", "value": "membership|authorization" },
+        { "kind": "regex", "value": "organization.*(base filter|where|scope)" }
+      ],
+      "rubric": [
+        "Separates authentication and authorization",
+        "Checks resource and organization together",
+        "Keeps plugin and deployment bindings aligned"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["better-auth-integration", "better-auth-official"],
+      "evidenceStatus": "observed-source",
+      "tags": ["build-apis", "auth", "organization"],
+      "rationale": "Organization IDs supplied by clients never become authority by validation alone."
+    },
+    {
+      "id": "deep-api-auth-revocation-race",
+      "title": "Handle organization revocation during a live session",
+      "skill": "build-apis",
+      "kind": "safety",
+      "split": "adversarial",
+      "prompt": "A user switched organizations in the UI and their membership was revoked in another tab, but a valid session cookie remains. They request an export and open its SSE stream. Define policy, query scope, stream authorization, and tests.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/auth.md"],
+      "assertions": [
+        { "kind": "regex", "value": "re-?(read|validate)|membership" },
+        { "kind": "regex", "value": "SSE|stream" }
+      ],
+      "rubric": [
+        "Does not treat session validity as current membership",
+        "Defines long-lived stream revalidation/reconnect policy"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["better-auth-integration", "kaiju-site-scope"],
+      "evidenceStatus": "inferred",
+      "tags": ["build-apis", "auth", "security", "streaming"],
+      "rationale": "Held-out revocation tests organization authority beyond login."
+    },
+    {
+      "id": "deep-api-runtime-middleware-onion",
+      "title": "Own middleware order and one failure boundary",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Plan root, service, and route middleware for correlation, proxy policy, access logging, CORS, auth, organization policy, validators, handler, and error completion. Account for onion response order and one diagnostic per failure.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/runtime.md"],
+      "assertions": [
+        { "kind": "regex", "value": "root.*service.*route" },
+        { "kind": "regex", "value": "once|one.*(boundary|diagnostic)" }
+      ],
+      "rubric": [
+        "Places middleware at explicit ownership levels",
+        "Tests request and response order",
+        "Avoids duplicate failure logs"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance:utils/server", "new-finance:utils/middleware"],
+      "evidenceStatus": "observed-source",
+      "tags": ["build-apis", "runtime", "middleware"],
+      "rationale": "Framework registration order alone does not prove runtime response order."
+    },
+    {
+      "id": "deep-api-runtime-disconnect",
+      "title": "Propagate request disconnect without cancelling accepted durable work",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A client disconnects during a database search, an upload decode, and immediately after receiving 202 for a durable import. Define cancellation for each operation and prove resource cleanup.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/runtime.md"],
+      "assertions": [
+        { "kind": "regex", "value": "database|upload" },
+        {
+          "kind": "regex",
+          "value": "durable.*(not|must not).*cancel|202.*(not|must not).*cancel"
+        }
+      ],
+      "rubric": [
+        "Cancels request-scoped work",
+        "Preserves durably accepted work",
+        "Tests cleanup and downstream abort propagation"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "inferred",
+      "tags": ["build-apis", "runtime", "cancellation"],
+      "rationale": "Cancellation authority changes at durable acceptance."
+    },
+    {
+      "id": "deep-api-sse-cursor-design",
+      "title": "Design a durable authorized SSE progress feed",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Design /organizations/:org/imports/:run/events with a safe event union, opaque cursor, Last-Event-ID replay, high-water handoff, bounded delivery, disconnect cleanup, and authorization.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/streaming.md"],
+      "assertions": [
+        { "kind": "regex", "value": "high-water|high water" },
+        { "kind": "regex", "value": "backpressure|bounded" },
+        { "kind": "regex", "value": "organization|scope" }
+      ],
+      "rubric": [
+        "Uses durable authority for replay",
+        "Closes replay/live race",
+        "Separates delivery and workflow cancellation"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance", "kaiju-site-scope"],
+      "evidenceStatus": "inferred",
+      "tags": ["build-apis", "sse", "streaming"],
+      "rationale": "A useful stream skill must connect wire framing to durable and authorization contracts."
+    },
+    {
+      "id": "deep-api-sse-slow-consumer",
+      "title": "Recover an SSE endpoint with unbounded buffering",
+      "skill": "build-apis",
+      "kind": "safety",
+      "split": "adversarial",
+      "prompt": "An SSE endpoint pushes every workflow history item into an in-memory array before writing, accepts arbitrary run IDs, and cancels the workflow when the socket closes. Diagnose and specify corrections and load tests.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/streaming.md"],
+      "assertions": [
+        { "kind": "regex", "value": "bounded|backpressure" },
+        { "kind": "regex", "value": "authorization|organization|scope" },
+        { "kind": "regex", "value": "delivery.*cancell|workflow.*cancell" }
+      ],
+      "rubric": [
+        "Rejects raw unbounded history buffering",
+        "Separates transport cancellation",
+        "Requires scoped cursor/replay tests"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-apis", "sse", "security", "backpressure"],
+      "rationale": "Held-out pressure and authority failures must change the design."
+    },
+    {
+      "id": "deep-api-deployment-contract",
+      "title": "Make one API service independently deployable",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Turn an import-safe API package into an independently deployable service. Define entrypoint, config, resources, migrations, readiness, worker dependency, shutdown, OpenAPI, rollout compatibility, and artifact verification.",
+      "expectedSkills": ["build-apis"],
+      "requiredReferences": ["build-apis/references/deployment.md"],
+      "assertions": [
+        { "kind": "regex", "value": "entrypoint|artifact" },
+        { "kind": "regex", "value": "readiness|ready" },
+        { "kind": "regex", "value": "drain|shutdown" }
+      ],
+      "rubric": [
+        "Distinguishes a library from deployable host",
+        "Includes worker reachability for accepted work",
+        "Defines migration and rollback window"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["build-apis", "deployment", "training"],
+      "rationale": "Service boundaries must be executable and operational, not folder conventions."
+    },
+    {
+      "id": "deep-api-deployment-false-readiness",
+      "title": "Reject false readiness for an accepted-work API",
+      "skill": "build-apis",
+      "kind": "safety",
+      "split": "valid-unseen",
+      "prompt": "The API readiness endpoint returns 200 after Hono starts even when the workflow SQL adapter is unsupported and no worker polls the queue. POST /imports still returns 202. Audit and redesign readiness and degraded behavior.",
+      "expectedSkills": ["build-apis", "build-workflows"],
+      "requiredReferences": ["build-apis/references/deployment.md"],
+      "assertions": [
+        { "kind": "regex", "value": "not ready|unready|503|disable" },
+        { "kind": "regex", "value": "worker|adapter" }
+      ],
+      "rubric": [
+        "Does not return false durable acceptance",
+        "Makes capability status and degradation explicit"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/workflows/runtime/effect_sql_adapter.ts"
+      ],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-apis", "deployment", "readiness", "composition"],
+      "rationale": "Held-out deployment evidence protects truthfulness at the 202 boundary."
+    },
+    {
+      "id": "deep-workflow-authority-selection",
+      "title": "Select a workflow engine from authority and recovery needs",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Choose among a scheduled command, Postgres job table, custom Effect control plane, @effect/workflow, and Temporal for a 30-day import/review process. Map authority, identities, timers, signals, retries, operators, and versioning before recommending.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/durability.md"],
+      "assertions": [
+        { "kind": "regex", "value": "authority" },
+        { "kind": "regex", "value": "identity|idempot" },
+        { "kind": "regex", "value": "operator|recovery" }
+      ],
+      "rubric": [
+        "Compares actual durability claims",
+        "Does not choose by abstraction preference",
+        "Names deployment and version burden"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "effect-workflow-official",
+        "temporal-typescript-official",
+        "new-finance"
+      ],
+      "evidenceStatus": "normative",
+      "tags": ["build-workflows", "durability", "selection"],
+      "rationale": "Engine selection must begin with authority and recovery, not library popularity."
+    },
+    {
+      "id": "deep-workflow-false-durability",
+      "title": "Reject a retrying promise as a durable workflow",
+      "skill": "build-workflows",
+      "kind": "safety",
+      "split": "adversarial",
+      "prompt": "A service calls an Effect program with exponential retry in a detached fiber and labels it durable because errors are typed. Audit every durability claim and define the minimum safe alternative.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/durability.md"],
+      "assertions": [
+        { "kind": "regex", "value": "process.*loss|restart" },
+        { "kind": "regex", "value": "not durable|in-memory" }
+      ],
+      "rubric": [
+        "Separates typed/retryable from persisted/recoverable",
+        "Offers a proportionate engine/table alternative"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["effect-official"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-workflows", "durability", "safety"],
+      "rationale": "Held-out language must not let Effect vocabulary manufacture durability."
+    },
+    {
+      "id": "deep-workflow-effect-production-gate",
+      "title": "Gate an Effect workflow production adapter honestly",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A repo proves Workflow.make and WorkflowEngine.layerMemory in tests but its effect_sql adapter returns not-implemented for registration, identity, start, poll, interrupt, and resume. Plan the production adapter, Layers, worker, config, observability, and acceptance tests without claiming completion.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/effect-workflow.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "memory.*(test|not.*production)|not implemented"
+        },
+        { "kind": "regex", "value": "restart|durable" }
+      ],
+      "rubric": [
+        "Separates proven memory behavior from missing durability",
+        "Requires full adapter operations and cross-process tests",
+        "Pins alpha version boundaries"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/workflows/runtime",
+        "effect-workflow-official"
+      ],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-workflows", "effect", "training"],
+      "rationale": "The exact uploaded stub is the strongest test of capability honesty."
+    },
+    {
+      "id": "deep-workflow-effect-wait-atomicity",
+      "title": "Repair an Effect durable-wait wake-up gap",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A wait router marks a wait timed out, then separately enqueues an Effect resume token, appends timeline, and marks the run pending. A crash after the first write leaves no active wait and no resume. Redesign and verify signal/timeout/cancel races.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/effect-workflow.md"],
+      "assertions": [
+        { "kind": "regex", "value": "transaction|atomic" },
+        { "kind": "regex", "value": "reconcil" },
+        {
+          "kind": "regex",
+          "value": "signal.*timeout.*cancel|timeout.*signal.*cancel"
+        }
+      ],
+      "rubric": [
+        "Identifies the exact orphan window",
+        "Creates one winning transition",
+        "Adds failure injection and repair"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance:utils/workflows/worker/loops.ts"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-workflows", "effect", "waits", "atomicity"],
+      "rationale": "Held-out atomicity catches a source-grounded durability defect."
+    },
+    {
+      "id": "deep-workflow-temporal-complete-design",
+      "title": "Design a complete Temporal import workflow",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Design a Temporal TypeScript CSV import requiring upload parse, idempotent database batches, manual mapping approval, progress query, correction update, cancellation, schedule, retry/timeout/heartbeat, worker deployment, Continue-As-New, and Postgres projection.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/temporal.md"],
+      "assertions": [
+        { "kind": "regex", "value": "Client.*Worker.*Workflow.*Activit" },
+        { "kind": "regex", "value": "Signal|Query|Update" },
+        { "kind": "regex", "value": "heartbeat|Continue-As-New" }
+      ],
+      "rubric": [
+        "Separates process/package roles",
+        "Keeps I/O in Activities",
+        "Defines messages and operational lifecycle",
+        "Avoids large payloads in history"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["temporal-typescript-official"],
+      "evidenceStatus": "normative",
+      "tags": ["build-workflows", "temporal", "training"],
+      "rationale": "Temporal guidance must cover the whole runtime and operations system."
+    },
+    {
+      "id": "deep-workflow-temporal-upgrade-break",
+      "title": "Prevent a nondeterministic Temporal rollout",
+      "skill": "build-workflows",
+      "kind": "safety",
+      "split": "adversarial",
+      "prompt": "A Temporal workflow deployment reorders Activities, imports a Node provider client into workflow code, changes an input field from optional to required, and removes old workers immediately. Build a safe upgrade and rollback plan.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/temporal.md"],
+      "assertions": [
+        { "kind": "regex", "value": "determin|replay" },
+        { "kind": "regex", "value": "old.*worker|compatible.*worker|version" },
+        { "kind": "regex", "value": "Activity|Node" }
+      ],
+      "rubric": [
+        "Finds workflow sandbox and command-history defects",
+        "Requires history replay",
+        "Maintains compatible workers and payload decoding"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["temporal-typescript-official"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-workflows", "temporal", "versioning", "safety"],
+      "rationale": "Held-out rollout tests deterministic and compatibility reasoning."
+    },
+    {
+      "id": "deep-workflow-control-plane-admission",
+      "title": "Design atomic workflow admission policies",
+      "skill": "build-workflows",
+      "kind": "knowledge",
+      "split": "train",
+      "prompt": "Define idempotency, concurrency, throttle, rate limit, debounce, batch, singleton, and priority for tenant-scoped workflow starts. Specify storage primitives, persisted resolved keys, statuses, and accepted response links.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/control-plane.md"],
+      "assertions": [
+        { "kind": "regex", "value": "idempoten.*concurren.*throttle.*rate" },
+        { "kind": "regex", "value": "atomic|constraint|lock" }
+      ],
+      "rubric": [
+        "Does not conflate policy semantics",
+        "Scopes and persists resolved keys",
+        "Uses atomic admission"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance:utils/workflows/definition.ts"],
+      "evidenceStatus": "observed-source",
+      "tags": ["build-workflows", "control-plane", "admission"],
+      "rationale": "The uploaded definitions expose rich policy shapes that require executable semantics."
+    },
+    {
+      "id": "deep-workflow-control-plane-legacy-route",
+      "title": "Detect a new control plane bypassed by the public API",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Definitions, PostgreSQL tables, worker loops, and a new control plane exist, but POST /imports still calls an old in-process dispatcher. Audit capability status and prove the corrected reachability path.",
+      "expectedSkills": ["build-workflows", "build-apis"],
+      "requiredReferences": ["build-workflows/references/control-plane.md"],
+      "assertions": [
+        { "kind": "regex", "value": "legacy.*(bypass|path)|not.*reachable" },
+        {
+          "kind": "regex",
+          "value": "request.*queue|request.*worker|end-to-end"
+        }
+      ],
+      "rubric": [
+        "Reports the new system as unreachable",
+        "Requires an actual deployed request-to-effect trace"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-workflows", "control-plane", "reachability"],
+      "rationale": "Held-out topology prevents source presence from becoming a false completion claim."
+    },
+    {
+      "id": "deep-workflow-outbox-inbox",
+      "title": "Close a database-to-workflow dual-write gap",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Creating an import commits PostgreSQL, then starts a workflow. Design the transactional outbox, publisher lease, stable event identity, receiver inbox, ambiguous acknowledgement, and reconciliation path.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/atomicity.md"],
+      "assertions": [
+        { "kind": "regex", "value": "outbox" },
+        { "kind": "regex", "value": "inbox|dedup" },
+        { "kind": "regex", "value": "reconcil" }
+      ],
+      "rubric": [
+        "Commits domain row and intent together",
+        "Handles publish-after-accept ambiguity",
+        "Makes repair auditable"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["build-workflows", "atomicity", "outbox"],
+      "rationale": "Outbox behavior must include claim, receiver, and repair, not only a table."
+    },
+    {
+      "id": "deep-workflow-ambiguous-provider-effect",
+      "title": "Recover an ambiguous external effect",
+      "skill": "build-workflows",
+      "kind": "safety",
+      "split": "adversarial",
+      "prompt": "A payment Activity times out after the provider may have charged the card, then retries. The workflow start had an idempotency key but the provider request did not. Define correction, reconciliation, and crash tests.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/atomicity.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "provider.*(idempoten|operation key)|idempoten.*provider"
+        },
+        { "kind": "regex", "value": "lookup|reconcil" }
+      ],
+      "rubric": [
+        "Does not confuse start and effect idempotency",
+        "Looks up ambiguous provider state before retry"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["temporal-typescript-official"],
+      "evidenceStatus": "inferred",
+      "tags": ["build-workflows", "atomicity", "payments", "safety"],
+      "rationale": "Held-out external effects are where at-least-once claims cause real harm."
+    },
+    {
+      "id": "deep-workflow-worker-lease-fencing",
+      "title": "Implement multi-worker lease safety",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a PostgreSQL ready queue claimed by multiple workers. Include SKIP LOCKED or equivalent atomic claim, leases, heartbeats, fencing, retries, poison work, fairness, backpressure, readiness, and graceful drain.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/workers.md"],
+      "assertions": [
+        { "kind": "regex", "value": "SKIP LOCKED|atomic.*claim" },
+        { "kind": "regex", "value": "fencing|generation" },
+        { "kind": "regex", "value": "poison|dead-letter" }
+      ],
+      "rubric": [
+        "Prevents claim and late-owner races",
+        "Coordinates retry budgets",
+        "Defines worker operations and fairness"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance:utils/workflows/worker"],
+      "evidenceStatus": "normative",
+      "tags": ["build-workflows", "workers", "leases", "training"],
+      "rationale": "A worker reference should lead to concrete claim and lifecycle design."
+    },
+    {
+      "id": "deep-workflow-worker-cron-dst",
+      "title": "Reject interval math for calendar schedules",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A worker advances both intervals and cron schedules by adding interval_seconds to now. Product schedules use America/Toronto and must define DST, overlap, missed runs, catch-up, and backfill. Diagnose and test the correction.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/workers.md"],
+      "assertions": [
+        { "kind": "regex", "value": "calendar|cron.*parser|timezone" },
+        { "kind": "regex", "value": "DST|daylight" }
+      ],
+      "rubric": [
+        "Separates interval and calendar scheduling",
+        "Defines stable occurrence identity and publication atomicity"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance:utils/workflows/worker/loops.ts"],
+      "evidenceStatus": "counterexample",
+      "tags": ["build-workflows", "workers", "schedules"],
+      "rationale": "The uploaded worker explicitly leaves cron expansion incomplete."
+    },
+    {
+      "id": "deep-workflow-checkpoint-resume",
+      "title": "Define a committed resumable pipeline checkpoint",
+      "skill": "build-workflows",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Design checkpoints for streaming WARC records into PostgreSQL and ClickHouse. Include input identity/hash, stage/schema versions, committed cursor, output manifests/hashes, required sink commits, resume, and incompatible input behavior.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/recovery.md"],
+      "assertions": [
+        { "kind": "regex", "value": "input.*(hash|identity)" },
+        { "kind": "regex", "value": "manifest|output.*hash" },
+        { "kind": "regex", "value": "committed.*cursor|cursor.*commit" }
+      ],
+      "rubric": [
+        "Checkpoints committed output rather than attempted input",
+        "Validates provenance before resume",
+        "Handles multiple sinks honestly"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["live-browser-cli", "new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["build-workflows", "recovery", "checkpoints"],
+      "rationale": "Resume correctness depends on output and provenance, not a line counter."
+    },
+    {
+      "id": "deep-workflow-late-lease-owner",
+      "title": "Prevent a late expired worker from committing",
+      "skill": "build-workflows",
+      "kind": "safety",
+      "split": "adversarial",
+      "prompt": "Worker A pauses after its lease expires; Worker B recovers and completes the item; Worker A resumes and writes an older result. Design fencing, idempotency, compare-and-set, operator evidence, and a deterministic test.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/recovery.md"],
+      "assertions": [
+        { "kind": "regex", "value": "fencing|generation" },
+        { "kind": "regex", "value": "compare-and-set|CAS|precondition" }
+      ],
+      "rubric": [
+        "Does not rely on lease expiry alone",
+        "Rejects stale commits and preserves audit evidence"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "inferred",
+      "tags": ["build-workflows", "recovery", "leases", "safety"],
+      "rationale": "Held-out late completion tests the hardest lease invariant."
+    },
+    {
+      "id": "deep-workflow-public-event-stream",
+      "title": "Project workflow progress into a safe replayable event stream",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a safe customer progress stream from an internal workflow history. Separate engine history, operator timeline, domain events, public events, atomic publication, cursors, replay/live delivery, retention, and cancellation.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/streams.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "engine history.*(not|separate).*public|public.*(projection|event)"
+        },
+        { "kind": "regex", "value": "cursor|high-water" }
+      ],
+      "rubric": [
+        "Does not expose raw engine history",
+        "Publishes state and events atomically",
+        "Keeps HTTP delivery decoupled from workflow execution"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance", "temporal-typescript-official"],
+      "evidenceStatus": "normative",
+      "tags": ["build-workflows", "streams", "training"],
+      "rationale": "Workflow streaming needs an explicit projection contract before SSE."
+    },
+    {
+      "id": "deep-workflow-stream-retention-gap",
+      "title": "Handle an expired workflow event cursor honestly",
+      "skill": "build-workflows",
+      "kind": "safety",
+      "split": "valid-unseen",
+      "prompt": "Public progress events retain seven days, a customer reconnects with a ten-day-old cursor, operator timeline retains 90 days, and raw Temporal history contains private payloads. Define safe resync behavior without silently starting at now or exposing raw history.",
+      "expectedSkills": ["build-workflows"],
+      "requiredReferences": ["build-workflows/references/streams.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "expired.*(cursor|resync)|resync.*cursor|reset.*event"
+        },
+        { "kind": "regex", "value": "not.*raw.*history|safe.*projection" }
+      ],
+      "rubric": [
+        "Makes the retention gap explicit",
+        "Uses a safe snapshot/reset or error contract",
+        "Protects internal history"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["temporal-typescript-official"],
+      "evidenceStatus": "inferred",
+      "tags": ["build-workflows", "streams", "retention", "safety"],
+      "rationale": "Held-out retention requires truthful resynchronization semantics."
+    }
+  ]
+}

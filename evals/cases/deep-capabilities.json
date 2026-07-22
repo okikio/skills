@@ -1,0 +1,3256 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "deep-cli-optique-grammar",
+      "title": "Typed Optique command grammar",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Design a multi-command CLI with global verbosity, mutually exclusive authentication modes, shared targets, typed subcommand results, and generated completion. Explain the parser shape and show code without moving invalid-state checks into the handler.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/optique.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(or\\(|mutually exclusive|invalid combinations).*(parser|grammar|type)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(discriminated union|inferred result|typed result).*(command|subcommand)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(completion|shell completion).*(parser|same grammar|derived)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "optique-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Optique",
+        "parser-combinators"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-optique-generated-surfaces",
+      "title": "Generated CLI surfaces stay synchronized",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Show how help, shell completion, man pages, and static command discovery should derive from an Optique program while keeping execution out of the discovery path.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/optique.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(help|usage).*(parser|program|grammar)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(completion|man page).*(generate|derived|same)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(discover|static discovery).*(side effect|execute|runtime)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "optique-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Optique",
+        "generated-surfaces"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-optique-multi-source",
+      "title": "Sparse multi-source option resolution",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A CLI accepts a value from an option, environment, config, or prompt. Define sparse-source parsing, precedence, explicit absence, validation timing, and how provenance reaches diagnostics.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/optique.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(CLI|option).*(environment|env).*(config).*(prompt)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(precedence|priority|source order)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(absent|undefined|sparse).*(default|merge|resolve)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "optique-official",
+        "cli-guidebook"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Optique",
+        "configuration",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-logtape-result-isolation",
+      "title": "LogTape stable result isolation",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Implement a `config show --json` result path using LogTape as the only output transport. The JSON must remain pipe-safe on stdout while diagnostics go to stderr. Include redaction and inherited-sink handling.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(result category|\\.result|kaiju\\.result).*(stdout|standard output)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(parentSinks|sink inheritance|override).*(override|isolate|duplicate)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(redact|redaction).*(serializ|format|sink)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "logtape-official",
+        "cli-audit"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "LogTape",
+        "stdout",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-logtape-lifecycle",
+      "title": "LogTape sink lifecycle and meta diagnostics",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Design terminal, rotating-file, and asynchronous remote diagnostic sinks. Explain configuration, meta-logger routing, flush/disposal, failure handling, and tests.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(async sink|fromAsyncSink|remote).*(order|queue|failure)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(dispose|flush|shutdown).*(await|pending|close)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(logtape.*meta|meta logger).*(sink|diagnostic|failure)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "logtape-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "LogTape",
+        "lifecycle"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-c12-precedence",
+      "title": "c12 authored configuration precedence",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Resolve overrides, the project config file, RC files, package metadata, defaults, environment-specific layers, and extends. State the exact high-to-low model and return source provenance.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/c12-defu.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(override).*(config file).*(RC|rc).*(package).*(default|extend)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(high.*low|priority|precedence)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(configFile|layers|source|provenance)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "c12-official",
+        "kaiju-config-handoff"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "c12",
+        "precedence"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-c12-single-evaluation",
+      "title": "Dynamic c12 configuration runs once",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A configuration export performs I/O and increments a counter. Design discovery, validation, default derivation, and execution so the export is evaluated exactly once and the resolved value is passed downstream.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/c12-defu.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(once|single evaluation|one time)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(resolved config|runtime config).*(pass|inject|downstream)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(avoid|do not|never).*(reload|re-import|loadConfig.*again)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "c12-official",
+        "kaiju-config-handoff"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "c12",
+        "evaluation",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-defu-arrays",
+      "title": "defu array and operation merge policy",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Merge inherited ClickHouse schemas, seed modules, plugin maps, and scalar defaults. Arrays must replace when explicitly authored, while object defaults fill gaps. Show a custom merger and address string-or-symbol keys.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/c12-defu.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(array|schemas|seed).*(replace|not concatenate|do not concatenate)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(object|record).*(merge|fill|default)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(string \\| symbol|String\\(key\\)|symbol key)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "defu-official",
+        "kaiju-config-handoff"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "defu",
+        "merge"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-unjs-selection",
+      "title": "Focused UnJS capability selection",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Choose a minimal UnJS package set for a TypeScript CLI needing commands, config, terminal diagnostics, HTTP, storage, path/URL handling, and packaging. Distinguish adjacent packages and deliberate exclusions.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/unjs.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(citty|Optique).*(command|parser)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(c12|consola|ofetch|unstorage|pathe|ufo)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(exclude|not selected|do not add).*(reason|because|ownership)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "unjs-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "UnJS",
+        "ecosystem"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-cli-jiti-boundary",
+      "title": "jiti is an execution boundary",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Explain when a CLI should use jiti for TypeScript config loading, how native import and c12 fallback relate, and what security, cache, resolution, and side-effect risks must be tested.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/unjs.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(native import|import\\(\\)).*(fallback|jiti)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(execute|execution).*(untrusted|side effect|security)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cache|resolution|interop).*(test|verify|invalidate)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "jiti-official",
+        "c12-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "jiti",
+        "security"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-service-module-contract",
+      "title": "Complete service-module contract",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Define a production service module containing metadata, schemas, definitions, handlers, middleware, client bindings, workflow registrations, and health/readiness. Show how every surface is reachable from the exported registry.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/service-modules.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(metadata|manifest).*(schema|definition).*(handler)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(middleware|client|workflow|health|readiness)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(export|registry|index).*(reach|discover|enumerate)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:docs/service-module-authoring.md"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "service-module",
+        "architecture"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-service-module-no-orphans",
+      "title": "Reject orphan service-module surfaces",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Review a module whose endpoint handler works but its schema, client binding, background registration, and health contribution are never exported. Diagnose each orphan and define a reachability test.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/service-modules.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(orphan|unreachable|not exported)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(schema|client).*(registry|export|index)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(workflow|background|health).*(registration|discover|enumerat)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:docs/service-module-authoring.md"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "service-module",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-effect-service-layer",
+      "title": "Effect service and Layer construction",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Model a payment gateway as an Effect service with typed operations and errors, a live implementation requiring configuration and HTTP services, a test implementation, scoped resource cleanup, and an application Layer graph.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/effect-services.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(Context\\.Tag|Effect\\.Service|service tag)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Layer\\.effect|Layer\\.scoped|Layer\\.succeed|layer).*(live|test)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Scope|acquireRelease|scoped).*(cleanup|release|resource)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "effect-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Effect",
+        "services",
+        "Layer"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-effect-errors",
+      "title": "Effect typed error boundary",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Represent validation, authentication, upstream, timeout, and defect failures through an Effect service and map them to HTTP responses at one boundary. Do not erase the error channel with catch-all exceptions.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/effect-services.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(tagged error|Schema\\.TaggedError|Data\\.TaggedError|typed error)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(validation|authentication|upstream|timeout).*(HTTP|status|response)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(defect|die|cause).*(error channel|boundary|not.*business)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "effect-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Effect",
+        "errors"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-standard-schema",
+      "title": "Standard Schema interoperability boundary",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Design an endpoint factory that accepts Standard Schema-compatible validators, preserves inferred input/output types, converts validation issues once, and does not depend on a Zod-only private method.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/contracts.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(Standard Schema|StandardSchema|~standard)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(infer|input|output).*(type|generic)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(issue|validation error).*(normalize|map|once)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/middleware/validation.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Standard-Schema",
+        "validation"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-middleware-order",
+      "title": "Middleware ordering is part of the contract",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Specify middleware order for request ID, logging context, CORS, body limits, authentication, active organization, validation, authorization, rate limits, handler execution, and error mapping. Explain failures caused by reordering.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/runtime.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(request ID|requestId).*(logging|context)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(authentication|session).*(organization|authorization)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(validation|body limit|rate limit).*(handler|before)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance",
+        "better-auth-integration:apps/frontend/src/middleware/active_org.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "middleware",
+        "security",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-better-auth-org",
+      "title": "Better Auth organization authority",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Design session lookup, active-organization selection, membership verification, role checks, cache behavior, and client invalidation. Reject a client-provided organization ID as sufficient authority.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/auth.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(session|cookie).*(server|verify)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(organization|tenant).*(membership|member|role)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(client|header|request).*(not.*authority|untrusted|verify)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "better-auth-official",
+        "better-auth-integration:apps/frontend/src/middleware/active_org.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Better-Auth",
+        "authorization"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-sse-replay",
+      "title": "SSE replay and cursor authority",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Design an SSE endpoint with stable event IDs, Last-Event-ID parsing, bounded replay, authorization rechecks, heartbeats, and an explicit cursor retention/expiry response.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/streaming.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(id:|event ID|Last-Event-ID)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(replay|cursor).*(retention|expire|bounded)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(authorization|session).*(recheck|resume|reconnect)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "SSE",
+        "replay"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-sse-backpressure",
+      "title": "SSE backpressure and cancellation",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A slow SSE client causes unbounded buffering and continues database polling after disconnect. Repair the stream ownership, queue bounds, cancellation propagation, cleanup, and slow-consumer policy.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/streaming.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(backpressure|bounded queue|high water|slow consumer)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(AbortSignal|cancel|disconnect).*(database|poll|upstream)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cleanup|release|close).*(timer|subscription|reader|resource)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "SSE",
+        "backpressure",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-independent-deployability",
+      "title": "Prove independent service deployability",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Extract one service module for separate deployment. Identify transitive runtime/config/schema/client/workflow dependencies, generated artifacts, migration ownership, health checks, and a cold-start verification.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/deployment.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(transitive|dependency closure|closure).*(runtime|config|schema)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(migration|workflow|generated artifact).*(owner|package|deploy)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cold start|fresh process|standalone).*(health|verify|test)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "deployment",
+        "service-module"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-durability-ladder",
+      "title": "Choose the required durability level",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Classify an operation among in-process async work, queue work, Postgres-backed checkpointing, @effect/workflow, and Temporal. Use failure horizon, wait duration, external effects, signals, replay, operations burden, and recovery objectives.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/durability.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(in-process|queue|Postgres|Effect|Temporal)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(failure horizon|restart|wait duration|signals|replay)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(operations|infrastructure|recovery objective|RTO|RPO)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:docs/workflows-mental-model.md",
+        "effect-workflow-official",
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "experimental",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "durability",
+        "selection"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-effect-boundary",
+      "title": "Effect service versus durable workflow",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Explain how Effect services and Layers structure capabilities without themselves persisting execution history. Then show what @effect/workflow adds, marking experimental or unverified APIs instead of inventing exports.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/effect-workflow.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(service|Layer).*(dependency|capability).*(not durable|not persistence|does not persist)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(@effect/workflow).*(history|durable|replay|engine)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(experimental|verify.*export|source inspection|unverified)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "effect-official",
+        "effect-workflow-official"
+      ],
+      "evidenceStatus": "experimental",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Effect",
+        "durability",
+        "hallucination"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-effect-workflow-engine",
+      "title": "@effect/workflow engine selection",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Design a durable Effect workflow only after identifying the installed package version, backend/runtime requirements, activity boundary, serialization constraints, retry model, and operational surface. Separate verified API names from pseudocode.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/effect-workflow.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(installed|version|lockfile).*(inspect|verify)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(activity|side effect).*(serialization|retry|boundary)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(pseudocode|illustrative|verify exact).*(API|export|version)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "effect-workflow-official"
+      ],
+      "evidenceStatus": "experimental",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Effect",
+        "workflow",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-temporal-determinism",
+      "title": "Temporal deterministic orchestration",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Split a subscription-renewal process into deterministic Workflow code and Activities for database, payment, email, and time-sensitive external calls. Include retries, timeouts, idempotency, and replay-safe changes.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/temporal.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(Workflow).*(deterministic|replay)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Activity|Activities).*(database|payment|email|network)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(retry|timeout|idempotency).*(Activity|side effect)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Temporal",
+        "determinism"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-temporal-messages",
+      "title": "Temporal query, signal, and update semantics",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Choose Queries, Signals, and Updates for status reads, fire-and-forget approval, and validated state changes returning a result. Cover serialization, handler concurrency, initialization, and event-history effects.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/temporal.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(Query).*(read|non-mutating|synchronous)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Signal).*(mutate|no return|fire|accepted)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Update).*(validate|return|result|history)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Temporal",
+        "messages"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-temporal-deployment",
+      "title": "Temporal worker and client deployment",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Define separate Workflow bundle, Activity implementations, Worker process, client/starter, task queues, namespace, connection, secrets, observability, graceful shutdown, and safe code versioning.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/temporal.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(workflow bundle|Workflow code).*(worker|deterministic)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Activity|client|starter|task queue|namespace)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(versioning|deployment|build ID|patch).*(replay|history|safe)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Temporal",
+        "deployment",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-outbox",
+      "title": "Transactional outbox recovery",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "An API writes business state and then publishes a job; crashes between the two lose work. Design an outbox transaction, dispatcher lease, idempotent consumer, retry/dead-letter policy, metrics, and reconciliation.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/atomicity.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(business|domain).*(outbox).*(same transaction|atomic)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(lease|claim|skip locked|dispatcher).*(retry|publish)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(idempotent|dedup).*(consumer|handler).*(reconcile|dead letter|DLQ)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/workflows/postgres_store.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "outbox",
+        "recovery"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-lease-recovery",
+      "title": "Lease expiration and ownership recovery",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Design a worker lease with fencing or ownership tokens, heartbeat, expiry, safe takeover, checkpoint persistence, and protection against the old worker committing after its lease is lost.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/recovery.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(lease|owner token|fencing).*(expiry|heartbeat)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(takeover|reclaim).*(checkpoint|resume)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(stale|old worker).*(reject|cannot commit|fence)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/workflows/postgres_store.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "lease",
+        "fencing"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-pipeline-checkpoint-resume",
+      "title": "Checkpointed pipeline resume",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A ten-stage ingestion pipeline fails after publishing stage seven. Define immutable inputs, stage attempt records, output artifact digests, resume rules, invalidation, cleanup, and final reconciliation without re-running successful external effects.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/pipelines.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(stage|attempt).*(status|input|output|digest)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(resume|restart).*(last successful|checkpoint|invalidate)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(external effect|publish).*(idempotent|do not rerun|dedup|reconcile)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md",
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "pipeline",
+        "checkpoint",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-cancellation",
+      "title": "Durable cancellation contract",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Define requested, observed, and completed cancellation states across API, workflow engine, worker, child jobs, and external calls. Include compensations, uncancellable regions, timeouts, and user-visible status.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/workers.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(requested|request).*(observed|acknowledge).*(completed|terminal)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(AbortSignal|cancel).*(child|external|worker)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(compensation|uncancellable|shield|cleanup).*(timeout|status)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "cancellation",
+        "workflow"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-event-stream",
+      "title": "Workflow events to SSE projection",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Project durable workflow events to authorized SSE clients. Separate event-store cursor from transport connection, specify replay windows, event ordering, redaction, slow consumers, and reconnect semantics.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/streams.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(event store|durable event).*(cursor|sequence|ordering)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(SSE|transport).*(reconnect|Last-Event-ID|replay)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(authorization|redaction|slow consumer|backpressure)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "workflow",
+        "SSE"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-reconciliation",
+      "title": "Recovery is incomplete without reconciliation",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Design periodic reconciliation for workflows that call an external provider whose response can be lost. Define authoritative sources, correlation IDs, drift states, repair actions, audit evidence, and alert thresholds.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/recovery.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(authoritative|source of truth).*(provider|local)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(correlation|idempotency).*(drift|unknown|ambiguous)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(repair|reconcile|audit).*(alert|metric|threshold)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "reconciliation",
+        "recovery"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-workflow-versioning",
+      "title": "Long-lived workflow code versioning",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Plan a deployment that changes branching in executions that may run for months. Cover deterministic replay, patch/build/version mechanisms, worker compatibility, migration limits, and rollback verification.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/temporal.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(replay|history).*(old execution|long-lived)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(patch|build ID|worker version|versioning)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(rollback|compatibility|migration).*(test|replay|verify)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Temporal",
+        "versioning",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-clickhouse-ordering",
+      "title": "ClickHouse ORDER BY from query shapes",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Choose a MergeTree ORDER BY and optional PRIMARY KEY for time-series events using actual filter, grouping, and locality requirements. Explain sparse index granules, cardinality, compression locality, and why a transactional primary-key intuition is wrong.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(ORDER BY|sorting key).*(query|filter|locality)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(sparse|granule|mark|index_granularity)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(PRIMARY KEY|primary key).*(not unique|not transactional|different)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "ClickHouse",
+        "MergeTree"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-clickhouse-partitions",
+      "title": "ClickHouse partition discipline",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Design monthly or daily partitions only after estimating part counts, retention operations, merge pressure, and query pruning. Diagnose over-partitioning by high-cardinality tenant ID.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(partition).*(retention|drop|prun|lifecycle)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(part count|too many parts|merge pressure|over-partition)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(tenant|high cardinality).*(avoid|not partition|bad)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "ClickHouse",
+        "partitioning"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-clickhouse-dedup",
+      "title": "ClickHouse deduplication is not immediate uniqueness",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Design retried ingestion using insert deduplication or ReplacingMergeTree. Explain merge timing, query-time FINAL or argMax tradeoffs, materialized-view implications, and end-to-end idempotency.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(ReplacingMergeTree|dedup).*(merge|eventual|best effort)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(FINAL|argMax).*(query|overhead|current state)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(materialized view|retry|insert).*(idempot|dedup)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "ClickHouse",
+        "deduplication",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-clickhouse-projections",
+      "title": "ClickHouse projection decision",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Compare ORDER BY redesign, data-skipping indexes, materialized views, full projections, and lightweight projections for a secondary access path. Include version-dependent behavior and mutation/delete constraints.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(projection|lightweight projection).*(secondary|sorting|_part_offset)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(materialized view|data skipping|ORDER BY).*(compare|alternative|different)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(version|mutation|delete).*(constraint|verify|compatib)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "ClickHouse",
+        "projections"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-clickhouse-ttl-mutations",
+      "title": "ClickHouse retention and mutation operations",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Specify TTL retention, lightweight deletes, classic mutations, and partition drops for different data-removal needs. Explain asynchronous execution, merge costs, compliance verification, and operational monitoring.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(TTL).*(merge|expire|retention)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(lightweight delete|mutation|partition drop).*(cost|asynchronous|use)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(compliance|removal).*(verify|monitor|system table)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "ClickHouse",
+        "TTL",
+        "mutations"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-drizzle-internals",
+      "title": "Drizzle architecture from schema to execution",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Trace a typed select from table/column definitions through query builder and SQL AST, dialect compilation, placeholders, session/driver execution, result decoding, relations, and prepared-query reuse.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/drizzle-architecture.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(table|column|schema).*(query builder|select)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(SQL AST|SQL chunk|dialect).*(compile|escape|parameter)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(session|driver|prepared).*(execute|decode|map result)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "drizzle-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Drizzle",
+        "internals"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-custom-drizzle-dialect",
+      "title": "Custom Drizzle-like ClickHouse adapter",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Design a Drizzle-like adapter for ClickHouse without pretending upstream Drizzle supports the dialect. Define schema metadata, SQL AST, dialect compiler, parameter binding, session/driver, result mapping, capability flags, migrations, and conformance tests.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse-adapter.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(schema metadata|table|column).*(SQL AST|query builder)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(dialect|compiler).*(parameter|identifier|escape)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(capability|unsupported).*(transaction|returning|migration|conformance)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "drizzle-official",
+        "clickhouse-official",
+        "user-memory:custom-clickhouse-drizzle"
+      ],
+      "evidenceStatus": "experimental",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "ORM",
+        "adapter",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-custom-adapter-honesty",
+      "title": "Do not invent private adapter APIs",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "The repository mentions a custom ClickHouse Drizzle-like library but its source is unavailable. Produce a design and inspection checklist while clearly separating verified upstream Drizzle behavior, ClickHouse requirements, and unverified private exports.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse-adapter.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(verified|observed).*(Drizzle|ClickHouse)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(unverified|unknown|source unavailable).*(private|custom|export|API)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(inspect|package|source|types|lockfile).*(before|verify)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "drizzle-official",
+        "clickhouse-official",
+        "user-memory:custom-clickhouse-drizzle"
+      ],
+      "evidenceStatus": "experimental",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "hallucination",
+        "adapter"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-oltp-olap",
+      "title": "Separate PostgreSQL authority from ClickHouse analytics",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Design an architecture where PostgreSQL owns transactional truth and ClickHouse serves analytics. Cover outbox/CDC transfer, schemas, lateness, deduplication, correction, reconciliation, query routing, and failure states.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/storage-ownership.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(PostgreSQL|Postgres).*(authority|transactional|source of truth)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(ClickHouse).*(analytics|OLAP|projection)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(outbox|CDC).*(late|dedup|reconcile|correction)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance",
+        "clickhouse-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "PostgreSQL",
+        "ClickHouse"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-data-artifact-provenance",
+      "title": "Pipeline artifact provenance",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Define raw, normalized, enriched, indexed, and published artifacts with immutable identifiers, schemas, digests, producer versions, lineage, validation, retention, and replay contracts.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/artifacts.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(raw|normalized|enriched|indexed|published)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(digest|hash|schema|producer version).*(lineage|provenance)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(retention|replay|validation).*(artifact|stage)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "artifacts",
+        "provenance"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-sites-icon-selection",
+      "title": "Astro Icon versus Unplugin Icons",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Choose between Astro Icon and Unplugin Icons for an Astro site with local brand SVGs, Iconify sets, Solid islands, SSR output, and a strict server-bundle budget. Cover renderer ownership, optimization, types, and deployment risks.",
+      "expectedSkills": [
+        "build-sites"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-sites/references/icons.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(Astro Icon|astro-icon).*(local|Iconify|SVG|Astro)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Unplugin Icons|unplugin-icons).*(compiler|Solid|virtual import|renderer)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(server|SSR|bundle).*(icon set|include|size|risk)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "astro-icon-official",
+        "unplugin-icons-official",
+        "kaiju-website"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Astro",
+        "icons"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-sites-font-selection",
+      "title": "Astro Fonts API versus direct Fontsource",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Choose between Astro's Fonts API and direct @fontsource imports. Cover providers, local hosting, privacy, variants, subsets, preloads, optimized fallbacks, variable axes, caching, and OG-image access.",
+      "expectedSkills": [
+        "build-sites"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-sites/references/fonts.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(Fonts API|fontProviders|Font).*(provider|local|cache)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Fontsource|@fontsource).*(weight|style|subset|variable)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(preload|fallback|CLS|privacy|OG|fontData)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "astro-fonts-official",
+        "fontsource-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Astro",
+        "fonts",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-web-icon-renderer-mismatch",
+      "title": "Reject icon renderer mismatch",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A Solid component imports an icon compiled for React while Astro renders the surrounding page. Diagnose the ownership mismatch and specify the correct Unplugin Icons compiler/types or an Astro-native boundary.",
+      "expectedSkills": [
+        "build-web"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web/references/assets.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(compiler|renderer).*(Solid|React|Astro)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(unplugin-icons/types/solid|compiler.*solid|Astro boundary)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(React icon|wrong renderer|mismatch).*(fail|invalid|not)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "unplugin-icons-official",
+        "kaiju-website"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "icons",
+        "renderer"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-web-solid-primitives",
+      "title": "Select Solid Primitives by lifecycle",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Choose primitives for media queries, resize, event listeners, scheduled work, persistence, and reactive maps. For each, address owner, cleanup, SSR behavior, accessor semantics, and whether a package is actually installed.",
+      "expectedSkills": [
+        "build-web-apps"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web-apps/references/solid.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(owner|reactive root|component).*(cleanup|dispose|onCleanup)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(SSR|server|hydration).*(guard|behavior|fallback)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(media|resize|event|schedule|storage|map).*(primitive|package)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "solid-primitives-official",
+        "solid-primitives"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Solid",
+        "primitives"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-web-tanstack-ecosystem",
+      "title": "TanStack ecosystem ownership",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Map Router, Query, Table, Form, Virtual, and Start to URL state, server-state cache, table models, draft form state, virtualization, and application runtime. Reject using Query for local drafts or Router for secret state.",
+      "expectedSkills": [
+        "build-web-apps"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web-apps/references/tanstack.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(Router).*(URL|search params|navigation)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Query).*(server state|cache|invalidation)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Table|Form|Virtual|Start).*(row|draft|virtual|runtime)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-site-scope"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "TanStack",
+        "ecosystem"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-web-auth-state",
+      "title": "Auth state does not grant authorization",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Integrate Better Auth into a Solid/TanStack app. Separate UI session state, server session verification, active-organization selection, membership/role authorization, cache invalidation, route guards, and SSR hydration.",
+      "expectedSkills": [
+        "build-web-apps"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web-apps/references/auth.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(client|UI).*(session|cache).*(not.*authority|display)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(server).*(verify|session|membership|role|organization)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(SSR|hydration|route guard|invalidate).*(auth|session)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "better-auth-official",
+        "better-auth-integration"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Better-Auth",
+        "Solid",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-okikio-observables",
+      "title": "@okikio/observables lifecycle and backpressure",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Build a typeahead and bulk-stream pipeline with @okikio/observables 1.4.0. Use typed operators, cancellation, deterministic teardown, push versus pull consumption, bounded buffering, error modes, and optional RxJS/Web Streams interop.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/observables.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(switchMap|debounce|filter|map).*(typeahead|search|cancel)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(unsubscribe|using|Symbol\\.dispose|teardown).*(once|cleanup|deterministic)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(pull\\(|for await|backpressure|highWaterMark).*(buffer|consumer|stream)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "observables-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Okikio",
+        "observables"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-okikio-observables-errors",
+      "title": "Observable error modes are semantic",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Compare pass-through, ignore, throw, and manual error modes for validation, telemetry, and fail-fast processing. Include ObservableError handling and prove cleanup still runs on failure or cancellation.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/observables.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(pass-through).*(ignore).*(throw).*(manual)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(ObservableError|catchErrors|ignoreErrors|mapErrors|tapError)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cleanup|teardown|unsubscribe).*(failure|cancel|error)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "observables-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Okikio",
+        "observables",
+        "frozen"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-okikio-sparql",
+      "title": "@okikio/sparql query boundary",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Use @okikio/sparql 0.0.2 to construct a parameterized SELECT with values, triple patterns, filters, optional clauses, ordering, and limits. Keep HTTP transport, endpoint auth, result parsing, and retries outside the builder unless verified exports prove otherwise.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/sparql.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(value|term).*(triple|pattern).*(SELECT|query builder)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(filter|optional|order|limit)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(transport|HTTP|auth|retry|parse).*(outside|separate|verify)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "sparql-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Okikio",
+        "SPARQL",
+        "hallucination"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-okikio-undent",
+      "title": "Undent preserves intentional text structure",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Use @okikio/undent for a generated man-page example containing interpolation, blank lines, tabs, wide Unicode, and aligned columns. Explain the difference between dedentation and visual-width alignment and test exact output.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/undent.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(dedent|undent).*(minimum|indent|blank line)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(align|visual width|Unicode|East Asian|tab)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(exact output|snapshot|golden).*(test|verify)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes the governing ownership and boundary decisions before presenting code.",
+        "Separates verified capabilities from repository-specific inference and unresolved APIs.",
+        "Covers failure behavior, deliberate exclusions, and connected-system consequences.",
+        "Provides validation or executable verification proportionate to the decision."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "undent:mod.ts",
+        "undent:unicode.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "Okikio",
+        "undent"
+      ],
+      "rationale": "A shallow keyword response can mention the tool yet still invent APIs or omit the operational contract; this case requires a decision-complete answer."
+    },
+    {
+      "id": "deep-api-query-language",
+      "title": "Query language ownership and bounded complexity",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Design a public list endpoint with allowlisted filters, sorts, fields, pagination, stable cursors, total-count policy, complexity limits, and a database translation boundary. Explain how unknown operators, nullable values, and authorization-scoped rows fail.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/queries.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(allowlist|allowed).*(filter|sort|field|operator)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cursor|pagination).*(stable|ordering|tie.break|unique)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(complexity|limit|cost).*(authorization|scope|database|query)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Defines a grammar and ownership boundary instead of passing arbitrary input to the database.",
+        "Specifies stable ordering, null semantics, and invalid-input behavior.",
+        "Keeps authorization predicates inseparable from query translation.",
+        "Provides focused parser and database integration tests."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/query"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "query-language"
+      ],
+      "rationale": "Generic filtering advice does not define a safe, stable, or testable public query contract."
+    },
+    {
+      "id": "deep-workflow-control-plane",
+      "title": "Workflow control-plane authority",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Define a control plane for registering versioned workflow definitions, starting idempotently, inspecting status, requesting cancellation, retrying failed runs, and enumerating available capabilities. Separate definition metadata, run records, worker execution, and public API authority.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/control-plane.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(definition|registry).*(version|metadata|capability)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(start|run).*(idempotency|idempotent|request key)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cancel|retry|status).*(authority|state transition|run record)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Separates definitions, run state, execution, and public commands.",
+        "Defines idempotency and legal state transitions.",
+        "Explains worker discovery and version compatibility.",
+        "Tests concurrent starts, cancellation races, and unavailable definitions."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/workflows"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "control-plane"
+      ],
+      "rationale": "A queue wrapper is not a workflow control plane unless registration, authority, and run state are explicit."
+    },
+    {
+      "id": "deep-data-projection-authority",
+      "title": "Derived projection authority and rebuild",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Design search and graph projections derived from an authoritative operational store. Specify source offsets, projection schemas, idempotent writes, deletion and correction handling, lag, rebuild, cutover, reconciliation, and query fallbacks.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/projections.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(authority|source of truth).*(projection|derived|search|graph)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(offset|cursor|checkpoint).*(idempotent|dedup|correction|delete)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(rebuild|backfill).*(cutover|reconcile|lag|fallback)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Names the authority and every projection's scope.",
+        "Covers deletes, corrections, duplicates, and out-of-order updates.",
+        "Defines measurable lag and reconciliation.",
+        "Provides a no-downtime rebuild and cutover verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evidenceStatus": "counterexample",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "projection"
+      ],
+      "rationale": "Calling a search or graph store a cache hides correctness, rebuild, and authority contracts."
+    },
+    {
+      "id": "deep-okikio-wikitext-maturity",
+      "title": "Wikitext cost ladder and export honesty",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Use the attached wikitext package to choose among tokenizer events, event trees, parse trees, and incremental sessions. Verify public exports before giving code, explain memory and update costs, and handle the observed missing-export mismatch without inventing an API.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/wikitext.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(token|event).*(event tree|parse tree|session)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cost|memory|incremental|update).*(choose|ladder|tradeoff)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(export|mod\\.ts).*(missing|verify|unavailable|mismatch)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Chooses the cheapest representation that satisfies the requested operation.",
+        "Distinguishes experimental protocols from public exports.",
+        "Does not invent the missing parser/session entrypoint.",
+        "Uses source inspection and exact-output fixtures for verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "wikitext:mod.ts",
+        "wikitext:parse.ts",
+        "wikitext:session.ts"
+      ],
+      "evidenceStatus": "experimental",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "wikitext"
+      ],
+      "rationale": "The archive contains promising experiments and missing-export evidence, so API confidence must follow the actual entrypoint."
+    },
+    {
+      "id": "deep-api-query-auth-scope",
+      "title": "Query pagination cannot outrun authorization",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "Review a list endpoint that applies tenant authorization after database pagination and accepts arbitrary sort fields. Repair the query contract so filters, authorization, stable ordering, cursor encoding, counts, and complexity limits operate over the same authorized relation.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/queries.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(authorization|tenant|organization).*(where|base query|before.*pagination)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(stable|unique|tie.break).*(sort|order|cursor)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(count|pagination).*(authorized|same relation|scope)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Moves authorization into the database relation before counts and pagination.",
+        "Rejects arbitrary sort and filter expressions.",
+        "Defines stable cursor encoding and invalid-cursor behavior.",
+        "Tests cross-tenant and row-deletion cases."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/query"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "query-language"
+      ],
+      "rationale": "A syntactically valid query API still leaks or skips data if authorization and pagination do not share one relation."
+    },
+    {
+      "id": "deep-data-artifact-manifest-train",
+      "title": "Artifact manifest as a replay contract",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Define a manifest for raw, normalized, enriched, and published pipeline artifacts. Include immutable identity, content digest, schema/version, producer revision, source cursor, parents, row counts, validation status, storage URI, retention, and commit state, then explain how a resumed stage verifies it.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/artifacts.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(digest|hash).*(schema|producer|revision)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(source cursor|parent|lineage|provenance)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(commit|complete|validation).*(resume|verify|replay)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Separates an attempted artifact from a committed artifact.",
+        "Makes provenance and schema compatibility machine-checkable.",
+        "Defines retention without deleting required replay inputs.",
+        "Verifies bytes and metadata before reuse."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evidenceStatus": "counterexample",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "artifacts"
+      ],
+      "rationale": "A filename alone cannot prove artifact identity, completeness, lineage, or safe resumability."
+    },
+    {
+      "id": "deep-data-projection-delete-repair",
+      "title": "Projection deletes and corrections are first-class",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A search projection only handles creates and updates; deleted and corrected source rows remain searchable forever. Add authoritative tombstones or replacement semantics, ordered source positions, idempotent application, lag metrics, reconciliation, and a generation rebuild/cutover.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/projections.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(delete|tombstone|remove).*(projection|search)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(correction|out.of.order|version|offset).*(idempotent|ordering|dedup)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(reconcile|rebuild).*(generation|cutover|lag)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Defines deletion and correction semantics from the authority.",
+        "Prevents old events from resurrecting stale documents.",
+        "Makes lag and drift observable.",
+        "Proves rebuild and atomic cutover."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evidenceStatus": "counterexample",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "projection"
+      ],
+      "rationale": "Projection correctness includes disappearance and correction, not only successful upserts."
+    },
+    {
+      "id": "deep-data-storage-classification-train",
+      "title": "Classify authority before selecting storage",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Classify user accounts, workflow state, clickstream analytics, full-text search, RDF relationships, and replay artifacts across PostgreSQL, ClickHouse, a search engine, a graph store, and object storage. For every placement name the authority, projection path, consistency, correction, rebuild, and query contract.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/storage-ownership.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(PostgreSQL|Postgres).*(transaction|authority|OLTP)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(ClickHouse|search|graph).*(projection|derived|analytics)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(object storage|artifact).*(replay|immutable|manifest)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Classifies by workload and authority instead of familiarity.",
+        "Explains projection transfer and consistency.",
+        "Defines correction and rebuild for every derived store.",
+        "Rejects cross-engine feature assumptions."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance",
+        "clickhouse-official",
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "storage"
+      ],
+      "rationale": "Using every store as a peer authority creates irreconcilable drift and cross-engine hallucinations."
+    },
+    {
+      "id": "deep-workflow-pipeline-commit-train",
+      "title": "Checkpoint only committed stage output",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Define a resumable pipeline stage that reads an input manifest, writes output to a temporary location, validates counts/schema/digest, atomically commits a manifest, advances the source cursor, and publishes downstream work. State the transaction or reconciliation boundary for each step.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/pipelines.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(temporary|staging).*(validate|digest|count|schema)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(commit|atomic).*(manifest|output|cursor)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(publish|downstream).*(outbox|reconcile|idempotent)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Distinguishes attempted input from committed output.",
+        "Makes cursor advancement atomic or repairable.",
+        "Prevents downstream publication before durable acceptance.",
+        "Includes crash injection at every boundary."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md",
+        "new-finance:utils/workflows"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "pipeline"
+      ],
+      "rationale": "An attempted-item cursor loses or duplicates data when output commitment and publication are separate."
+    },
+    {
+      "id": "deep-workflow-pipeline-resume-unseen",
+      "title": "Resume validates lineage before skipping work",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A pipeline wants to skip every stage marked successful after code, schema, configuration, and source data changed. Define stage identity, input lineage, producer revision, compatibility rules, invalidation propagation, selective replay, external-effect idempotency, and final reconciliation.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/pipelines.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(input|lineage|parent).*(digest|identity|manifest)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(code|producer|schema|config).*(version|compatib|invalidate)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(selective|resume|replay).*(downstream|idempotent|reconcile)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Skips work only when inputs and producer semantics remain compatible.",
+        "Propagates invalidation through the dependency graph.",
+        "Protects already-committed external effects.",
+        "Reconciles the final published state."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md",
+        "new-finance:utils/workflows"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "deep-capability",
+        "anti-hallucination",
+        "pipeline"
+      ],
+      "rationale": "A success bit without lineage and producer identity turns resume into stale-data reuse."
+    }
+  ]
+}

@@ -1,0 +1,1744 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "balance-api-auth-train",
+      "title": "Balanced optimizer case for references/auth.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design Better Auth integration for a multi-organization API. Trace server construction, adapter ownership, session lookup, organization membership and resource authorization, plugin order, trusted origins, cookies, migrations, test isolation, and safe client exposure. Distinguish authentication from authorization and do not copy an adapter API that the installed version does not export.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/auth.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "authenticat.*authoriz",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "organization|tenant",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "adapter|plugin|version",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "better-auth-official",
+        "better-auth-integration:apps/frontend/src/middleware/active_org.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-api-contracts-train",
+      "title": "Balanced optimizer case for references/contracts.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design an endpoint contract whose path, repeated query values, conditional headers, JSON body, success variants, errors, pagination metadata, and OpenAPI operation identity all remain aligned. Explain validator middleware reachability, Standard Schema interoperability, Zod-specific ownership, normalization, generated clients, and compatibility tests.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/contracts.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "path.*query.*header.*body",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Standard Schema|Zod",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "OpenAPI|generated client",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/middleware/validation.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-api-deployment-seen",
+      "title": "Balanced optimizer case for references/deployment.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Split an API into independently deployable service modules. Define the configuration and resource boundary, boot contract, route registration, health versus readiness, graceful drain, connection cleanup, migration ownership, cross-service contract tests, and the evidence that proves a module can run alone.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/deployment.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "health.*readiness|readiness.*health",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "drain|shutdown|close",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "contract test|independent",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-api-effect-services-seen",
+      "title": "Balanced optimizer case for references/effect-services.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review an Effect-based HTTP service that constructs a Layer per request, catches every error as unknown, leaks a scoped database pool, and hides required services with global singletons. Produce a corrected Context.Tag, Layer, typed-error, Scope, runtime, test-layer, and Hono boundary design while explaining when Effect should not be introduced.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/effect-services.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Context.Tag|Layer",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Scope|acquireRelease|finalizer",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "typed error|Data.TaggedError|Cause",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "effect-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-api-queries-train",
+      "title": "Balanced optimizer case for references/queries.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Define a tenant-scoped list query with allowlisted filters, stable multi-column sort, opaque cursor, exact or deliberately estimated count, field projection, maximum page size, and server-owned authorization predicates. Show how parsing, normalized query specs, SQL binding, and response metadata remain distinct.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/queries.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "tenant|organization",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "cursor.*sort|sort.*cursor",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "allowlist|parameter",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/query"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-api-runtime-seen",
+      "title": "Balanced optimizer case for references/runtime.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Diagnose a Hono service where validation is registered after the handler, Better Auth is created on every request, LogTape is configured twice, shutdown abandons streams, and raw provider errors reach clients. Give middleware order, one composition root, resource lifetime, error mapping, cancellation, and executable request checks.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/runtime.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "middleware.*order|validator.*before",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "once|composition root|long-lived",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "shutdown|cancel|drain",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance",
+        "better-auth-integration:apps/frontend/src/middleware/active_org.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-api-service-modules-seen",
+      "title": "Balanced optimizer case for references/service-modules.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Given endpoint definitions, handlers, generated OpenAPI, and tests but no group registry entry or service composition root, classify what exists and what does not. Supply a complete module topology, registration conformance checks, standalone boot path, resource construction, and real request verification without inventing durable workflows.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/service-modules.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "registr|reachab",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "composition root|standalone",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "OpenAPI.*not|not.*OpenAPI",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:docs/service-module-authoring.md"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-api-streaming-train",
+      "title": "Balanced optimizer case for references/streaming.md",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design an authenticated SSE endpoint for long-running import status. Specify event framing, event IDs, cursor authority, Last-Event-ID replay, retention gaps, snapshot plus tail, organization authorization on reconnect, heartbeat, bounded buffering, slow-consumer policy, cancellation, proxy settings, and terminal state.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/streaming.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Last-Event-ID|event id",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "backpressure|slow consumer|bounded",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "authorization|tenant|organization",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-apis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-cli-integration-train",
+      "title": "Balanced optimizer case for references/integration.md",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design the full lifecycle for a configuration-heavy CLI using Optique, c12/defu, LogTape, and selected UnJS utilities. Establish operation order from minimal argv parsing through one config load, full typed parse, resource construction, result/diagnostic routing, generated help/completion/man pages, cleanup, and tests. Prevent each library from taking ownership outside its boundary.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/integration.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "minimal.*argv|bootstrap",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "config.*once|one.*config",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "stdout.*stderr|result.*diagnostic",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "cli-audit",
+        "optique-official",
+        "logtape-official",
+        "c12-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-clis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-cli-logtape-train",
+      "title": "Balanced optimizer case for references/logtape.md",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design LogTape as the sole runtime output transport for a CLI that must pipe JSON, completion scripts, and man pages on stdout while keeping diagnostics on stderr or files. Define result categories, parentSinks isolation, redaction order, verbosity, pretty/plain/JSON formatting, file lifecycle, library behavior, and recorder-based tests.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "parentSinks.*override|override.*parentSinks",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "redact",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "stdout.*stderr|result.*diagnostic",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "logtape-official",
+        "cli-audit"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-clis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-cli-unjs-train",
+      "title": "Balanced optimizer case for references/unjs.md",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Select only the needed UnJS packages for config discovery, runtime TypeScript loading, filesystem traversal, path aliases, process cleanup, and package metadata. For c12, jiti, pathe, pkg-types, confbox, destr, defu, and related candidates, state capability boundaries, runtime and cache implications, Deno/Node portability, deliberate exclusions, and verification.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/unjs.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "c12|jiti",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "pathe|pkg-types|confbox|destr",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "exclude|do not|not needed",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "unjs-official",
+        "c12-official",
+        "jiti-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-clis"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-data-artifacts-seen",
+      "title": "Balanced optimizer case for references/artifacts.md",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A data pipeline generates schemas, query manifests, migrations, client types, and fixture snapshots from one source model. Define artifact ownership, deterministic generation, provenance headers, check versus write modes, drift detection, compatibility review, cleanup of stale output, and CI/release verification.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/artifacts.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "source of truth|owner",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "check.*write|write.*check",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "drift|determin",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-data"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-data-clickhouse-adapter-seen",
+      "title": "Balanced optimizer case for references/clickhouse-adapter.md",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review a custom Drizzle-like ClickHouse adapter. Trace public schema metadata through SQL AST, dialect compilation, placeholders, session/client execution, row decoding, capability flags, migration artifacts, and conformance tests. Separate verified local exports from upstream Drizzle and ClickHouse behavior; reject OLTP transactions and uniqueness that the adapter cannot provide.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse-adapter.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "AST.*dialect|dialect.*AST",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "session|driver|client",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "capabilit|unsupported|uniqu",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "drizzle-official",
+        "clickhouse-official",
+        "kaiju-site-scope:libs/clickhouse"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-data"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-data-clickhouse-seen",
+      "title": "Balanced optimizer case for references/clickhouse.md",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Tune a tenant-scoped ClickHouse events table after queries scan too many parts and small inserts overwhelm merges. Reason from ORDER BY, sparse primary indexes, granules, partitions, insert batching, parts, merges, projections, materialized views, TTL, corrections, deduplication, and system-table/EXPLAIN evidence without promising OLTP semantics.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "ORDER BY|primary index|granule",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "parts|merge",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "system[.]parts|EXPLAIN",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-data"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-data-drizzle-train",
+      "title": "Balanced optimizer case for references/drizzle-architecture.md",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Explain Drizzle's internal boundary sequence using a typed joined query: table and column metadata, selection shape, SQL AST, dialect escaping and placeholders, prepared query, session/driver execution, ordered result decoding, nullability collapse, relations, transactions, and Drizzle Kit migrations. Identify which layers a new dialect must implement.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/drizzle-architecture.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "SQL AST|query AST",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "dialect.*placeholder|placeholder.*dialect",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "prepared.*session|session.*driver",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "drizzle-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-data"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-data-projections-train",
+      "title": "Balanced optimizer case for references/projections.md",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a Postgres-to-ClickHouse analytical projection with an outbox or CDC source, immutable event identity, idempotent ingestion, versioned projection logic, watermark/checkpoint authority, late and duplicate events, rebuild/backfill, cutover, reconciliation, and degraded-mode behavior. Keep the OLTP store authoritative.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/projections.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "outbox|CDC",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "checkpoint|watermark",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "rebuild|backfill|reconcil",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-data"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-data-storage-seen",
+      "title": "Balanced optimizer case for references/storage-ownership.md",
+      "skill": "build-data",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Classify ownership across Postgres, ClickHouse, object storage, cache, and search for an application with transactional writes and analytical reads. Define authoritative versus derived state, consistency windows, identifiers, deletion propagation, retention, failure modes, recovery, and evidence for each boundary.",
+      "expectedSkills": [
+        "build-data"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-data/references/storage-ownership.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "authoritative|source of truth",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "derived|projection",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "deletion|retention|reconcil",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "clickhouse-official",
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-data"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-sites-fonts-seen",
+      "title": "Balanced optimizer case for references/fonts.md",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Choose between stable Astro Fonts configuration, the Fontsource provider, direct @fontsource package imports, and local files for an Astro 7 site migrating from Astro 5 experimental fonts. Cover providers and variants, one owner per family, optimized fallbacks, preloads, privacy, licenses, variable axes, cache behavior, CLS, and built-network verification.",
+      "expectedSkills": [
+        "build-sites"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-sites/references/fonts.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Astro 5|experimental",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "one owner|duplicate",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "preload|fallback|CLS",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "astro-fonts-official",
+        "fontsource-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-sites"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-sites-icons-train",
+      "title": "Balanced optimizer case for references/icons.md",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design icon ownership for an Astro site with server-rendered content, Solid islands, local branded SVGs, and Iconify collections. Compare Astro Icon and Unplugin Icons, compiler/bundler adapters, virtual imports, custom collections, styling and accessibility, bundle/network cost, dynamic names, SSR, and deliberate exclusions.",
+      "expectedSkills": [
+        "build-sites"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-sites/references/icons.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Astro Icon|astro-icon",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Unplugin Icons|unplugin-icons",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "accessib|aria|decorative",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "astro-icon-official",
+        "unplugin-icons-official",
+        "kaiju-website"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-sites"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-webapp-auth-seen",
+      "title": "Balanced optimizer case for references/auth.md",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review Better Auth in a TanStack Solid application. Trace server and client ownership, cookies, session refresh, SSR loaders, middleware, route guards, organization switching, cache invalidation, CSRF/trusted origins, redirects, plugins, and authorization rechecks. Do not trust client-selected active organization as policy.",
+      "expectedSkills": [
+        "build-web-apps"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web-apps/references/auth.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "server.*client|client.*server",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "organization|tenant",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "CSRF|trusted origin|cookie",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "better-auth-official",
+        "better-auth-integration"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-web-apps"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-webapp-solid-seen",
+      "title": "Balanced optimizer case for references/solid.md",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Refactor a Solid feature that destructures props, creates effects without cleanup, reads browser APIs during SSR, duplicates async state, and imports a primitive by guessed name. Use owner/disposal boundaries, signals/memos/effects/resources, onCleanup, hydration-safe browser access, package/export verification, and focused tests.",
+      "expectedSkills": [
+        "build-web-apps"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web-apps/references/solid.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "onCleanup|dispos",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "SSR|hydration|browser",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "export|package|primitive",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "solid-primitives-official",
+        "solid-primitives"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-web-apps"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-webapp-tanstack-train",
+      "title": "Balanced optimizer case for references/tanstack.md",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a TanStack Solid app route with route validation, loader prefetch, Query cache ownership, mutation invalidation, SSR dehydration/hydration, auth context, search parameters, pending/error states, and navigation. Separate Router, Query, Table, Form, and Start responsibilities instead of treating TanStack as one package.",
+      "expectedSkills": [
+        "build-web-apps"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web-apps/references/tanstack.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Router|route",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Query|cache|invalidat",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "dehydrat|hydrat",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-site-scope"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-web-apps"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-web-assets-train",
+      "title": "Balanced optimizer case for references/assets.md",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Define one cross-renderer asset policy for an Astro documentation site and a Solid application sharing icons, fonts, images, and branded SVGs. Assign source and generated ownership, import versus public URL rules, hashing/caching, SSR behavior, accessibility metadata, build adapters, optimization, and drift tests.",
+      "expectedSkills": [
+        "build-web"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web/references/assets.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "source.*generated|generated.*source",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "hash|cache",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "SSR|server render|accessib",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-website",
+        "unplugin-icons-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-web"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-atomicity-train",
+      "title": "Balanced optimizer case for references/atomicity.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design atomic admission for a Postgres-backed durable workflow: business row, run record, first ready step, idempotency key, and outbox notification. Explain transaction boundaries, unique constraints, duplicate starts, concurrent claims, fencing, crash points, and how external effects remain outside the database transaction.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/atomicity.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "transaction",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "idempot|unique",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "fenc|claim|lease",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/workflows/postgres_store.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-control-plane-seen",
+      "title": "Balanced optimizer case for references/control-plane.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Specify a workflow control plane with stable run identity, statuses, step attempts, dependencies, ready queues, leases and fencing tokens, heartbeats, signals, cancellation, pause/resume, retry and terminal semantics, event history, list/detail APIs, retention, and operator actions. Separate desired from observed state.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/control-plane.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "lease|fencing",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "desired.*observed|observed.*desired",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "cancel|pause|resume",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:utils/workflows"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-durability-train",
+      "title": "Balanced optimizer case for references/durability.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Choose among in-process Effect, a queue, Postgres checkpoints, @effect/workflow, and Temporal for work that waits days, calls payment/email providers, requires approval, and must recover after deploys. Define failure horizon, durable authority, replay or resume model, effect idempotency, operational burden, and kill/restart verification.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/durability.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "failure horizon|process.*restart",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "idempot",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Temporal|@effect/workflow",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance:docs/workflows-mental-model.md",
+        "effect-workflow-official",
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-effect-workflow-seen",
+      "title": "Balanced optimizer case for references/effect-workflow.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Evaluate @effect/workflow for an installed 0.18.2 project while current research shows 0.19.0. Identify exact exports from the installed package before coding; describe Workflow.make, activities, engine/backend Layer, serialization, retries, interruption, persistence, worker topology, observability, migration risk, and crash/restart tests. Mark pseudocode and version differences.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/effect-workflow.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "0[.]18[.]2|installed version",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Workflow[.]make|activity",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Layer|engine|backend",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "effect-workflow-official",
+        "new-finance:utils/workflows"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-pipelines-seen",
+      "title": "Balanced optimizer case for references/pipelines.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Design a multi-stage ingestion pipeline with extract, normalize, enrich, load, and publish stages. Define artifact manifests, checksums, stage contracts, resumable checkpoints, concurrency limits, partial-sink recovery, backfills, schema evolution, lineage, observability, and promotion only after all sinks reconcile.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/pipelines.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "manifest|checksum|lineage",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "checkpoint|resume",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "partial.*sink|reconcil",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md",
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-recovery-train",
+      "title": "Balanced optimizer case for references/recovery.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Write a recovery plan for workers that can crash after an external effect but before recording completion. Cover idempotency keys, effect receipts, retry classification, lease expiry and fencing, poison work, compensation, reconciliation, manual repair, history retention, drills, RPO/RTO, and evidence that distinguishes retry from recovery.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/recovery.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "receipt|idempot",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "lease|fenc",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "RPO|RTO|reconcil",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance",
+        "new-finance:utils/workflows/postgres_store.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-streams-seen",
+      "title": "Balanced optimizer case for references/streams.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Connect a durable workflow event log to SSE clients. Define append authority, sequence/cursor semantics, snapshot plus tail, replay retention and gaps, fan-out, bounded buffers, slow consumers, authorization on reconnect, cancellation, terminal events, and recovery when live notification is lost.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/streams.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "snapshot.*tail|tail.*snapshot",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "cursor|sequence|replay",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "slow consumer|backpressure|bounded",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-temporal-train",
+      "title": "Balanced optimizer case for references/temporal.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a Temporal TypeScript subscription workflow with deterministic orchestration and Activities for database, payments, and email. Specify Workflow ID policy, task queue, one object argument, search attributes, retries and timeouts, heartbeats, cancellation, signals/queries/updates, child workflows, worker versioning, replay tests, and app-owned mapping helpers.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/temporal.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Workflow ID|workflowId",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Activit|determin",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "signal|query|update",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-workflow-workers-seen",
+      "title": "Balanced optimizer case for references/workers.md",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review a database worker that selects unlocked rows, performs work for ten minutes without heartbeat, and completes by row ID after its lease expired. Correct claim atomicity, SKIP LOCKED usage, lease duration, heartbeat, fencing token, bounded concurrency, graceful shutdown, retry classification, and stale completion rejection.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/workers.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "SKIP LOCKED|atomic.*claim",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "heartbeat|lease",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "fencing|stale.*completion",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "build-workflows"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-okikio-observables-train",
+      "title": "Balanced optimizer case for references/observables.md",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Integrate @okikio/observables 1.4.0 into a streaming boundary. Verify exact exports and design Observable lifecycle, subscribe/unsubscribe teardown, sync versus async delivery, error modes, operator cleanup, EventBus ownership, backpressure policy, AbortSignal interop, async iteration, and tests for cancellation and resource leaks.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/observables.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "unsubscribe|teardown|cleanup",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "backpressure|buffer",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "AbortSignal|async iter",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "observables-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "use-okikio"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-okikio-sparql-seen",
+      "title": "Balanced optimizer case for references/sparql.md",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Use @okikio/sparql 0.0.2 without guessing exports. Verify the exact query builder/executor boundary, prefixes, variables and bindings, raw interpolation hazards, transport and authentication ownership, result decoding, cancellation, pagination, errors, compatibility with the endpoint, and executable query tests.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/sparql.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "0[.]0[.]2|export",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "binding|parameter|interpol",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "decode|result|cancel",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "sparql-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "use-okikio"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    },
+    {
+      "id": "balance-okikio-undent-train",
+      "title": "Balanced optimizer case for references/undent.md",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Choose and demonstrate @okikio/undent helpers for interpolated CLI help, alignment, embedded blocks, blank lines, tabs, ANSI/Unicode display width, and generated snapshots. Verify the installed exports, explain the dedent/interpolation algorithm and deliberate exclusions, and test CRLF plus wide/combining characters.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/undent.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "interpol|dedent",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Unicode|wide|combining|ANSI",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "snapshot|CRLF",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ownership and version boundaries explicit before proposing code.",
+        "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
+        "Includes failure signatures, deliberate exclusions, and executable verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "undent:mod.ts",
+        "undent:unicode.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "reference-balance",
+        "anti-hallucination",
+        "use-okikio"
+      ],
+      "rationale": "Provides the missing optimizer split with a decision-complete scenario rather than a suffix-only prompt variant."
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "deep-devtools-mise-config-ownership",
+      "title": "Resolve Mise configuration and tool ownership",
+      "skill": "build-devtools",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A monorepo has root and package mise.toml files, .node-version, package.json runtime fields, user config, CI setup, and editor tasks. Produce the resolved ownership map for tools, environment, tasks, trust, config scopes, backends, minimum version, activation mode, and lock policy without deleting interoperable version files blindly.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/mise-aube.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "hierarch|scope|resolved config",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "trust|minimum.*version|lock",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "idiomatic|[.]node-version|package[.]json",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Assigns one owner per version and task while preserving useful interoperability.",
+        "Treats trust, plugins, and backends as execution and supply-chain boundaries.",
+        "Includes resolved-config and clean-shell evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "mise-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "mise",
+        "config"
+      ],
+      "rationale": "Tests Mise as a layered toolchain rather than a single version file."
+    },
+    {
+      "id": "deep-devtools-mise-task-semantics",
+      "title": "Design a Mise task graph without hidden mutations",
+      "skill": "build-devtools",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Design Mise tasks for generation check/write, parallel lint/typecheck/test, an interactive migration, and an authorized release. Use structured dependencies, tools, env, dir, sources/outputs, confirmation, output modes, timeouts, and file tasks. Explain timestamp freshness limits, confirmation ordering, redaction, and why Markdown directives must not be formatted.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/mise-aube.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "depends|structured.*task",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "sources.*outputs|outputs.*sources",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "confirm.*depend|depend.*confirm|raw.*redact",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes ordering and concurrency safe.",
+        "Does not mistake freshness stamps for semantic validation.",
+        "Preserves file-task directives and stable output contracts."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "mise-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "mise",
+        "tasks"
+      ],
+      "rationale": "Exercises operational task properties and their non-obvious failure behavior."
+    },
+    {
+      "id": "deep-devtools-mise-lock-provenance",
+      "title": "Verify Mise lockfile and backend provenance",
+      "skill": "build-devtools",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A project declares loose versions across core, Aqua, GitHub, npm, and custom plugin backends but claims reproducible installs on Linux, macOS, and Windows. Define the mise.lock generation and --locked process, current-platform versus cross-platform provenance limits, runtime dependencies of language backends, plugin review, CI trust, and upgrade tests.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/mise-aube.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "mise[.]lock|--locked",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "checksum|provenance|attestation",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "cross-platform|platform",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Does not call loose declarations reproducible.",
+        "Separates verified current-platform artifacts from metadata-only entries.",
+        "Includes backend and plugin supply-chain inspection."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "mise-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "mise",
+        "provenance"
+      ],
+      "rationale": "Held-out case prevents overclaiming lockfile and backend guarantees."
+    },
+    {
+      "id": "deep-devtools-aube-existing-lockfile",
+      "title": "Trial Aube without creating dual lockfile authority",
+      "skill": "build-devtools",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Plan a reversible Aube 1.27 adoption in a pnpm monorepo with native dependencies, catalogs, workspace protocol, patches, filtered CI, package publication, and deployment. Keep the pnpm lockfile authoritative during the trial, compare graphs and linker behavior, verify lifecycle builds, and define the separate cutover to aube-lock.yaml plus rollback.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/mise-aube.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "existing.*lock|pnpm-lock|one.*lock",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "isolated|linker|phantom",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "rollback|cutover",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Does not create two writable dependency graphs.",
+        "Tests package-manager semantics beyond a successful install.",
+        "Separates trial, lockfile conversion, and cleanup."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "aube-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "aube",
+        "migration"
+      ],
+      "rationale": "Tests Aube's coexistence capability without silently changing ownership."
+    },
+    {
+      "id": "deep-devtools-aube-build-jail",
+      "title": "Approve and jail dependency lifecycle builds",
+      "skill": "build-devtools",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Aube reports unreviewed esbuild, sharp, and a legacy native dependency. Design allowBuilds review, strict failure, jailBuilds, package-specific environment/write/network permissions, platform differences, side-effect caching, diagnostics, and CI verification. Do not broadly disable the jail or approve every script.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/mise-aube.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "allowBuilds|approve-builds",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "jailBuilds|jail",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "permission|network|write|environment",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Separates permission to execute from sandboxed capability.",
+        "Grants narrow package-specific exceptions.",
+        "Tests the real native artifact on every supported platform."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "aube-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "aube",
+        "security"
+      ],
+      "rationale": "Exercises Aube's distinctive lifecycle security model."
+    },
+    {
+      "id": "deep-devtools-aube-workspace-deploy",
+      "title": "Verify Aube workspace filters catalogs and deploy payload",
+      "skill": "build-devtools",
+      "kind": "artifact",
+      "split": "valid-unseen",
+      "prompt": "A workspace uses dependency and dependent graph filters, named catalogs, workspace protocol dependencies, recursive builds, and aube deploy. Define dry selection, graph order, catalogMode, concrete-version rewriting, pack versus deployAllFiles behavior, frozen CI, clean-consumer installation, and failure propagation.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/mise-aube.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "filter|dependent|dependency graph",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "catalog|workspace:",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "deployAllFiles|pack.*deploy|deploy.*pack",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Verifies selected packages before mutating them.",
+        "Inspects rewritten manifests and payload contents.",
+        "Does not use deployAllFiles to hide an incorrect package contract."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "aube-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "aube",
+        "workspace",
+        "deploy"
+      ],
+      "rationale": "Held-out case covers the workspace ecosystem around the installer."
+    },
+    {
+      "id": "deep-devtools-mise-aube-owner-loop",
+      "title": "Prevent Mise and Aube runtime owner loops",
+      "skill": "build-devtools",
+      "kind": "safety",
+      "split": "adversarial",
+      "prompt": "Mise installs Aube, Aube packageManager switching installs another Aube, both can install Node, aubr auto-installs before scripts, and CI must be air-gapped. Establish one executable and runtime owner, exact re-exec/fallback policy, frozen/no-install behavior, secret handling, cold and offline checks, and a rollback path.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/mise-aube.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "one.*owner|Mise.*Aube|Aube.*Mise",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "air-gap|offline|download.*error",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "auto-install|no-install|frozen",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Eliminates ambiguous executable and Node ownership.",
+        "Prevents hidden downloads or lock mutations in air-gapped CI.",
+        "Tests re-exec, fallback, secrets, and rollback explicitly."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "mise-official",
+        "aube-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "mise",
+        "aube",
+        "safety"
+      ],
+      "rationale": "Composition case within one ecosystem catches mutually recursive tool ownership."
+    }
+  ]
+}

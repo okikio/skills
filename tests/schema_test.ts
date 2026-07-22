@@ -38,4 +38,8 @@ Deno.test("composition cases cover composed behavior", async () => {
     item.skill === "composition"
   );
   assertEquals(composition.length >= 20, true);
+  assertEquals(
+    composition.every((item) => item.expectedSkills.length > 0),
+    true,
+  );
 });

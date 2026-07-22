@@ -1,0 +1,306 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "frozen-web-hybrid-surface-ownership",
+      "title": "Classify a hybrid Astro and Solid web monorepo",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A monorepo contains an Astro marketing site, Astro documentation, a TanStack Solid product application, shared design tokens, renderer-specific icons, Better Auth, and API routes. Produce one surface and ownership map, keep renderer bindings separate, assign URL/cache/session/local/durable state owners, and define SSR, hydration, accessibility, security, performance, and deployment verification.",
+      "expectedSkills": [
+        "build-web"
+      ],
+      "requiredReferences": [
+        "build-web/references/surfaces.md",
+        "build-web/references/renderers.md",
+        "build-web/references/assets.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "marketing.*documentation.*product|surface.*map",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "URL.*cache.*session|session.*durable",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "SSR|hydration",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Classifies each surface independently.",
+        "Does not copy renderer-specific APIs across Astro and Solid.",
+        "Coordinates shared concerns without replacing specialist owners."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-site-scope",
+        "kaiju-website"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-web",
+        "frozen",
+        "hybrid"
+      ],
+      "rationale": "Frozen root-router case for cross-surface ownership rather than framework-name recall."
+    },
+    {
+      "id": "frozen-web-native-first-failure",
+      "title": "Preserve native browser behavior across interactive islands",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Review a page that hydrates every navigation item, replaces links with click handlers, imports a React-only icon component into Solid, stores filter state outside the URL, ignores reduced motion, and reads window during SSR. Give the smallest native-first correction and browser verification matrix.",
+      "expectedSkills": [
+        "build-web"
+      ],
+      "requiredReferences": [
+        "build-web/references/renderers.md",
+        "build-web/references/motion.md",
+        "build-web/references/verification.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "native|link|anchor",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "React.*Solid|renderer",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "reduced motion|SSR|window",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Restores native semantics before adding client state.",
+        "Keeps renderer bindings and SSR lifetimes correct.",
+        "Includes keyboard, no-JS, reduced-motion, and hydration checks."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-site-scope",
+        "solid-primitives"
+      ],
+      "evidenceStatus": "counterexample",
+      "tags": [
+        "build-web",
+        "frozen",
+        "native-first"
+      ],
+      "rationale": "Frozen adversarial case for common cross-renderer hallucinations."
+    },
+    {
+      "id": "frozen-devtools-generation-release",
+      "title": "Prove generated package and release reproducibility",
+      "skill": "build-devtools",
+      "kind": "artifact",
+      "split": "test-frozen",
+      "prompt": "Design check and write modes for a generator that produces an npm package from Deno source, then release it from an immutable revision. Cover provenance, semantic drift, stale deletion, source formatting isolation, export and package-content tests, clean-consumer installation, version propagation, checksums, rollback, and CI parity.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/generated-artifacts.md",
+        "build-devtools/references/packaging.md",
+        "build-devtools/references/releases.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "check.*write|write.*check",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "provenance|immutable revision|checksum",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "consumer|package contents|exports",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Separates authored source, generated source, build output, and release artifact.",
+        "Prevents generators from reformatting unrelated Markdown.",
+        "Proves the artifact as consumed, not only the source tree."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "undent:scripts/build_npm.ts"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-devtools",
+        "frozen",
+        "generation",
+        "release"
+      ],
+      "rationale": "Frozen developer-tooling case joining generation to real release evidence."
+    },
+    {
+      "id": "frozen-devtools-toolchain-parity",
+      "title": "Reconcile Mise tasks package ownership and CI",
+      "skill": "build-devtools",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A repository has Mise, Deno tasks, package-manager scripts, editor tasks, and CI commands with different names, permissions, environment defaults, and lockfile behavior. Produce an ownership table, canonical command graph, cold setup and upgrade checks, offline/proxy boundaries, and removal plan for redundant wrappers without inventing private Aube configuration.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "requiredReferences": [
+        "build-devtools/references/toolchains.md",
+        "build-devtools/references/hygiene.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "owner|ownership",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Mise|Deno|CI",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Aube.*(verify|unverified|source)|do not.*Aube",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Determines manifest, lockfile, version, task, and environment owners.",
+        "Treats private tools as discovery targets rather than guessed APIs.",
+        "Verifies cold setup, routine use, CI, upgrade, and cleanup."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "user-memory"
+      ],
+      "evidenceStatus": "unresolved",
+      "tags": [
+        "build-devtools",
+        "frozen",
+        "toolchain"
+      ],
+      "rationale": "Frozen anti-hallucination case for overlapping public and private toolchains."
+    },
+    {
+      "id": "frozen-sites-font-icon-ownership",
+      "title": "Keep Astro font and icon pipelines singular",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "An Astro 7 site uses the stable Fonts API, direct Fontsource imports, Astro Icon, Unplugin Icons in Solid islands, and local branded SVGs. Remove duplicate ownership while preserving SSR, selective preloads, privacy, variable weights, accessibility, custom collections, caching, and production-build/network verification.",
+      "expectedSkills": [
+        "build-sites"
+      ],
+      "requiredReferences": [
+        "build-sites/references/fonts.md",
+        "build-sites/references/icons.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "one owner|duplicate",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Astro Fonts|fonts:",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Astro Icon|Unplugin Icons",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the current stable Astro Fonts shape rather than the old experimental flag.",
+        "Chooses one font owner per family and the correct icon compiler per renderer.",
+        "Includes built-output, network, accessibility, and privacy evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "astro-fonts-official",
+        "fontsource-official",
+        "astro-icon-official",
+        "unplugin-icons-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-sites",
+        "frozen",
+        "fonts",
+        "icons"
+      ],
+      "rationale": "Second frozen site case protects two volatile asset ecosystems."
+    },
+    {
+      "id": "frozen-okikio-source-status-gate",
+      "title": "Refuse invented Okikio exports and inherited stack choices",
+      "skill": "use-okikio",
+      "kind": "safety",
+      "split": "test-frozen",
+      "prompt": "A target repository mentions @okikio/observables, an old @okikio/sparql example, an unpublished backend helper, Zod, and LogTape. Determine exact package/version/export and consumer evidence before integration. Preserve the target repository's validation and logging owners, distinguish published, experimental, local, documented-only, and remembered packages, and give an inspection or adapter plan for anything unavailable.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "requiredReferences": [
+        "use-okikio/references/observables.md",
+        "use-okikio/references/sparql.md",
+        "use-okikio/references/packages.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "published|experimental|local|remembered|documented",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "export|version|consumer",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod|LogTape",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Does not invent private imports or assume remembered names are published.",
+        "Does not force Zod or LogTape when the consumer selected another owner.",
+        "Provides exact next inspection and compatibility tests for unresolved surfaces."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "observables-official",
+        "sparql-official",
+        "user-memory"
+      ],
+      "evidenceStatus": "unresolved",
+      "tags": [
+        "use-okikio",
+        "frozen",
+        "anti-hallucination"
+      ],
+      "rationale": "Second frozen personal-library case enforces evidence status and consumer ownership."
+    }
+  ]
+}

@@ -31,6 +31,7 @@
         "Moves only the invalid ownership",
         "Runs the fixture verifier"
       ],
+      "oracleStrength": "fixture-behavior",
       "tags": [
         "fixture",
         "workspace"
@@ -71,6 +72,7 @@
         "Regenerates or updates output consistently",
         "Removes the legacy module"
       ],
+      "oracleStrength": "fixture-behavior",
       "tags": [
         "fixture",
         "refactor",
@@ -112,6 +114,7 @@
         "Uses or requests a disposable target",
         "Distinguishes blocked verification from implementation"
       ],
+      "oracleStrength": "fixture-behavior",
       "tags": [
         "fixture",
         "migration",
@@ -126,6 +129,12 @@
       "id": "fixture-refactor-docs",
       "title": "Remove the old mental model from source and docs",
       "skill": "composition",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [
+        "deno-software"
+      ],
       "kind": "composition",
       "split": "transfer",
       "prompt": "Both skills are installed. Complete the transport refactor across source and documentation, then run the verifier. Produce one plan and one verdict.",
@@ -153,6 +162,7 @@
         "Uses one general delivery lifecycle",
         "Removes stale documentation"
       ],
+      "oracleStrength": "fixture-behavior",
       "tags": [
         "fixture",
         "composition",

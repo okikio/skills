@@ -73,7 +73,19 @@ Install Deno 2, then run:
 deno task validate
 deno task check
 deno task test
+deno task skillopt:matrix
+deno task sources:verify --attachments /path/to/uploaded-evidence
 ```
+
+The optional source check recomputes the registered SHA-256 values for the
+uploaded guidebooks and archives and verifies every registered ZIP claim path.
+`evals/capabilities.json` then connects those
+sources to routed references and behavioral cases, so a tool name by itself is
+not treated as verified coverage.
+
+`skillopt:matrix` exports and verifies every capability reference, root router,
+and frozen composition topology. It proves selection and immutability boundaries;
+it does not substitute for model rollouts or behavioral judging.
 
 Cross-model execution still requires implementing the rollout adapter described
 in `skillopt/benchmark-contract.md` and enabling provider commands from

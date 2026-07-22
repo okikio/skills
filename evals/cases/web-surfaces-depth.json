@@ -1,0 +1,1548 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "web-surface-train-route-ownership",
+      "title": "Classify a mixed Astro monorepo by route ownership",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A monorepo contains a prerendered marketing homepage, static OpenAPI docs, an authenticated SSR product frontend, unused Solid marketing prototypes, and one WebGL hero island. Produce a route-by-route surface inventory, identify active entrypoints, assign document, URL, remote, local, session and resource owners, and state what evidence must not be treated as active architecture.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/surfaces.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(route|surface).*(static|prerender).*(SSR|request)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(unused|unreachable|import graph).*(not|do not).*(architecture|owner)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(URL|query).*(remote|cache).*(local|session)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Classifies each reachable route rather than the repository globally.",
+        "Assigns one owner per state/resource concern and identifies negative evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "kaiju-site-scope", "new-finance"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "surfaces", "ownership"],
+      "rationale": "Prevents package lists and dormant files from becoming hallucinated architecture."
+    },
+    {
+      "id": "web-surface-seen-hybrid-cache-boundary",
+      "title": "Separate public and personalized cache boundaries",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Review a server-output Astro project where the homepage is public and deterministic, account pages read a session and organization, and an avatar could be deferred. Decide which routes should prerender, render per request, or use a server island. Define cache policy, fallback, adapter need, and verification for each.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/surfaces.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "homepage.*(prerender|static)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "account.*(private|no-store|request)",
+          "flags": "i"
+        },
+        { "kind": "regex", "value": "server island|server:defer", "flags": "i" }
+      ],
+      "rubric": [
+        "Does not equate global server output with request-time rendering for every route.",
+        "Connects cache authority, fallback and adapter verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "new-finance"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "surfaces", "cache"],
+      "rationale": "Tests route-level rendering and cache decisions."
+    },
+    {
+      "id": "web-surface-heldout-name-only-extension",
+      "title": "Reject a name-only browser extension classification",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A repository is called browser-extension-ui but contains no manifest, background worker, content script, extension API imports, permissions or packaging config. It does contain a normal Astro site and an unused browser folder. The requester asks you to implement extension storage and messaging. Explain the classification, missing evidence, safe next work, and what you must not invent.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/surfaces.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(name|folder).*(not|insufficient).*(extension|architecture)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "manifest.*(background|content script|permission)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(do not|must not).*(invent|assume).*(API|storage|messaging)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Reports the evidence gap instead of fabricating extension contracts.",
+        "Separates safe site work from authority needed to create a new extension surface."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website"],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "surfaces", "anti-hallucination"],
+      "rationale": "Repository naming is a common source of invented runtime APIs."
+    },
+
+    {
+      "id": "web-renderer-train-island-escalation",
+      "title": "Choose native HTML, script, island, or server island",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "For an Astro page with FAQ disclosure, a theme toggle, an authenticated account summary, and a below-fold WebGL visual, choose native HTML, page script, client island directive, or server island for each. Include renderer integrations, fallbacks, hydration urgency and cleanup ownership.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/renderers.md"],
+      "assertions": [
+        { "kind": "regex", "value": "FAQ.*(details|native)", "flags": "i" },
+        {
+          "kind": "regex",
+          "value": "account.*(server:defer|server island).*(fallback|adapter)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "WebGL.*client:visible.*(cleanup|frame|destroy)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Escalates renderer ownership only when behavior requires it.",
+        "Treats hydration timing and post-mount resource lifetime as separate contracts."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "new-finance"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "renderers", "islands"],
+      "rationale": "Tests decision completeness across Astro rendering mechanisms."
+    },
+    {
+      "id": "web-renderer-seen-solid-hydration",
+      "title": "Repair a Solid SSR hydration mismatch",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A Solid island destructures reactive props, reads matchMedia and localStorage during render, starts requestAnimationFrame at module evaluation, and returns a cleanup function from onMount. Diagnose every contract error and show a server-snapshot, mount, and onCleanup structure that can be hydration-tested.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/renderers.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(destructur|eager).*(break|lose).*reactiv",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(matchMedia|localStorage).*(after|onMount|snapshot)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "onCleanup.*(requestAnimationFrame|cancelAnimationFrame)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Explains Solid live prop paths and lifecycle instead of translating React rules.",
+        "Defines a deterministic first render and executable hydration diagnostic."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["solid-motion-experiments", "solid-primitives"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "renderers", "solid", "hydration"],
+      "rationale": "Targets renderer-specific hallucinations and cleanup mistakes."
+    },
+    {
+      "id": "web-renderer-heldout-client-only-silencing",
+      "title": "Reject client-only as an SSR error silencer",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A developer changes every failing Astro island to bare client:only to make the build pass. Review the patch. Explain renderer hints, server HTML loss, fallback and SEO/accessibility cost, how to isolate browser-only behavior, and the raw-HTML plus hydration checks needed before accepting any client-only boundary.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/renderers.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "client:only.*(explicit|renderer).*(react|solid-js)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(server HTML|SSR).*(loss|skip|blank|fallback)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(isolate|mount).*(browser-only|window|DOM)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Does not accept client-only as a universal workaround.",
+        "Requires exact renderer and behavior verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "solid-motion-experiments"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "renderers", "anti-hallucination"],
+      "rationale": "Prevents hiding ownership and hydration defects behind client rendering."
+    },
+
+    {
+      "id": "web-components-train-registry-contract",
+      "title": "Move a generated dialog without losing its ecosystem contract",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A Solid Astro repository wants to copy a dialog from a React finance app. Produce the evidence inventory and migration decision covering components.json, registry target, Kobalte/Corvu versus Base UI, aliases, CVA, stylesheet layers, tokens, icons, portals, focus and tests. Do not translate JSX by appearance.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/components.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(components[.]json|registry).*(renderer|Solid|React)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(Kobalte|Corvu).*(Base UI).*(not|different|mismatch)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(focus|portal).*(keyboard|return|trap)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Treats generated source, primitives, styles and tests as one contract.",
+        "Rejects renderer translation without behavioral evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "new-finance"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "components", "registry"],
+      "rationale": "Generated component files are otherwise easy to copy incompletely."
+    },
+    {
+      "id": "web-components-seen-solid-primitives-selection",
+      "title": "Select from the Solid Primitives ecosystem by capability",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A Solid island needs resize observation, page visibility, debouncing, event listeners and cleanup. Explain how to research Solid Primitives as a monorepo ecosystem, compare make* and create* ownership, check package maturity/server tests/siblings, choose the smallest packages, and verify SSR plus disposal without inventing exports.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/components.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(resize-observer|page-visibility|scheduled|event-listener)",
+          "flags": "i"
+        },
+        { "kind": "regex", "value": "make[*`]?|create[*`]?", "flags": "i" },
+        {
+          "kind": "regex",
+          "value": "(README|source|export).*(installed|version|verify)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Searches sibling packages and actual source instead of treating the ecosystem as one library.",
+        "Does not fabricate hook names and includes server/lifetime checks."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["solid-primitives", "solid-primitives-official"],
+      "evidenceStatus": "executable",
+      "tags": ["web-surfaces-depth", "components", "solid-primitives"],
+      "rationale": "Exercises the mandatory ecosystem hypothesis without over-installation."
+    },
+    {
+      "id": "web-components-heldout-icon-font-bloat",
+      "title": "Diagnose component assets that bloat a marketing route",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A generated component imports an entire icon collection, assumes a React compiler in a Solid island, depends on missing z-* CSS, and the layout preloads seven font families. Produce the correction plan and bundle/waterfall/accessibility evidence. Do not fix the issue by replacing every component library.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/components.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(icon|compiler).*(Solid|React).*(match|mismatch)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "z[-*]|generated.*(CSS|style|token)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(font|preload).*(critical|waterfall|metric)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Repairs each owning contract without a broad framework rewrite.",
+        "Includes finite bundle, accessible icon and font-loading verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "new-finance"],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "components", "performance"],
+      "rationale": "Tests connected component/style/asset reasoning."
+    },
+
+    {
+      "id": "web-motion-train-presence-lifecycle",
+      "title": "Design Solid exit presence without disposing the owner",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a Solid presence boundary for an exiting child. Separate logical from physical presence; define retained record identity, descendant registration, completion aggregation, zero-animation, cancellation, nested exit, same-key reentry and exactly-once disposal. State which parts the uploaded single-slot experiment does and does not prove.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/motion.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "logical.*physical.*(presence|retain)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(register|aggregate).*(completion|descendant)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "single[- ]slot.*(not|does not).*(keyed|parity)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Models owner retention rather than starting animation after disposal.",
+        "Keeps experimental scope and unsupported parity explicit."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["solid-motion-experiments", "solid-primitives"],
+      "evidenceStatus": "experimental",
+      "tags": ["web-surfaces-depth", "motion", "presence"],
+      "rationale": "Presence is a high-risk area for API-shaped hallucination."
+    },
+    {
+      "id": "web-motion-seen-webgl-resource-owner",
+      "title": "Productionize a decorative WebGL hero",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review a below-fold Solid WebGL hero with image and depth textures, pointer parallax, particles, ResizeObserver, reduced-motion media query and requestAnimationFrame. Define mount/async-dispose handling, static fallback, page/offscreen suspension, context failure, DPR caps, accessibility and resource-count tests.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/motion.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(static|image).*(fallback).*(WebGL|texture|context)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cancelAnimationFrame|disconnect|destroy).*(listener|texture|program|particle)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "client:visible.*(not|does not).*(pause|suspend)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Covers every external resource and late async completion.",
+        "Separates initial lazy hydration from ongoing visibility/performance policy."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "solid-primitives"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "motion", "webgl"],
+      "rationale": "Tests continuous-work cleanup and graceful enhancement."
+    },
+    {
+      "id": "web-motion-heldout-types-without-runtime",
+      "title": "Reject gesture and layout claims backed only by types",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A Solid motion package exports whileHover, whileTap, drag, layout and AnimatePresence props, but source has no pointer bindings, drag controller or layout measurement and only a single-child presence prototype. Review its capability claims, define a conformance matrix and the tests needed before documenting parity.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/motion.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(type|prop).*(not|does not).*(prove|capability|runtime)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(pointer|event).*(drag|gesture).*(test|binding)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "layout.*(measure|FLIP|invalidation)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Distinguishes declared surface from implemented event/render/lifetime paths.",
+        "Requires executable capability evidence and documents exclusions."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["solid-motion-experiments"],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "motion", "anti-hallucination"],
+      "rationale": "Explicitly punishes hallucinated feature parity."
+    },
+
+    {
+      "id": "web-security-train-request-boundary",
+      "title": "Threat-model an authenticated web mutation",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a cookie-authenticated Astro POST endpoint that updates an organization setting. Specify raw input/size/content-type validation, server-derived session and organization membership, CSRF/origin policy, idempotency/conflict behavior, cache headers, safe public errors, redacted diagnostics and cross-tenant tests.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/security.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(session|identity).*(derive|server).*(organization|tenant).*(authorize|membership)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(CSRF|Origin).*(cookie|SameSite)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(redact|do not log).*(cookie|token|payload|secret)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Traces authority into the service/repository instead of trusting client scope.",
+        "Defines method, replay/duplicate, error, cache and logging behavior."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance", "better-auth-integration"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "security", "authorization"],
+      "rationale": "Tests complete production boundary ownership."
+    },
+    {
+      "id": "web-security-seen-webhook-rewrite",
+      "title": "Rewrite a secret-logging webhook boundary",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A webhook endpoint logs its API key, complete environment and form payload, parses before proving the provider signature, accepts GET for mutation, has no replay/idempotency record, and returns provider errors. Produce a safe sequence over raw bytes and a verification matrix while preserving only validated domain mappings.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/security.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "raw.*(bytes|body).*(signature|constant[- ]time)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(timestamp|replay).*(event id|idempot)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(GET).*(not|must not).*(mutat|side effect)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the uploaded webhook as counterexample rather than approved architecture.",
+        "Separates provider verification, parsing, idempotency, side effects and diagnostics."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["thunderstrike-blog"],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "security", "webhooks"],
+      "rationale": "Prevents copying the most dangerous observed endpoint."
+    },
+    {
+      "id": "web-security-heldout-rich-snippet-xss",
+      "title": "Prevent provider snippet and CMS rich-text XSS",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A CMS returns Portable Text and a search provider returns snippets containing mark tags. A developer wants to send both through set:html because the framework escapes normal interpolation. Define separate structured render/sanitization boundaries, URL/embed policy, unknown-block behavior, CSP role and executable payload tests.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/security.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(structured|block|mark).*(renderer|allowlist)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(set:html|raw HTML).*(sanitize|untrusted|do not)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "CSP.*(defen[cs]e in depth|not.*replacement)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Does not assume provider markup is safe because it contains an expected tag.",
+        "Defines behavior for links, embeds, unknown blocks and hostile payloads."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["thunderstrike-blog", "kaiju-website"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "security", "xss"],
+      "rationale": "Raw-content boundaries are a frequent hallucination and security source."
+    },
+
+    {
+      "id": "web-verify-train-layered-matrix",
+      "title": "Build a layered verification plan for a mixed web change",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A change adds an Astro SSR route, a Solid island, an authenticated form, a CMS card, new icons/fonts and a WebGL animation. Produce a layered plan separating type, unit, production build, raw server HTML, hydration, browser, accessibility, security, resource lifetime, performance and adapter smoke evidence. Label blocked checks honestly.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/verification.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(raw server HTML|curl).*(hydration|mismatch)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(listener|observer|frame|WebGL).*(count|baseline|cleanup)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(blocked).*(not|separate).*(failed|passed)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Maps each claim to the lowest sufficient and one relevant integration oracle.",
+        "Does not convert a build result into browser/deployment success."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "new-finance", "solid-motion-experiments"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "verification", "matrix"],
+      "rationale": "Tests evidence-based completion reporting."
+    },
+    {
+      "id": "web-verify-seen-navigation-leak",
+      "title": "Prove repeated Astro navigation does not leak work",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A ClientRouter site initializes hash-link handlers, observers, animation frames and a Solid island on every navigation. Define instrumentation and a browser sequence that detects duplicated events, retained roots, frames, observers and focus/history regressions over five navigations.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/verification.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "astro:page-load.*(AbortController|delegat|cleanup)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(addEventListener|requestAnimationFrame|observer).*(remove|cancel|disconnect).*(baseline|balance)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(back|forward|hash).*(focus|history)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses resource/event counts and real navigation rather than a snapshot.",
+        "Includes browser semantics affected by global hash interception."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "solid-motion-experiments"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "verification", "lifetime"],
+      "rationale": "Makes an observed navigation defect reproducible."
+    },
+    {
+      "id": "web-verify-heldout-check-substitution",
+      "title": "Reject typecheck as proof of deployed web behavior",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A report says typecheck passed, therefore the site is hydrated, accessible, secure, performant and deployable. Correct the report. For each claim name the missing oracle, propose an authorized check, and distinguish failed, blocked and not-run evidence.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/verification.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "typecheck.*(does not|cannot).*(hydration|browser|deploy)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "accessib.*(keyboard|tree|screen reader|browser)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(failed|blocked|not run).*(separate|distinct)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Calibrates every completion claim to direct evidence.",
+        "Does not invent external/deployed results."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-site-scope"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "verification", "anti-hallucination"],
+      "rationale": "Prevents shallow validation from becoming a false completion claim."
+    },
+
+    {
+      "id": "web-failures-train-hydration-diagnosis",
+      "title": "Trace a web failure to its first owning boundary",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "After client navigation, a page has duplicate smooth-scroll behavior, a Solid chart flashes, selection moves to another row, and CPU keeps rising. Use failure signatures to form separate hypotheses, identify the next evidence for each, and define narrow regression oracles without proposing a framework rewrite.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/failures.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "duplicate.*(page-load|listener|delegat)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "flash.*(hydration|initial|server)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "selection.*(index|stable.*id)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "CPU.*(frame|observer|cleanup)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Keeps distinct failure owners separate.",
+        "Uses signatures to choose inspection rather than assuming a cause."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "solid-motion-experiments", "new-finance"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "failures", "diagnosis"],
+      "rationale": "Tests precise diagnosis without broad speculative changes."
+    },
+    {
+      "id": "web-failures-seen-cms-auth-chain",
+      "title": "Diagnose a cross-system site failure chain",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A CMS article displays as 1970, its taxonomy page is empty, preview appears in public cache, and an authenticated API explorer cannot send its session cookie. Map each signature to its likely boundary and next inspection, including date fallback, taxonomy identity, preview cache and credentialed CORS/cookie contracts.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/failures.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "1970.*(date|epoch|fallback)",
+          "flags": "i"
+        },
+        { "kind": "regex", "value": "taxonomy.*(name|id|slug)", "flags": "i" },
+        {
+          "kind": "regex",
+          "value": "preview.*(private|no-store|cache)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(CORS|origin).*(cookie|credentials|trusted)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Identifies four separate owner contracts and their evidence.",
+        "Does not patch the page presentation to hide server/content/auth defects."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["thunderstrike-blog", "kaiju-site-scope"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "failures", "connected-systems"],
+      "rationale": "Exercises failure signatures across content, cache and auth."
+    },
+    {
+      "id": "web-failures-heldout-arbitrary-workaround",
+      "title": "Reject workaround-driven web diagnosis",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A retained exit never completes, so a developer adds a 500ms timeout; a virtual list loses focus, so they set overscan to 10,000; CSP blocks a provider, so they disable CSP. Review why each workaround hides an ownership defect and specify the evidence and bounded correction required.",
+      "expectedSkills": ["build-web"],
+      "requiredReferences": ["build-web/references/failures.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "timeout.*(completion|presence|zero-animation|cancel)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "overscan.*(focus|virtual).*(not|memory)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "CSP.*(origin|nonce|resource).*(not|disable)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Finds the underlying owner for all three defects.",
+        "Proposes regression evidence rather than another symptom workaround."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "solid-motion-experiments",
+        "new-finance",
+        "thunderstrike-blog"
+      ],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "failures", "anti-hallucination"],
+      "rationale": "Punishes plausible but unsafe workaround advice."
+    },
+
+    {
+      "id": "site-astro-train-route-config",
+      "title": "Design an Astro route and adapter configuration",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Plan an Astro project with static marketing and docs routes, request-time account routes, a deferred avatar, React auth forms, a Solid WebGL island, generated OpenAPI JSON, icons and fonts. Provide the output/prerender/adapter/integration/directive decisions and installed-version checks without copying an uploaded config wholesale.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/astro.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(static|prerender).*(marketing|docs).*(request|SSR).*(account)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(React|Solid).*(integration|client:).*(renderer|island)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(installed|version).*(experimental|adapter|option)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Makes route-level rendering decisions and connects them to adapter/runtime.",
+        "Keeps renderer and asset integrations finite and version-grounded."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "kaiju-site-scope", "new-finance"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "astro", "architecture"],
+      "rationale": "Tests complete Astro configuration ownership."
+    },
+    {
+      "id": "site-astro-seen-client-router-lifetime",
+      "title": "Repair Astro ClientRouter lifecycle code",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "An Astro BaseHead enables ClientRouter and on every astro:page-load attaches click handlers to every hash and target=_blank link. Repair the architecture using rendered attributes where possible, delegated/idempotent setup where needed, focus/history/reduced-motion behavior, and repeated-navigation verification.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/astro.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(render|markup).*(rel=.*noopener|external)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(delegat|AbortController|cleanup).*(astro:page-load)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(focus|history|back|reduced motion).*(hash|scroll)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Removes repeat mutation when safe markup can own the behavior.",
+        "Tests navigation semantics and resource balance."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website"],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "astro", "navigation"],
+      "rationale": "Turns a concrete uploaded defect into an operational rule."
+    },
+    {
+      "id": "site-astro-heldout-auto-adapter-assumption",
+      "title": "Reject unverified auto-adapter deployment parity",
+      "skill": "build-sites",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "An Astro project uses an auto-adapter and passes astro dev, so the team claims Node, Deno, Netlify, Vercel and Cloudflare support including sessions, images and server islands. Review the claim and define a target capability matrix, config/version evidence and adapter-equivalent smoke suite.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/astro.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "astro dev.*(does not|not).*(adapter|deploy|parity)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(session|image|server island|binding).*(matrix|target|verify)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(startup|artifact|request).*(adapter|deployment)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Refuses multi-host parity without target-specific evidence.",
+        "Defines explicit capabilities and smoke artifacts."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "thunderstrike-blog"],
+      "evidenceStatus": "normative",
+      "tags": [
+        "web-surfaces-depth",
+        "astro",
+        "deployment",
+        "anti-hallucination"
+      ],
+      "rationale": "Auto-detection must not become an invented portability guarantee."
+    },
+
+    {
+      "id": "site-content-train-adapter-model",
+      "title": "Design a project-owned CMS view-model adapter",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a CMS adapter for articles, authors, taxonomies, media and Portable Text. Define provider validation, stable ids/slugs/dates, published/draft/preview policy, relationship batching, cache hints, rich-text mapping, missing record/media behavior and page/feed/sitemap reuse.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/content.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "provider.*(map|adapter).*(stable|project).*(Article|view model)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(batch|N[+-]1|request cache).*(relation|author|taxonomy)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(published|draft|preview).*(feed|sitemap|direct)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Keeps provider-specific data and errors out of page components.",
+        "Defines one visibility policy reused by all discovery surfaces."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["thunderstrike-blog", "kaiju-website"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "content", "cms"],
+      "rationale": "Tests the complete content boundary missing from shallow skills."
+    },
+    {
+      "id": "site-content-seen-local-reference-schema",
+      "title": "Strengthen an Astro content collection schema",
+      "skill": "build-sites",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "An Astro content config makes every article field optional to ingest inconsistent legacy Markdown. Redesign the boundary for publishable authors, series, topics, categories, articles and pages using references and image-aware schemas, cross-field validation, safe draft defaults and a separate migration report. Mark version-sensitive API details.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/content.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "reference[(].*(author|topic|series)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(hero image|media).*(alt|dimension|require)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(legacy|migration).*(separate|report).*(publish)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Does not weaken the publishable contract to hide migration defects.",
+        "Uses relationship and image semantics while flagging Astro API version boundaries."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "content", "astro-collections"],
+      "rationale": "Separates migration inputs from valid runtime content."
+    },
+    {
+      "id": "site-content-heldout-dual-source",
+      "title": "Reject a runtime local-plus-CMS merge",
+      "skill": "build-sites",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "During a CMS migration, a developer concatenates local Astro articles and live CMS articles at request time so nothing is lost. Explain duplicate slug/date/feed/taxonomy risks; design preserved raw evidence, idempotent mapping, reconciliation, redirects and a route-by-route source switch without deleting migration input prematurely.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/content.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(one|single).*(runtime source|source of truth).*(route)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(duplicate slug|identity|conflict).*(feed|taxonomy|date)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(idempotent|reconcil|redirect).*(migration|switch)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Rejects nondeterministic dual runtime ownership.",
+        "Preserves evidence and defines a reversible, verified switch."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["thunderstrike-blog", "kaiju-website"],
+      "evidenceStatus": "normative",
+      "tags": [
+        "web-surfaces-depth",
+        "content",
+        "migration",
+        "anti-hallucination"
+      ],
+      "rationale": "Migration safety must not create a permanent duplicate content system."
+    },
+
+    {
+      "id": "site-quality-train-route-gates",
+      "title": "Define decision-complete quality gates for a public site",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Create route-specific quality gates for a marketing homepage with WebGL, an article page from CMS, and static API docs. Cover document semantics, no-JS, content discoverability, font/icon/image budgets, reduced motion, XSS/forms, CMS/API failure, generated artifacts and target adapter smoke.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/site-quality.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(homepage|article|API docs).*(different|route).*(gate|budget|contract)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(sitemap|feed|canonical|OpenAPI).*(validate|diff|crawl)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(no JavaScript|no-JS).*(fallback|content|task)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Defines quality by user task and route risk, not one generic score.",
+        "Maps accessibility, performance, security, resilience and deployment to observable evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "thunderstrike-blog", "kaiju-site-scope"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "site-quality", "gates"],
+      "rationale": "Turns broad quality claims into executable acceptance criteria."
+    },
+    {
+      "id": "site-quality-seen-performance-budget",
+      "title": "Review a route with wildcard icons and excessive font preloads",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A marketing route includes wildcard Astro Icon collections, Unplugin Icons, seven preloaded fonts, an above-fold image, a below-fold WebGL island and third-party particles. Define a before/after budget and the build, bundle, waterfall, LCP/CLS, frame, offscreen and failure evidence needed to reduce cost without deleting the visual design blindly.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/site-quality.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(wildcard|icon collection).*(bundle|finite|include)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "font.*(preload|variant|fallback|metric).*(waterfall|CLS)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "WebGL.*(offscreen|frame|fallback|DPR)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Measures causal artifacts and preserves the route's design intent.",
+        "Includes continuous-work and failure budgets, not transfer size alone."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website"],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "site-quality", "performance"],
+      "rationale": "Applies observed configuration risks to measurable quality work."
+    },
+    {
+      "id": "site-quality-heldout-lighthouse-only",
+      "title": "Reject a Lighthouse-only site signoff",
+      "skill": "build-sites",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A site scores 100 in one Lighthouse run. The team declares accessibility, SEO, security, resilience and performance complete without testing keyboard focus, CMS outage, drafts, no-JS, XSS, WebGL failure, feeds, redirects or deployed headers. Correct the signoff and define missing direct oracles.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/site-quality.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Lighthouse.*(not|does not).*(complete|prove)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(keyboard|accessibility tree|focus).*(manual|browser|test)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(CMS|WebGL|no-JS|XSS).*(failure|inject|test)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Calibrates automated scoring to what it can prove.",
+        "Adds content, failure, security and deployment evidence without inventing success."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website", "thunderstrike-blog"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "site-quality", "anti-hallucination"],
+      "rationale": "Prevents surface-level audit scores from replacing behavior."
+    },
+
+    {
+      "id": "site-casebook-train-evidence-classification",
+      "title": "Classify positive, negative and experimental uploaded evidence",
+      "skill": "build-sites",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Using the Kaiju marketing/docs, finance, ThunderStrike and Solid motion cases, build an evidence table that labels active positive patterns, counterexamples, experimental capabilities and unresolved version claims. For each, extract an ownership principle and a verification requirement rather than copying a package list.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/casebook.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(positive|active).*(counterexample|negative).*(experimental)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(ownership|owner).*(verify|evidence)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(version|installed).*(unresolved|verify|not copy)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Does not treat every uploaded line as an approved pattern.",
+        "Produces transferable decisions and direct verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-website",
+        "kaiju-site-scope",
+        "new-finance",
+        "thunderstrike-blog",
+        "solid-motion-experiments"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "casebook", "evidence"],
+      "rationale": "Grounding requires evaluating source status, not only reading it."
+    },
+    {
+      "id": "site-casebook-seen-kaiju-homepage",
+      "title": "Apply the Kaiju homepage case without copying its defects",
+      "skill": "build-sites",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A new Astro marketing site resembles the Kaiju homepage. Explain which case patterns to reuse—Astro document ownership, native FAQ, narrow WebGL island, static fallback and cleanup—and which to reject or reverify—repeat page-load listeners, wildcard icons, many preloads, CSP disabled, auto-adapter and experimental options.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/casebook.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(details|native FAQ).*(no|without).*(island|hydration)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "WebGL.*(static image|fallback).*(cleanup|destroy)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(page-load|wildcard|preload|CSP).*(reject|review|verify)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Transfers ownership patterns while preserving negative evidence.",
+        "Requires version and bundle/security verification for config choices."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-website"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "casebook", "kaiju"],
+      "rationale": "Casebooks must guide judgment instead of becoming templates."
+    },
+    {
+      "id": "site-casebook-heldout-upload-authority",
+      "title": "Reject uploaded source as automatic normative authority",
+      "skill": "build-sites",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A reviewer says every pattern in an attached codebase should be encoded as best practice because it is user-provided. Respond using the casebook method: classify observed versus normative evidence, show how the ThunderStrike webhook and motion parity claims are counterexample/experimental, and define when current official/version evidence is required.",
+      "expectedSkills": ["build-sites"],
+      "requiredReferences": ["build-sites/references/casebook.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "uploaded.*(not|does not).*(normative|best practice|authority)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "webhook.*(counterexample|secret|signature)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "motion.*(experimental|not.*parity|unsupported)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Respects uploaded evidence while evaluating its safety/status.",
+        "Requires official/version verification for volatile public APIs."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["thunderstrike-blog", "solid-motion-experiments"],
+      "evidenceStatus": "counterexample",
+      "tags": ["web-surfaces-depth", "casebook", "anti-hallucination"],
+      "rationale": "Prevents grounding from degenerating into uncritical copying."
+    },
+
+    {
+      "id": "webapp-forms-train-auth-state-machine",
+      "title": "Design an accessible multi-method auth form",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a React auth form in an Astro SSR page using the observed TanStack Form/Better Auth boundary. Cover server-derived provider capabilities, native labels/autocomplete, blur and submit validation, form and per-method pending state, passkey capability, safe provider errors, callback allowlist, focus/announcement and server trust.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/forms.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "server.*(derive|capabilit).*(provider|passkey).*(client-safe|ids)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(onBlur|blur).*(onSubmit|submit).*(validation|schema)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(pending method|social|passkey).*(overlap|disable|coordinate)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Keeps field UX, auth request and server authority as distinct owners.",
+        "Includes accessible errors and safe redirect/provider behavior."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance", "better-auth-integration"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "forms", "auth"],
+      "rationale": "Tests a complete form boundary rather than field snippets."
+    },
+    {
+      "id": "webapp-forms-seen-async-races",
+      "title": "Resolve async validation and submission races",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A username validator is debounced but older responses overwrite newer input. Users can double-submit a create action, navigate away while pending, and an optimistic success remains after a 409 conflict. Define sequencing/cancellation, submitted snapshots, idempotency, navigation policy, rollback/invalidation and error focus.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/forms.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(AbortController|sequence|request id).*(current value|stale)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(idempotency|unique|duplicate).*(server|database)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(409|conflict).*(rollback|authoritative|invalidate)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Treats debounce, cancellation and atomic commit as different contracts.",
+        "Defines behavior for route departure and accessible server errors."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "forms", "races"],
+      "rationale": "Exercises common mutation races shallow skills miss."
+    },
+    {
+      "id": "webapp-forms-heldout-client-validation-trust",
+      "title": "Reject client schema as a security boundary",
+      "skill": "build-web-apps",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A form validates with Zod in the browser, disables submit while invalid, includes organizationId as a hidden field and sends a POST. The team says server parsing, authorization, CSRF and idempotency are redundant. Review the claim and define the server commit contract plus bypass tests.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/forms.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "client.*validation.*(not|never).*(security|trust)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "organization.*(derive|session|membership).*(server)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(CSRF|Origin).*(idempot|duplicate).*(test|server)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Rejects hidden/client values as authority.",
+        "Defines server validation, authorization and retry/duplicate behavior."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "forms", "anti-hallucination"],
+      "rationale": "Client libraries must not be mistaken for domain enforcement."
+    },
+
+    {
+      "id": "webapp-data-train-url-query-ownership",
+      "title": "Build a validated search route with one query identity",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a tenant-scoped lead search route with query draft, technology/fact filters, sort, page and page size. Define Zod URL defaults/canonicalization, dependent page reset, query-options key shared by loader and component, local selection/dialog state, targeted list invalidation and direct-link verification.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/data-views.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "URL.*(filter|sort|page).*(validate|schema)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "query.*key.*(organization|tenant).*(loader|component)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(selection|dialog|draft).*(local|not.*URL)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Assigns URL, query cache and local state without duplication.",
+        "Uses one complete tenant-scoped query identity and reset policy."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-site-scope"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "data-views", "url-state"],
+      "rationale": "Tests the complete TanStack route/query ownership chain."
+    },
+    {
+      "id": "webapp-data-seen-virtual-table",
+      "title": "Specify a production virtualized data table",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A React table needs pinned rows, resizable columns, dynamic heights, 100k rows, infinite loading and selection. Define stable row/item keys, server sort/filter/page, scroll container, measurement, spacer/pinned sections, fetch threshold, focus/accessibility, SSR/hydration, all-matching selection and realistic performance tests.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/data-views.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "getItemKey|stable.*(row|domain).*id",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(measure|dynamic height).*(scroll element|spacer|overscan)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "all[- ]matching.*(exclusion|query identity|server)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Separates Table presentation from Virtual rendering and server query semantics.",
+        "Includes selection authority, focus, SSR and large-data evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "data-views", "virtualization"],
+      "rationale": "Virtualization needs operational detail beyond library names."
+    },
+    {
+      "id": "webapp-data-heldout-table-implies-virtual",
+      "title": "Reject inferred virtualization and bulk semantics",
+      "skill": "build-web-apps",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A component imports TanStack Table and has a header checkbox, so a reviewer claims it virtualizes rows, supports accessible grids, and selects every server match. Explain which separate libraries and policies are required, how to inspect runtime source, what unsupported behavior must be stated, and the conformance tests for each claim.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/data-views.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "TanStack Table.*(not|does not).*(virtual)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(header checkbox|select).*(not|does not).*(all[- ]matching|server)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "role=.grid|grid.*(keyboard|focus).*(not|require)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Challenges three independent inferred capabilities.",
+        "Requires source and behavioral tests instead of surface syntax."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "data-views", "anti-hallucination"],
+      "rationale": "Prevents headless-table imports from becoming invented features."
+    },
+
+    {
+      "id": "webapp-verify-train-end-to-end",
+      "title": "Verify a stateful SSR search and mutation application",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Build a verification plan for an SSR app with validated URL search, loader/query cache, organization auth, virtual table, page selection, add-to-list mutation and dialogs. Include pure state tests, server/repository oracles, raw HTML/hydration, browser history/focus, cross-tenant, failure injection, resource counts and bundle/performance evidence.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/verification.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(direct URL|reload|back|forward).*(filter|sort|page)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "cross[- ]tenant.*(repository|server|authorization)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(raw.*HTML|SSR).*(hydration|mismatch).*(browser)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Maps every state owner and security boundary to a direct oracle.",
+        "Includes virtualized focus/large-data, mutation and lifecycle evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-site-scope", "new-finance"],
+      "evidenceStatus": "normative",
+      "tags": ["web-surfaces-depth", "webapp-verification", "end-to-end"],
+      "rationale": "Tests integration depth across the application state system."
+    },
+    {
+      "id": "webapp-verify-seen-auth-switch",
+      "title": "Verify an organization switch cannot retain old authority",
+      "skill": "build-web-apps",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "An authenticated user switches organizations while a search query and add-to-list dialog are open. Define tests for server membership, route context, tenant-scoped query keys, cache invalidation, selection/dialog reset or reconciliation, cookie/session behavior, pending request cancellation and attempts to submit old organization ids.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/verification.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "query key.*(organization|tenant)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(cancel|abort|ignore).*(pending|old).*(request|response)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "old.*organization.*(403|reject|authorize|membership)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Verifies authority through server/repository and client cache/state transitions.",
+        "Tests races and stale UI rather than only the final screen."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["kaiju-site-scope", "better-auth-integration"],
+      "evidenceStatus": "observed-source",
+      "tags": ["web-surfaces-depth", "webapp-verification", "tenant"],
+      "rationale": "Organization switching exposes cache and authority coupling."
+    },
+    {
+      "id": "webapp-verify-heldout-mocked-success",
+      "title": "Reject a mocked toast as mutation proof",
+      "skill": "build-web-apps",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A component test clicks Save, mocks the network, sees a success toast and declares the mutation verified. Identify the unproven server schema, authorization, idempotency, database/provider commit, query invalidation, rollback, error mapping, hydration and browser focus contracts. Propose proportionate direct oracles.",
+      "expectedSkills": ["build-web-apps"],
+      "requiredReferences": ["build-web-apps/references/verification.md"],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "toast.*(not|does not).*(commit|server|prove)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(authorization|idempotency).*(repository|database|provider)",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "(invalidate|rollback|authoritative).*(query|cache)",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Calibrates the mocked component test to UI behavior only.",
+        "Adds direct service/repository and integration oracles without demanding production writes."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": ["new-finance", "kaiju-site-scope"],
+      "evidenceStatus": "normative",
+      "tags": [
+        "web-surfaces-depth",
+        "webapp-verification",
+        "anti-hallucination"
+      ],
+      "rationale": "Prevents mock success from becoming an invented end-to-end result."
+    }
+  ]
+}

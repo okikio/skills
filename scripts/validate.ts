@@ -1,6 +1,7 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  CapabilityRegistrySchema,
   type EvalCase,
   EvalCaseFileSchema,
   ModelRegistrySchema,
@@ -14,8 +15,10 @@ const warnings: string[] = [];
 const ids = new Set<string>();
 const skills = new Set<string>();
 const cases: EvalCase[] = [];
+const casesById = new Map<string, EvalCase>();
 const sourceIds = new Set<string>();
 const sourceClaimPaths = new Map<string, Set<string>>();
+const skillDocuments = new Map<string, string>();
 
 for await (const path of walkFiles(join(root, "skills"))) {
   if (!path.endsWith("SKILL.md")) continue;
@@ -23,6 +26,7 @@ for await (const path of walkFiles(join(root, "skills"))) {
   const directory = path.split("/").at(-2);
   if (!directory) continue;
   skills.add(directory);
+  skillDocuments.set(directory, source);
   const name = source.match(/^name:\s*(.+)$/m)?.[1]?.trim();
   const description = source.match(/^description:\s*(.+)$/m)?.[1]?.trim();
   if (name !== directory) {
@@ -65,6 +69,7 @@ for await (const path of walkFiles(join(root, "evals", "cases"))) {
     if (ids.has(item.id)) errors.push(`duplicate eval id: ${item.id}`);
     ids.add(item.id);
     cases.push(item);
+    casesById.set(item.id, item);
     if (item.skill !== "composition" && !skills.has(item.skill)) {
       errors.push(`${item.id}: unknown target skill ${item.skill}`);
     }
@@ -87,15 +92,6 @@ for await (const path of walkFiles(join(root, "evals", "cases"))) {
     }
     if (item.activation && item.expectedSkills.length === 0) {
       warnings.push(`${item.id}: uses legacy two-skill activation telemetry`);
-    }
-    if (
-      item.skill === "composition" &&
-      item.expectedSkills.length === 0 &&
-      !item.tags.some((tag) => skills.has(tag))
-    ) {
-      warnings.push(
-        `${item.id}: composition case is not selectable by a skill exporter`,
-      );
     }
     if (
       item.oracleStrength === "routing-smoke" &&
@@ -155,15 +151,137 @@ if (!sources.success) {
   }
 }
 
-const strongCases = cases.filter((item) =>
-  item.oracleStrength === "fixture-behavior" || item.oracleStrength === "mixed"
+let capabilityCount = 0;
+let mappedEvalCount = 0;
+let mappedSourceCount = 0;
+let capabilitiesJson: unknown;
+try {
+  capabilitiesJson = JSON.parse(
+    await Deno.readTextFile(join(root, "evals/capabilities.json")),
+  );
+} catch (error) {
+  errors.push(`evals/capabilities.json: invalid JSON: ${error}`);
+}
+if (capabilitiesJson !== undefined) {
+  const capabilities = CapabilityRegistrySchema.safeParse(capabilitiesJson);
+  if (!capabilities.success) {
+    errors.push(`evals/capabilities.json: ${capabilities.error.message}`);
+  } else {
+    const capabilityIds = new Set<string>();
+    const capabilityReferences = new Set<string>();
+    const mappedEvals = new Set<string>();
+    const mappedSources = new Set<string>();
+    for (const capability of capabilities.data.capabilities) {
+      capabilityCount++;
+      if (capabilityIds.has(capability.id)) {
+        errors.push(`duplicate capability id: ${capability.id}`);
+      }
+      capabilityIds.add(capability.id);
+      if (!skills.has(capability.skill)) {
+        errors.push(`${capability.id}: unknown skill ${capability.skill}`);
+      }
+      const reference = join(
+        root,
+        "skills",
+        capability.skill,
+        capability.reference,
+      );
+      const routedReference = `${capability.skill}/${capability.reference}`;
+      capabilityReferences.add(routedReference);
+      try {
+        await Deno.stat(reference);
+      } catch {
+        errors.push(
+          `${capability.id}: unknown reference ${capability.reference}`,
+        );
+      }
+      if (
+        !skillDocuments.get(capability.skill)?.includes(capability.reference)
+      ) {
+        errors.push(
+          `${capability.id}: ${capability.reference} is not routed from ` +
+            `${capability.skill}/SKILL.md`,
+        );
+      }
+      for (const evalId of capability.evalIds) {
+        mappedEvals.add(evalId);
+        const mappedCase = casesById.get(evalId);
+        if (!mappedCase) {
+          errors.push(`${capability.id}: unknown eval ${evalId}`);
+        } else if (!mappedCase.requiredReferences.includes(routedReference)) {
+          errors.push(
+            `${capability.id}: eval ${evalId} does not require ${routedReference}`,
+          );
+        }
+      }
+      for (const sourceId of capability.sourceIds) {
+        mappedSources.add(sourceId);
+        const [base, ...fragmentParts] = sourceId.split(":");
+        const fragment = fragmentParts.join(":");
+        if (!sourceIds.has(base)) {
+          errors.push(`${capability.id}: unknown source ${sourceId}`);
+        } else if (fragment && !sourceClaimPaths.get(base)?.has(fragment)) {
+          errors.push(
+            `${capability.id}: unknown source claim path ${sourceId}`,
+          );
+        }
+      }
+    }
+    for (const routedReference of capabilityReferences) {
+      const referenceCases = cases.filter((item) =>
+        item.requiredReferences.includes(routedReference)
+      );
+      for (const requiredSplit of ["train", "valid-seen"] as const) {
+        if (!referenceCases.some((item) => item.split === requiredSplit)) {
+          errors.push(`${routedReference}: missing ${requiredSplit} coverage`);
+        }
+      }
+      if (
+        !referenceCases.some((item) =>
+          ["valid-unseen", "transfer", "adversarial", "test-frozen"].includes(
+            item.split,
+          )
+        )
+      ) {
+        errors.push(`${routedReference}: missing held-out coverage`);
+      }
+    }
+    mappedEvalCount = mappedEvals.size;
+    mappedSourceCount = mappedSources.size;
+  }
+}
+
+const executableAssertionKinds = new Set([
+  "file-exists",
+  "file-not-exists",
+  "file-unchanged",
+  "file-changed",
+  "command",
+]);
+const executableCases = cases.filter((item) =>
+  item.assertions.some((assertion) =>
+    executableAssertionKinds.has(assertion.kind)
+  )
+);
+const rubricCases = cases.filter((item) =>
+  item.oracleStrength === "trajectory-rubric" ||
+  item.oracleStrength === "mixed"
+);
+const smokeCases = cases.filter((item) =>
+  item.oracleStrength === "routing-smoke"
 );
 const frozenCases = cases.filter((item) => item.split === "test-frozen");
-if (strongCases.length < 10) {
-  errors.push("evaluation corpus requires at least 10 strong behavioral cases");
+if (executableCases.length < 10) {
+  errors.push("evaluation corpus requires at least 10 executable cases");
 }
 if (frozenCases.length < 10) {
   errors.push("evaluation corpus requires at least 10 frozen cases");
+}
+for (const skill of skills) {
+  const skillFrozen = frozenCases.filter((item) => item.skill === skill).length;
+  if (skillFrozen < 2) {
+    errors.push(`${skill}: requires at least two skill-owned frozen cases`);
+  }
 }
 
 if (warnings.length > 0) {
@@ -175,5 +293,8 @@ if (errors.length > 0) {
 }
 console.log(
   `Validated ${skills.size} skills and ${ids.size} evaluation cases ` +
-    `(${strongCases.length} strong, ${frozenCases.length} frozen).`,
+    `(${executableCases.length} executable, ${rubricCases.length} rubric-defined, ` +
+    `${smokeCases.length} smoke, ${frozenCases.length} frozen), plus ` +
+    `${capabilityCount} capabilities mapped to ${mappedEvalCount} evals and ` +
+    `${mappedSourceCount} source claims across ${sourceIds.size} sources.`,
 );

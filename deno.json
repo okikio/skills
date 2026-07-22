@@ -16,7 +16,10 @@
     "check": "deno fmt --check && deno lint && deno check scripts/*.ts src/*.ts tests/*.ts",
     "test": "deno test --allow-read --allow-write --allow-run tests/",
     "validate": "deno run --allow-read scripts/validate.ts",
+    "sources:verify": "deno run --allow-read --allow-run=unzip scripts/verify_sources.ts",
     "skillopt:export": "deno run --allow-read --allow-write scripts/export_skillopt.ts",
+    "skillopt:verify": "deno run --allow-read scripts/verify_skillopt_workspace.ts",
+    "skillopt:matrix": "deno run --allow-read --allow-write --allow-run scripts/validate_skillopt_matrix.ts",
     "skillopt:gate": "deno run --allow-read scripts/gate_skillopt.ts"
   }
 }

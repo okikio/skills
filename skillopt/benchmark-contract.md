@@ -5,13 +5,15 @@ forbidden behaviors, deterministic assertions, and a qualitative rubric.
 
 The exported workspace contains:
 
-- `candidate/skills/<target>/SKILL.md`: the sole trainable target document;
-- `candidate/skills/<target>/references/`: immutable candidate context during a
-  root-router optimization pass;
+- `candidate/skills/<target>/SKILL.md`: the trainable document during a
+  root-router pass and immutable context during a reference pass;
+- `candidate/skills/<target>/references/`: selectively loaded candidate context;
+  immutable during a root-router pass, with exactly one selected file mutable
+  during an individual-reference pass;
 - `companions/skills/<skill>/`: immutable companion skill trees selected with
   `--with`;
 - `workspace.json`: target, companions, mutable/immutable paths, skill and case
-  digests, and the exact case set;
+  digests, per-file immutable digests, and the exact case set;
 - `data/*.jsonl`: only the splits permitted by the selected export mode.
 
 The rollout adapter must install or expose the candidate and companion skill
@@ -38,6 +40,8 @@ The rollout adapter must:
 8. return generic installed/activated skill and reference telemetry;
 9. record case, corpus, skill, model, adapter, seed, and repetition identity;
 10. return a normalized score and evidence bundle.
+11. retain a trusted copy of `workspace.json`, reject added skill files, and run
+    the immutable digest verifier after the target or optimizer process exits.
 
 The evaluator gives executable acceptance criteria priority. A candidate cannot
 pass by merely describing the expected change. Destructive operations,
@@ -49,8 +53,12 @@ candidate gate. Transfer, adversarial, and composition results remain evaluator
 evidence. Test-frozen runs occur only at release and never become optimizer or
 candidate-reflection feedback.
 
-Baseline and candidate reports must be paired on target, host, model and adapter
-versions, installed skills, case set and case IDs, seed policy, repetitions, and
-run count. A gate cannot compare aggregate scores produced by different cases.
+Baseline and candidate reports use one `benchmarkId` and must be paired on
+target, host, model and adapter versions, companion-skill topology, case set and
+case IDs, seed policy, repetitions, and run count. Their `variantRole`,
+`variantId`, and target `skillRevision` must differ. The candidate must install
+the target skill; the baseline may represent no skill, the current skill, or a
+released skill. A gate cannot compare a variant to itself or compare aggregate
+scores produced by different cases.
 Evaluation reports use `phase: "evaluate"` and omit `frozenScore`. Release
 reports use `phase: "release"` and require it. The two phases cannot be paired.

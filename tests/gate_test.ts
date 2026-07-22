@@ -6,18 +6,20 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
 function report(overrides: Record<string, unknown> = {}) {
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     phase: "release",
     runId: "run",
     createdAt: "2026-07-13T00:00:00.000Z",
     gitRevision: "baseline",
-    candidateRevision: "candidate",
+    benchmarkId: "benchmark-a",
+    skillRevision: "baseline-skill",
     targetSkill: "build-clis",
     host: "codex",
     model: "test-model",
     modelVersion: "1",
     adapterVersion: "1",
-    variantId: "candidate",
+    variantRole: "baseline",
+    variantId: "baseline",
     installedSkills: ["build-clis"],
     caseSetDigest: "cases",
     caseIds: ["case-a"],
@@ -47,6 +49,15 @@ function report(overrides: Record<string, unknown> = {}) {
   };
 }
 
+function candidateReport(overrides: Record<string, unknown> = {}) {
+  return report({
+    variantRole: "candidate",
+    variantId: "candidate",
+    skillRevision: "candidate-skill",
+    ...overrides,
+  });
+}
+
 async function runGate(
   directory: string,
   candidate: Record<string, unknown>,
@@ -73,11 +84,14 @@ async function runGate(
 }
 
 Deno.test("SkillOpt gate rejects primary task regression despite unseen improvement", async () => {
-  const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+  const directory = await Deno.makeTempDir({
+    dir: root,
+    prefix: ".gate-test-",
+  });
   try {
     const output = await runGate(
       directory,
-      report({ taskSuccessRate: 0.79, validUnseenScore: 0.9 }),
+      candidateReport({ taskSuccessRate: 0.79, validUnseenScore: 0.9 }),
     );
     assert.notEqual(output.code, 0);
     assert.match(
@@ -90,13 +104,36 @@ Deno.test("SkillOpt gate rejects primary task regression despite unseen improvem
 });
 
 Deno.test("SkillOpt gate accepts a paired non-regressing strict improvement", async () => {
-  const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+  const directory = await Deno.makeTempDir({
+    dir: root,
+    prefix: ".gate-test-",
+  });
   try {
     const output = await runGate(
       directory,
-      report({ taskSuccessRate: 0.81, validUnseenScore: 0.8 }),
+      candidateReport({ taskSuccessRate: 0.81, validUnseenScore: 0.8 }),
     );
     assert.equal(output.code, 0, new TextDecoder().decode(output.stderr));
+  } finally {
+    await Deno.remove(directory, { recursive: true });
+  }
+});
+
+Deno.test("SkillOpt gate rejects self-labelled variant comparisons", async () => {
+  const directory = await Deno.makeTempDir({
+    dir: root,
+    prefix: ".gate-test-",
+  });
+  try {
+    const output = await runGate(
+      directory,
+      candidateReport({ variantId: "baseline" }),
+    );
+    assert.notEqual(output.code, 0);
+    assert.match(
+      new TextDecoder().decode(output.stderr),
+      /distinct variantId/,
+    );
   } finally {
     await Deno.remove(directory, { recursive: true });
   }

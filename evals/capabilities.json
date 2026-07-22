@@ -1,0 +1,1831 @@
+{
+  "schemaVersion": 1,
+  "capabilities": [
+    {
+      "id": "cap-cli-optique-grammar",
+      "skill": "build-clis",
+      "reference": "references/optique.md",
+      "capability": "Typed Optique command grammar",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "optique-official"
+      ],
+      "evalIds": [
+        "deep-cli-optique-grammar"
+      ],
+      "decisionQuestions": [
+        "Design a multi-command CLI with global verbosity, mutually exclusive authentication modes, shared targets, typed subcommand results, and generated completion. Explain the parser shape and show code without moving invalid-state checks into the handler."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-optique-generated-surfaces",
+      "skill": "build-clis",
+      "reference": "references/optique.md",
+      "capability": "Generated CLI surfaces stay synchronized",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "optique-official"
+      ],
+      "evalIds": [
+        "deep-cli-optique-generated-surfaces"
+      ],
+      "decisionQuestions": [
+        "Show how help, shell completion, man pages, and static command discovery should derive from an Optique program while keeping execution out of the discovery path."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-optique-multi-source",
+      "skill": "build-clis",
+      "reference": "references/optique.md",
+      "capability": "Sparse multi-source option resolution",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "optique-official",
+        "cli-guidebook"
+      ],
+      "evalIds": [
+        "deep-cli-optique-multi-source"
+      ],
+      "decisionQuestions": [
+        "A CLI accepts a value from an option, environment, config, or prompt. Define sparse-source parsing, precedence, explicit absence, validation timing, and how provenance reaches diagnostics."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-logtape-result-isolation",
+      "skill": "build-clis",
+      "reference": "references/logtape.md",
+      "capability": "LogTape stable result isolation",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "logtape-official",
+        "cli-audit"
+      ],
+      "evalIds": [
+        "deep-cli-logtape-result-isolation"
+      ],
+      "decisionQuestions": [
+        "Implement a `config show --json` result path using LogTape as the only output transport. The JSON must remain pipe-safe on stdout while diagnostics go to stderr. Include redaction and inherited-sink handling."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-logtape-lifecycle",
+      "skill": "build-clis",
+      "reference": "references/logtape.md",
+      "capability": "LogTape sink lifecycle and meta diagnostics",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "logtape-official"
+      ],
+      "evalIds": [
+        "deep-cli-logtape-lifecycle"
+      ],
+      "decisionQuestions": [
+        "Design terminal, rotating-file, and asynchronous remote diagnostic sinks. Explain configuration, meta-logger routing, flush/disposal, failure handling, and tests."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-c12-precedence",
+      "skill": "build-clis",
+      "reference": "references/c12-defu.md",
+      "capability": "c12 authored configuration precedence",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "c12-official",
+        "kaiju-config-handoff"
+      ],
+      "evalIds": [
+        "deep-cli-c12-precedence"
+      ],
+      "decisionQuestions": [
+        "Resolve overrides, the project config file, RC files, package metadata, defaults, environment-specific layers, and extends. State the exact high-to-low model and return source provenance."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-c12-single-evaluation",
+      "skill": "build-clis",
+      "reference": "references/c12-defu.md",
+      "capability": "Dynamic c12 configuration runs once",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "c12-official",
+        "kaiju-config-handoff"
+      ],
+      "evalIds": [
+        "deep-cli-c12-single-evaluation"
+      ],
+      "decisionQuestions": [
+        "A configuration export performs I/O and increments a counter. Design discovery, validation, default derivation, and execution so the export is evaluated exactly once and the resolved value is passed downstream."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-defu-arrays",
+      "skill": "build-clis",
+      "reference": "references/c12-defu.md",
+      "capability": "defu array and operation merge policy",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "defu-official",
+        "kaiju-config-handoff"
+      ],
+      "evalIds": [
+        "deep-cli-defu-arrays"
+      ],
+      "decisionQuestions": [
+        "Merge inherited ClickHouse schemas, seed modules, plugin maps, and scalar defaults. Arrays must replace when explicitly authored, while object defaults fill gaps. Show a custom merger and address string-or-symbol keys."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-selection",
+      "skill": "build-clis",
+      "reference": "references/unjs.md",
+      "capability": "Focused UnJS capability selection",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "unjs-official"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-selection"
+      ],
+      "decisionQuestions": [
+        "Choose a minimal UnJS package set for a TypeScript CLI needing commands, config, terminal diagnostics, HTTP, storage, path/URL handling, and packaging. Distinguish adjacent packages and deliberate exclusions."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-cli-jiti-boundary",
+      "skill": "build-clis",
+      "reference": "references/unjs.md",
+      "capability": "jiti is an execution boundary",
+      "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
+      "status": "observed-source",
+      "sourceIds": [
+        "jiti-official",
+        "c12-official"
+      ],
+      "evalIds": [
+        "deep-cli-jiti-boundary"
+      ],
+      "decisionQuestions": [
+        "Explain when a CLI should use jiti for TypeScript config loading, how native import and c12 fallback relate, and what security, cache, resolution, and side-effect risks must be tested."
+      ],
+      "failureSignatures": [
+        "Generated or operational CLI behavior drifts from its parser, configuration, output, or lifecycle contract, or relies on an undocumented package API."
+      ],
+      "exclusions": [
+        "Do not infer that adjacent ecosystem packages are installed, and do not move parser, merge, redaction, or lifecycle invariants into an ad hoc handler."
+      ],
+      "verification": [
+        "Evaluate the command as an installed subprocess with separated stdout and stderr, representative configuration sources, generated artifacts, and failure paths."
+      ]
+    },
+    {
+      "id": "cap-api-service-module-contract",
+      "skill": "build-apis",
+      "reference": "references/service-modules.md",
+      "capability": "Complete service-module contract",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance:docs/service-module-authoring.md"
+      ],
+      "evalIds": [
+        "deep-api-service-module-contract"
+      ],
+      "decisionQuestions": [
+        "Define a production service module containing metadata, schemas, definitions, handlers, middleware, client bindings, workflow registrations, and health/readiness. Show how every surface is reachable from the exported registry."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-service-module-no-orphans",
+      "skill": "build-apis",
+      "reference": "references/service-modules.md",
+      "capability": "Reject orphan service-module surfaces",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance:docs/service-module-authoring.md"
+      ],
+      "evalIds": [
+        "deep-api-service-module-no-orphans"
+      ],
+      "decisionQuestions": [
+        "Review a module whose endpoint handler works but its schema, client binding, background registration, and health contribution are never exported. Diagnose each orphan and define a reachability test."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-effect-service-layer",
+      "skill": "build-apis",
+      "reference": "references/effect-services.md",
+      "capability": "Effect service and Layer construction",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "effect-official"
+      ],
+      "evalIds": [
+        "deep-api-effect-service-layer"
+      ],
+      "decisionQuestions": [
+        "Model a payment gateway as an Effect service with typed operations and errors, a live implementation requiring configuration and HTTP services, a test implementation, scoped resource cleanup, and an application Layer graph."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-effect-errors",
+      "skill": "build-apis",
+      "reference": "references/effect-services.md",
+      "capability": "Effect typed error boundary",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "effect-official"
+      ],
+      "evalIds": [
+        "deep-api-effect-errors"
+      ],
+      "decisionQuestions": [
+        "Represent validation, authentication, upstream, timeout, and defect failures through an Effect service and map them to HTTP responses at one boundary. Do not erase the error channel with catch-all exceptions."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-standard-schema",
+      "skill": "build-apis",
+      "reference": "references/contracts.md",
+      "capability": "Standard Schema interoperability boundary",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance:utils/middleware/validation.ts"
+      ],
+      "evalIds": [
+        "deep-api-standard-schema"
+      ],
+      "decisionQuestions": [
+        "Design an endpoint factory that accepts Standard Schema-compatible validators, preserves inferred input/output types, converts validation issues once, and does not depend on a Zod-only private method."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-middleware-order",
+      "skill": "build-apis",
+      "reference": "references/runtime.md",
+      "capability": "Middleware ordering is part of the contract",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance",
+        "better-auth-integration:apps/frontend/src/middleware/active_org.ts"
+      ],
+      "evalIds": [
+        "deep-api-middleware-order"
+      ],
+      "decisionQuestions": [
+        "Specify middleware order for request ID, logging context, CORS, body limits, authentication, active organization, validation, authorization, rate limits, handler execution, and error mapping. Explain failures caused by reordering."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-better-auth-org",
+      "skill": "build-apis",
+      "reference": "references/auth.md",
+      "capability": "Better Auth organization authority",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "better-auth-official",
+        "better-auth-integration:apps/frontend/src/middleware/active_org.ts"
+      ],
+      "evalIds": [
+        "deep-api-better-auth-org"
+      ],
+      "decisionQuestions": [
+        "Design session lookup, active-organization selection, membership verification, role checks, cache behavior, and client invalidation. Reject a client-provided organization ID as sufficient authority."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-sse-replay",
+      "skill": "build-apis",
+      "reference": "references/streaming.md",
+      "capability": "SSE replay and cursor authority",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evalIds": [
+        "deep-api-sse-replay"
+      ],
+      "decisionQuestions": [
+        "Design an SSE endpoint with stable event IDs, Last-Event-ID parsing, bounded replay, authorization rechecks, heartbeats, and an explicit cursor retention/expiry response."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-sse-backpressure",
+      "skill": "build-apis",
+      "reference": "references/streaming.md",
+      "capability": "SSE backpressure and cancellation",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evalIds": [
+        "deep-api-sse-backpressure"
+      ],
+      "decisionQuestions": [
+        "A slow SSE client causes unbounded buffering and continues database polling after disconnect. Repair the stream ownership, queue bounds, cancellation propagation, cleanup, and slow-consumer policy."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-api-independent-deployability",
+      "skill": "build-apis",
+      "reference": "references/deployment.md",
+      "capability": "Prove independent service deployability",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evalIds": [
+        "deep-api-independent-deployability"
+      ],
+      "decisionQuestions": [
+        "Extract one service module for separate deployment. Identify transitive runtime/config/schema/client/workflow dependencies, generated artifacts, migration ownership, health checks, and a cold-start verification."
+      ],
+      "failureSignatures": [
+        "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
+      ],
+      "exclusions": [
+        "Do not treat client state as authority, invent service-module exports, or hide middleware and streaming lifecycle decisions inside endpoint handlers."
+      ],
+      "verification": [
+        "Exercise the public endpoint and exported service registry through success, invalid input, unauthorized, cancellation, reconnect, and independent-startup paths."
+      ]
+    },
+    {
+      "id": "cap-workflow-durability-ladder",
+      "skill": "build-workflows",
+      "reference": "references/durability.md",
+      "capability": "Choose the required durability level",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "experimental",
+      "sourceIds": [
+        "new-finance:docs/workflows-mental-model.md",
+        "effect-workflow-official",
+        "temporal-typescript-official"
+      ],
+      "evalIds": [
+        "deep-workflow-durability-ladder"
+      ],
+      "decisionQuestions": [
+        "Classify an operation among in-process async work, queue work, Postgres-backed checkpointing, @effect/workflow, and Temporal. Use failure horizon, wait duration, external effects, signals, replay, operations burden, and recovery objectives."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-effect-boundary",
+      "skill": "build-workflows",
+      "reference": "references/effect-workflow.md",
+      "capability": "Effect service versus durable workflow",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "experimental",
+      "sourceIds": [
+        "effect-official",
+        "effect-workflow-official",
+        "new-finance:utils/workflows"
+      ],
+      "evalIds": [
+        "deep-workflow-effect-boundary"
+      ],
+      "decisionQuestions": [
+        "Explain how Effect services and Layers structure capabilities without themselves persisting execution history. Then show what @effect/workflow adds, marking experimental or unverified APIs instead of inventing exports."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-effect-workflow-engine",
+      "skill": "build-workflows",
+      "reference": "references/effect-workflow.md",
+      "capability": "@effect/workflow engine selection",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "experimental",
+      "sourceIds": [
+        "effect-workflow-official",
+        "new-finance:utils/workflows"
+      ],
+      "evalIds": [
+        "deep-workflow-effect-workflow-engine"
+      ],
+      "decisionQuestions": [
+        "Design a durable Effect workflow only after identifying the installed package version, backend/runtime requirements, activity boundary, serialization constraints, retry model, and operational surface. Separate verified API names from pseudocode."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-temporal-determinism",
+      "skill": "build-workflows",
+      "reference": "references/temporal.md",
+      "capability": "Temporal deterministic orchestration",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evalIds": [
+        "deep-workflow-temporal-determinism"
+      ],
+      "decisionQuestions": [
+        "Split a subscription-renewal process into deterministic Workflow code and Activities for database, payment, email, and time-sensitive external calls. Include retries, timeouts, idempotency, and replay-safe changes."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-temporal-messages",
+      "skill": "build-workflows",
+      "reference": "references/temporal.md",
+      "capability": "Temporal query, signal, and update semantics",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evalIds": [
+        "deep-workflow-temporal-messages"
+      ],
+      "decisionQuestions": [
+        "Choose Queries, Signals, and Updates for status reads, fire-and-forget approval, and validated state changes returning a result. Cover serialization, handler concurrency, initialization, and event-history effects."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-temporal-deployment",
+      "skill": "build-workflows",
+      "reference": "references/temporal.md",
+      "capability": "Temporal worker and client deployment",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evalIds": [
+        "deep-workflow-temporal-deployment"
+      ],
+      "decisionQuestions": [
+        "Define separate Workflow bundle, Activity implementations, Worker process, client/starter, task queues, namespace, connection, secrets, observability, graceful shutdown, and safe code versioning."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-outbox",
+      "skill": "build-workflows",
+      "reference": "references/atomicity.md",
+      "capability": "Transactional outbox recovery",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance:utils/workflows/postgres_store.ts"
+      ],
+      "evalIds": [
+        "deep-workflow-outbox"
+      ],
+      "decisionQuestions": [
+        "An API writes business state and then publishes a job; crashes between the two lose work. Design an outbox transaction, dispatcher lease, idempotent consumer, retry/dead-letter policy, metrics, and reconciliation."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-lease-recovery",
+      "skill": "build-workflows",
+      "reference": "references/recovery.md",
+      "capability": "Lease expiration and ownership recovery",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance:utils/workflows/postgres_store.ts"
+      ],
+      "evalIds": [
+        "deep-workflow-lease-recovery"
+      ],
+      "decisionQuestions": [
+        "Design a worker lease with fencing or ownership tokens, heartbeat, expiry, safe takeover, checkpoint persistence, and protection against the old worker committing after its lease is lost."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-checkpoint-resume",
+      "skill": "build-workflows",
+      "reference": "references/pipelines.md",
+      "capability": "Checkpointed pipeline resume",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md",
+        "new-finance"
+      ],
+      "evalIds": [
+        "deep-workflow-pipeline-checkpoint-resume",
+        "deep-workflow-pipeline-commit-train",
+        "deep-workflow-pipeline-resume-unseen"
+      ],
+      "decisionQuestions": [
+        "A ten-stage ingestion pipeline fails after publishing stage seven. Define immutable inputs, stage attempt records, output artifact digests, resume rules, invalidation, cleanup, and final reconciliation without re-running successful external effects."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-cancellation",
+      "skill": "build-workflows",
+      "reference": "references/workers.md",
+      "capability": "Durable cancellation contract",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evalIds": [
+        "deep-workflow-cancellation"
+      ],
+      "decisionQuestions": [
+        "Define requested, observed, and completed cancellation states across API, workflow engine, worker, child jobs, and external calls. Include compensations, uncancellable regions, timeouts, and user-visible status."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-event-stream",
+      "skill": "build-workflows",
+      "reference": "references/streams.md",
+      "capability": "Workflow events to SSE projection",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evalIds": [
+        "deep-workflow-event-stream"
+      ],
+      "decisionQuestions": [
+        "Project durable workflow events to authorized SSE clients. Separate event-store cursor from transport connection, specify replay windows, event ordering, redaction, slow consumers, and reconnect semantics."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-reconciliation",
+      "skill": "build-workflows",
+      "reference": "references/recovery.md",
+      "capability": "Recovery is incomplete without reconciliation",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evalIds": [
+        "deep-workflow-reconciliation"
+      ],
+      "decisionQuestions": [
+        "Design periodic reconciliation for workflows that call an external provider whose response can be lost. Define authoritative sources, correlation IDs, drift states, repair actions, audit evidence, and alert thresholds."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-workflow-versioning",
+      "skill": "build-workflows",
+      "reference": "references/temporal.md",
+      "capability": "Long-lived workflow code versioning",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "temporal-typescript-official"
+      ],
+      "evalIds": [
+        "deep-workflow-versioning"
+      ],
+      "decisionQuestions": [
+        "Plan a deployment that changes branching in executions that may run for months. Cover deterministic replay, patch/build/version mechanisms, worker compatibility, migration limits, and rollback verification."
+      ],
+      "failureSignatures": [
+        "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
+      ],
+      "exclusions": [
+        "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
+      ],
+      "verification": [
+        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+      ]
+    },
+    {
+      "id": "cap-data-clickhouse-ordering",
+      "skill": "build-data",
+      "reference": "references/clickhouse.md",
+      "capability": "ClickHouse ORDER BY from query shapes",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evalIds": [
+        "deep-data-clickhouse-ordering"
+      ],
+      "decisionQuestions": [
+        "Choose a MergeTree ORDER BY and optional PRIMARY KEY for time-series events using actual filter, grouping, and locality requirements. Explain sparse index granules, cardinality, compression locality, and why a transactional primary-key intuition is wrong."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-clickhouse-partitions",
+      "skill": "build-data",
+      "reference": "references/clickhouse.md",
+      "capability": "ClickHouse partition discipline",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evalIds": [
+        "deep-data-clickhouse-partitions"
+      ],
+      "decisionQuestions": [
+        "Design monthly or daily partitions only after estimating part counts, retention operations, merge pressure, and query pruning. Diagnose over-partitioning by high-cardinality tenant ID."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-clickhouse-dedup",
+      "skill": "build-data",
+      "reference": "references/clickhouse.md",
+      "capability": "ClickHouse deduplication is not immediate uniqueness",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evalIds": [
+        "deep-data-clickhouse-dedup"
+      ],
+      "decisionQuestions": [
+        "Design retried ingestion using insert deduplication or ReplacingMergeTree. Explain merge timing, query-time FINAL or argMax tradeoffs, materialized-view implications, and end-to-end idempotency."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-clickhouse-projections",
+      "skill": "build-data",
+      "reference": "references/clickhouse.md",
+      "capability": "ClickHouse projection decision",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evalIds": [
+        "deep-data-clickhouse-projections"
+      ],
+      "decisionQuestions": [
+        "Compare ORDER BY redesign, data-skipping indexes, materialized views, full projections, and lightweight projections for a secondary access path. Include version-dependent behavior and mutation/delete constraints."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-clickhouse-ttl-mutations",
+      "skill": "build-data",
+      "reference": "references/clickhouse.md",
+      "capability": "ClickHouse retention and mutation operations",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "clickhouse-official"
+      ],
+      "evalIds": [
+        "deep-data-clickhouse-ttl-mutations"
+      ],
+      "decisionQuestions": [
+        "Specify TTL retention, lightweight deletes, classic mutations, and partition drops for different data-removal needs. Explain asynchronous execution, merge costs, compliance verification, and operational monitoring."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-drizzle-internals",
+      "skill": "build-data",
+      "reference": "references/drizzle-architecture.md",
+      "capability": "Drizzle architecture from schema to execution",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "drizzle-official"
+      ],
+      "evalIds": [
+        "deep-data-drizzle-internals"
+      ],
+      "decisionQuestions": [
+        "Trace a typed select from table/column definitions through query builder and SQL AST, dialect compilation, placeholders, session/driver execution, result decoding, relations, and prepared-query reuse."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-custom-drizzle-dialect",
+      "skill": "build-data",
+      "reference": "references/clickhouse-adapter.md",
+      "capability": "Custom Drizzle-like ClickHouse adapter",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "experimental",
+      "sourceIds": [
+        "drizzle-official",
+        "clickhouse-official",
+        "kaiju-site-scope:libs/clickhouse"
+      ],
+      "evalIds": [
+        "deep-data-custom-drizzle-dialect"
+      ],
+      "decisionQuestions": [
+        "Design a Drizzle-like adapter for ClickHouse without pretending upstream Drizzle supports the dialect. Define schema metadata, SQL AST, dialect compiler, parameter binding, session/driver, result mapping, capability flags, migrations, and conformance tests."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-custom-adapter-honesty",
+      "skill": "build-data",
+      "reference": "references/clickhouse-adapter.md",
+      "capability": "Do not invent private adapter APIs",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "experimental",
+      "sourceIds": [
+        "drizzle-official",
+        "clickhouse-official",
+        "kaiju-site-scope:libs/clickhouse"
+      ],
+      "evalIds": [
+        "deep-data-custom-adapter-honesty"
+      ],
+      "decisionQuestions": [
+        "The repository mentions a custom ClickHouse Drizzle-like library but its source is unavailable. Produce a design and inspection checklist while clearly separating verified upstream Drizzle behavior, ClickHouse requirements, and unverified private exports."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-oltp-olap",
+      "skill": "build-data",
+      "reference": "references/storage-ownership.md",
+      "capability": "Separate PostgreSQL authority from ClickHouse analytics",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance",
+        "clickhouse-official"
+      ],
+      "evalIds": [
+        "deep-data-oltp-olap",
+        "deep-data-storage-classification-train"
+      ],
+      "decisionQuestions": [
+        "Design an architecture where PostgreSQL owns transactional truth and ClickHouse serves analytics. Cover outbox/CDC transfer, schemas, lateness, deduplication, correction, reconciliation, query routing, and failure states."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-data-artifact-provenance",
+      "skill": "build-data",
+      "reference": "references/artifacts.md",
+      "capability": "Pipeline artifact provenance",
+      "ownership": "The data skill owns storage authority, physical layout, query semantics, schema and dialect behavior, projections, migrations, artifacts, and reconciliation.",
+      "status": "observed-source",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evalIds": [
+        "deep-data-artifact-provenance",
+        "deep-data-artifact-manifest-train"
+      ],
+      "decisionQuestions": [
+        "Define raw, normalized, enriched, indexed, and published artifacts with immutable identifiers, schemas, digests, producer versions, lineage, validation, retention, and replay contracts."
+      ],
+      "failureSignatures": [
+        "OLTP assumptions are applied to analytical storage, or an ORM/dialect capability is asserted without compiling, executing, decoding, and testing its SQL contract."
+      ],
+      "exclusions": [
+        "Do not infer uniqueness, transactions, immediate deduplication, or unsupported Drizzle/ClickHouse APIs from familiar names or ecosystem proximity."
+      ],
+      "verification": [
+        "Inspect generated SQL and query plans, execute representative writes and reads, test retries and migrations, and reconcile results against the authoritative store."
+      ]
+    },
+    {
+      "id": "cap-sites-icon-selection",
+      "skill": "build-sites",
+      "reference": "references/icons.md",
+      "capability": "Astro Icon versus Unplugin Icons",
+      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "status": "observed-source",
+      "sourceIds": [
+        "astro-icon-official",
+        "unplugin-icons-official",
+        "kaiju-website"
+      ],
+      "evalIds": [
+        "deep-sites-icon-selection"
+      ],
+      "decisionQuestions": [
+        "Choose between Astro Icon and Unplugin Icons for an Astro site with local brand SVGs, Iconify sets, Solid islands, SSR output, and a strict server-bundle budget. Cover renderer ownership, optimization, types, and deployment risks."
+      ],
+      "failureSignatures": [
+        "Renderer, provider, ownership, or state authority is mismatched, causing build, hydration, bundle, privacy, accessibility, or authorization failures."
+      ],
+      "exclusions": [
+        "Do not mix framework-specific compiled components, over-preload assets, expose secret state in URLs, or equate a hydrated session cache with server authorization."
+      ],
+      "verification": [
+        "Build both static and server targets where applicable, inspect emitted assets and bundles, exercise hydration and navigation, and test accessibility and authorization in a browser."
+      ]
+    },
+    {
+      "id": "cap-sites-font-selection",
+      "skill": "build-sites",
+      "reference": "references/fonts.md",
+      "capability": "Astro Fonts API versus direct Fontsource",
+      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "status": "observed-source",
+      "sourceIds": [
+        "astro-fonts-official",
+        "fontsource-official"
+      ],
+      "evalIds": [
+        "deep-sites-font-selection"
+      ],
+      "decisionQuestions": [
+        "Choose between Astro's Fonts API and direct @fontsource imports. Cover providers, local hosting, privacy, variants, subsets, preloads, optimized fallbacks, variable axes, caching, and OG-image access."
+      ],
+      "failureSignatures": [
+        "Renderer, provider, ownership, or state authority is mismatched, causing build, hydration, bundle, privacy, accessibility, or authorization failures."
+      ],
+      "exclusions": [
+        "Do not mix framework-specific compiled components, over-preload assets, expose secret state in URLs, or equate a hydrated session cache with server authorization."
+      ],
+      "verification": [
+        "Build both static and server targets where applicable, inspect emitted assets and bundles, exercise hydration and navigation, and test accessibility and authorization in a browser."
+      ]
+    },
+    {
+      "id": "cap-web-icon-renderer-mismatch",
+      "skill": "build-web",
+      "reference": "references/assets.md",
+      "capability": "Reject icon renderer mismatch",
+      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "status": "observed-source",
+      "sourceIds": [
+        "unplugin-icons-official",
+        "kaiju-website"
+      ],
+      "evalIds": [
+        "deep-web-icon-renderer-mismatch"
+      ],
+      "decisionQuestions": [
+        "A Solid component imports an icon compiled for React while Astro renders the surrounding page. Diagnose the ownership mismatch and specify the correct Unplugin Icons compiler/types or an Astro-native boundary."
+      ],
+      "failureSignatures": [
+        "Renderer, provider, ownership, or state authority is mismatched, causing build, hydration, bundle, privacy, accessibility, or authorization failures."
+      ],
+      "exclusions": [
+        "Do not mix framework-specific compiled components, over-preload assets, expose secret state in URLs, or equate a hydrated session cache with server authorization."
+      ],
+      "verification": [
+        "Build both static and server targets where applicable, inspect emitted assets and bundles, exercise hydration and navigation, and test accessibility and authorization in a browser."
+      ]
+    },
+    {
+      "id": "cap-web-solid-primitives",
+      "skill": "build-web-apps",
+      "reference": "references/solid.md",
+      "capability": "Select Solid Primitives by lifecycle",
+      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "status": "observed-source",
+      "sourceIds": [
+        "solid-primitives-official",
+        "solid-primitives"
+      ],
+      "evalIds": [
+        "deep-web-solid-primitives"
+      ],
+      "decisionQuestions": [
+        "Choose primitives for media queries, resize, event listeners, scheduled work, persistence, and reactive maps. For each, address owner, cleanup, SSR behavior, accessor semantics, and whether a package is actually installed."
+      ],
+      "failureSignatures": [
+        "Renderer, provider, ownership, or state authority is mismatched, causing build, hydration, bundle, privacy, accessibility, or authorization failures."
+      ],
+      "exclusions": [
+        "Do not mix framework-specific compiled components, over-preload assets, expose secret state in URLs, or equate a hydrated session cache with server authorization."
+      ],
+      "verification": [
+        "Build both static and server targets where applicable, inspect emitted assets and bundles, exercise hydration and navigation, and test accessibility and authorization in a browser."
+      ]
+    },
+    {
+      "id": "cap-web-tanstack-ecosystem",
+      "skill": "build-web-apps",
+      "reference": "references/tanstack.md",
+      "capability": "TanStack ecosystem ownership",
+      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "status": "observed-source",
+      "sourceIds": [
+        "kaiju-site-scope"
+      ],
+      "evalIds": [
+        "deep-web-tanstack-ecosystem"
+      ],
+      "decisionQuestions": [
+        "Map Router, Query, Table, Form, Virtual, and Start to URL state, server-state cache, table models, draft form state, virtualization, and application runtime. Reject using Query for local drafts or Router for secret state."
+      ],
+      "failureSignatures": [
+        "Renderer, provider, ownership, or state authority is mismatched, causing build, hydration, bundle, privacy, accessibility, or authorization failures."
+      ],
+      "exclusions": [
+        "Do not mix framework-specific compiled components, over-preload assets, expose secret state in URLs, or equate a hydrated session cache with server authorization."
+      ],
+      "verification": [
+        "Build both static and server targets where applicable, inspect emitted assets and bundles, exercise hydration and navigation, and test accessibility and authorization in a browser."
+      ]
+    },
+    {
+      "id": "cap-web-auth-state",
+      "skill": "build-web-apps",
+      "reference": "references/auth.md",
+      "capability": "Auth state does not grant authorization",
+      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "status": "observed-source",
+      "sourceIds": [
+        "better-auth-official",
+        "better-auth-integration"
+      ],
+      "evalIds": [
+        "deep-web-auth-state"
+      ],
+      "decisionQuestions": [
+        "Integrate Better Auth into a Solid/TanStack app. Separate UI session state, server session verification, active-organization selection, membership/role authorization, cache invalidation, route guards, and SSR hydration."
+      ],
+      "failureSignatures": [
+        "Renderer, provider, ownership, or state authority is mismatched, causing build, hydration, bundle, privacy, accessibility, or authorization failures."
+      ],
+      "exclusions": [
+        "Do not mix framework-specific compiled components, over-preload assets, expose secret state in URLs, or equate a hydrated session cache with server authorization."
+      ],
+      "verification": [
+        "Build both static and server targets where applicable, inspect emitted assets and bundles, exercise hydration and navigation, and test accessibility and authorization in a browser."
+      ]
+    },
+    {
+      "id": "cap-okikio-observables",
+      "skill": "use-okikio",
+      "reference": "references/observables.md",
+      "capability": "@okikio/observables lifecycle and backpressure",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "status": "observed-source",
+      "sourceIds": [
+        "observables-official"
+      ],
+      "evalIds": [
+        "deep-okikio-observables"
+      ],
+      "decisionQuestions": [
+        "Build a typeahead and bulk-stream pipeline with @okikio/observables 1.4.0. Use typed operators, cancellation, deterministic teardown, push versus pull consumption, bounded buffering, error modes, and optional RxJS/Web Streams interop."
+      ],
+      "failureSignatures": [
+        "The answer invents an export or ignores version-specific lifecycle, error, backpressure, serialization, or transport limitations."
+      ],
+      "exclusions": [
+        "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
+      ],
+      "verification": [
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+      ]
+    },
+    {
+      "id": "cap-okikio-observables-errors",
+      "skill": "use-okikio",
+      "reference": "references/observables.md",
+      "capability": "Observable error modes are semantic",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "status": "observed-source",
+      "sourceIds": [
+        "observables-official"
+      ],
+      "evalIds": [
+        "deep-okikio-observables-errors"
+      ],
+      "decisionQuestions": [
+        "Compare pass-through, ignore, throw, and manual error modes for validation, telemetry, and fail-fast processing. Include ObservableError handling and prove cleanup still runs on failure or cancellation."
+      ],
+      "failureSignatures": [
+        "The answer invents an export or ignores version-specific lifecycle, error, backpressure, serialization, or transport limitations."
+      ],
+      "exclusions": [
+        "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
+      ],
+      "verification": [
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+      ]
+    },
+    {
+      "id": "cap-okikio-sparql",
+      "skill": "use-okikio",
+      "reference": "references/sparql.md",
+      "capability": "@okikio/sparql query boundary",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "status": "observed-source",
+      "sourceIds": [
+        "sparql-official"
+      ],
+      "evalIds": [
+        "deep-okikio-sparql"
+      ],
+      "decisionQuestions": [
+        "Use @okikio/sparql 0.0.2 to construct a parameterized SELECT with values, triple patterns, filters, optional clauses, ordering, and limits. Keep HTTP transport, endpoint auth, result parsing, and retries outside the builder unless verified exports prove otherwise."
+      ],
+      "failureSignatures": [
+        "The answer invents an export or ignores version-specific lifecycle, error, backpressure, serialization, or transport limitations."
+      ],
+      "exclusions": [
+        "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
+      ],
+      "verification": [
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+      ]
+    },
+    {
+      "id": "cap-okikio-undent",
+      "skill": "use-okikio",
+      "reference": "references/undent.md",
+      "capability": "Undent preserves intentional text structure",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "status": "observed-source",
+      "sourceIds": [
+        "undent:mod.ts",
+        "undent:unicode.ts"
+      ],
+      "evalIds": [
+        "deep-okikio-undent"
+      ],
+      "decisionQuestions": [
+        "Use @okikio/undent for a generated man-page example containing interpolation, blank lines, tabs, wide Unicode, and aligned columns. Explain the difference between dedentation and visual-width alignment and test exact output."
+      ],
+      "failureSignatures": [
+        "The answer invents an export or ignores version-specific lifecycle, error, backpressure, serialization, or transport limitations."
+      ],
+      "exclusions": [
+        "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
+      ],
+      "verification": [
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+      ]
+    },
+    {
+      "id": "cap-cli-integration-sequence",
+      "skill": "build-clis",
+      "reference": "references/integration.md",
+      "capability": "End-to-end CLI integration sequence",
+      "ownership": "The CLI skill owns the ordered path from parser and sparse sources through resolution, runtime context, LogTape routing, handler execution, cleanup, and exit status.",
+      "status": "observed-source",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "logtape-official",
+        "c12-official"
+      ],
+      "evalIds": [
+        "cli-deep-integration-normal-path-seen",
+        "cli-deep-end-to-end-source-trace"
+      ],
+      "decisionQuestions": [
+        "Can a single user input be traced through parsing, source provenance, resolved configuration, handler context, stable result output, diagnostics, cleanup, and exit semantics?"
+      ],
+      "failureSignatures": [
+        "Individual packages are configured plausibly but evaluation order, value provenance, output isolation, or cleanup breaks when they are composed."
+      ],
+      "exclusions": [
+        "Do not reload configuration in the handler, derive defaults before all sparse sources are known, or bypass LogTape for stable results."
+      ],
+      "verification": [
+        "Run the installed CLI through a normal command, conflicting sources, invalid input, piped JSON output, cancellation, and sink shutdown while recording each stage once."
+      ]
+    },
+    {
+      "id": "cap-api-query-language",
+      "skill": "build-apis",
+      "reference": "references/queries.md",
+      "capability": "Bounded public query language",
+      "ownership": "The API skill owns public filter, sort, field, pagination, count, complexity, authorization, and database-translation semantics.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance:utils/query"
+      ],
+      "evalIds": [
+        "deep-api-query-language",
+        "deep-api-query-auth-scope"
+      ],
+      "decisionQuestions": [
+        "Which operators, fields, sorts, null semantics, cursors, counts, and complexity limits are public, and where are authorization predicates bound?"
+      ],
+      "failureSignatures": [
+        "Arbitrary client input reaches the database, cursors are unstable, nulls change meaning across adapters, or authorization is applied after pagination."
+      ],
+      "exclusions": [
+        "Do not expose an ORM expression language directly or accept unknown fields and operators for forward compatibility."
+      ],
+      "verification": [
+        "Property-test parsing and cursor stability, then execute allowlisted and rejected queries against representative authorized datasets."
+      ]
+    },
+    {
+      "id": "cap-workflow-control-plane",
+      "skill": "build-workflows",
+      "reference": "references/control-plane.md",
+      "capability": "Workflow control-plane authority",
+      "ownership": "The workflow skill owns definition registration, version identity, run state, idempotent starts, legal control transitions, and worker discovery.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance:utils/workflows"
+      ],
+      "evalIds": [
+        "deep-workflow-control-plane"
+      ],
+      "decisionQuestions": [
+        "Where do definitions, run records, workers, and public start/status/cancel/retry commands live, and which record is authoritative for each transition?"
+      ],
+      "failureSignatures": [
+        "A queue is presented as a control plane, concurrent starts duplicate a run, or a worker executes an unregistered or incompatible definition."
+      ],
+      "exclusions": [
+        "Do not derive durable status only from an in-memory worker and do not let public callers write run state directly."
+      ],
+      "verification": [
+        "Race duplicate starts, stop workers during transitions, request repeated cancellation, retry terminal runs, and test definition-version incompatibility."
+      ]
+    },
+    {
+      "id": "cap-data-projection-rebuild",
+      "skill": "build-data",
+      "reference": "references/projections.md",
+      "capability": "Derived projection authority and rebuild",
+      "ownership": "The data skill owns projection source offsets, schemas, idempotent application, lag, deletion and correction handling, rebuild, cutover, and reconciliation.",
+      "status": "counterexample",
+      "sourceIds": [
+        "popmodern:DATA_PIPELINE.md"
+      ],
+      "evalIds": [
+        "deep-data-projection-authority",
+        "deep-data-projection-delete-repair"
+      ],
+      "decisionQuestions": [
+        "What store is authoritative, which source position makes updates replayable, and how are stale projections rebuilt and cut over without serving mixed generations?"
+      ],
+      "failureSignatures": [
+        "Search or graph results silently diverge after deletes, corrections, duplicates, or a partial backfill, and no source offset can explain the drift."
+      ],
+      "exclusions": [
+        "Do not call a projection a cache if it has independent query semantics, durable state, or a rebuild/cutover lifecycle."
+      ],
+      "verification": [
+        "Replay duplicated and out-of-order events into an empty generation, compare with authority, measure lag, and atomically cut traffic after reconciliation."
+      ]
+    },
+    {
+      "id": "cap-okikio-wikitext-maturity",
+      "skill": "use-okikio",
+      "reference": "references/wikitext.md",
+      "capability": "Wikitext representation cost and export maturity",
+      "ownership": "The Okikio skill owns source-grounded selection among tokenizer events, event trees, parse trees, and incremental sessions while respecting the package entrypoint.",
+      "status": "experimental",
+      "sourceIds": [
+        "wikitext:mod.ts",
+        "wikitext:parse.ts",
+        "wikitext:session.ts"
+      ],
+      "evalIds": [
+        "deep-okikio-wikitext-maturity"
+      ],
+      "decisionQuestions": [
+        "What is the cheapest representation for the requested operation, and is the implementation actually exported by the inspected package version?"
+      ],
+      "failureSignatures": [
+        "An experimental session or parser is imported from the public entrypoint even though the archive shows the export is missing or inconsistent."
+      ],
+      "exclusions": [
+        "Do not promote an experiment, protocol note, or internal file to a stable public API without checking mod.ts and package exports."
+      ],
+      "verification": [
+        "Type-check the exact public import and run golden token/event/tree fixtures plus incremental edit cases for the chosen representation."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-package-build-release",
+      "skill": "build-clis",
+      "reference": "references/unjs-build-release.md",
+      "capability": "Versioned package build, package-manager planning, and release authority",
+      "ownership": "The CLI skill owns reviewable build, packed-contract, dependency-operation, version, changelog, Git, and publication stages while each package owns only its verified mechanism.",
+      "status": "observed-source",
+      "sourceIds": [
+        "unbuild-3-6-1",
+        "nypm-0-6-8",
+        "changelogen-0-6-2"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-build-release-pipeline",
+        "deep-cli-unjs-release-side-effect-refusal"
+      ],
+      "decisionQuestions": [
+        "Which source, build, pack, dependency, changelog, version, commit, tag, push, publish, and registry-verification stages are read-only, locally mutating, externally mutating, or separately authorized?"
+      ],
+      "failureSignatures": [
+        "A jiti development stub is packed, export paths do not exist, dependencies change the wrong workspace, or changelog generation silently escalates to tag, push, or publication."
+      ],
+      "exclusions": [
+        "Do not equate a source build with a valid package, package-manager detection with manifest ownership, or release preparation with remote publication authority."
+      ],
+      "verification": [
+        "Run a clean non-stub build, inspect and install the tarball in clean consumers, snapshot nypm dry plans, review fixed-history changelog output, and test each authorized release effect independently."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-source-template-content",
+      "skill": "build-clis",
+      "reference": "references/unjs-build-release.md",
+      "capability": "Source-preserving edits, bounded generated documentation, and pinned template staging",
+      "ownership": "The CLI skill owns destination and content authority; Magicast owns verified static-ish AST mechanics, automd owns explicit marker regions, and giget owns template acquisition into a staging directory.",
+      "status": "observed-source",
+      "sourceIds": [
+        "magicast-0-5-3",
+        "automd-0-4-3",
+        "giget-3-3-0"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-source-content-preservation",
+        "deep-cli-unjs-scaffold-manager-authority",
+        "deep-cli-unjs-release-side-effect-refusal"
+      ],
+      "decisionQuestions": [
+        "Can the source shape be represented safely, which exact bytes or marker regions are owned, which immutable template identity is trusted, and may any existing destination be changed or removed?"
+      ],
+      "failureSignatures": [
+        "A guessed Magicast export fails, dynamic config is rewritten incorrectly, automd changes human prose, or giget force options erase or overwrite an owned destination."
+      ],
+      "exclusions": [
+        "Do not invent missing Magicast helpers, run broad Markdown formatting, treat a registry slug as immutable, or enable forceClean without explicit destructive authority."
+      ],
+      "verification": [
+        "Exercise unsupported AST fixtures and marker byte preservation, download pinned templates into isolation, inspect archive paths and scripts, and verify the merged repository rather than fetch success."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-user-environment",
+      "skill": "build-clis",
+      "reference": "references/unjs-build-release.md",
+      "capability": "XDG user preferences and portable environment hints",
+      "ownership": "The CLI skill owns interaction and configuration policy; rc9 stores small validated user preferences and std-env reports runtime, provider, agent, TTY, color, and mode signals without deciding authority.",
+      "status": "observed-source",
+      "sourceIds": [
+        "rc9-3-0-1",
+        "std-env-4-2-0"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-scaffold-manager-authority"
+      ],
+      "decisionQuestions": [
+        "Is the value a user preference or project contract, how is it parsed and validated, which stream is interactive, and is an environment signal merely a hint or a real policy input?"
+      ],
+      "failureSignatures": [
+        "RC values silently change type, dotted keys collide, prompts run in noninteractive contexts, or runtime/CI/agent detection is treated as security authorization."
+      ],
+      "exclusions": [
+        "Do not use rc9 as c12 project discovery or a default secret store, and do not treat std-env module snapshots or stdout TTY as a complete interaction contract."
+      ],
+      "verification": [
+        "Test XDG overrides, native and quoted RC values, corrupt files, per-stream redirection, no-TTY CI, and Node-compatible Deno/Bun runtime detection."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-fetch-contract",
+      "skill": "build-clis",
+      "reference": "references/unjs-fetch-state.md",
+      "capability": "Versioned ofetch request, parsing, retry, interceptor, cancellation, and deadline contract",
+      "ownership": "The CLI skill owns request safety, total deadlines, idempotency, schemas, redaction, and result contracts while ofetch owns the verified fetch mechanics of its pinned major line.",
+      "status": "observed-source",
+      "sourceIds": [
+        "ofetch-1-5-1"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-fetch-state-contracts",
+        "deep-cli-unjs-fetch-retry-interceptors"
+      ],
+      "decisionQuestions": [
+        "Which requests are retryable, how do root cancellation and per-attempt timeout compose in the installed version, where are response values validated, and which interceptor properties may be logged?"
+      ],
+      "failureSignatures": [
+        "A payload request is retried unsafely, a supplied signal disables the assumed timeout path, a typed generic substitutes for runtime validation, or an interceptor discloses credentials or error bodies."
+      ],
+      "exclusions": [
+        "Do not infer v2 alpha behavior from 1.5.1, treat a TypeScript result generic as validation, or let ofetch defaults decide business idempotency and total deadline policy."
+      ],
+      "verification": [
+        "Run a stalled local server and deterministic retry/error fixtures for signal, timeout, deadline, parsing, raw responses, streams, redaction, and safe versus unsafe methods."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-state-event-contract",
+      "skill": "build-clis",
+      "reference": "references/unjs-fetch-state.md",
+      "capability": "Driver-bounded storage, versioned fingerprints, and explicit hook lifecycle",
+      "ownership": "The CLI skill owns checkpoint, cache, idempotency, extension, failure, and teardown semantics; unstorage, ohash, and Hookable own only their exact verified storage, serialization/hash, and dispatch mechanics.",
+      "status": "observed-source",
+      "sourceIds": [
+        "unstorage-1-17-5",
+        "ohash-2-0-11",
+        "hookable-6-1-1"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-fetch-state-contracts",
+        "deep-cli-unjs-storage-hash-hooks",
+        "deep-cli-unjs-storage-exactly-once-refusal"
+      ],
+      "decisionQuestions": [
+        "Which selected driver methods and backend guarantees are real, what versioned normalized value is fingerprinted, and how are hook order, concurrency, errors, output, registration, removal, and shutdown owned?"
+      ],
+      "failureSignatures": [
+        "A missing optional driver method behaves like success, a remote store is called transactional without proof, a hash is mistaken for idempotency, or hook errors and registrations outlive their owner."
+      ],
+      "exclusions": [
+        "Do not infer persistence, transactions, compare-and-set, durable watch, cryptographic security, exactly-once effects, or plugin isolation from package names or common method shapes."
+      ],
+      "verification": [
+        "Exercise the exact selected driver and backend under restart, batch failure, watch loss, TTL, disposal, duplicate inputs, hash-version migration, serial/parallel hook failure, output hooks, and cleanup."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-runtime-config-pipeline",
+      "skill": "build-clis",
+      "reference": "references/unjs-runtime-config.md",
+      "capability": "Versioned executable configuration, merge, parsing, and format pipeline",
+      "ownership": "The CLI skill owns trust, precedence, semantic validation, output, and lifecycle while jiti, c12, defu, destr, and confbox own their exact inspected loading, merge, parsing, and format mechanics.",
+      "status": "observed-source",
+      "sourceIds": [
+        "jiti-2-7-0",
+        "c12-4-0-0-beta-5",
+        "defu-6-1-7",
+        "destr-2-0-5",
+        "confbox-0-2-4",
+        "live-browser-cli:packages/config/src/index.ts",
+        "live-browser-cli:packages/config/src/merge.ts"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-runtime-config-ownership",
+        "deep-cli-unjs-runtime-config-version-guard",
+        "deep-cli-unjs-runtime-config-hostile-module"
+      ],
+      "decisionQuestions": [
+        "Which source is data versus executable code, what precedence and array/null/function merge algebra applies, which parser errors are surfaced, and where is the merged value semantically validated?"
+      ],
+      "failureSignatures": [
+        "Executable config is treated as sandboxed, arrays follow guessed merge semantics, tolerant parsing is treated as validation, partial JSONC survives hidden diagnostics, or package internals bypass the LogTape output owner."
+      ],
+      "exclusions": [
+        "Do not infer c12 v3 behavior from the v4 beta, use jiti as a sandbox, accept destr fallback as valid input, guess confbox exports, or let defu defaults become unexplained product policy."
+      ],
+      "verification": [
+        "Type-check exact imports, test malicious executable modules and every precedence/merge edge, inspect format diagnostics, validate authored and runtime schemas, and capture direct output under failure."
+      ]
+    },
+    {
+      "id": "cap-cli-unjs-package-path-url-boundaries",
+      "skill": "build-clis",
+      "reference": "references/unjs-runtime-config.md",
+      "capability": "Package metadata, path containment, and URL identity boundaries",
+      "ownership": "The CLI skill owns manifest and workspace authority, filesystem containment, URL identity, security, and validation while pkg-types, pathe, and ufo own their exact discovery and transformation mechanics.",
+      "status": "observed-source",
+      "sourceIds": [
+        "pkg-types-2-3-1",
+        "pathe-2-0-3",
+        "ufo-1-6-4"
+      ],
+      "evalIds": [
+        "deep-cli-unjs-runtime-config-ownership",
+        "deep-cli-unjs-runtime-config-path-url"
+      ],
+      "decisionQuestions": [
+        "Which package manifest owns the operation, does the resolved path remain within the authorized root after symlink resolution, and may URL normalization change signing, cache, or resource identity?"
+      ],
+      "failureSignatures": [
+        "Parent package discovery crosses ownership, a normalized path escapes through a symlink, pkg-types write/cache behavior loses concurrent changes, or ufo protocol/normalization behavior is copied from a contradictory example."
+      ],
+      "exclusions": [
+        "Do not treat package discovery as dependency ownership, string normalization as authorization, URL cleanup as identity-preserving, or the ufo README isScriptProtocol example as controlling over the pinned runtime."
+      ],
+      "verification": [
+        "Test nested workspaces and concurrent manifest updates, path traversal and symlinks on supported platforms, signed and opaque URLs, and exact pinned ufo protocol behavior."
+      ]
+    },
+    {
+      "id": "cap-devtools-mise-toolchain",
+      "skill": "build-devtools",
+      "reference": "references/mise-aube.md",
+      "capability": "Mise tool, environment, task, trust, and provenance ownership",
+      "ownership": "The developer-tools skill owns repository toolchain and task evidence; Mise may own selected tool versions, environments, and task adapters without displacing manifest, secret, runtime, or CI owners silently.",
+      "status": "observed-source",
+      "sourceIds": ["mise-official"],
+      "evalIds": [
+        "deep-devtools-mise-config-ownership",
+        "deep-devtools-mise-task-semantics",
+        "deep-devtools-mise-lock-provenance"
+      ],
+      "decisionQuestions": [
+        "Which resolved configuration scope owns each tool, environment value, task, backend, trust decision, lock entry, and runtime, and what evidence proves clean-shell and CI parity?"
+      ],
+      "failureSignatures": [
+        "A task or tool resolves differently by directory or host, a freshness stamp hides an invalid artifact, or a lock/provenance claim exceeds what was verified on the target platform."
+      ],
+      "exclusions": [
+        "Do not trust arbitrary configuration, activate hidden global state in CI, duplicate canonical tasks, or call loose versions and metadata-only cross-platform entries reproducible."
+      ],
+      "verification": [
+        "Inspect resolved configuration, run locked installs and canonical tasks in clean shells on supported platforms, validate generated artifacts semantically, and record backend/provenance evidence."
+      ]
+    },
+    {
+      "id": "cap-devtools-aube-package-manager",
+      "skill": "build-devtools",
+      "reference": "references/mise-aube.md",
+      "capability": "Aube dependency graph, workspace, security, and migration ownership",
+      "ownership": "The developer-tools skill owns adoption and verification; Aube owns the selected JavaScript dependency graph, lockfile updates, linker/store, workspace operations, and approved dependency builds only after explicit cutover.",
+      "status": "observed-source",
+      "sourceIds": ["aube-official", "aube-1-27-0"],
+      "evalIds": [
+        "deep-devtools-aube-existing-lockfile",
+        "deep-devtools-aube-build-jail",
+        "deep-devtools-aube-workspace-deploy"
+      ],
+      "decisionQuestions": [
+        "Can Aube preserve the authoritative existing lockfile and required graph, peer, patch, native-build, workspace, pack, deploy, frozen-CI, and rollback semantics before becoming the owner?"
+      ],
+      "failureSignatures": [
+        "Two lockfiles become writable, hoisting hides undeclared dependencies, native artifacts remain unbuilt, workspace filters select the wrong graph, or deployment payload differs from the package contract."
+      ],
+      "exclusions": [
+        "Do not infer semantic parity from a successful install, approve every lifecycle script, disable the jail broadly, or convert lockfiles and task ownership in one unreviewable step."
+      ],
+      "verification": [
+        "Compare resolved graphs and lock diffs, test isolated linking and approved jailed builds, exercise filters/catalogs/pack/deploy, install clean consumers, and prove rollback."
+      ]
+    },
+    {
+      "id": "cap-devtools-mise-aube-composition",
+      "skill": "build-devtools",
+      "reference": "references/mise-aube.md",
+      "capability": "Mise and Aube executable, runtime, task, and auto-install composition",
+      "ownership": "The developer-tools skill assigns one owner for the Aube executable, Node runtime, JS dependencies, canonical tasks, and environment while making re-exec, auto-install, offline, and fallback behavior explicit.",
+      "status": "observed-source",
+      "sourceIds": ["mise-official", "aube-official", "aube-1-27-0"],
+      "evalIds": ["deep-devtools-mise-aube-owner-loop"],
+      "decisionQuestions": [
+        "Will Mise or Aube install each executable and runtime, can either re-exec or download unexpectedly, and what frozen/offline policy prevents hidden mutation in CI?"
+      ],
+      "failureSignatures": [
+        "Mise and Aube repeatedly replace one another, different Node versions run install and tasks, or an air-gapped command performs an implicit install or download."
+      ],
+      "exclusions": [
+        "Do not allow two runtime owners, rely on shell activation implicitly in CI, or treat auto-install convenience as authorization to mutate a frozen dependency graph."
+      ],
+      "verification": [
+        "Trace version selection and re-exec, run cold/warm/frozen/offline scenarios, inspect environment and lock digests, and execute a documented rollback."
+      ]
+    }
+  ]
+}

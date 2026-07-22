@@ -55,7 +55,16 @@
       "role": "CLI implementation patterns, contradictions, tasks, config, logging, and stages",
       "verifiedDate": "2026-07-13",
       "sha256": "13b9282438b11e687262d11f90c627a6fb5847db788a7ddf6325aae65334de33",
-      "claimPaths": ["README.md", "deno.jsonc", "clis/main/src/program.ts", "clis/main/src/shared/logging.ts"]
+      "claimPaths": [
+        "README.md",
+        "deno.jsonc",
+        "clis/main/src/program.ts",
+        "clis/main/src/shared/logging.ts",
+        "packages/config/deno.json",
+        "packages/config/src/index.ts",
+        "packages/config/src/merge.ts",
+        "packages/config/src/merge.test.ts"
+      ]
     },
     {
       "id": "kaiju-website",
@@ -75,7 +84,11 @@
       "role": "TanStack Solid application, Astro docs, services, auth, billing, and data",
       "verifiedDate": "2026-07-13",
       "sha256": "362f490ad770b18bf1a02d8050024782049e6c420097103d21c6bb3b1507b202",
-      "claimPaths": ["apps/frontend/src/routes/(product)/_app/(search)/components/LeadSearchPage.tsx", "apps/frontend/src/routes/(product)/_app/(search)/_queries.ts"],
+      "claimPaths": [
+        "apps/frontend/src/routes/(product)/_app/(search)/components/LeadSearchPage.tsx",
+        "apps/frontend/src/routes/(product)/_app/(search)/_queries.ts",
+        "libs/clickhouse"
+      ],
       "notes": "Contains no browser-extension implementation"
     },
     {
@@ -114,8 +127,25 @@
       "role": "API, auth, query, data, server, and workflow utilities",
       "verifiedDate": "2026-07-13",
       "sha256": "6b184daf86f81e2fbe7271d9df0bed9f32468aaebd44478e38e12046762fba24",
-      "treeDigest": "907d3e7b474f8139fd7dfab26f8b97592568365fbf0082e734fefc4116f4c559",
-      "claimPaths": ["docs/service-module-authoring.md", "docs/workflows-mental-model.md", "utils/auth", "utils/auth/auth.ts", "utils/execution/db.ts", "utils/middleware/validation.ts", "utils/query", "utils/workflows", "utils/workflows/postgres_store.ts"]
+      "claimPaths": [
+        "docs/service-module-authoring.md",
+        "docs/workflows-mental-model.md",
+        "utils/auth",
+        "utils/auth/auth.ts",
+        "utils/endpoint",
+        "utils/execution/db.ts",
+        "utils/middleware",
+        "utils/middleware/validation.ts",
+        "utils/query",
+        "utils/server",
+        "utils/workflows",
+        "utils/workflows/definition.ts",
+        "utils/workflows/postgres_store.ts",
+        "utils/workflows/runtime",
+        "utils/workflows/runtime/effect_sql_adapter.ts",
+        "utils/workflows/worker",
+        "utils/workflows/worker/loops.ts"
+      ]
     },
     {
       "id": "old-finance",
@@ -125,7 +155,6 @@
       "role": "Duplicate finance archive retained for provenance testing",
       "verifiedDate": "2026-07-13",
       "sha256": "bc4d4c3ed55944326674b854618c8ebddab82c12aa85834a87f484462b56ab9c",
-      "treeDigest": "907d3e7b474f8139fd7dfab26f8b97592568365fbf0082e734fefc4116f4c559",
       "duplicateOf": "new-finance",
       "notes": "Relative-path and content hashes are identical"
     },
@@ -137,8 +166,10 @@
       "role": "User Better Auth integration monorepo, not upstream Better Auth source",
       "verifiedDate": "2026-07-13",
       "sha256": "7da8d175225fa3b776c58d3f7326d706fdc1f269e919fbb1e82ae5e012782822",
-      "treeDigest": "132452608992142fdded76c52b055f9f259e7fbd3ff8535a55e9ce9603f5e469",
-      "claimPaths": ["apps/frontend/src/middleware/active_org.ts"]
+      "claimPaths": [
+        "apps/frontend/src/middleware/active_org.ts",
+        ".agents/research/inngest_effect_architecture_handoff.md"
+      ]
     },
     {
       "id": "popmodern",
@@ -148,7 +179,12 @@
       "role": "Historical APIs, pipelines, search/graph/data patterns, and drift",
       "verifiedDate": "2026-07-13",
       "sha256": "de09a057170fb2703eb974fca0cfe2a30e223e215109b1d9bccf45bcfa1a1157",
-      "claimPaths": ["DATA_PIPELINE.md", "README.md", "infra/mediawiki_ingest/etl_runner.py", "supabase/functions/collections/endpoints/lists/feed/handler.ts"]
+      "claimPaths": [
+        "DATA_PIPELINE.md",
+        "README.md",
+        "infra/mediawiki_ingest/etl_runner.py",
+        "supabase/functions/collections/endpoints/lists/feed/handler.ts"
+      ]
     },
     {
       "id": "undent",
@@ -158,7 +194,12 @@
       "role": "Undent APIs, Unicode widths, generation, packaging, and release patterns",
       "verifiedDate": "2026-07-13",
       "sha256": "4debcddd9b14311adc7721f5a504b1240a0ced289405d6fd6a5267cda9f51304",
-      "claimPaths": ["mod.ts", "scripts/build_npm.ts", "scripts/sync_unicode_east_asian_width.ts", "unicode.ts"]
+      "claimPaths": [
+        "mod.ts",
+        "scripts/build_npm.ts",
+        "scripts/sync_unicode_east_asian_width.ts",
+        "unicode.ts"
+      ]
     },
     {
       "id": "wikitext",
@@ -168,7 +209,14 @@
       "role": "Tokenizer/event/tree/session APIs, experiments, and missing-export counterexample",
       "verifiedDate": "2026-07-13",
       "sha256": "4a8b68e454c1dbeb0161a03433dfd85ee88307fce37dc7b756e4fbc3a337377c",
-      "claimPaths": ["deno.json", "experiments/event-shape-study/protocol.md", "mod.ts", "parse.ts", "readme.md", "session.ts"]
+      "claimPaths": [
+        "deno.json",
+        "experiments/event-shape-study/protocol.md",
+        "mod.ts",
+        "parse.ts",
+        "readme.md",
+        "session.ts"
+      ]
     },
     {
       "id": "user-memory",
@@ -178,6 +226,366 @@
       "role": "Discovery hints for private or unavailable packages",
       "verifiedDate": "2026-07-13",
       "claimPaths": ["custom-clickhouse-drizzle"]
+    },
+    {
+      "id": "optique-official",
+      "artifact": "https://optique.dev/llms-full.txt",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Optique parser combinators, runners, discovery, generated surfaces, and integrations",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "logtape-official",
+      "artifact": "https://logtape.org/llms-full.txt",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "LogTape categories, inheritance, sinks, filters, formatters, redaction, adapters, and testing",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "c12-official",
+      "artifact": "https://github.com/unjs/c12",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "c12 source priority, configuration layers, dotenv, package fields, extends, watching, and custom mergers",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "defu-official",
+      "artifact": "https://github.com/unjs/defu",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "defu recursive defaults merge semantics, custom mergers, and function/array variants",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "jiti-official",
+      "artifact": "https://github.com/unjs/jiti",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "jiti runtime module loading, transformation, resolution, interop, and cache boundaries",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "unjs-official",
+      "artifact": "https://unjs.io/packages/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "UnJS ecosystem package inventory and complementary capability discovery",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "effect-official",
+      "artifact": "https://effect.website/docs/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Effect services, Context, Layers, typed errors, resource scopes, concurrency, and runtime composition",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "effect-workflow-official",
+      "artifact": "https://registry.npmjs.org/@effect/workflow/-/workflow-0.19.0.tgz",
+      "kind": "official-docs",
+      "status": "experimental",
+      "role": "Pinned @effect/workflow 0.19.0 package source and durability surface; verify exact exports before use",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm dist integrity sha512-9x84bADzhVWrglxWW3ts3LzoojMLAJ8SpR+Bv3YaZ3LToXrxTYnJZ29vR6X5VyK35rpQ7DtTruAT3JnQKmIEXw==; the package remains alpha/version-sensitive"
+    },
+    {
+      "id": "temporal-typescript-official",
+      "artifact": "https://docs.temporal.io/develop/typescript",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Temporal TypeScript Workflows, Activities, Workers, clients, messages, retries, timeouts, cancellation, and versioning",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "clickhouse-official",
+      "artifact": "https://clickhouse.com/docs/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "ClickHouse storage engines, parts, merges, sparse indexes, granules, projections, materialized views, TTL, mutations, and deduplication",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "drizzle-official",
+      "artifact": "https://orm.drizzle.team/docs/overview",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Drizzle schema, SQL AST, dialect, driver/session, prepared query, mapping, migration, relation, and transaction contracts",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "astro-icon-official",
+      "artifact": "https://www.astroicon.dev/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Astro Icon local SVG, Iconify sets, optimization, styling, and deployment behavior",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "unplugin-icons-official",
+      "artifact": "https://github.com/unplugin/unplugin-icons",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Unplugin Icons bundler adapters, renderer compilers, virtual imports, custom collections, types, and auto import",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "astro-fonts-official",
+      "artifact": "https://docs.astro.build/en/guides/fonts/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Astro Fonts API providers, variants, fallbacks, preloads, local caching, privacy, and programmatic font data",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "fontsource-official",
+      "artifact": "https://fontsource.org/docs/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Fontsource static and variable packages, subsets, weights, styles, CSS imports, and API metadata",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "observables-official",
+      "artifact": "https://jsr.io/@okikio/observables/1.4.0",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "@okikio/observables 1.4.0 lifecycle, operators, error modes, backpressure, events, interop, and resource cleanup",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "sparql-official",
+      "artifact": "https://jsr.io/@okikio/sparql/0.0.2",
+      "kind": "official-docs",
+      "status": "experimental",
+      "role": "@okikio/sparql 0.0.2 value conversion, patterns, fluent SPARQL query construction, and maturity limits",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "better-auth-official",
+      "artifact": "https://www.better-auth.com/docs/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Better Auth server/client setup, adapters, sessions, plugins, organizations, and framework integrations",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "solid-primitives-official",
+      "artifact": "https://primitives.solidjs.community/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Solid Primitives package inventory, reactive ownership, SSR, cleanup, scheduling, and platform integrations",
+      "verifiedDate": "2026-07-17"
+    },
+    {
+      "id": "unbuild-3-6-1",
+      "artifact": "https://registry.npmjs.org/unbuild/-/unbuild-3.6.1.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published unbuild 3.6.1 declarations and README for build entries, declarations, Rollup and mkdist options, stubs, hooks, and package output",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-+U5CdtrdjfWkZhuO4N9l5UhyiccoeMEXIc2Lbs30Haxb+tRwB3VwB8AoZRxlAzORXunenSo+j6lh45jx+xkKgg=="
+    },
+    {
+      "id": "nypm-0-6-8",
+      "artifact": "https://registry.npmjs.org/nypm/-/nypm-0.6.8.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published nypm 0.6.8 declarations and README for package-manager detection, dry planning, install, dependency, script, dlx, and command-builder APIs",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-Q9K4Diu6l5u6xJQogeFSs/zKtyMSgFKFtRQV+tHP4kL7KPm2grpBU0dFIwFaXwNxN0MtfKWc43VpCugAa+LPsw=="
+    },
+    {
+      "id": "changelogen-0-6-2",
+      "artifact": "https://registry.npmjs.org/changelogen/-/changelogen-0.6.2.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published changelogen 0.6.2 declarations and README for config, Git parsing, Markdown generation, semver decisions, version mutation, tags, publication, and GitHub release synchronization",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-QtC7+r9BxoUm+XDAwhLbz3CgU134J1ytfE3iCpLpA4KFzX2P1e6s21RrWDwUBzfx66b1Rv+6lOA2nS2btprd+A=="
+    },
+    {
+      "id": "automd-0-4-3",
+      "artifact": "https://registry.npmjs.org/automd/-/automd-0.4.3.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published automd 0.4.3 declarations and README for marker parsing, pure transformation, bounded generation, custom generators, config, output, and watch lifecycle",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-5WJNEiaNpFm8h0OmQzhnESthadUQhJwQfka/TmmJpMudZ8qU9MZao9p0G1g7WYA9pVTz6FMMOSvxnfQ9g8q9vQ=="
+    },
+    {
+      "id": "giget-3-3-0",
+      "artifact": "https://registry.npmjs.org/giget/-/giget-3.3.0.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published giget 3.3.0 declarations and README for pinned template acquisition, providers, registries, cache modes, ignore filters, installation, authorization, and destructive destination options",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-gzi2D96p+AMfDcmJHGDj3KJ9NRiwvlFAU5yfa3ROwWZmFUjX4P43x3BcyRaOMMLto1vUo7C+86+MFhYTl6Ryiw=="
+    },
+    {
+      "id": "magicast-0-5-3",
+      "artifact": "https://registry.npmjs.org/magicast/-/magicast-0.5.3.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published Magicast 0.5.3 declarations and README for static-ish module parsing, proxy mutation, code generation, file helpers, builders, unsupported shapes, and experimental helpers",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-pVKE4UdSQ7DvHzivsCIFx2BJn1mHG6KsyrFcaxFx6tONdneEuThrDx0Cj3AMg58KyN4pzYT+LHOotxDQDjNvkw=="
+    },
+    {
+      "id": "rc9-3-0-1",
+      "artifact": "https://registry.npmjs.org/rc9/-/rc9-3.0.1.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published rc9 3.0.1 declarations and README for parsing, flat/unflat native values, local RC files, XDG user configuration, updates, and deprecated aliases",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-gMDyleLWVE+i6Sgtc0QbbY6pEKqYs97NGi6isHQPqYlLemPoO8dxQ3uGi0f4NiP98c+jMW6cG1Kx9dDwfvqARQ=="
+    },
+    {
+      "id": "std-env-4-2-0",
+      "artifact": "https://registry.npmjs.org/std-env/-/std-env-4.2.0.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published std-env 4.2.0 declarations and README for runtime, CI provider, agent, TTY, color, platform, mode, and minimal-environment signals",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-oCUKSupKTHX53EyjDtuZQ64pjLJ6yYCtpmEw0goYxtjG9KpbRe8KAsl2tBUGU9DyMcJ0RwJ8GqJAFzMXcXW1Rw=="
+    },
+    {
+      "id": "ofetch-1-5-1",
+      "artifact": "https://registry.npmjs.org/ofetch/-/ofetch-1.5.1.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published ofetch 1.5.1 declarations, README, and implementation for parsing, errors, interceptors, retries, timeout, signals, raw responses, streams, and Node dispatchers",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-2W4oUZlVaqAPAil6FUg/difl6YhqhUR7x2eZY4bQCko22UXg3hptq9KLQdqFClV+Wu85UX7hNtdGTngi/1BxcA==; excludes the v2 alpha line"
+    },
+    {
+      "id": "unstorage-1-17-5",
+      "artifact": "https://registry.npmjs.org/unstorage/-/unstorage-1.17.5.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published unstorage 1.17.5 declarations, implementation, drivers, and README for storage, mounts, metadata, watches, snapshots, transactions, disposal, and driver capability fallbacks",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-0i3iqvRfx29hkNntHyQvJTpf5W9dQ9ZadSoRU8+xVlhVtT7jAX57fazYO9EHvcRCfBCyi5YRya7XCDOsbTgkPg==; excludes the v2 alpha line"
+    },
+    {
+      "id": "ohash-2-0-11",
+      "artifact": "https://registry.npmjs.org/ohash/-/ohash-2.0.11.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published ohash 2.0.11 declarations and implementation for serialization, hashing, equality, diffing, object hashing, and v1 compatibility boundaries",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-RdR9FQrFwNBNXAr4GixM8YaRZRJ5PUWbKYbE5eOsrwAjJW0q2REGcf79oYPsLyskQCZG1PLN+S/K1V00joZAoQ=="
+    },
+    {
+      "id": "hookable-6-1-1",
+      "artifact": "https://registry.npmjs.org/hookable/-/hookable-6.1.1.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published Hookable 6.1.1 declarations and implementation for hook registration, ordering, serial and parallel calls, error hooks, output hooks, removal, deprecation, and minimal core",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-U9LYDy1CwhMCnprUfeAZWZGByVbhd54hwepegYTK7Pi5NvqEj63ifz5z+xukznehT7i6NIZRu89Ay1AZmRsLEQ==; attached repositories also contain 5.5.3"
+    },
+    {
+      "id": "jiti-2-7-0",
+      "artifact": "https://registry.npmjs.org/jiti/-/jiti-2.7.0.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published jiti 2.7.0 declarations, README, and implementation for module loading, resolution, transformation, caches, interop, async import, and output callbacks",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==; jiti executes code and is not a sandbox"
+    },
+    {
+      "id": "c12-4-0-0-beta-5",
+      "artifact": "https://registry.npmjs.org/c12/-/c12-4.0.0-beta.5.tgz",
+      "kind": "official-docs",
+      "status": "experimental",
+      "role": "Published c12 4.0.0-beta.5 declarations, README, and implementation for source discovery, layers, extends, dotenv, package config, custom mergers, watching, and optional format peers",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-yWGCPCQGJeFq4R0mFg5HOhC3Rg+B0PCdM+ldXWUhughoGgeeq8/tjRmXh4/lmhKWyhf+KOFxB/JMXf0Yv1Fd5A==; attached CLI also pins stable 3.3.4"
+    },
+    {
+      "id": "defu-6-1-7",
+      "artifact": "https://registry.npmjs.org/defu/-/defu-6.1.7.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published defu 6.1.7 declarations and implementation for recursive defaults merging, arrays, null/undefined, function merging, and custom mergers",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-7z22QmUWiQ/2d0KkdYmANbRUVABpZ9SNYyH5vx6PZ+nE5bcC0l7uFvEfHlyld/HcGBFTL536ClDt3DEcSlEJAQ=="
+    },
+    {
+      "id": "destr-2-0-5",
+      "artifact": "https://registry.npmjs.org/destr/-/destr-2.0.5.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published destr 2.0.5 declarations and implementation for tolerant and strict JSON/native-value parsing, prototype-key protection, and fallback behavior",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-ugFTXCtDZunbzasqBxrK93Ik/DRYsO6S/fedkWEMKqt04xZ4csmnmwGDBAb07QWNaGMAmnTIemsYZCksjATwsA=="
+    },
+    {
+      "id": "confbox-0-2-4",
+      "artifact": "https://registry.npmjs.org/confbox/-/confbox-0.2.4.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published confbox 0.2.4 declarations and implementation for JSON, JSONC, JSON5, YAML, TOML, INI, JSONL, and dotenv parsing and serialization with format-specific diagnostics",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-ysOGlgTFbN2/Y6Cg3Iye8YKulHw+R2fNXHrgSmXISQdMnomY6eNDprVdW9R5xBguEqI954+S6709UyiO7B+6OQ=="
+    },
+    {
+      "id": "pkg-types-2-3-1",
+      "artifact": "https://registry.npmjs.org/pkg-types/-/pkg-types-2.3.1.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published pkg-types 2.3.1 declarations and implementation for package discovery, manifest read/write, normalization, export resolution, workspace detection, and cache behavior",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-y+ichcgc2LrADuhLNAx8DFjVfgz91pRxfZdI3UDhxHvcVEZsenLO+7XaU5vOp0u/7V/wZ+plyuQxtrDlZJ+yeg=="
+    },
+    {
+      "id": "pathe-2-0-3",
+      "artifact": "https://registry.npmjs.org/pathe/-/pathe-2.0.3.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published pathe 2.0.3 declarations and implementation for normalized path operations, aliases, filename/extension helpers, and platform-independent string behavior",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w=="
+    },
+    {
+      "id": "ufo-1-6-4",
+      "artifact": "https://registry.npmjs.org/ufo/-/ufo-1.6.4.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Published ufo 1.6.4 declarations, README, and implementation for URL parsing, joining, query handling, encoding, protocol checks, normalization, and relative resolution",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-JFNbkD1Svwe0KvGi8GOeLcP4kAWQ609twvCdcHxq1oSL8svv39ZuSvajcD8B+5D0eL4+s1Is2D/O6KN3qcTeRA==; README/runtime isScriptProtocol input mismatch is documented in the focused reference"
+    },
+    {
+      "id": "mise-official",
+      "artifact": "https://mise.jdx.dev/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Mise configuration hierarchy, tools and backends, lockfile provenance, tasks, environments, trust, activation, and CI behavior",
+      "verifiedDate": "2026-07-17",
+      "notes": "Mutable current documentation; recheck installed Mise version, generated help, backend policy, and defaults before use"
+    },
+    {
+      "id": "aube-official",
+      "artifact": "https://aube.jdx.dev/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Aube package-manager model, existing lockfiles, workspaces, catalogs, deploys, settings, lifecycle builds, jail, security, runtime, and CI behavior",
+      "verifiedDate": "2026-07-17",
+      "notes": "Mutable current documentation; recheck the installed Aube version and generated CLI/settings references before use"
+    },
+    {
+      "id": "aube-1-27-0",
+      "artifact": "https://registry.npmjs.org/@endevco/aube/-/aube-1.27.0.tgz",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Pinned @endevco/aube 1.27.0 npm package identity and installation metadata",
+      "verifiedDate": "2026-07-17",
+      "notes": "npm integrity sha512-HgxHsneiPlnaPuo25lrLGPHu/SesodYhem4ezlOZ+BR0aOtC5GJFYOLJnAUgxoMsUKtVGnr42FmDinviFSEVzA=="
     },
     {
       "id": "deno-software",

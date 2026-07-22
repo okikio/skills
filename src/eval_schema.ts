@@ -49,7 +49,6 @@ export const SourceRecordSchema = z.object({
   role: z.string(),
   verifiedDate: z.iso.date(),
   sha256: z.string().regex(/^[a-f0-9]{64}$/).optional(),
-  treeDigest: z.string().regex(/^[a-f0-9]{64}$/).optional(),
   claimPaths: z.array(z.string()).default([]),
   duplicateOf: z.string().optional(),
   notes: z.string().optional(),
@@ -58,6 +57,26 @@ export const SourceRegistrySchema = z.object({
   schemaVersion: z.literal(1),
   sources: z.array(SourceRecordSchema),
 });
+
+export const CapabilityRecordSchema = z.object({
+  id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
+  skill: SkillIdSchema,
+  reference: z.string().regex(/^references\/[a-z0-9][a-z0-9._/-]*\.md$/),
+  capability: z.string().min(8),
+  ownership: z.string().min(8),
+  status: EvidenceStatusSchema,
+  sourceIds: z.array(z.string()).min(1),
+  evalIds: z.array(z.string()).min(1),
+  decisionQuestions: z.array(z.string().min(8)).min(1),
+  failureSignatures: z.array(z.string().min(8)).min(1),
+  exclusions: z.array(z.string().min(8)).min(1),
+  verification: z.array(z.string().min(8)).min(1),
+});
+export const CapabilityRegistrySchema = z.object({
+  schemaVersion: z.literal(1),
+  capabilities: z.array(CapabilityRecordSchema).min(1),
+});
+export type CapabilityRecord = z.infer<typeof CapabilityRecordSchema>;
 
 export const AssertionSchema = z.discriminatedUnion("kind", [
   z.object({
@@ -93,6 +112,14 @@ export const AssertionSchema = z.discriminatedUnion("kind", [
     stderr: z.string().optional(),
     timeoutMs: z.number().int().positive().max(300_000).default(120_000),
   }),
+]);
+
+const executableAssertionKinds = new Set([
+  "file-exists",
+  "file-not-exists",
+  "file-unchanged",
+  "file-changed",
+  "command",
 ]);
 
 const LegacyActivationSchema = z.object({
@@ -139,6 +166,36 @@ export const EvalCaseSchema = z.object({
       code: "custom",
       message: "fixture-behavior cases require a fixture",
       path: ["fixture"],
+    });
+  }
+  if (value.skill === "composition" && value.expectedSkills.length === 0) {
+    context.addIssue({
+      code: "custom",
+      message: "composition cases require explicit expectedSkills",
+      path: ["expectedSkills"],
+    });
+  }
+  const hasExecutableAssertion = value.assertions.some((assertion) =>
+    executableAssertionKinds.has(assertion.kind)
+  );
+  if (
+    value.oracleStrength === "fixture-behavior" &&
+    !hasExecutableAssertion
+  ) {
+    context.addIssue({
+      code: "custom",
+      message: "fixture-behavior cases require a command or file assertion",
+      path: ["assertions"],
+    });
+  }
+  if (
+    value.oracleStrength === "mixed" &&
+    (!hasExecutableAssertion || value.rubric.length === 0)
+  ) {
+    context.addIssue({
+      code: "custom",
+      message: "mixed cases require both an executable assertion and a rubric",
+      path: ["oracleStrength"],
     });
   }
 });
@@ -217,17 +274,19 @@ export const EvalResultSchema = z.object({
 export type EvalResult = z.infer<typeof EvalResultSchema>;
 
 export const AggregateReportSchema = z.object({
-  schemaVersion: z.literal(2),
+  schemaVersion: z.literal(3),
   phase: z.enum(["evaluate", "release"]),
   runId: z.string(),
   createdAt: z.iso.datetime(),
   gitRevision: z.string(),
-  candidateRevision: z.string(),
+  benchmarkId: z.string(),
+  skillRevision: z.string(),
   targetSkill: SkillIdSchema,
   host: ModelAdapterSchema.shape.host,
   model: z.string(),
   modelVersion: z.string(),
   adapterVersion: z.string(),
+  variantRole: z.enum(["baseline", "candidate"]),
   variantId: z.string(),
   installedSkills: z.array(SkillIdSchema),
   caseSetDigest: z.string(),
@@ -273,3 +332,57 @@ export const AggregateReportSchema = z.object({
   }
 });
 export type AggregateReport = z.infer<typeof AggregateReportSchema>;
+
+export const SkillOptWorkspaceSchema = z.object({
+  schemaVersion: z.literal(2),
+  mode: z.enum(["optimize", "evaluate", "release"]),
+  optimizationUnit: z.enum(["root-router", "reference"]),
+  targetSkill: SkillIdSchema,
+  targetReference: z.string().optional(),
+  companionSkills: z.array(SkillIdSchema),
+  mutablePaths: z.array(z.string()),
+  immutablePaths: z.array(z.string()),
+  immutableDigests: z.record(
+    z.string(),
+    z.string().regex(/^[a-f0-9]{64}$/),
+  ),
+  skillRevisions: z.record(
+    SkillIdSchema,
+    z.string().regex(/^[a-f0-9]{64}$/),
+  ),
+  cases: z.array(z.object({
+    id: z.string(),
+    digest: z.string().regex(/^[a-f0-9]{64}$/),
+  })),
+  caseSetDigest: z.string().regex(/^[a-f0-9]{64}$/),
+}).superRefine((value, context) => {
+  if (value.mode === "optimize" && value.mutablePaths.length !== 1) {
+    context.addIssue({
+      code: "custom",
+      message: "optimize workspaces require exactly one mutable path",
+      path: ["mutablePaths"],
+    });
+  }
+  if (value.mode !== "optimize" && value.mutablePaths.length !== 0) {
+    context.addIssue({
+      code: "custom",
+      message: "evaluation and release workspaces must be immutable",
+      path: ["mutablePaths"],
+    });
+  }
+  if (value.optimizationUnit === "reference" && !value.targetReference) {
+    context.addIssue({
+      code: "custom",
+      message: "reference optimization requires targetReference",
+      path: ["targetReference"],
+    });
+  }
+  if (value.optimizationUnit === "root-router" && value.targetReference) {
+    context.addIssue({
+      code: "custom",
+      message: "root-router optimization cannot set targetReference",
+      path: ["targetReference"],
+    });
+  }
+});
+export type SkillOptWorkspace = z.infer<typeof SkillOptWorkspaceSchema>;
