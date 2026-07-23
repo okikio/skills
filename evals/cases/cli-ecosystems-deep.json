@@ -8,18 +8,26 @@
       "kind": "knowledge",
       "split": "train",
       "prompt": "A command has --output with a parser default of ./dist, APP_OUTPUT in the environment, output in c12 config, and a resolved Zod default. Explain the bug and provide a corrected Optique/source-resolution pattern that preserves the intended precedence.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "requiredReferences": [
         "build-clis/references/optique.md",
         "build-clis/references/c12-defu.md"
       ],
       "assertions": [
-        { "kind": "regex", "value": "sparse|absence|absent" },
+        {
+          "kind": "regex",
+          "value": "sparse|absence|absent"
+        },
         {
           "kind": "regex",
           "value": "CLI.*environment.*config|environment.*config.*default"
         },
-        { "kind": "regex", "value": "default.*(after|final)|resolved.*schema" }
+        {
+          "kind": "regex",
+          "value": "default.*(after|final)|resolved.*schema"
+        }
       ],
       "rubric": [
         "Removes parser default from a source-bearing term",
@@ -33,7 +41,12 @@
         "kaiju-config-handoff"
       ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "optique", "config", "precedence"],
+      "tags": [
+        "build-clis",
+        "optique",
+        "config",
+        "precedence"
+      ],
       "rationale": "Parser defaults are a recurring source-precedence failure."
     },
     {
@@ -43,8 +56,13 @@
       "kind": "trajectory",
       "split": "valid-unseen",
       "prompt": "Review a Deno CLI whose lockfile contains stable @optique/core and @optique/run 1.1.1 plus several 1.2.0-dev integration packages. A proposed patch copies current docs and widens all versions to caret ranges. Diagnose the risk and define the verification required before changing versions.",
-      "expectedSkills": ["build-clis", "deno-software"],
-      "requiredReferences": ["build-clis/references/optique.md"],
+      "expectedSkills": [
+        "build-clis",
+        "deno-software"
+      ],
+      "requiredReferences": [
+        "build-clis/references/optique.md"
+      ],
       "assertions": [
         {
           "kind": "regex",
@@ -54,7 +72,10 @@
           "kind": "regex",
           "value": "lockfile|resolved version|export map|type declaration"
         },
-        { "kind": "regex", "value": "compiled|packaged|binary" }
+        {
+          "kind": "regex",
+          "value": "compiled|packaged|binary"
+        }
       ],
       "rubric": [
         "Does not assume documentation matches installed exports",
@@ -62,9 +83,17 @@
         "Requires packaged-artifact verification"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["live-browser-cli", "optique-official"],
+      "sourceIds": [
+        "live-browser-cli",
+        "optique-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-clis", "deno-software", "optique", "versions"],
+      "tags": [
+        "build-clis",
+        "deno-software",
+        "optique",
+        "versions"
+      ],
       "rationale": "The attached implementation contains a real stable/prerelease split."
     },
     {
@@ -74,15 +103,26 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Design Optique command registration for a CLI that will be bundled and compiled into a standalone executable while preserving completion and man generation. Include the failure oracle that proves every command made it into the artifact.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "requiredReferences": [
         "build-clis/references/optique.md",
         "build-clis/references/integration.md"
       ],
       "assertions": [
-        { "kind": "regex", "value": "static.*import|explicit.*import" },
-        { "kind": "regex", "value": "completion.*man|man.*completion" },
-        { "kind": "regex", "value": "compiled|standalone|installed artifact" }
+        {
+          "kind": "regex",
+          "value": "static.*import|explicit.*import"
+        },
+        {
+          "kind": "regex",
+          "value": "completion.*man|man.*completion"
+        },
+        {
+          "kind": "regex",
+          "value": "compiled|standalone|installed artifact"
+        }
       ],
       "rubric": [
         "Uses one statically visible command model",
@@ -90,9 +130,17 @@
         "Executes each installed command"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "live-browser-cli", "optique-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "live-browser-cli",
+        "optique-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "optique", "distribution"],
+      "tags": [
+        "build-clis",
+        "optique",
+        "distribution"
+      ],
       "rationale": "Source discovery can succeed while compiled commands disappear."
     },
     {
@@ -102,16 +150,30 @@
       "kind": "safety",
       "split": "adversarial",
       "prompt": "Use @optique/clack to ask for every missing configuration value. The command will run in CI and with redirected stdin. Define a safe interaction policy and subprocess tests without removing the interactive experience.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "requiredReferences": [
         "build-clis/references/optique.md",
         "build-clis/references/interaction.md"
       ],
       "assertions": [
-        { "kind": "regex", "value": "TTY|terminal" },
-        { "kind": "regex", "value": "--no-input|non.?interactive" },
-        { "kind": "regex", "value": "fail.*(flag|value)|required.*flag" },
-        { "kind": "regex", "value": "closed stdin|redirected stdin|subprocess" }
+        {
+          "kind": "regex",
+          "value": "TTY|terminal"
+        },
+        {
+          "kind": "regex",
+          "value": "--no-input|non.?interactive"
+        },
+        {
+          "kind": "regex",
+          "value": "fail.*(flag|value)|required.*flag"
+        },
+        {
+          "kind": "regex",
+          "value": "closed stdin|redirected stdin|subprocess"
+        }
       ],
       "rubric": [
         "Treats Clack as a renderer adapter",
@@ -119,9 +181,18 @@
         "Prevents hangs in CI"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "cli-audit", "optique-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "cli-audit",
+        "optique-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "optique", "clack", "automation"],
+      "tags": [
+        "build-clis",
+        "optique",
+        "clack",
+        "automation"
+      ],
       "rationale": "A prompt package does not own the automation policy."
     },
     {
@@ -131,17 +202,33 @@
       "kind": "knowledge",
       "split": "train",
       "prompt": "Resolve routes when file provides [file], environment prepends [env], and CLI appends [cli]. The public merge call lists inputs highest-to-lowest. Give the correct result, traversal order, and defu boundary needed to avoid operation objects merging into each other.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/c12-defu.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/c12-defu.md"
+      ],
       "assertions": [
-        { "kind": "contains", "value": "env" },
-        { "kind": "contains", "value": "file" },
-        { "kind": "contains", "value": "cli" },
+        {
+          "kind": "contains",
+          "value": "env"
+        },
+        {
+          "kind": "contains",
+          "value": "file"
+        },
+        {
+          "kind": "contains",
+          "value": "cli"
+        },
         {
           "kind": "regex",
           "value": "file.*environment.*CLI|low.*high|reverse"
         },
-        { "kind": "regex", "value": "pair|one layer at a time" }
+        {
+          "kind": "regex",
+          "value": "pair|one layer at a time"
+        }
       ],
       "rubric": [
         "Produces [env, file, cli]",
@@ -149,9 +236,17 @@
         "Uses pairwise resolved inheritance"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-config-handoff", "defu-official"],
+      "sourceIds": [
+        "kaiju-config-handoff",
+        "defu-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "c12", "defu", "arrays"],
+      "tags": [
+        "build-clis",
+        "c12",
+        "defu",
+        "arrays"
+      ],
       "rationale": "Operation composition is the most fragile part of the merge contract."
     },
     {
@@ -161,12 +256,25 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "A lower config selects {kind: range, from, to, limit}; a higher config selects {kind: named, crawls}. defu retains from/to/limit. Explain and correct the merger without replacing every nested object atomically.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/c12-defu.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/c12-defu.md"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "discriminated union|branch" },
-        { "kind": "regex", "value": "atomic.*replace|replace.*atomic" },
-        { "kind": "regex", "value": "path|namespace" }
+        {
+          "kind": "regex",
+          "value": "discriminated union|branch"
+        },
+        {
+          "kind": "regex",
+          "value": "atomic.*replace|replace.*atomic"
+        },
+        {
+          "kind": "regex",
+          "value": "path|namespace"
+        }
       ],
       "rubric": [
         "Rejects hybrid branches",
@@ -174,9 +282,17 @@
         "Preserves recursive merging for ordinary objects"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-config-handoff", "defu-official"],
+      "sourceIds": [
+        "kaiju-config-handoff",
+        "defu-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "config", "defu", "unions"],
+      "tags": [
+        "build-clis",
+        "config",
+        "defu",
+        "unions"
+      ],
       "rationale": "Generic recursive merging corrupts discriminated unions."
     },
     {
@@ -186,15 +302,26 @@
       "kind": "trajectory",
       "split": "test-frozen",
       "prompt": "A two-pass Optique CLI uses c12 to load an async TypeScript config factory, and handlers need the resolved configuration. Design the control flow and a real fixture oracle proving the factory evaluates once without hiding calls behind a reset.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "requiredReferences": [
         "build-clis/references/c12-defu.md",
         "build-clis/references/integration.md"
       ],
       "assertions": [
-        { "kind": "regex", "value": "load.*once|evaluat.*once|single.*load" },
-        { "kind": "regex", "value": "reuse|share|inject" },
-        { "kind": "regex", "value": "counter|marker|fixture" },
+        {
+          "kind": "regex",
+          "value": "load.*once|evaluat.*once|single.*load"
+        },
+        {
+          "kind": "regex",
+          "value": "reuse|share|inject"
+        },
+        {
+          "kind": "regex",
+          "value": "counter|marker|fixture"
+        },
         {
           "kind": "regex",
           "value": "handler.*(not|doesn't|does not).*reload|no.*handler.*load"
@@ -206,9 +333,18 @@
         "Uses an executable side-effect counter"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-config-handoff", "live-browser-cli", "c12-official"],
+      "sourceIds": [
+        "kaiju-config-handoff",
+        "live-browser-cli",
+        "c12-official"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["build-clis", "c12", "optique", "frozen"],
+      "tags": [
+        "build-clis",
+        "c12",
+        "optique",
+        "frozen"
+      ],
       "rationale": "Static inspection cannot prove dynamic factories execute once."
     },
     {
@@ -218,14 +354,33 @@
       "kind": "knowledge",
       "split": "transfer",
       "prompt": "Design config files and config explain machine results for a layered c12 configuration with extends, environment, CLI override, and array operations. Include redaction and explain why a static precedence list is insufficient.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/c12-defu.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/c12-defu.md"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "winner" },
-        { "kind": "regex", "value": "shadowed" },
-        { "kind": "regex", "value": "operation|append|prepend|replace" },
-        { "kind": "regex", "value": "redact" },
-        { "kind": "regex", "value": "all.*layer|every.*layer" }
+        {
+          "kind": "regex",
+          "value": "winner"
+        },
+        {
+          "kind": "regex",
+          "value": "shadowed"
+        },
+        {
+          "kind": "regex",
+          "value": "operation|append|prepend|replace"
+        },
+        {
+          "kind": "regex",
+          "value": "redact"
+        },
+        {
+          "kind": "regex",
+          "value": "all.*layer|every.*layer"
+        }
       ],
       "rubric": [
         "Uses recorded resolver decisions",
@@ -233,9 +388,17 @@
         "Returns versioned redacted machine data"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "kaiju-config-handoff", "c12-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "c12-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "c12", "provenance"],
+      "tags": [
+        "build-clis",
+        "c12",
+        "provenance"
+      ],
       "rationale": "Configuration inspection must answer field-specific decisions."
     },
     {
@@ -245,14 +408,33 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Configure LogTape so app result JSON, completion scripts, and man pages pass through LogTape but reach stdout as exact raw bytes while app diagnostics reach stderr or a file. Include the category rule that prevents inherited sinks.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/logtape.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
       "assertions": [
-        { "kind": "contains", "value": "parentSinks" },
-        { "kind": "contains", "value": "override" },
-        { "kind": "regex", "value": "result.*stdout|stdout.*result" },
-        { "kind": "regex", "value": "diagnostic.*stderr|stderr.*diagnostic" },
-        { "kind": "regex", "value": "raw|exact" }
+        {
+          "kind": "contains",
+          "value": "parentSinks"
+        },
+        {
+          "kind": "contains",
+          "value": "override"
+        },
+        {
+          "kind": "regex",
+          "value": "result.*stdout|stdout.*result"
+        },
+        {
+          "kind": "regex",
+          "value": "diagnostic.*stderr|stderr.*diagnostic"
+        },
+        {
+          "kind": "regex",
+          "value": "raw|exact"
+        }
       ],
       "rubric": [
         "Uses separate hierarchical categories",
@@ -260,9 +442,17 @@
         "Blocks parent diagnostic inheritance"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "live-browser-cli", "logtape-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "live-browser-cli",
+        "logtape-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-clis", "logtape", "stdout"],
+      "tags": [
+        "build-clis",
+        "logtape",
+        "stdout"
+      ],
       "rationale": "One transport requires category isolation to preserve composability."
     },
     {
@@ -272,19 +462,29 @@
       "kind": "safety",
       "split": "adversarial",
       "prompt": "A config show command JSON.stringify()s its full config into result_text and then applies LogTape field redaction to the sink. It also writes pretty diagnostics and an error file. Correct the design and define tests for nested secrets across every route.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/logtape.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
       "assertions": [
         {
           "kind": "regex",
           "value": "before.*serial|structured.*before|redact.*before"
         },
-        { "kind": "regex", "value": "nested|array" },
+        {
+          "kind": "regex",
+          "value": "nested|array"
+        },
         {
           "kind": "regex",
           "value": "result.*diagnostic.*file|every.*sink|all.*route"
         },
-        { "kind": "regex", "value": "URL|authorization|cookie|token|API key" }
+        {
+          "kind": "regex",
+          "value": "URL|authorization|cookie|token|API key"
+        }
       ],
       "rubric": [
         "Keeps sensitive objects structured until redaction",
@@ -292,9 +492,18 @@
         "Tests bootstrap and nested values"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "live-browser-cli", "logtape-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "live-browser-cli",
+        "logtape-official"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["build-clis", "logtape", "redaction", "security"],
+      "tags": [
+        "build-clis",
+        "logtape",
+        "redaction",
+        "security"
+      ],
       "rationale": "Field redaction cannot inspect opaque serialized values."
     },
     {
@@ -304,17 +513,34 @@
       "kind": "trajectory",
       "split": "test-frozen",
       "prompt": "A CLI config file fails during c12 evaluation before the full Optique program runs. The user passed --log-format json --log-output errors.jsonl --silent. Design the smallest bootstrap path and exact process assertions without duplicating the domain parser.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "requiredReferences": [
         "build-clis/references/logtape.md",
         "build-clis/references/integration.md"
       ],
       "assertions": [
-        { "kind": "regex", "value": "raw args|bootstrap|early" },
-        { "kind": "regex", "value": "small|minimal|logging-only" },
-        { "kind": "regex", "value": "stdout.*empty|empty.*stdout" },
-        { "kind": "regex", "value": "errors.jsonl|selected.*file" },
-        { "kind": "regex", "value": "flush|await" }
+        {
+          "kind": "regex",
+          "value": "raw args|bootstrap|early"
+        },
+        {
+          "kind": "regex",
+          "value": "small|minimal|logging-only"
+        },
+        {
+          "kind": "regex",
+          "value": "stdout.*empty|empty.*stdout"
+        },
+        {
+          "kind": "regex",
+          "value": "errors.jsonl|selected.*file"
+        },
+        {
+          "kind": "regex",
+          "value": "flush|await"
+        }
       ],
       "rubric": [
         "Parses only early logging controls",
@@ -322,9 +548,18 @@
         "Asserts exact stdout/file/exit behavior"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "live-browser-cli", "logtape-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "live-browser-cli",
+        "logtape-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "logtape", "bootstrap", "frozen"],
+      "tags": [
+        "build-clis",
+        "logtape",
+        "bootstrap",
+        "frozen"
+      ],
       "rationale": "Fallible configuration precedes normal logger setup."
     },
     {
@@ -334,13 +569,29 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A proposal replaces a typed JSONL StageWriter and checkpoint store with LogTape file sinks because LogTape is the sole output transport. Correct the ownership model and show how stage writes can still emit diagnostics.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/logtape.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "artifact|StageWriter|checkpoint" },
-        { "kind": "regex", "value": "not.*log|separate.*log|typed.*writer" },
-        { "kind": "regex", "value": "schema|validate" },
-        { "kind": "regex", "value": "diagnostic|event" }
+        {
+          "kind": "regex",
+          "value": "artifact|StageWriter|checkpoint"
+        },
+        {
+          "kind": "regex",
+          "value": "not.*log|separate.*log|typed.*writer"
+        },
+        {
+          "kind": "regex",
+          "value": "schema|validate"
+        },
+        {
+          "kind": "regex",
+          "value": "diagnostic|event"
+        }
       ],
       "rubric": [
         "Separates observable transport from durable application state",
@@ -348,9 +599,16 @@
         "Allows structured diagnostic events"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "live-browser-cli"],
+      "sourceIds": [
+        "cli-guidebook",
+        "live-browser-cli"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-clis", "logtape", "artifacts"],
+      "tags": [
+        "build-clis",
+        "logtape",
+        "artifacts"
+      ],
       "rationale": "Sole process output transport does not make a logger the data store."
     },
     {
@@ -360,16 +618,42 @@
       "kind": "knowledge",
       "split": "transfer",
       "prompt": "Design a project-aware CLI that loads layered config, detects CI/color, edits TypeScript config, performs bounded HTTP requests, persists resumable checkpoints, detects the project package manager, and builds a distributable library. Select focused UnJS packages, their boundaries, and what each does not own.",
-      "expectedSkills": ["build-clis", "explore-ecosystems"],
-      "requiredReferences": ["build-clis/references/unjs.md"],
+      "expectedSkills": [
+        "build-clis",
+        "explore-ecosystems"
+      ],
+      "requiredReferences": [
+        "build-clis/references/unjs.md"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "c12.*defu|defu.*c12" },
-        { "kind": "contains", "value": "std-env" },
-        { "kind": "contains", "value": "magicast" },
-        { "kind": "contains", "value": "ofetch" },
-        { "kind": "contains", "value": "unstorage" },
-        { "kind": "contains", "value": "nypm" },
-        { "kind": "contains", "value": "unbuild" }
+        {
+          "kind": "regex",
+          "value": "c12.*defu|defu.*c12"
+        },
+        {
+          "kind": "contains",
+          "value": "std-env"
+        },
+        {
+          "kind": "contains",
+          "value": "magicast"
+        },
+        {
+          "kind": "contains",
+          "value": "ofetch"
+        },
+        {
+          "kind": "contains",
+          "value": "unstorage"
+        },
+        {
+          "kind": "contains",
+          "value": "nypm"
+        },
+        {
+          "kind": "contains",
+          "value": "unbuild"
+        }
       ],
       "rubric": [
         "Maps each capability to one focused adapter",
@@ -377,9 +661,17 @@
         "Does not install unrelated ecosystem packages"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-audit", "cli-guidebook", "unjs-official"],
+      "sourceIds": [
+        "cli-audit",
+        "cli-guidebook",
+        "unjs-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "explore-ecosystems", "unjs"],
+      "tags": [
+        "build-clis",
+        "explore-ecosystems",
+        "unjs"
+      ],
       "rationale": "The ecosystem is valuable only when package ownership remains explicit."
     },
     {
@@ -389,16 +681,30 @@
       "kind": "safety",
       "split": "adversarial",
       "prompt": "Add Citty beneath Optique for nested commands and Consola beside LogTape for progress because all four packages are popular. Evaluate the proposal and provide the narrower implementation choices.",
-      "expectedSkills": ["build-clis", "explore-ecosystems"],
-      "requiredReferences": ["build-clis/references/unjs.md"],
+      "expectedSkills": [
+        "build-clis",
+        "explore-ecosystems"
+      ],
+      "requiredReferences": [
+        "build-clis/references/unjs.md"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "Citty.*alternative|alternative.*Citty" },
+        {
+          "kind": "regex",
+          "value": "Citty.*alternative|alternative.*Citty"
+        },
         {
           "kind": "regex",
           "value": "Consola.*alternative|alternative.*Consola"
         },
-        { "kind": "regex", "value": "split.*ownership|overlap|one.*owner" },
-        { "kind": "regex", "value": "formatter|sink|renderer" }
+        {
+          "kind": "regex",
+          "value": "split.*ownership|overlap|one.*owner"
+        },
+        {
+          "kind": "regex",
+          "value": "formatter|sink|renderer"
+        }
       ],
       "rubric": [
         "Chooses one parser owner",
@@ -406,9 +712,18 @@
         "Implements progress over the selected event model"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-audit", "cli-guidebook", "unjs-official"],
+      "sourceIds": [
+        "cli-audit",
+        "cli-guidebook",
+        "unjs-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "unjs", "ownership", "safety"],
+      "tags": [
+        "build-clis",
+        "unjs",
+        "ownership",
+        "safety"
+      ],
       "rationale": "Ecosystem accumulation creates conflicting public contracts."
     },
     {
@@ -418,7 +733,10 @@
       "kind": "safety",
       "split": "test-frozen",
       "prompt": "A local CLI writes progress to an unstorage memory driver and hashes arguments with ohash. Announce that the command is now durable and exactly-once across crashes. Correct the claim and define the missing recovery contracts and kill/restart tests.",
-      "expectedSkills": ["build-clis", "build-workflows"],
+      "expectedSkills": [
+        "build-clis",
+        "build-workflows"
+      ],
       "requiredReferences": [
         "build-clis/references/unjs.md",
         "build-clis/references/integration.md"
@@ -428,10 +746,22 @@
           "kind": "regex",
           "value": "not durable|does not.*durab|memory.*(lost|process)"
         },
-        { "kind": "regex", "value": "idempoten|reconcil" },
-        { "kind": "regex", "value": "atomic|commit" },
-        { "kind": "regex", "value": "lease|checkpoint|version" },
-        { "kind": "regex", "value": "kill|restart|crash" }
+        {
+          "kind": "regex",
+          "value": "idempoten|reconcil"
+        },
+        {
+          "kind": "regex",
+          "value": "atomic|commit"
+        },
+        {
+          "kind": "regex",
+          "value": "lease|checkpoint|version"
+        },
+        {
+          "kind": "regex",
+          "value": "kill|restart|crash"
+        }
       ],
       "rubric": [
         "Rejects the durability claim",
@@ -439,9 +769,19 @@
         "Requires executable recovery tests"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "cli-audit", "unjs-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "cli-audit",
+        "unjs-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "build-workflows", "unjs", "durability", "frozen"],
+      "tags": [
+        "build-clis",
+        "build-workflows",
+        "unjs",
+        "durability",
+        "frozen"
+      ],
       "rationale": "Persistence adapters do not establish exactly-once recovery."
     },
     {
@@ -451,20 +791,43 @@
       "kind": "trajectory",
       "split": "valid-unseen",
       "prompt": "Review a --timeout option that appears in Optique help, APP_TIMEOUT, c12 config, Zod runtime schema, ofetch policy, generated completion, and docs. Produce an end-to-end ownership trace, identify ambiguous defaults, and define executable verification without editing.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "requiredReferences": [
         "build-clis/references/integration.md",
         "build-clis/references/optique.md",
         "build-clis/references/unjs.md"
       ],
       "assertions": [
-        { "kind": "regex", "value": "parser|Optique" },
-        { "kind": "regex", "value": "environment|APP_TIMEOUT" },
-        { "kind": "regex", "value": "c12|config" },
-        { "kind": "regex", "value": "Zod|schema" },
-        { "kind": "regex", "value": "ofetch|HTTP" },
-        { "kind": "regex", "value": "completion.*doc|doc.*completion" },
-        { "kind": "regex", "value": "subprocess|installed" }
+        {
+          "kind": "regex",
+          "value": "parser|Optique"
+        },
+        {
+          "kind": "regex",
+          "value": "environment|APP_TIMEOUT"
+        },
+        {
+          "kind": "regex",
+          "value": "c12|config"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod|schema"
+        },
+        {
+          "kind": "regex",
+          "value": "ofetch|HTTP"
+        },
+        {
+          "kind": "regex",
+          "value": "completion.*doc|doc.*completion"
+        },
+        {
+          "kind": "regex",
+          "value": "subprocess|installed"
+        }
       ],
       "rubric": [
         "Separates grammar, sources, runtime validation, and consumer",
@@ -472,9 +835,17 @@
         "Includes generated and installed surfaces"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "cli-audit", "live-browser-cli"],
+      "sourceIds": [
+        "cli-guidebook",
+        "cli-audit",
+        "live-browser-cli"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "audit", "integration"],
+      "tags": [
+        "build-clis",
+        "audit",
+        "integration"
+      ],
       "rationale": "A public term is incomplete when any ownership arrow is missing."
     },
     {
@@ -484,8 +855,12 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Sketch the adapter boundaries for a CLI using ofetch, unstorage, ohash, and nypm. For each package, name the application policy it must not decide and one executable test that crosses the real adapter.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/unjs.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/unjs.md"
+      ],
       "assertions": [
         {
           "kind": "regex",
@@ -503,7 +878,10 @@
           "kind": "regex",
           "value": "nypm.*(package manager|authoriz)|package manager.*nypm"
         },
-        { "kind": "regex", "value": "fixture|integration|subprocess|restart" }
+        {
+          "kind": "regex",
+          "value": "fixture|integration|subprocess|restart"
+        }
       ],
       "rubric": [
         "Assigns focused adapter roles",
@@ -511,9 +889,17 @@
         "Uses real integration or process oracles"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "cli-audit", "unjs-official"],
+      "sourceIds": [
+        "cli-guidebook",
+        "cli-audit",
+        "unjs-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "unjs", "adapters"],
+      "tags": [
+        "build-clis",
+        "unjs",
+        "adapters"
+      ],
       "rationale": "A seen case teaches selection without reducing the ecosystem to package-name recall."
     },
     {
@@ -523,17 +909,45 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Describe the complete control flow for a successful command from raw argv through early controls, c12 loading, Optique sources, resolved Zod request, injected handler capabilities, LogTape result routing, cleanup, and installed-artifact verification. Identify which stages execute once.",
-      "expectedSkills": ["build-clis"],
-      "requiredReferences": ["build-clis/references/integration.md"],
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/integration.md"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "early|bootstrap" },
-        { "kind": "regex", "value": "c12.*once|load.*once" },
-        { "kind": "regex", "value": "Optique|source context" },
-        { "kind": "regex", "value": "Zod|resolved.*schema" },
-        { "kind": "regex", "value": "inject|capabilit" },
-        { "kind": "regex", "value": "LogTape.*result|result.*LogTape" },
-        { "kind": "regex", "value": "flush|cleanup|close" },
-        { "kind": "regex", "value": "installed|packaged|compiled" }
+        {
+          "kind": "regex",
+          "value": "early|bootstrap"
+        },
+        {
+          "kind": "regex",
+          "value": "c12.*once|load.*once"
+        },
+        {
+          "kind": "regex",
+          "value": "Optique|source context"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod|resolved.*schema"
+        },
+        {
+          "kind": "regex",
+          "value": "inject|capabilit"
+        },
+        {
+          "kind": "regex",
+          "value": "LogTape.*result|result.*LogTape"
+        },
+        {
+          "kind": "regex",
+          "value": "flush|cleanup|close"
+        },
+        {
+          "kind": "regex",
+          "value": "installed|packaged|compiled"
+        }
       ],
       "rubric": [
         "Preserves source and lifecycle ownership",
@@ -547,8 +961,980 @@
         "kaiju-config-handoff"
       ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "integration", "lifecycle"],
+      "tags": [
+        "build-clis",
+        "integration",
+        "lifecycle"
+      ],
       "rationale": "A seen composition case prevents individually correct references from producing a broken lifecycle."
+    },
+    {
+      "id": "cli-deep-five-library-audit",
+      "title": "Audit Optique c12 defu LogTape and Zod ownership together",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Review a CLI that uses Optique, c12, defu, LogTape, and Zod. Determine whether the libraries are being used together ideally. Produce a boundary-by-boundary audit and identify concrete fixes for defaults, config loading, merging, logging, and verification.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/optique.md",
+        "build-clis/references/c12-defu.md",
+        "build-clis/references/logtape.md",
+        "build-clis/references/integration.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Optique.*(grammar|help|completion)|grammar.*Optique"
+        },
+        {
+          "kind": "regex",
+          "value": "c12.*(discover|extends|factory)|discover.*c12"
+        },
+        {
+          "kind": "regex",
+          "value": "defu.*(merge|merger)|merge.*defu"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod.*default|default.*Zod"
+        },
+        {
+          "kind": "regex",
+          "value": "LogTape.*(sink|redact|diagnostic)|redact.*LogTape"
+        },
+        {
+          "kind": "regex",
+          "value": "load.*once|single.*snapshot|runProgram"
+        }
+      ],
+      "rubric": [
+        "Assigns one owner per boundary",
+        "Rejects parser defaults as sparse source values",
+        "Requires one resolved config and logger resource for handlers",
+        "Includes executable verification, not only static inspection"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "audit",
+        "optique",
+        "c12",
+        "defu",
+        "logtape",
+        "zod"
+      ],
+      "rationale": "The hardest failures happen at ownership boundaries between otherwise good libraries."
+    },
+    {
+      "id": "cli-deep-five-library-stack-train",
+      "title": "Recall the five-library stack ownership map",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "train",
+      "prompt": "A CLI uses Optique, c12, defu, LogTape, and Zod. Give the correct owner for token grammar, config discovery, loader merging, app merge semantics, runtime defaults, diagnostics/results, and handler execution. Include one failure signature for each boundary.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/five-library-stack.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Optique.*token|token.*Optique"
+        },
+        {
+          "kind": "regex",
+          "value": "c12.*discover|discover.*c12"
+        },
+        {
+          "kind": "regex",
+          "value": "defu.*merge|merge.*defu"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod.*runtime.*default|default.*Zod"
+        },
+        {
+          "kind": "regex",
+          "value": "LogTape.*result|diagnostic.*LogTape"
+        },
+        {
+          "kind": "regex",
+          "value": "handler.*inject|capabilit"
+        }
+      ],
+      "rubric": [
+        "Maps every library to its boundary",
+        "Names what each library must not own",
+        "Includes concrete failure signatures"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "ownership",
+        "optique",
+        "c12",
+        "defu",
+        "logtape",
+        "zod"
+      ],
+      "rationale": "Agents need the integrated stack map before applying detailed implementation rules."
+    },
+    {
+      "id": "cli-deep-five-library-stack-seen",
+      "title": "Apply the stack map to one timeout option",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Trace a --timeout value through Optique help and parsing, APP_TIMEOUT, c12 config, defu-backed app merging, Zod defaults, an HTTP adapter, provenance, LogTape diagnostics, and subprocess tests. Show where the common parser-default bug would enter.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/five-library-stack.md",
+        "build-clis/references/defaults-provenance.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "--timeout|timeout"
+        },
+        {
+          "kind": "regex",
+          "value": "APP_TIMEOUT|environment"
+        },
+        {
+          "kind": "regex",
+          "value": "c12|config"
+        },
+        {
+          "kind": "regex",
+          "value": "defu|merge"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod|schema"
+        },
+        {
+          "kind": "regex",
+          "value": "LogTape|diagnostic"
+        },
+        {
+          "kind": "regex",
+          "value": "parser.*default.*bug|bug.*parser.*default"
+        },
+        {
+          "kind": "regex",
+          "value": "subprocess|installed|compiled"
+        }
+      ],
+      "rubric": [
+        "Traces one public value through all owners",
+        "Identifies the parser-default pollution point",
+        "Ends in executable verification"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "integration",
+        "defaults",
+        "verification"
+      ],
+      "rationale": "A seen value trace proves the reference is usable, not just conceptually complete."
+    },
+    {
+      "id": "cli-deep-five-library-mental-model",
+      "title": "Teach the full five-library CLI mental model",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "Give another agent a detailed implementation mental model for a Deno CLI using Optique, c12, defu, LogTape, and Zod. Include diagrams or maps, wrong/right examples, ownership tables, defaulting logic, the actual merge algorithm, and a verification matrix detailed enough to prevent common boundary mistakes.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/five-library-stack.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Optique.*c12.*defu.*Zod.*LogTape|public CLI language"
+        },
+        {
+          "kind": "regex",
+          "value": "ownership.*table|Boundary.*Owner"
+        },
+        {
+          "kind": "regex",
+          "value": "wrong.*right|bad.*good"
+        },
+        {
+          "kind": "regex",
+          "value": "default.*taxonomy|default.*kind"
+        },
+        {
+          "kind": "regex",
+          "value": "high.*low.*low.*high|low.*high.*high.*low"
+        },
+        {
+          "kind": "contains",
+          "value": "resolveStandaloneOperations"
+        },
+        {
+          "kind": "regex",
+          "value": "c12.*merger.*app.*merger|app.*merger.*c12.*merger"
+        },
+        {
+          "kind": "regex",
+          "value": "one.*snapshot|single.*snapshot|load.*once"
+        },
+        {
+          "kind": "regex",
+          "value": "test matrix|verification matrix|required test"
+        },
+        {
+          "kind": "regex",
+          "value": "parser.*default.*sparse|sparse.*parser.*default"
+        }
+      ],
+      "rubric": [
+        "Explains data flow through every library boundary",
+        "Shows concrete wrong and right implementation shapes",
+        "Details the c12 loader merger, app merger, operation lowering, and final sparse validation",
+        "Distinguishes documented defaults, parser defaults, deferred fallbacks, and Zod runtime defaults",
+        "Defines tests that catch each major ownership regression"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "mental-model",
+        "optique",
+        "c12",
+        "defu",
+        "logtape",
+        "zod"
+      ],
+      "rationale": "The skill must transfer enough structure that another agent can implement safely, not merely recall package names."
+    },
+    {
+      "id": "cli-deep-optique-12-deferred-defaults",
+      "title": "Use Optique 1.2 deferred values without stealing Zod defaults",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A CLI sees Optique 1.2 deferredValue and proposes moving every config default from Zod into deferred parser fallbacks so help can show the values. Correct the design, including documented defaults, handler-time fallbacks, placeholders, and tests.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/optique.md"
+      ],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "deferredValue"
+        },
+        {
+          "kind": "regex",
+          "value": "handler.*time|handler-time"
+        },
+        {
+          "kind": "regex",
+          "value": "sparse|absent|absence"
+        },
+        {
+          "kind": "regex",
+          "value": "document.*default|help.*default"
+        },
+        {
+          "kind": "regex",
+          "value": "placeholder"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod.*default|schema.*default"
+        }
+      ],
+      "rubric": [
+        "Limits deferredValue to real handler-time fallbacks",
+        "Keeps ordinary runtime defaults in the complete schema",
+        "Prevents placeholders from entering patches or provenance",
+        "Tests help-visible defaults separately from parsed output"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "optique",
+        "zod",
+        "defaults"
+      ],
+      "rationale": "Optique 1.2 makes deferred values tempting, but most defaults still belong to schemas."
+    },
+    {
+      "id": "cli-deep-c12-two-mergers",
+      "title": "Separate c12 loader merging from strict app merging",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A c12 CLI passes its final strict mergeConfigInputs function as loadConfig({ merger }) and then config extends plus $append fails. Explain why this is wrong and define the two merger functions, the high-to-low versus low-to-high app merge loop, standalone operation lowering, and fixtures that prove the fix.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/c12-defu.md",
+        "build-clis/references/integration.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "two.*merger|separate.*merger"
+        },
+        {
+          "kind": "contains",
+          "value": "extends"
+        },
+        {
+          "kind": "regex",
+          "value": "loader.*metadata|control.*field"
+        },
+        {
+          "kind": "regex",
+          "value": "strict.*(after|final)|application.*merg"
+        },
+        {
+          "kind": "regex",
+          "value": "high.*low|low.*high"
+        },
+        {
+          "kind": "contains",
+          "value": "resolveStandaloneOperations"
+        },
+        {
+          "kind": "regex",
+          "value": "append|prepend|operation"
+        },
+        {
+          "kind": "regex",
+          "value": "empty array|false|0|atomic|immutab"
+        },
+        {
+          "kind": "regex",
+          "value": "fixture|integration"
+        }
+      ],
+      "rubric": [
+        "Keeps c12 control metadata alive during loading",
+        "Runs strict app merge after c12 resolves layers",
+        "Explains standalone operation lowering and reversed evaluation",
+        "Proves extends plus array operation composition through real config files and unit merge cases"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "c12-official",
+        "defu-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "c12",
+        "defu",
+        "config",
+        "testing"
+      ],
+      "rationale": "The single-merger shortcut breaks loader semantics before application validation can help."
+    },
+    {
+      "id": "cli-deep-five-library-benchmark-baseline",
+      "title": "Separate CLI startup from component throughput",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "train",
+      "prompt": "Define the minimum benchmark model for a Deno CLI using Optique, c12, defu, Zod, provenance, and LogTape. Distinguish installed startup, cold application work, warm component throughput, fixtures, correctness gates, and the statistics required for a regression claim.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/benchmarking.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "installed|compiled|artifact"
+        },
+        {
+          "kind": "regex",
+          "value": "cold|fresh process"
+        },
+        {
+          "kind": "regex",
+          "value": "warm"
+        },
+        {
+          "kind": "regex",
+          "value": "fixture|workload"
+        },
+        {
+          "kind": "regex",
+          "value": "correctness|semantic.*oracle"
+        },
+        {
+          "kind": "regex",
+          "value": "median|p95|distribution|variability"
+        },
+        {
+          "kind": "regex",
+          "value": "absolute.*relative|relative.*absolute"
+        }
+      ],
+      "rubric": [
+        "Defines process startup separately from reusable in-process work",
+        "Names representative deterministic workloads for each library boundary",
+        "Requires semantic output checks before timing",
+        "Reports a distribution, sample context, and meaningful absolute and relative changes"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "benchmark",
+        "startup",
+        "mitata"
+      ],
+      "rationale": "Agents need a baseline measurement vocabulary before reviewing a specific performance claim."
+    },
+    {
+      "id": "cli-deep-optique-zod-default-ownership",
+      "title": "Keep Optique Zod adapters sparse and choose the right Zod default",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Implement an --output option shared with APP_OUTPUT and c12 config. The value trims whitespace and removes a trailing slash, help should show ./dist, and omission from every authored source should resolve to ./dist. Explain the exact @optique/zod term, sparse and complete schemas, whether to use Zod v4 .default() or .prefault(), and tests that prove the placeholder and help default never become CLI provenance.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/defaults-provenance.md",
+        "build-clis/references/testing.md"
+      ],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "@optique/zod"
+        },
+        {
+          "kind": "regex",
+          "value": "sparse|absent|absence"
+        },
+        {
+          "kind": "contains",
+          "value": ".prefault("
+        },
+        {
+          "kind": "regex",
+          "value": "transform|trim|normaliz"
+        },
+        {
+          "kind": "regex",
+          "value": "help.*(does not|doesn't|never).*parse|document.*default.*absent"
+        },
+        {
+          "kind": "regex",
+          "value": "placeholder.*(does not|doesn't|never)|never.*placeholder"
+        },
+        {
+          "kind": "regex",
+          "value": "CLI.*environment.*config.*default|environment.*config.*runtime"
+        }
+      ],
+      "rubric": [
+        "Uses @optique/zod only for scalar token parsing and keeps omission absent",
+        "Uses a non-defaulted sparse leaf and a complete runtime schema",
+        "Chooses prefault because the fallback must pass through normalization",
+        "Separately tests help visibility, parsed absence, precedence, and provenance"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "optique",
+        "zod",
+        "defaults",
+        "provenance"
+      ],
+      "rationale": "The adapter boundary is where parser-visible metadata is most often mistaken for runtime default ownership."
+    },
+    {
+      "id": "cli-deep-provenance-equal-value",
+      "title": "Preserve explicit source identity when values are equal",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "Config sets retries=3 and the user explicitly passes --retries=3. A proposed config explain implementation compares values and reports config as the winner because nothing changed. Correct the algorithm and define a versioned, redacted provenance envelope that also handles aliases, --name=value, runtime defaults, arrays, and shadowed contributions.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/defaults-provenance.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "record.*(during|while).*resolv|merge.*provenance"
+        },
+        {
+          "kind": "regex",
+          "value": "explicit.*CLI.*winner|CLI.*explicit.*winner"
+        },
+        {
+          "kind": "regex",
+          "value": "winner"
+        },
+        {
+          "kind": "regex",
+          "value": "shadowed"
+        },
+        {
+          "kind": "regex",
+          "value": "schemaVersion|schema version|versioned"
+        },
+        {
+          "kind": "regex",
+          "value": "redact"
+        },
+        {
+          "kind": "regex",
+          "value": "alias|--name=value"
+        },
+        {
+          "kind": "regex",
+          "value": "append|prepend|array"
+        }
+      ],
+      "rubric": [
+        "Rejects value comparison as the provenance oracle",
+        "Records explicit presence and source metadata during resolution",
+        "Represents winners, shadowed values, operations, source IDs, and runtime defaults",
+        "States evidence limits when Optique does not expose source identity directly"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "kaiju-config-handoff"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "provenance",
+        "config",
+        "optique"
+      ],
+      "rationale": "Equal values are the simplest counterexample to provenance reconstructed after merging."
+    },
+    {
+      "id": "cli-deep-five-library-benchmark-plan",
+      "title": "Benchmark the five-library stack without weakening semantics",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A change claims the Optique/c12/defu/Zod/LogTape startup path is 40% faster based on one warm in-process merge loop. Review the claim and design a reproducible Deno/mitata benchmark plan covering installed startup, config discovery, merge/provenance scaling, Zod parsing, logging/redaction, fixtures, statistics, and regression gates.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/benchmarking.md",
+        "build-clis/references/testing.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "warm.*(not|isn't|is not).*startup|startup.*fresh process"
+        },
+        {
+          "kind": "contains",
+          "value": "mitata"
+        },
+        {
+          "kind": "regex",
+          "value": "installed|compiled|artifact"
+        },
+        {
+          "kind": "regex",
+          "value": "c12.*discover|config.*discover"
+        },
+        {
+          "kind": "regex",
+          "value": "provenance.*overhead|overhead.*provenance"
+        },
+        {
+          "kind": "regex",
+          "value": "Zod|schema"
+        },
+        {
+          "kind": "regex",
+          "value": "LogTape|redaction"
+        },
+        {
+          "kind": "regex",
+          "value": "median|p95|distribution|variability"
+        },
+        {
+          "kind": "regex",
+          "value": "semantic|correctness.*oracle|oracle.*correctness"
+        }
+      ],
+      "rubric": [
+        "Rejects the warm microbenchmark as evidence for startup",
+        "Separates cold process, warm component, and long-running measurements",
+        "Uses deterministic representative fixtures and validates outputs before timing",
+        "Reports absolute and relative changes with variability and a calibrated budget"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "benchmark",
+        "mitata",
+        "startup",
+        "provenance"
+      ],
+      "rationale": "Component throughput and user-visible command latency require different evidence."
+    },
+    {
+      "id": "cli-deep-config-verification-oracles",
+      "title": "Prove config defaults and merger behavior through real boundaries",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Create a verification plan for a Deno CLI refactor that separates c12's loader merger from the strict app merger, moves runtime defaults into Zod, adds field provenance, and threads one config snapshot through Optique hooks. Include unit, temporary-project, subprocess, generated-surface, installed-artifact, and benchmark gates with concrete failure oracles.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/testing.md",
+        "build-clis/references/defaults-provenance.md",
+        "build-clis/references/benchmarking.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "real.*temporary|temporary.*c12|fixture"
+        },
+        {
+          "kind": "regex",
+          "value": "extends"
+        },
+        {
+          "kind": "regex",
+          "value": "counter|marker.*once|evaluat.*once"
+        },
+        {
+          "kind": "regex",
+          "value": "false|0|empty array"
+        },
+        {
+          "kind": "regex",
+          "value": "winner.*shadowed|shadowed.*winner"
+        },
+        {
+          "kind": "regex",
+          "value": "stdout.*stderr|stderr.*stdout"
+        },
+        {
+          "kind": "regex",
+          "value": "completion|man"
+        },
+        {
+          "kind": "regex",
+          "value": "installed|compiled"
+        },
+        {
+          "kind": "regex",
+          "value": "benchmark.*after|correctness.*benchmark"
+        }
+      ],
+      "rubric": [
+        "Separates merger unit oracles from real c12 loader fixtures",
+        "Proves one factory evaluation with an external side effect",
+        "Tests default absence, equal-valued overrides, array operations, atomic unions, and redaction",
+        "Exercises exact streams and exits through the installed artifact before benchmarking"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "c12-official",
+        "defu-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "testing",
+        "c12",
+        "zod",
+        "provenance",
+        "benchmark"
+      ],
+      "rationale": "The refactor crosses enough boundaries that no single test layer can establish correctness."
+    },
+    {
+      "id": "cli-deep-kaiju-casebook-browser-trace",
+      "title": "Trace browser detect from argv to WACZ artifacts",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Using the Kaiju CLI casebook, trace `kaiju browser detect --route example.com --capture-profile max --wacz --out out/browser` from argv through Optique parsing, sparse adapter patching, config/provenance overlay, runtime Zod defaults, browser run orchestration, stages, WARC/WACZ artifacts, and result output. Identify at least five failure oracles.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/casebook.md",
+        "build-clis/references/five-library-stack.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "argv.*Optique|Optique.*argv"
+        },
+        {
+          "kind": "regex",
+          "value": "sparse.*patch|ProjectConfigPatch"
+        },
+        {
+          "kind": "contains",
+          "value": "maxCaptureDefault"
+        },
+        {
+          "kind": "regex",
+          "value": "provenance|applyConfigPatch"
+        },
+        {
+          "kind": "regex",
+          "value": "StageWriter|stage"
+        },
+        {
+          "kind": "regex",
+          "value": "WACZ|WARC"
+        },
+        {
+          "kind": "regex",
+          "value": "failure oracle|must not|throws|blocks"
+        }
+      ],
+      "rubric": [
+        "Follows the complete public-token to artifact/result trace",
+        "Distinguishes profile-implied source policy from ordinary runtime defaults",
+        "Preserves sparse adapter and provenance rules",
+        "Names concrete stage, archive, resume/overwrite, and WACZ failure oracles"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-config-handoff",
+        "cli-guidebook"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-clis",
+        "kaiju",
+        "browser",
+        "wacz",
+        "artifacts",
+        "provenance"
+      ],
+      "rationale": "The browser command combines nearly every CLI boundary and catches generic advice."
+    },
+    {
+      "id": "cli-deep-kaiju-casebook-stage-boundaries",
+      "title": "Keep stages artifacts results and diagnostics separate",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A patch proposes writing raw captured bytes into LogTape diagnostic records and stage JSONL so browser and Common Crawl runs have fewer artifact files. Use the Kaiju casebook to reject or revise the design. Include the stage envelope, binary payload rule, result/diagnostic split, and verification matrix.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/casebook.md",
+        "build-clis/references/output.md",
+        "build-clis/references/logtape.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "stable result|result.*stdout"
+        },
+        {
+          "kind": "regex",
+          "value": "diagnostic|LogTape"
+        },
+        {
+          "kind": "regex",
+          "value": "durable artifact|artifact writer|WARC|WACZ"
+        },
+        {
+          "kind": "contains",
+          "value": "StageWriter"
+        },
+        {
+          "kind": "regex",
+          "value": "schema_version.*run_id.*stage.*seq|seq.*target.*data"
+        },
+        {
+          "kind": "regex",
+          "value": "binary|ArrayBuffer|byte_length|sha"
+        },
+        {
+          "kind": "regex",
+          "value": "redact|redaction"
+        }
+      ],
+      "rubric": [
+        "Separates stable results, operational diagnostics, and durable artifacts",
+        "Rejects raw binary in stage payloads and LogTape diagnostics",
+        "Documents the stage JSONL envelope and typed artifact reference pattern",
+        "Requires tests for stdout/stderr isolation, redaction, stage validation, and artifact readback"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-clis",
+        "kaiju",
+        "stages",
+        "artifacts",
+        "logtape",
+        "redaction"
+      ],
+      "rationale": "Artifact/log boundary mistakes are high-risk in capture pipelines."
+    },
+    {
+      "id": "cli-deep-kaiju-casebook-lifecycle-reality",
+      "title": "Separate ideal cancellation from observed implementation",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Review a Kaiju-style long-running CLI and decide whether cancellation is actually productionized. Trace AbortController ownership, browser queue behavior, ordered async mapping, worker pool close, stage/diagnostic flush, archive close, and overwrite markers. State what is implemented, what is only an ideal target, and what tests are required.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "requiredReferences": [
+        "build-clis/references/casebook.md",
+        "build-clis/references/lifecycle.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "AbortController|AbortSignal"
+        },
+        {
+          "kind": "contains",
+          "value": "runBoundedQueue"
+        },
+        {
+          "kind": "contains",
+          "value": "mapBoundedAsyncOrdered"
+        },
+        {
+          "kind": "regex",
+          "value": "worker.*close|close.*worker"
+        },
+        {
+          "kind": "regex",
+          "value": "flush|StageWriter|diagnostic"
+        },
+        {
+          "kind": "regex",
+          "value": "observed.*ideal|ideal.*observed|implemented.*target"
+        },
+        {
+          "kind": "regex",
+          "value": "subprocess|interrupt|Ctrl-C|SIGINT"
+        }
+      ],
+      "rubric": [
+        "Does not claim cancellation is complete from types alone",
+        "Traces signal ownership from process entry to active work",
+        "Covers queue, worker, stage, diagnostics, archive, and overwrite lifecycle",
+        "Ends with concrete subprocess and cleanup tests"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "kaiju-config-handoff",
+        "cli-guidebook"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "build-clis",
+        "kaiju",
+        "lifecycle",
+        "cancellation",
+        "concurrency"
+      ],
+      "rationale": "Cancellation and cleanup are easy to overclaim without end-to-end signal tracing."
     }
   ]
 }

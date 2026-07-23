@@ -81,6 +81,101 @@
       ]
     },
     {
+      "id": "cap-cli-five-library-stack",
+      "skill": "build-clis",
+      "reference": "references/five-library-stack.md",
+      "capability": "Integrated Optique c12 defu LogTape and Zod CLI stack",
+      "ownership": "The CLI skill owns the cross-library boundary map, default timing, merge algorithm, one-snapshot execution, logging routes, and executable verification plan.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evalIds": [
+        "cli-deep-five-library-stack-train",
+        "cli-deep-five-library-stack-seen",
+        "cli-deep-five-library-mental-model"
+      ],
+      "decisionQuestions": [
+        "Explain and implement the full ownership graph for a CLI where Optique parses, c12 loads config, defu assists merging, Zod validates defaults, and LogTape routes output, including the exact high-to-low caller order and low-to-high merge evaluation."
+      ],
+      "failureSignatures": [
+        "Parser defaults overwrite config, c12 loader metadata is rejected early, standalone operations leak into runtime, defu concatenates arrays accidentally, handlers reload config, or LogTape mixes result and diagnostic routes."
+      ],
+      "exclusions": [
+        "Do not replace this boundary map with package-name recall, and do not let any one library own defaults, config loading, merging, logging, and execution together."
+      ],
+      "verification": [
+        "Run parser absence/default tests, c12 extends plus operation fixtures, merge tests for falsy values, empty arrays, operation composition, atomic unions, immutability, single dynamic config evaluation, LogTape stdout/stderr isolation, redaction, generated surfaces, and installed-artifact commands."
+      ]
+    },
+    {
+      "id": "cap-cli-defaults-provenance",
+      "skill": "build-clis",
+      "reference": "references/defaults-provenance.md",
+      "capability": "Sparse defaults and field-level config provenance",
+      "ownership": "The CLI skill owns default classification, sparse source schemas, complete runtime defaults, source evidence, merge-time decisions, and the redacted provenance envelope.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official"
+      ],
+      "evalIds": [
+        "cli-deep-optique-zod-default-ownership",
+        "cli-deep-five-library-stack-seen",
+        "cli-deep-provenance-equal-value"
+      ],
+      "decisionQuestions": [
+        "For one source-bearing field, decide what Optique documents and parses, what @optique/zod validates, what c12 loads, how defu-backed merge policy resolves it, whether Zod uses default or prefault, and how the provenance envelope proves the winner."
+      ],
+      "failureSignatures": [
+        "An omitted CLI term becomes a high-precedence value, a placeholder is treated as intent, a transform skips an input-shaped fallback, nested defaults fail to materialize, or provenance is guessed from equal final values."
+      ],
+      "exclusions": [
+        "Do not use one defaulted schema for authored input, sparse patches, and complete runtime config, and do not reconstruct source identity after resolution."
+      ],
+      "verification": [
+        "Test help-visible versus parsed absence, every precedence combination, default and prefault transform behavior, nested defaults, equal-valued explicit overrides, arrays and atomic branches, dynamic factory count, redaction, and versioned machine explain output."
+      ]
+    },
+    {
+      "id": "cap-cli-benchmarking",
+      "skill": "build-clis",
+      "reference": "references/benchmarking.md",
+      "capability": "Correctness-gated CLI performance measurement",
+      "ownership": "The CLI skill owns representative workload definitions and the separation of installed startup, cold application paths, warm components, provenance overhead, logging cost, and performance claims.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official"
+      ],
+      "evalIds": [
+        "cli-deep-five-library-benchmark-baseline",
+        "cli-deep-five-library-benchmark-plan",
+        "cli-deep-config-verification-oracles"
+      ],
+      "decisionQuestions": [
+        "Design a reproducible benchmark and regression policy that measures the user-visible CLI path and its components without weakening merge, provenance, redaction, output, or lifecycle semantics."
+      ],
+      "failureSignatures": [
+        "A warm in-process microbenchmark is reported as startup, fixtures change between runs, correctness is not asserted, output work contaminates timings, or a noisy percentage lacks absolute change and variability."
+      ],
+      "exclusions": [
+        "Do not use benchmark results as correctness evidence, generalize one machine to unsupported platforms, or remove security and provenance work without an explicit product tradeoff."
+      ],
+      "verification": [
+        "Run semantic oracles first, measure deterministic tiny, typical, large, and adversarial fixtures, spawn the installed artifact for cold paths, compare distributions under a fixed runtime and lockfile, and report absolute plus relative changes."
+      ]
+    },
+    {
       "id": "cap-cli-logtape-result-isolation",
       "skill": "build-clis",
       "reference": "references/logtape.md",
@@ -1760,7 +1855,9 @@
       "capability": "Mise tool, environment, task, trust, and provenance ownership",
       "ownership": "The developer-tools skill owns repository toolchain and task evidence; Mise may own selected tool versions, environments, and task adapters without displacing manifest, secret, runtime, or CI owners silently.",
       "status": "observed-source",
-      "sourceIds": ["mise-official"],
+      "sourceIds": [
+        "mise-official"
+      ],
       "evalIds": [
         "deep-devtools-mise-config-ownership",
         "deep-devtools-mise-task-semantics",
@@ -1786,7 +1883,10 @@
       "capability": "Aube dependency graph, workspace, security, and migration ownership",
       "ownership": "The developer-tools skill owns adoption and verification; Aube owns the selected JavaScript dependency graph, lockfile updates, linker/store, workspace operations, and approved dependency builds only after explicit cutover.",
       "status": "observed-source",
-      "sourceIds": ["aube-official", "aube-1-27-0"],
+      "sourceIds": [
+        "aube-official",
+        "aube-1-27-0"
+      ],
       "evalIds": [
         "deep-devtools-aube-existing-lockfile",
         "deep-devtools-aube-build-jail",
@@ -1812,8 +1912,14 @@
       "capability": "Mise and Aube executable, runtime, task, and auto-install composition",
       "ownership": "The developer-tools skill assigns one owner for the Aube executable, Node runtime, JS dependencies, canonical tasks, and environment while making re-exec, auto-install, offline, and fallback behavior explicit.",
       "status": "observed-source",
-      "sourceIds": ["mise-official", "aube-official", "aube-1-27-0"],
-      "evalIds": ["deep-devtools-mise-aube-owner-loop"],
+      "sourceIds": [
+        "mise-official",
+        "aube-official",
+        "aube-1-27-0"
+      ],
+      "evalIds": [
+        "deep-devtools-mise-aube-owner-loop"
+      ],
       "decisionQuestions": [
         "Will Mise or Aube install each executable and runtime, can either re-exec or download unexpectedly, and what frozen/offline policy prevents hidden mutation in CI?"
       ],
@@ -1825,6 +1931,35 @@
       ],
       "verification": [
         "Trace version selection and re-exec, run cold/warm/frozen/offline scenarios, inspect environment and lock digests, and execute a documented rollback."
+      ]
+    },
+    {
+      "id": "cap-cli-kaiju-casebook-tracing",
+      "skill": "build-clis",
+      "reference": "references/casebook.md",
+      "capability": "Codebase-grounded Kaiju CLI trace auditing",
+      "ownership": "The CLI skill owns end-to-end tracing from public command terms through sparse adapters, config/provenance, source runs, stages, artifacts, diagnostics, lifecycle, and executable verification.",
+      "status": "observed-source",
+      "sourceIds": [
+        "kaiju-config-handoff",
+        "cli-guidebook"
+      ],
+      "evalIds": [
+        "cli-deep-kaiju-casebook-browser-trace",
+        "cli-deep-kaiju-casebook-stage-boundaries",
+        "cli-deep-kaiju-casebook-lifecycle-reality"
+      ],
+      "decisionQuestions": [
+        "Trace a Kaiju-style source command from argv through parser, source contexts, sparse patch, merge, runtime schema, provenance, source run, stages, artifacts, diagnostics, result output, lifecycle, and tests."
+      ],
+      "failureSignatures": [
+        "An answer skips directly from parser to handler, treats guidebook intent as executed behavior, moves defaults into sparse adapters, stores artifacts in logs, or claims cancellation without process-level signal evidence."
+      ],
+      "exclusions": [
+        "Do not use this casebook as proof that another repository has the same file paths, source behavior, or library versions; re-trace local code before editing."
+      ],
+      "verification": [
+        "Run behavior-specific tests or subprocess commands for parser sparsity, merge/provenance, result isolation, stage/artifact validation, source run behavior, lifecycle cleanup, generated surfaces, and installed artifact reachability."
       ]
     }
   ]
