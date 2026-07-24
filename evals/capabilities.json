@@ -1961,6 +1961,260 @@
       "verification": [
         "Run behavior-specific tests or subprocess commands for parser sparsity, merge/provenance, result isolation, stage/artifact validation, source run behavior, lifecycle cleanup, generated surfaces, and installed artifact reachability."
       ]
+    },
+    {
+      "id": "cap-library-architecture",
+      "skill": "build-libraries",
+      "reference": "references/architecture.md",
+      "capability": "Use-case-first library architecture and deep public modules",
+      "ownership": "The library skill owns consumer-shaped public APIs, information-hiding boundaries, deep common-case facades, focused lower-level capabilities, and the separation between reusable code and application shells.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "semver-official",
+        "decision-justification-guide"
+      ],
+      "evalIds": [
+        "library-architecture-use-case-first",
+        "library-architecture-deep-module",
+        "library-architecture-framework-exception",
+        "library-architecture-justify-boundary"
+      ],
+      "decisionQuestions": [
+        "Which concrete consumers and use cases define the public programming model, which decisions must each module hide, and when is a framework-style extension protocol genuinely the product?"
+      ],
+      "failureSignatures": [
+        "The package preserves a CLI flowchart, requires a universal runtime or context, exposes many shallow wrappers, or rejects every valid plugin framework without examining the extension requirement."
+      ],
+      "exclusions": [
+        "Do not treat moving files into a package as library design, equate export count with flexibility, or ban stages and plugins when third-party lifecycle extension is an explicit product capability."
+      ],
+      "verification": [
+        "Exercise representative common and advanced consumer call sites, inspect public exports and compatibility commitments, and verify the application shell owns argv, configuration discovery, rendering, signals, and process exits."
+      ]
+    },
+    {
+      "id": "cap-library-composition",
+      "skill": "build-libraries",
+      "reference": "references/composition.md",
+      "capability": "Multi-scale library and ecosystem composition",
+      "ownership": "The library skill owns composition across values, data flow, capabilities, policies, ecosystems, lifecycles, package graphs, and operations while preserving the semantics and ownership boundaries of strategic dependencies.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "logtape-official",
+        "c12-official",
+        "defu-official",
+        "unstorage-1-17-5",
+        "hookable-6-1-1"
+      ],
+      "evalIds": [
+        "library-composition-multiscale",
+        "library-composition-strategic-dependency",
+        "library-composition-no-ecosystem-hoarding"
+      ],
+      "decisionQuestions": [
+        "At which composition scales must the library cooperate, which ecosystem dependency should be used directly or adapted, and which owner configures logging, resolves configuration, chooses storage guarantees, and governs extensions?"
+      ],
+      "failureSignatures": [
+        "A lowest-common-denominator interface erases LogTape, c12, defu, or unstorage semantics; the library configures host-wide systems; or an umbrella package eagerly imports an ecosystem that consumers did not select."
+      ],
+      "exclusions": [
+        "Do not confuse swappability with composability, wrap strategic dependencies merely to hide their names, or add Hookable and plugin machinery when ordinary functions satisfy all known consumers."
+      ],
+      "verification": [
+        "Trace one owner per ecosystem boundary, test domain events separately from diagnostics, validate application-owned configuration resolution, and inspect installed dependency and entrypoint reachability for optional integrations."
+      ]
+    },
+    {
+      "id": "cap-library-data-flow",
+      "skill": "build-libraries",
+      "reference": "references/data-flow.md",
+      "capability": "Truthful cardinality, streaming, batching, and backpressure contracts",
+      "ownership": "The library skill owns the choice and semantics of values, arrays, iterables, generators, async iterables, streams, explicit batches, materialization points, early termination, cancellation, and bounded producer-consumer flow.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "whatwg-streams-standard",
+        "typescript-erm-official"
+      ],
+      "evalIds": [
+        "library-data-flow-shape-selection",
+        "library-data-flow-batching",
+        "library-data-flow-streaming-cleanup-fixture",
+        "library-data-flow-cancellation-boundary"
+      ],
+      "decisionQuestions": [
+        "Is the result singular or plural, bounded or incremental, reusable or one-shot, pull-oriented or backpressured, and where should batching or explicit materialization occur?"
+      ],
+      "failureSignatures": [
+        "A Promise of a giant array hides incremental work, an async iterable buffers unboundedly, a one-record pipeline pays excessive protocol overhead, or breaking consumption leaves upstream work and resources alive."
+      ],
+      "exclusions": [
+        "Do not expose a universal union of arrays, iterables, async iterables, and streams that pushes semantic decisions to every caller, and do not call an implementation streaming merely because its return type is AsyncIterable."
+      ],
+      "verification": [
+        "Assert laziness, first-result latency, bounded buffers, batch limits, early return, cancellation, upstream stop behavior, disposal, error propagation, and explicit array materialization in executable fixtures."
+      ]
+    },
+    {
+      "id": "cap-library-data-oriented-design",
+      "skill": "build-libraries",
+      "reference": "references/data-oriented-design.md",
+      "capability": "Transform-first data-oriented library internals",
+      "ownership": "The library skill owns workload-grounded transform graphs, data volume and lifetime analysis, hot and cold field separation, indexing, allocation and locality decisions, and intentional boundaries between ergonomic public values and optimized internal representations.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "data-oriented-design-book",
+        "v8-performance-official"
+      ],
+      "evalIds": [
+        "library-dod-transform-graph",
+        "library-dod-hot-cold-index",
+        "library-dod-typed-array-cargo-cult"
+      ],
+      "decisionQuestions": [
+        "What transforms dominate the workload, which fields are accessed together, what volumes and lifetimes exist, and which representation improves measured CPU, memory, locality, or allocation without corrupting the public model?"
+      ],
+      "failureSignatures": [
+        "The design begins from object taxonomies rather than transforms, scans cold metadata on hot paths, allocates per-record wrappers excessively, or replaces clear objects with typed arrays without a measured bottleneck."
+      ],
+      "exclusions": [
+        "Do not confuse data-oriented design with declarative data-driven policy, use typed arrays as an aesthetic default, or expose packed internal layouts as the public API without a compatibility reason."
+      ],
+      "verification": [
+        "Benchmark representative transforms with correctness oracles, allocation and memory evidence, compare baseline and optimized representations, and retain conversion boundaries between public records and hot internal batches."
+      ]
+    },
+    {
+      "id": "cap-library-resources-performance",
+      "skill": "build-libraries",
+      "reference": "references/resources-performance.md",
+      "capability": "Explicit resource ownership and workload-specific performance budgets",
+      "ownership": "The library skill owns acquisition, borrowing, transfer, cancellation, deterministic disposal, partial-construction cleanup, bounded concurrency and buffering, and measurable CPU, memory, latency, startup, resource, cleanup, and recovery budgets.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "typescript-erm-official",
+        "v8-performance-official",
+        "logtape-official"
+      ],
+      "evalIds": [
+        "library-resources-ownership",
+        "library-performance-budget",
+        "library-resource-early-return"
+      ],
+      "decisionQuestions": [
+        "Who owns each resource, how does every success, failure, cancellation, and early-return path release it, and which workload dimensions and thresholds define acceptable performance?"
+      ],
+      "failureSignatures": [
+        "Resources leak on partial failure or early termination, cancellation is mistaken for disposal, concurrency or buffers are unbounded, or a benchmark reports only average time while ignoring correctness, memory, variance, and resource counts."
+      ],
+      "exclusions": [
+        "Do not require explicit resource management syntax where the target runtime cannot support it; preserve the ownership contract with try/finally, and do not optimize one metric while silently violating another budget."
+      ],
+      "verification": [
+        "Run lifecycle fixtures across success, failure, cancellation, and early return; measure cold and warm latency, throughput, tail latency, CPU, peak and retained memory, allocations, open resources, cleanup time, and representative recovery cost."
+      ]
+    },
+    {
+      "id": "cap-library-packaging",
+      "skill": "build-libraries",
+      "reference": "references/packaging.md",
+      "capability": "Selective ESM packaging and tree-shakable public entrypoints",
+      "ownership": "The library skill owns public exports and subpaths, ESM-preserving output, truthful side-effect metadata, optional adapter isolation, declaration reachability, and clean-consumer proof that unused capabilities and dependencies are absent.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "node-packages-official",
+        "esbuild-tree-shaking-official",
+        "semver-official"
+      ],
+      "evalIds": [
+        "library-packaging-subpaths",
+        "library-packaging-side-effects",
+        "library-packaging-selective-fixture",
+        "library-packaging-runtime-registry-trap"
+      ],
+      "decisionQuestions": [
+        "Which entrypoints are public compatibility surfaces, which modules have import-time effects, and can a clean consumer select the core without retaining optional adapters or their dependency subtrees?"
+      ],
+      "failureSignatures": [
+        "The root barrel eagerly imports every adapter, sideEffects metadata lies, build output collapses all features into one mandatory graph, declarations expose private paths, or source inspection substitutes for bundled-consumer evidence."
+      ],
+      "exclusions": [
+        "Do not set sideEffects to false without auditing import-time behavior, expose internal files with wildcards by default, or claim tree-shaking from named exports alone."
+      ],
+      "verification": [
+        "Install the packed artifact into clean consumers, import root and explicit subpaths, run type checks, inspect bundler metafiles and output graphs, assert no import-time mutation, and compare bundle contents with and without optional integrations."
+      ]
+    },
+    {
+      "id": "cap-library-recovery-refactoring",
+      "skill": "build-libraries",
+      "reference": "references/recovery-refactoring.md",
+      "capability": "Precise recovery contracts and CLI-first library extraction",
+      "ownership": "The library skill owns restartable and checkpoint-resumable operation contracts, commit ordering, compatibility fingerprints, idempotent replay boundaries, and phased extraction from application-shaped workflows while durable execution authority remains with build-workflows.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "unstorage-1-17-5",
+        "ohash-2-0-11",
+        "temporal-typescript-official",
+        "cli-guidebook",
+        "cli-audit"
+      ],
+      "evalIds": [
+        "library-recovery-ladder",
+        "library-recovery-commit-order",
+        "library-refactor-cli-first"
+      ],
+      "decisionQuestions": [
+        "Is the operation merely restartable, checkpoint-resumable, or durably orchestrated; what output becomes authoritative before a checkpoint advances; and how can a CLI-shaped codebase gain a second programmatic consumer without a speculative rewrite?"
+      ],
+      "failureSignatures": [
+        "An iterator index is called a durable checkpoint, checkpoint state advances before output durability, incompatible requests resume silently, or a big-bang refactor preserves the shared runtime under new names without proving a second consumer."
+      ],
+      "exclusions": [
+        "Do not claim durable orchestration without persisted execution authority and reachable workers, and do not rewrite every package before characterizing one representative command and extracting one use-case boundary."
+      ],
+      "verification": [
+        "Test crash windows around output and checkpoint commits, replay and duplicate handling, fingerprint incompatibility, startup reconciliation, CLI subprocess parity, direct programmatic consumption, and removal of obsolete compatibility surfaces."
+      ]
+    },
+    {
+      "id": "cap-library-verification",
+      "skill": "build-libraries",
+      "reference": "references/verification.md",
+      "capability": "Evidence-backed library verification across source, artifact, runtime, and workload layers",
+      "ownership": "The library skill owns the claim-to-evidence matrix for public APIs, built artifacts, clean consumers, streaming and lifecycle semantics, performance budgets, recovery guarantees, compatibility, and cross-skill release composition.",
+      "status": "normative",
+      "sourceIds": [
+        "library-first-guidebook",
+        "node-packages-official",
+        "esbuild-tree-shaking-official",
+        "typescript-erm-official",
+        "whatwg-streams-standard",
+        "deno-software"
+      ],
+      "evalIds": [
+        "library-verification-claim-evidence",
+        "library-verification-benchmark-gate",
+        "library-verification-cross-skill"
+      ],
+      "decisionQuestions": [
+        "What observable artifact or executable scenario proves each library claim, which checks belong to adjacent skills, and which blocked checks must remain explicitly unverified?"
+      ],
+      "failureSignatures": [
+        "Source code is treated as proof of package behavior, unit tests stand in for clean-consumer or subprocess evidence, performance claims omit workload and variability, or a release verdict silently assumes blocked model, platform, or recovery checks passed."
+      ],
+      "exclusions": [
+        "Do not duplicate CLI, workflow, data, or developer-tool ownership; compose their evidence into one release verdict, and do not mark unavailable external model rollouts or platform tests as successful."
+      ],
+      "verification": [
+        "Maintain deterministic fixtures, rubric and held-out evals, packed-artifact consumers, package graph inspection, lifecycle and recovery fault injection, benchmark baselines and thresholds, cross-skill composition cases, and an honest pass, fail, blocked report."
+      ]
     }
   ]
 }

@@ -594,6 +594,80 @@
       "status": "normative",
       "role": "Deno-specific composition and verification contract",
       "verifiedDate": "2026-07-13"
+    },
+    {
+      "id": "library-first-guidebook",
+      "artifact": "library_first_architecture_guidebook.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Composable tree-shakable data-oriented library architecture, resource, performance, recovery, and refactoring contract",
+      "verifiedDate": "2026-07-23",
+      "sha256": "9656d1394a720dbaaa8604d9316454c20ac566e6d4f299ea0812e941d4aa4f48"
+    },
+    {
+      "id": "typescript-erm-official",
+      "artifact": "https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-2.html",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "TypeScript explicit resource management, using, await using, DisposableStack, and AsyncDisposableStack",
+      "verifiedDate": "2026-07-23"
+    },
+    {
+      "id": "node-packages-official",
+      "artifact": "https://nodejs.org/api/packages.html",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Node package exports, subpath exports, conditional exports, and public package encapsulation",
+      "verifiedDate": "2026-07-23"
+    },
+    {
+      "id": "esbuild-tree-shaking-official",
+      "artifact": "https://esbuild.github.io/api/#tree-shaking",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "esbuild ESM tree-shaking, conservative side-effect analysis, package sideEffects metadata, and metafile evidence",
+      "verifiedDate": "2026-07-23"
+    },
+    {
+      "id": "whatwg-streams-standard",
+      "artifact": "https://streams.spec.whatwg.org/",
+      "kind": "official-docs",
+      "status": "normative",
+      "role": "Readable, writable, and transform stream backpressure, cancellation, locking, and async iteration semantics",
+      "verifiedDate": "2026-07-23"
+    },
+    {
+      "id": "data-oriented-design-book",
+      "artifact": "https://www.dataorienteddesign.com/dodbook/",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Data-oriented transform, representation, access-pattern, locality, allocation, and hardware-aware design model",
+      "verifiedDate": "2026-07-23"
+    },
+    {
+      "id": "v8-performance-official",
+      "artifact": "https://v8.dev/blog/fast-properties",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "V8 object shapes, properties, elements, allocation, and runtime representation performance evidence",
+      "verifiedDate": "2026-07-23"
+    },
+    {
+      "id": "semver-official",
+      "artifact": "https://semver.org/",
+      "kind": "official-docs",
+      "status": "normative",
+      "role": "Explicit public API and compatibility versioning contract",
+      "verifiedDate": "2026-07-23"
+    },
+    {
+      "id": "decision-justification-guide",
+      "artifact": "how-to-justify-decisions-properly(1).md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Architecture decision objectives, constraints, causal diagnosis, alternatives, trade-offs, defeaters, and conditional-necessity discipline",
+      "verifiedDate": "2026-07-23",
+      "sha256": "f8166af2e7d468e1195369c3db9889640b00fc79972f816530d23255a608d5a4"
     }
   ]
 }

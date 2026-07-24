@@ -57,6 +57,13 @@ still require a rollout and judge runner; they are not executable outcomes.
 Release claims must use real trajectories and executable cases, not the smoke
 corpus or raw case totals.
 
+`library-design-deep.json` covers use-case-first architecture, multi-scale
+ecosystem composition, truthful data-flow contracts, data-oriented internals,
+explicit resource ownership, workload-specific performance, selective package
+graphs, recovery, refactoring, and claim-to-evidence verification. Its frozen
+fixtures exercise selective adoption and import-time effects, plus lazy async
+iteration, early termination, failure cleanup, and deterministic disposal.
+
 `evidence.json` contains source-grounded cases from the attached guidebooks and
 repositories. Its fixture cases cover Markdown preservation, CLI task parity,
 single configuration evaluation, result redaction, native site semantics,

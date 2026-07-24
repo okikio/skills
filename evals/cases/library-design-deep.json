@@ -1,0 +1,1747 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "library-architecture-use-case-first",
+      "title": "Derive a library from consumer use cases",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A CLI has parse, configure, acquire, collect, verify, detect, export, and upload stages plus a shared RuntimeContext. Design the reusable library API without preserving the CLI flowchart as its module structure. Show common and advanced consumer call sites, request/result/failure/event contracts, and the application boundary.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/architecture.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "use.?case|consumer call"
+        },
+        {
+          "kind": "regex",
+          "value": "request.*result.*fail.*event"
+        },
+        {
+          "kind": "regex",
+          "value": "CLI.*(adapter|composition root)|application.*owner"
+        },
+        {
+          "kind": "not-contains",
+          "value": "Stage<TContext>"
+        }
+      ],
+      "rubric": [
+        "Begins from concrete consumers and domain language",
+        "Keeps CLI and process concerns outside the reusable core",
+        "Provides a deep facade plus independently useful capabilities"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "architecture",
+        "training"
+      ],
+      "rationale": "The optimizer needs the central use-case-first correction."
+    },
+    {
+      "id": "library-architecture-deep-module",
+      "title": "Prefer deep modules over shallow wrappers",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Review a proposed SDK with 42 public classes, each wrapping one HTTP call, plus a universal Runtime object required by every method. Explain what should remain public, what knowledge each module should hide, and how to preserve a convenient facade without forcing the runtime on all consumers.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/architecture.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "deep module|small.*surface|information hid"
+        },
+        {
+          "kind": "regex",
+          "value": "facade|common case"
+        },
+        {
+          "kind": "regex",
+          "value": "focused capabilit|narrow.*contract"
+        },
+        {
+          "kind": "regex",
+          "value": "public.*compatib|version"
+        }
+      ],
+      "rubric": [
+        "Rejects surface-area-as-composability",
+        "Identifies change axes and hidden knowledge",
+        "Treats exports as compatibility commitments"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "semver-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "architecture",
+        "valid-seen"
+      ],
+      "rationale": "Library quality depends on depth and ownership, not class count."
+    },
+    {
+      "id": "library-architecture-framework-exception",
+      "title": "Recognize when a framework is the library",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A compiler toolkit lets third parties define passes, order them, inspect lifecycle events, and publish plugins. A reviewer says all Stage and Plugin abstractions are always wrong and must become plain functions. Decide whether the framework shape is justified and specify the contracts it must expose and verify.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/architecture.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "framework.*product|third.party extension"
+        },
+        {
+          "kind": "regex",
+          "value": "order|lifecycle|compatib|failure"
+        },
+        {
+          "kind": "regex",
+          "value": "plain function.*not|not.*always"
+        }
+      ],
+      "rubric": [
+        "Does not turn the guidance into a ban on frameworks",
+        "Requires evidence that extension is the product",
+        "Defines lifecycle and compatibility obligations"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "architecture",
+        "adversarial"
+      ],
+      "rationale": "The skill must preserve valid framework use cases."
+    },
+    {
+      "id": "library-composition-multiscale",
+      "title": "Map composition beyond function pipelines",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a library that uses LogTape diagnostics, receives c12-resolved configuration, stores optional checkpoints through unstorage, and offers a Hookable plugin surface. Map value, data-flow, capability, policy, ecosystem, lifecycle, package, and operational composition, with one owner per boundary.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/composition.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "value.*data.?flow.*capabilit|ecosystem.*lifecycle"
+        },
+        {
+          "kind": "regex",
+          "value": "LogTape.*(not|does not).*configure|application.*configure"
+        },
+        {
+          "kind": "regex",
+          "value": "c12.*application|resolved.*value"
+        },
+        {
+          "kind": "regex",
+          "value": "unstorage.*guarantee|driver"
+        },
+        {
+          "kind": "regex",
+          "value": "Hookable.*third.party|extension.*requirement"
+        }
+      ],
+      "rubric": [
+        "Covers all composition scales",
+        "Preserves each ecosystem's semantics and owner",
+        "Does not equate common interfaces with common guarantees"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "logtape-official",
+        "c12-official",
+        "unstorage-1-17-5",
+        "hookable-6-1-1"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "composition",
+        "training"
+      ],
+      "rationale": "Local function composition alone misses ecosystem and operational contracts."
+    },
+    {
+      "id": "library-composition-strategic-dependency",
+      "title": "Choose direct dependency or project adapter",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A library wants logging. One proposal imports LogTape directly with a namespaced category and leaves configuration to the host. Another wraps it as Logger.log(string). Compare the options, state when a project-owned adapter is warranted, and preserve domain events separately from diagnostics.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/composition.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "strategic depend|direct.*LogTape"
+        },
+        {
+          "kind": "regex",
+          "value": "structured|category|context|redact|lazy"
+        },
+        {
+          "kind": "regex",
+          "value": "domain event.*diagnostic|diagnostic.*domain event"
+        },
+        {
+          "kind": "regex",
+          "value": "adapter.*semantics|substitut"
+        }
+      ],
+      "rubric": [
+        "Rejects the lowest-common-denominator wrapper",
+        "Explains when an adapter is justified",
+        "Separates stable domain events from support diagnostics"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "logtape-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "composition",
+        "logtape",
+        "valid-seen"
+      ],
+      "rationale": "Swappability must not erase strategic ecosystem value."
+    },
+    {
+      "id": "library-composition-no-ecosystem-hoarding",
+      "title": "Select the smallest coherent ecosystem set",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "An SDK already uses LogTape, c12, defu, and unstorage. A proposal adds Consola, a second config loader, a second merge library, and an internal event bus because they are all composable. Produce the ownership and exclusion decision, including where Hookable would actually be justified.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/composition.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "duplicate|overlap|one owner"
+        },
+        {
+          "kind": "regex",
+          "value": "Consola.*alternative|second.*logger"
+        },
+        {
+          "kind": "regex",
+          "value": "Hookable.*third.party|plugin"
+        },
+        {
+          "kind": "regex",
+          "value": "smallest coherent|exclude"
+        }
+      ],
+      "rubric": [
+        "Does not maximize package count",
+        "Distinguishes companions from alternatives",
+        "Requires a real extension contract before adding hooks"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "cli-audit",
+        "hookable-6-1-1"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "composition",
+        "ecosystems",
+        "valid-unseen"
+      ],
+      "rationale": "Composability is not ecosystem accumulation."
+    },
+    {
+      "id": "library-data-flow-shape-selection",
+      "title": "Choose truthful collection and stream shapes",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "train",
+      "prompt": "For each operation choose and justify T, Promise<T>, readonly T[], Iterable<T>, AsyncIterable<T>, ReadableStream<Uint8Array>, or AsyncIterable<readonly T[]>: compile 500 rules, crawl 100,000 domains, decode a response body, return a final summary, and batch database writes.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/data-flow.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "rules.*array|readonly"
+        },
+        {
+          "kind": "regex",
+          "value": "domains.*AsyncIterable|crawl.*AsyncIterable"
+        },
+        {
+          "kind": "regex",
+          "value": "response.*ReadableStream|bytes.*stream"
+        },
+        {
+          "kind": "regex",
+          "value": "batch|materiali"
+        }
+      ],
+      "rubric": [
+        "Matches shape to cardinality and semantics",
+        "Uses arrays as explicit materialization boundaries",
+        "Distinguishes domain async iteration from transport streams"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "whatwg-streams-standard"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "data-flow",
+        "training"
+      ],
+      "rationale": "The data shape is part of the public contract."
+    },
+    {
+      "id": "library-data-flow-batching",
+      "title": "Stream between subsystems and batch within them",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A domain pipeline yields one Observation at a time, awaits one database insert per record, logs every record, and preserves input order across skewed network requests. Redesign it with bounded admission, concurrency, buffering, ordering policy, byte/count/time batch limits, and explicit materialization points.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/data-flow.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "admission.*concurrency.*buffer|queue capacity"
+        },
+        {
+          "kind": "regex",
+          "value": "batch.*(bytes|count|time)"
+        },
+        {
+          "kind": "regex",
+          "value": "input.*completion.*order|ordering policy"
+        },
+        {
+          "kind": "regex",
+          "value": "backpressure|slow.*sink"
+        }
+      ],
+      "rubric": [
+        "Separates admission, concurrency, buffering, and ordering",
+        "Batches hot subsystem work without destroying incremental flow",
+        "Accounts for slow destinations and gap buffering"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "whatwg-streams-standard"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "data-flow",
+        "batching",
+        "valid-seen"
+      ],
+      "rationale": "Per-record elegance can hide serious CPU, I/O, and memory overhead."
+    },
+    {
+      "id": "library-data-flow-streaming-cleanup-fixture",
+      "title": "Repair lazy streaming and early-return cleanup",
+      "skill": "build-libraries",
+      "kind": "artifact",
+      "split": "test-frozen",
+      "prompt": "Repair collectItems() so it is a lazy AsyncIterable, reads one item at a time, stops upstream work when the consumer breaks, disposes the acquired AsyncDisposable exactly once on early return and failure, and passes the fixture verifier. Use explicit resource management where the target runtime supports it, otherwise preserve the same contract with try/finally.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/data-flow.md"
+      ],
+      "assertions": [
+        {
+          "kind": "command",
+          "command": [
+            "node",
+            "verify.mjs"
+          ],
+          "expectedExitCode": 0
+        }
+      ],
+      "rubric": [
+        "Returns an async iterable rather than a materialized promise",
+        "Acquires lazily and stops after early return",
+        "Disposes on normal early return and source failure"
+      ],
+      "oracleStrength": "fixture-behavior",
+      "sourceIds": [
+        "library-first-guidebook",
+        "whatwg-streams-standard",
+        "typescript-erm-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "data-flow",
+        "streaming",
+        "frozen"
+      ],
+      "rationale": "Executable proof protects incrementality and cleanup semantics.",
+      "fixture": "library-streaming-cleanup"
+    },
+    {
+      "id": "library-dod-transform-graph",
+      "title": "Design from transformations and data lifetime",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A technology detection library processes millions of observations. Produce a data-oriented design from target normalization through observation batches, detector index probes, fact candidates, aggregation, and persistence. Record cardinality, fields accessed, allocation, copying, lifetime, batching, and public versus internal representations.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/data-oriented-design.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "transform.*graph|cardinalit"
+        },
+        {
+          "kind": "regex",
+          "value": "hot.*cold|lifetime"
+        },
+        {
+          "kind": "regex",
+          "value": "public.*internal.*represent|internal.*public"
+        },
+        {
+          "kind": "regex",
+          "value": "allocation|copy|locality"
+        }
+      ],
+      "rubric": [
+        "Uses the transformation graph rather than object taxonomy",
+        "Separates stable public models from optimized internal batches",
+        "Accounts for volume, lifetime, allocation, and access patterns"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "data-oriented-design-book",
+        "v8-performance-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "data-oriented-design",
+        "training"
+      ],
+      "rationale": "Data-oriented design begins with data and transforms."
+    },
+    {
+      "id": "library-dod-hot-cold-index",
+      "title": "Separate hot records cold evidence and indexes",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Each fact candidate currently embeds a large evidence object and string technology name. The hot loop repeatedly groups and scores millions of candidates. Propose a measured internal representation, evidence store, identifiers, index lifetime, and conversion boundary while keeping the public API readable.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/data-oriented-design.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "hot.*cold|evidence store"
+        },
+        {
+          "kind": "regex",
+          "value": "ID|identifier|dictionary|index"
+        },
+        {
+          "kind": "regex",
+          "value": "public.*boundary|conversion"
+        },
+        {
+          "kind": "regex",
+          "value": "measure|benchmark|profile"
+        }
+      ],
+      "rubric": [
+        "Reduces hot-path payload without leaking packed internals",
+        "Includes index build, memory, invalidation, and lifetime costs",
+        "Requires end-to-end evidence"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "data-oriented-design-book",
+        "v8-performance-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "data-oriented-design",
+        "valid-seen"
+      ],
+      "rationale": "Hot and cold separation is useful only with explicit conversion and lifetime costs."
+    },
+    {
+      "id": "library-dod-typed-array-cargo-cult",
+      "title": "Reject unmeasured typed-array redesign",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A 200-rule configuration library runs once at startup. A reviewer demands struct-of-arrays, numeric IDs, object pooling, and typed arrays because data-oriented design is always faster. Evaluate the proposal, define the evidence that could justify it, and choose the default representation now.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/data-oriented-design.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "premature|cargo|not.*typed array|ordinary object"
+        },
+        {
+          "kind": "regex",
+          "value": "small|startup|200"
+        },
+        {
+          "kind": "regex",
+          "value": "profile|benchmark|threshold"
+        },
+        {
+          "kind": "regex",
+          "value": "conversion|complexity"
+        }
+      ],
+      "rubric": [
+        "Does not equate data-oriented design with typed arrays",
+        "Chooses understandable bounded data by default",
+        "Defines conditions that would justify revisiting the representation"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "data-oriented-design-book"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "data-oriented-design",
+        "adversarial"
+      ],
+      "rationale": "The skill must prevent representation cargo culting."
+    },
+    {
+      "id": "library-resources-ownership",
+      "title": "Model resource acquisition borrowing and disposal",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a library API that uses a shared browser pool, per-run temporary workspace, per-target browser context, database transaction, stream writer, and checkpoint session. Define owner, lifetime, borrow/transfer policy, cancellation, partial-construction cleanup, disposal order, and supported using/await using fallback.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/resources-performance.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "application.*run.*target|lifetime"
+        },
+        {
+          "kind": "regex",
+          "value": "borrow|transfer"
+        },
+        {
+          "kind": "regex",
+          "value": "AsyncDisposable|await using|try/finally"
+        },
+        {
+          "kind": "regex",
+          "value": "partial.*construct|reverse.*order"
+        }
+      ],
+      "rubric": [
+        "Separates resources by lifetime",
+        "Makes ownership transfer and cleanup explicit",
+        "Handles partial failure, abort, and cleanup failure"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "typescript-erm-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "resources",
+        "training"
+      ],
+      "rationale": "Resource lifetime is a public API concern."
+    },
+    {
+      "id": "library-performance-budget",
+      "title": "Define multidimensional workload budgets",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A browser-analysis library claims it is faster after raising concurrency from 8 to 64. Design a performance evaluation that covers startup, first result, throughput, p95/p99, CPU, allocation, peak and retained memory, queue depth, open browsers/pages, cleanup, and recovery under fixed admission and destination behavior.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/resources-performance.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "startup|first.*result"
+        },
+        {
+          "kind": "regex",
+          "value": "p95|p99|tail"
+        },
+        {
+          "kind": "regex",
+          "value": "peak.*retained|allocation|RSS"
+        },
+        {
+          "kind": "regex",
+          "value": "admission.*queue|buffer"
+        },
+        {
+          "kind": "regex",
+          "value": "baseline|variab|oracle"
+        }
+      ],
+      "rubric": [
+        "Rejects throughput achieved through unbounded queue growth",
+        "Separates CPU, memory, latency, resource, and cleanup metrics",
+        "Defines representative baseline and correctness gates"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "v8-performance-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "performance",
+        "valid-seen"
+      ],
+      "rationale": "Performance is workload-specific and multidimensional."
+    },
+    {
+      "id": "library-resource-early-return",
+      "title": "Prove cancellation and cleanup are separate",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "An async iterable accepts AbortSignal and calls abort() when the consumer stops, but leased pages, a reader lock, and a temporary directory remain open until process exit. Explain the defect and design the lifecycle and tests for normal completion, early return, source error, consumer error, and cleanup failure.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/resources-performance.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "AbortSignal.*(not|does not).*dispose|cancellation.*disposal"
+        },
+        {
+          "kind": "regex",
+          "value": "early return|consumer error|source error"
+        },
+        {
+          "kind": "regex",
+          "value": "reader.*lock|page|temporary"
+        },
+        {
+          "kind": "regex",
+          "value": "exactly once|cleanup.*failure"
+        }
+      ],
+      "rubric": [
+        "Distinguishes stop requests from resource release",
+        "Covers all lifecycle exits",
+        "Preserves primary and cleanup failure evidence"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "typescript-erm-official",
+        "whatwg-streams-standard"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "resources",
+        "cancellation",
+        "valid-unseen"
+      ],
+      "rationale": "Abort propagation alone is not resource safety."
+    },
+    {
+      "id": "library-packaging-subpaths",
+      "title": "Design ESM public subpaths and optional adapters",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design package.json exports and source boundaries for a core analysis library plus browser, PostgreSQL, ClickHouse, LogTape, and Temporal adapters. Preserve ESM, explicit extensions, declarations, optional dependency behavior, and a small root facade without eager adapter imports.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/packaging.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "exports|subpath"
+        },
+        {
+          "kind": "regex",
+          "value": "browser.*PostgreSQL.*ClickHouse|optional adapter"
+        },
+        {
+          "kind": "regex",
+          "value": "type.*module|ESM"
+        },
+        {
+          "kind": "regex",
+          "value": "types|declaration"
+        },
+        {
+          "kind": "regex",
+          "value": "root.*(not|does not).*import|separate"
+        }
+      ],
+      "rubric": [
+        "Creates explicit stable subpaths",
+        "Keeps runtime-specific integrations in leaves",
+        "Aligns JavaScript and declaration entrypoints"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "node-packages-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "packaging",
+        "training"
+      ],
+      "rationale": "Selective adoption depends on physical package boundaries."
+    },
+    {
+      "id": "library-packaging-side-effects",
+      "title": "Audit side effects before declaring tree-shakability",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A package sets sideEffects:false but its root imports a generated registry, configures logging, reads environment variables, and registers browser adapters. Explain why the metadata is unsafe, redesign the entrypoints, and define artifact-level tree-shaking evidence beyond bundle size.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/packaging.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "sideEffects.*unsafe|truthful"
+        },
+        {
+          "kind": "regex",
+          "value": "import.?time|top.?level"
+        },
+        {
+          "kind": "regex",
+          "value": "metafile|module graph|marker"
+        },
+        {
+          "kind": "regex",
+          "value": "clean consumer|packed artifact"
+        }
+      ],
+      "rubric": [
+        "Treats side-effect metadata as a verified contract",
+        "Moves effects behind explicit entrypoints or calls",
+        "Uses module markers or graphs plus semantic execution"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "esbuild-tree-shaking-official",
+        "node-packages-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "packaging",
+        "tree-shaking",
+        "valid-seen"
+      ],
+      "rationale": "Metadata cannot compensate for an eagerly connected module graph."
+    },
+    {
+      "id": "library-packaging-selective-fixture",
+      "title": "Repair selective package adoption",
+      "skill": "build-libraries",
+      "kind": "artifact",
+      "split": "test-frozen",
+      "prompt": "Repair the fixture package so the root and core subpath expose only the core analyze capability, the browser adapter is available from an explicit browser subpath, imports perform no global mutation, package side-effect metadata is truthful, and the verifier passes. Do not remove the browser capability.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/packaging.md"
+      ],
+      "assertions": [
+        {
+          "kind": "command",
+          "command": [
+            "node",
+            "verify.mjs"
+          ],
+          "expectedExitCode": 0
+        }
+      ],
+      "rubric": [
+        "Adds explicit root, core, and browser public entrypoints",
+        "Prevents root/core imports from traversing the browser adapter",
+        "Removes import-time mutation and declares side effects truthfully"
+      ],
+      "oracleStrength": "fixture-behavior",
+      "sourceIds": [
+        "library-first-guidebook",
+        "node-packages-official",
+        "esbuild-tree-shaking-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "packaging",
+        "tree-shaking",
+        "frozen"
+      ],
+      "rationale": "Executable consumer behavior is stronger than source inspection.",
+      "fixture": "library-selective-adoption"
+    },
+    {
+      "id": "library-recovery-ladder",
+      "title": "Classify restart resume and durable orchestration",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "train",
+      "prompt": "Classify three designs: an idempotent command reruns from the beginning, a library resumes from committed batch receipts, and a Temporal worker survives process loss with timers and signals. Define the authority and verification required for each and route durable execution ownership correctly.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/recovery-refactoring.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "restartable.*checkpoint|checkpoint.*durab"
+        },
+        {
+          "kind": "regex",
+          "value": "committed.*receipt|checkpoint"
+        },
+        {
+          "kind": "regex",
+          "value": "Temporal|workflow.*authority"
+        },
+        {
+          "kind": "regex",
+          "value": "build-workflows|durable.*owner"
+        }
+      ],
+      "rubric": [
+        "Names all three guarantees precisely",
+        "Keeps library checkpoint contracts distinct from durable execution",
+        "Requires persisted authority and crash evidence"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "recovery",
+        "training"
+      ],
+      "rationale": "Recovery claims must not collapse into one vague resumability label."
+    },
+    {
+      "id": "library-recovery-commit-order",
+      "title": "Commit outputs before advancing checkpoints",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A resumable importer writes checkpoint N before flushing database batch N, and uses the current array index as its only identity. Redesign commit order, logical IDs, attempt IDs, output receipts, compatibility metadata, replay behavior, and startup reconciliation.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/recovery-refactoring.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "write.*output.*checkpoint|output.*before.*checkpoint"
+        },
+        {
+          "kind": "regex",
+          "value": "logical.*attempt|attempt.*logical"
+        },
+        {
+          "kind": "regex",
+          "value": "receipt|reconcile"
+        },
+        {
+          "kind": "regex",
+          "value": "version|fingerprint|schema"
+        }
+      ],
+      "rubric": [
+        "Prevents skipped output after crash",
+        "Separates logical work from attempts",
+        "Handles replay and incompatible resume"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "unstorage-1-17-5",
+        "ohash-2-0-11"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "recovery",
+        "valid-seen"
+      ],
+      "rationale": "Checkpoint position without durable output identity is fake resumability."
+    },
+    {
+      "id": "library-refactor-cli-first",
+      "title": "Extract a reusable core without dual architecture",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A team wants to move every CLI stage into packages/core, preserve all runBrowserPackage names, keep RuntimeContext public, and add wrappers so no callers change. Produce a phased refactor that preserves one command, writes desired library consumers first, classifies context fields, adds a second consumer, proves selective adoption, and removes compatibility scaffolding under an explicit policy.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/recovery-refactoring.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "characteri|preserve.*command|current behavior"
+        },
+        {
+          "kind": "regex",
+          "value": "consumer.*first|desired.*call"
+        },
+        {
+          "kind": "regex",
+          "value": "classif.*context|domain input.*capabilit"
+        },
+        {
+          "kind": "regex",
+          "value": "second consumer"
+        },
+        {
+          "kind": "regex",
+          "value": "remove.*compatib|legacy"
+        }
+      ],
+      "rubric": [
+        "Does not equate package movement with extraction",
+        "Uses a vertical use-case migration",
+        "Avoids permanent dual orchestration and stale names"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "cli-audit"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "refactoring",
+        "cli",
+        "adversarial"
+      ],
+      "rationale": "Compatibility wrappers can preserve the architecture being removed."
+    },
+    {
+      "id": "library-verification-claim-evidence",
+      "title": "Match library claims to executable evidence",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Create a verification matrix for a library that claims type-safe public APIs, import safety, tree-shaking, streaming, early-return cleanup, lower memory, and checkpoint resume. Name the minimum executable evidence for each claim and distinguish source review from artifact proof.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/verification.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "clean consumer|packed artifact"
+        },
+        {
+          "kind": "regex",
+          "value": "tree.?shak.*(metafile|marker|graph)"
+        },
+        {
+          "kind": "regex",
+          "value": "early return|slow.*sink|peak.*memory"
+        },
+        {
+          "kind": "regex",
+          "value": "kill|crash.*checkpoint|restart"
+        }
+      ],
+      "rubric": [
+        "Maps each claim to the right oracle",
+        "Includes artifact, lifecycle, performance, and crash evidence",
+        "Does not treat source inspection as runtime proof"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "verification",
+        "training"
+      ],
+      "rationale": "The skill must demand evidence proportional to the claim."
+    },
+    {
+      "id": "library-verification-benchmark-gate",
+      "title": "Design a correctness-gated library benchmark",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A candidate data layout is 18% faster in one microbenchmark. Design the acceptance protocol for public parse, streaming, diagnostics, persistence, cold import, peak memory, retained memory, and error/cancellation paths. Include practical thresholds, protected workflows, raw artifacts, and rejection rules.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/verification.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "correctness.*gate|semantic.*oracle"
+        },
+        {
+          "kind": "regex",
+          "value": "microbenchmark.*(not|cannot)|protected.*workflow"
+        },
+        {
+          "kind": "regex",
+          "value": "threshold|guardrail"
+        },
+        {
+          "kind": "regex",
+          "value": "raw.*sample|baseline|variab"
+        }
+      ],
+      "rubric": [
+        "Keeps the microbenchmark explanatory rather than decisive",
+        "Predeclares practical and statistical decision rules",
+        "Protects memory, startup, errors, and full workflows"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "v8-performance-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "verification",
+        "performance",
+        "valid-seen"
+      ],
+      "rationale": "Fast wrong or locally optimized code is not a successful library change."
+    },
+    {
+      "id": "library-verification-cross-skill",
+      "title": "Verify a library across CLI packaging and workflows",
+      "skill": "build-libraries",
+      "kind": "composition",
+      "split": "transfer",
+      "prompt": "A reusable analysis library is consumed by an Optique CLI, built with unbuild, logs through LogTape, stores checkpoint metadata in unstorage, and optionally runs inside Temporal. Produce one verification plan with correct owners for CLI behavior, package artifacts, ecosystem evidence, library resume contracts, and durable workflow execution.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/verification.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "build-clis|CLI.*owner"
+        },
+        {
+          "kind": "regex",
+          "value": "build-devtools|pack.*artifact|clean consumer"
+        },
+        {
+          "kind": "regex",
+          "value": "explore-ecosystems|source.*evidence"
+        },
+        {
+          "kind": "regex",
+          "value": "build-workflows|Temporal.*durable"
+        },
+        {
+          "kind": "regex",
+          "value": "library.*checkpoint|resume contract"
+        }
+      ],
+      "rubric": [
+        "Uses one integrated plan without duplicate owners",
+        "Separates package evidence from public API evidence",
+        "Separates resumable library semantics from durable orchestration"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "cli-guidebook",
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "verification",
+        "composition",
+        "transfer"
+      ],
+      "rationale": "Library completion often spans several existing domain skills."
+    },
+    {
+      "id": "library-data-flow-cancellation-boundary",
+      "title": "Preserve cancellation and ownership across iterable-stream adapters",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A library adapts an AsyncIterable<Record> into a ReadableStream<Record> for fetch integration. The current adapter keeps pulling after stream cancellation, materializes pending records, and leaves the source resource open when the reader releases its lock. Redesign the boundary and explain cancellation, return(), backpressure, buffering, and ownership semantics without pretending the two protocols are identical.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/data-flow.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "cancel.*(return|close|dispose)|return.*cancel"
+        },
+        {
+          "kind": "regex",
+          "value": "backpressure|desiredSize|pull"
+        },
+        {
+          "kind": "regex",
+          "value": "bounded.*buffer|buffer.*bound"
+        },
+        {
+          "kind": "regex",
+          "value": "ownership|borrow|transfer"
+        },
+        {
+          "kind": "not-contains",
+          "value": "AsyncIterable and ReadableStream are equivalent"
+        }
+      ],
+      "rubric": [
+        "Treats protocol adaptation as a semantic boundary",
+        "Stops upstream production and cleanup on cancellation",
+        "Defines buffer and ownership behavior explicitly"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "whatwg-streams-standard",
+        "typescript-erm-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "data-flow",
+        "valid-unseen"
+      ],
+      "rationale": "A library can expose both protocols only if the adapter preserves cancellation, pressure, and lifetime semantics."
+    },
+    {
+      "id": "library-packaging-runtime-registry-trap",
+      "title": "Reject a runtime-selected registry that defeats selective adoption",
+      "skill": "build-libraries",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A package exposes createAdapter(name) and implements it by statically importing every database, browser, telemetry, and cloud adapter into one registry. The author argues runtime selection is maximally composable and bundlers will remove unused entries. Review the claim and design build-time selection, explicit subpaths, and an optional runtime-loading surface with truthful side-effect and dependency behavior.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/packaging.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "static.*registry.*retain|eager.*import"
+        },
+        {
+          "kind": "regex",
+          "value": "subpath|explicit.*entry"
+        },
+        {
+          "kind": "regex",
+          "value": "dynamic import|runtime loader"
+        },
+        {
+          "kind": "regex",
+          "value": "metafile|clean consumer|bundle.*inspect"
+        },
+        {
+          "kind": "regex",
+          "value": "sideEffects.*truth"
+        }
+      ],
+      "rubric": [
+        "Distinguishes build-time selective adoption from runtime plugin selection",
+        "Keeps the common root free of optional adapter dependency graphs",
+        "Requires artifact-level proof rather than bundler optimism"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "node-packages-official",
+        "esbuild-tree-shaking-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "packaging",
+        "adversarial"
+      ],
+      "rationale": "Runtime registries are a common way to turn conceptual optionality into physical dependency retention."
+    },
+    {
+      "id": "route-build-libraries-public-api",
+      "title": "Route a reusable package redesign",
+      "skill": "build-libraries",
+      "kind": "routing",
+      "split": "valid-unseen",
+      "prompt": "Refactor a CLI-owned TypeScript core into a public ESM library with async iterables, explicit resource ownership, optional browser adapters, and tree-shaking tests.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "build-libraries"
+        }
+      ],
+      "rubric": [
+        "Activates the library skill"
+      ],
+      "oracleStrength": "routing-smoke",
+      "sourceIds": [
+        "library-first-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "routing"
+      ],
+      "rationale": "Public reusable package work should activate the focused skill."
+    },
+    {
+      "id": "route-library-incidental-helper-negative",
+      "title": "Do not route an incidental private helper",
+      "skill": "build-libraries",
+      "kind": "routing",
+      "split": "adversarial",
+      "prompt": "Rename one private formatDate helper inside an application. It has one caller and no public or reusable contract.",
+      "expectedSkills": [],
+      "forbiddenSkills": [
+        "build-libraries"
+      ],
+      "requiredReferences": [],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "not-contains",
+          "value": "build-libraries"
+        }
+      ],
+      "rubric": [
+        "Avoids activating a heavyweight library workflow for an incidental helper"
+      ],
+      "oracleStrength": "routing-smoke",
+      "sourceIds": [
+        "library-first-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "routing",
+        "negative"
+      ],
+      "rationale": "The skill explicitly excludes incidental internal helpers."
+    },
+    {
+      "id": "route-cli-flag-without-library-negative",
+      "title": "Keep a CLI-only flag in the CLI skill",
+      "skill": "composition",
+      "kind": "routing",
+      "split": "adversarial",
+      "prompt": "Add --quiet and generated shell completion to an existing Optique CLI. No reusable API or package boundary changes.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [
+        "build-libraries"
+      ],
+      "requiredReferences": [],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "build-clis"
+        },
+        {
+          "kind": "not-contains",
+          "value": "build-libraries"
+        }
+      ],
+      "rubric": [
+        "Routes public command language without inventing library work"
+      ],
+      "oracleStrength": "routing-smoke",
+      "sourceIds": [
+        "cli-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "build-libraries",
+        "routing",
+        "negative"
+      ],
+      "rationale": "CLI product changes do not automatically require a reusable library redesign."
+    },
+    {
+      "id": "composition-library-cli-extraction",
+      "title": "Compose delivery CLI and library ownership",
+      "skill": "composition",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "Implement a refactor that keeps an Optique CLI runnable while extracting a reusable analysis library, preserving c12 precedence and LogTape routing, adding package subpaths and clean-consumer tests, and removing the old runtime API after parity.",
+      "expectedSkills": [
+        "deliver-software",
+        "build-clis",
+        "build-libraries",
+        "build-devtools"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/recovery-refactoring.md",
+        "build-clis/references/architecture.md",
+        "build-devtools/references/packaging.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "one.*plan|ownership"
+        },
+        {
+          "kind": "regex",
+          "value": "CLI.*c12.*LogTape"
+        },
+        {
+          "kind": "regex",
+          "value": "clean consumer|package subpath"
+        },
+        {
+          "kind": "regex",
+          "value": "remove.*runtime|legacy"
+        }
+      ],
+      "rubric": [
+        "Uses one repository discovery and integrated plan",
+        "Keeps command/config/output ownership in the CLI",
+        "Carries implementation through package proof and cleanup"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "cli-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "composition",
+        "build-libraries",
+        "build-clis",
+        "build-devtools"
+      ],
+      "rationale": "The most common migration requires several skills with non-overlapping owners."
+    },
+    {
+      "id": "composition-library-durable-workflow",
+      "title": "Separate library resume from durable workflow authority",
+      "skill": "composition",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A library exposes resume(checkpoint), and a team claims this makes its 12-hour import durable. Design the library checkpoint contract and the Temporal worker/control-plane integration, including idempotent effects, versioning, operator controls, and crash verification.",
+      "expectedSkills": [
+        "build-libraries",
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/recovery-refactoring.md",
+        "build-workflows/references/durability.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "library.*checkpoint|resume contract"
+        },
+        {
+          "kind": "regex",
+          "value": "workflow.*authority|Temporal"
+        },
+        {
+          "kind": "regex",
+          "value": "idempot|operator|version"
+        },
+        {
+          "kind": "regex",
+          "value": "kill|restart|crash"
+        }
+      ],
+      "rubric": [
+        "Rejects the false durability claim",
+        "Keeps public resume semantics in the library",
+        "Assigns persisted execution and operator recovery to the workflow skill"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "composition",
+        "build-libraries",
+        "build-workflows",
+        "durability"
+      ],
+      "rationale": "Checkpoint APIs and durable execution are adjacent but distinct."
+    },
+    {
+      "id": "composition-library-ecosystem-selection",
+      "title": "Research an ecosystem for a library integration",
+      "skill": "composition",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Choose the smallest LogTape and UnJS package set for a reusable SDK that needs library-safe diagnostics, project config in its CLI adapter, optional checkpoint storage, and no plugin system. Inspect official siblings and exclusions, then define the library boundaries.",
+      "expectedSkills": [
+        "build-libraries",
+        "explore-ecosystems",
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/composition.md",
+        "explore-ecosystems/references/selection.md",
+        "build-clis/references/ecosystems.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "LogTape.*library|not.*configure"
+        },
+        {
+          "kind": "regex",
+          "value": "c12|defu|unstorage"
+        },
+        {
+          "kind": "regex",
+          "value": "exclude|smallest coherent"
+        },
+        {
+          "kind": "regex",
+          "value": "no.*Hookable|plugin.*not"
+        }
+      ],
+      "rubric": [
+        "Maps the ecosystems before selecting packages",
+        "Keeps configuration in the CLI adapter",
+        "Avoids installing extension machinery without a requirement"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "logtape-official",
+        "c12-official",
+        "unstorage-1-17-5"
+      ],
+      "evidenceStatus": "observed-source",
+      "tags": [
+        "composition",
+        "build-libraries",
+        "explore-ecosystems",
+        "build-clis"
+      ],
+      "rationale": "Library composition and ecosystem topology need separate owners."
+    },
+    {
+      "id": "composition-library-release-frozen",
+      "title": "Deliver a selective resumable library and CLI",
+      "skill": "composition",
+      "kind": "artifact",
+      "split": "test-frozen",
+      "prompt": "Plan and implement a Deno-first strict TypeScript library extracted from a CLI. Preserve a thin Optique/c12/LogTape CLI adapter, expose side-effect-free ESM core and browser subpaths, use bounded async batches with deterministic cleanup, define checkpoint-resume but route durable execution separately, build and pack the artifact, verify clean consumers and tree-shaking, and remove the old public runtime/stage API.",
+      "expectedSkills": [
+        "deliver-software",
+        "deno-software",
+        "build-clis",
+        "build-libraries",
+        "build-devtools",
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/architecture.md",
+        "build-libraries/references/data-flow.md",
+        "build-libraries/references/resources-performance.md",
+        "build-libraries/references/packaging.md",
+        "build-libraries/references/recovery-refactoring.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "thin.*CLI|Optique.*c12.*LogTape"
+        },
+        {
+          "kind": "regex",
+          "value": "subpath|side.?effect|tree.?shak"
+        },
+        {
+          "kind": "regex",
+          "value": "bounded.*batch|AsyncIterable|cleanup"
+        },
+        {
+          "kind": "regex",
+          "value": "checkpoint.*durable.*workflow|workflow.*separate"
+        },
+        {
+          "kind": "regex",
+          "value": "clean consumer|pack"
+        },
+        {
+          "kind": "regex",
+          "value": "remove.*stage|runtime"
+        }
+      ],
+      "rubric": [
+        "Produces one integrated implementation and cleanup plan",
+        "Preserves all specialist ownership boundaries",
+        "Requires executable package, lifecycle, performance, and recovery evidence"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "cli-guidebook",
+        "deno-software",
+        "temporal-typescript-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "composition",
+        "build-libraries",
+        "frozen",
+        "release"
+      ],
+      "rationale": "Frozen cross-skill topology for the full library-first migration."
+    },
+    {
+      "id": "library-architecture-justify-boundary",
+      "title": "Justify a library boundary without slogans",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A team says library-first architecture is necessary and proposes splitting every internal module into a separately published package. Evaluate and justify the boundary decision. Name the protected objective, hard constraints, diagnosis and causal chain, credible alternatives including doing nothing or a reversible pilot, exact rejection reasons, accepted trade-offs, assumptions or defeaters, and whether the proposal is necessary, conditionally necessary, prudent, preferred, or unjustified.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/architecture.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "objective|failure condition|protected"
+        },
+        {
+          "kind": "regex",
+          "value": "hard constraint|preference"
+        },
+        {
+          "kind": "regex",
+          "value": "do nothing|inaction|delay|pilot|partial"
+        },
+        {
+          "kind": "regex",
+          "value": "trade.?off|cost|risk"
+        },
+        {
+          "kind": "regex",
+          "value": "assumption|defeater|would change"
+        },
+        {
+          "kind": "regex",
+          "value": "conditionally necessary|prudent|preferred|unjustified"
+        },
+        {
+          "kind": "not-contains",
+          "value": "because it is best practice"
+        }
+      ],
+      "rubric": [
+        "Connects the situation, mechanism, constraints, and evidence to the boundary decision",
+        "Compares weaker and more reversible options before accepting package proliferation",
+        "Qualifies the conclusion and exposes evidence that would change it"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "library-first-guidebook",
+        "decision-justification-guide"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "architecture",
+        "decision-quality",
+        "valid-unseen"
+      ],
+      "rationale": "Library-first language must not become an unexamined package-splitting slogan."
+    }
+  ]
+}
