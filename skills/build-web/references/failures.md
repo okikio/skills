@@ -73,7 +73,7 @@ Use this reference during diagnosis and review. A signature narrows the next evi
 | Signature | Likely cause | Next inspection | Do not do |
 |---|---|---|---|
 | Removed item never disappears | Exit completion path missing | Presence registry and zero-animation case | Add arbitrary timeout |
-| Exit never appears | Owner disposed before retention | Parent control-flow boundary | Start animation in cleanup |
+| Exit never appears | Owner disposed before retention | Parent control-flow owner | Start animation in cleanup |
 | Duplicate item after reentry | Same-key policy undefined | Retained record identity | Generate random keys |
 | Motion prop type exists but no response | Type surface exceeds runtime | Event binding/renderer tests | Document capability as complete |
 | Animation jumps on hover release | Lane priority/resume wrong | Current value/velocity and resolver | Reset to initial value |
@@ -93,9 +93,9 @@ Use this reference during diagnosis and review. A signature narrows the next evi
 | Secrets appear in bundle | Server module reachable from client | Import graph and serialized props | Rename environment variable |
 | Webhook accepts spoofed events | Signature/raw-body/replay missing | Provider verification sequence | Rely on obscure URL |
 | Webhook retries duplicate side effects | Event id/idempotency missing | Persistence and retry contract | Always return 200 before work |
-| Logs contain API key or payload PII | Boundary logging raw objects | Structured redaction policy | Remove all diagnostics |
+| Logs contain API key or payload PII | Raw-object logging at the handoff | Structured redaction policy | Remove all diagnostics |
 | CSP breaks valid UI | Policy not derived from resources/nonces | Violation reports and asset origins | Disable CSP globally |
-| Rich content executes script | Raw HTML not sanitized/mapped | Content render boundary | Escape only one field |
+| Rich content executes script | Raw HTML not sanitized/mapped | Content rendering stage | Escape only one field |
 | Mutating GET route | Method semantics collapsed | Endpoint exports and caller | Add CSRF token to GET |
 | Personalized page served stale | Public/shared caching on auth route | Middleware classification | Bust cache with random URL |
 
@@ -120,9 +120,9 @@ Use this reference during diagnosis and review. A signature narrows the next evi
 2. Record route, output mode, renderer, state owners, auth scope, and connected systems.
 3. Inspect the active import/runtime graph; ignore unreachable examples.
 4. Capture raw server response, browser console/network, accessibility tree, and resource counts as relevant.
-5. Identify the first boundary where actual behavior diverges from the documented contract.
+5. Identify the first handoff where actual behavior diverges from the documented contract.
 6. Fix that owner without adding a second owner.
-7. Add a regression oracle at the lowest layer that reproduces the failure and one higher integration layer when the boundary crosses systems.
+7. Add a regression oracle at the lowest layer that reproduces the failure and one higher integration layer when the handoff crosses systems.
 8. Re-run adjacent negative/failure cases.
 
 ## Sources and freshness

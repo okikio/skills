@@ -60,7 +60,7 @@ Inventory intended consumers before selecting a builder.
 Do not promise a runtime because the language transpiles. Search public source
 for `Deno.*`, `node:` imports, native dependencies, dynamic `require`, filesystem
 layout assumptions, environment reads, subprocesses, and bundler transforms.
-Separate portable core from host adapters when the capability boundary is real.
+Separate portable core from host adapters when the capability split is real.
 
 ## Authority and artifact graph
 
@@ -80,7 +80,7 @@ source modules + public export inventory + version
 ```
 
 One source does not mean one artifact can serve every host. It means behavioral
-changes are authored once and transformation boundaries are deterministic. Each
+changes are authored once and transformation stages are deterministic. Each
 artifact still needs independent verification.
 
 Define one version source for a release: exact tag, validated release input, or
@@ -187,7 +187,7 @@ Unbuild 3.6.1 supports inferred or explicit entries, Rollup-based bundles,
 TypeScript declarations, multiple configs, sourcemaps, dependency checks,
 development stubs, and `mkdist` file-to-file output. Choose intentionally:
 
-- bundle when a compact runtime unit is desired and dependency boundaries are
+- bundle when a compact runtime unit is desired and dependency edges are
   understood;
 - `mkdist` when preserving module/subpath structure and per-file tree shaking
   matters;
@@ -276,7 +276,7 @@ tarball or registry version.
 
 | Axis | Minimum proof |
 |---|---|
-| Runtime | each promised Deno/Node/browser/worker version boundary |
+| Runtime | each promised Deno/Node/browser/worker version line |
 | Module | ESM and CJS only if each is promised |
 | Resolver | relevant TypeScript and runtime resolution modes |
 | Entry | every root/subpath/bin/asset import |
@@ -309,7 +309,7 @@ tooling, but preserve the consumer lockfile and exact commands as evidence.
 | Runtime works, types fail under NodeNext | wrong declaration extension/path | resolver trace in clean TS consumer |
 | One subpath contains stale code | output directory not cleared or unowned entry | clean build and output manifest |
 | Package works only in monorepo | workspace alias/hoist/undeclared dependency | isolated install with empty cache |
-| Browser bundle imports `node:` | host boundary leaked into public core | public graph and conditional export |
+| Browser bundle imports `node:` | host composition root leaked into public core | public graph and conditional export |
 | CJS and ESM have different singleton state | dual package instantiated twice | conditional export design and tests |
 | CLI installs but cannot execute | missing bin, shebang, mode, or runtime dependency | tar metadata and installed bin link |
 | Registry packages have different behavior | independent generation/version drift | source/version authority and archive diff |

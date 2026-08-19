@@ -15,7 +15,7 @@
 - [Deliberate exclusions](#deliberate-exclusions)
 - [Failure signatures](#failure-signatures)
 - [Tests and verification](#tests-and-verification)
-- [Evidence boundary](#evidence-boundary)
+- [Evidence limit](#evidence-limit)
 
 ## Outcome
 
@@ -29,7 +29,7 @@ OpenAPI operation is not implementation evidence by itself.
 
 | Term | Owns | Does not own |
 |---|---|---|
-| Service | One top-level runtime/deployment boundary such as accounts or ledger | Every related concept in the product |
+| Service | One top-level runtime/deployment unit such as accounts or ledger | Every related concept in the product |
 | Service module | A coherent endpoint/domain slice inside a service | A separate server by default |
 | Endpoint definition | Static transport contract and documentation | Business behavior or resource construction |
 | Endpoint handler | Translation from validated transport input to a capability call | Database construction, global middleware, or workflow worker boot |
@@ -197,7 +197,7 @@ The host entrypoint owns this sequence:
 1. resolve and validate configuration;
 2. construct long-lived resources;
 3. assemble the Effect Layers or explicit capability object;
-4. create one Hono root for this deployment boundary;
+4. create one Hono root for this deployment unit;
 5. install root middleware once;
 6. register service groups and endpoint middleware;
 7. validate the registry/OpenAPI/reachability contract;
@@ -229,7 +229,7 @@ This is illustrative, not a mandate to use `ManagedRuntime`. The invariant is
 one owned runtime/resource graph with explicit lifetime.
 
 Nested route groups must not call the server factory again. Recreating the root
-commonly duplicates CORS, correlation IDs, request logs, error boundaries, and
+commonly duplicates CORS, correlation IDs, request logs, error mappers, and
 resource construction.
 
 ## Domain and data seams
@@ -264,7 +264,7 @@ export interface PreferencesStore {
 
 Do not name every data module `repository` automatically. A direct query module,
 store, gateway, or adapter can be clearer. Do not leak Drizzle rows or provider
-errors across the domain boundary.
+errors across the domain interface.
 
 ## Workflow ownership
 
@@ -328,7 +328,7 @@ A service is independently deployable only if its artifact declares and tests:
 - deployment ordering and rollback compatibility.
 
 Independent deployability does not require deploying every service separately.
-It means boundaries are explicit enough that a separate deployment is possible
+It means service APIs are explicit enough that a separate deployment is possible
 without importing a monolithic hidden composition root.
 
 ## Deliberate exclusions
@@ -351,7 +351,7 @@ without importing a monolithic hidden composition root.
 | Missing handler logs a warning | Partial registry accepted | Fail startup or mark capability unavailable |
 | Middleware executes twice | Nested root construction | Count middleware invocation in request test |
 | Import requires production env | Module-scope resource construction | Import test with empty env |
-| Handler imports DB singleton | Composition boundary bypassed | Inject capability/client from root |
+| Handler imports DB singleton | Composition scope bypassed | Inject capability/client from root |
 | OpenAPI advertises only 200 | Error and async contracts omitted | Compare actual status variants |
 | One service cannot start alone | Hidden config/resource dependency | Minimal host fixture |
 | Worker package exists but route uses legacy start | Durable path unreachable | Route-to-worker reachability test |
@@ -376,7 +376,7 @@ Verification commands are repository-specific, but the evidence must include a
 typecheck, focused tests, generated-contract validation, a standalone boot, and
 at least one executable request for every operation changed.
 
-## Evidence boundary
+## Evidence limit
 
 The uploaded service-module authoring guides define the target architecture. The
 uploaded utility packages provide executable endpoint schemas, Standard Schema

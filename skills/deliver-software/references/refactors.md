@@ -1,63 +1,150 @@
 # Refactors and migrations
 
-## When to load
+Use this reference for structural replacement, ownership changes, dependency migrations, persisted-data migrations, package reorganization, API cutovers, and requests whose success requires an old path to stop being authoritative.
 
-Use this reference for structural replacement, ownership changes, migrations,
-cutovers, compatibility windows, and requests whose success requires old paths
-to stop being authoritative.
+A refactor is not complete because a cleaner abstraction was added. Completion means the controlling runtime path, consumers, tests, documentation, configuration, generated output, and obsolete code all agree on the new design.
 
-## 1. Establish the controlling path
+## Establish the current controlling path
 
-Trace the current entrypoint through registration, configuration, runtime
-dispatch, persistence, and downstream consumers. Search symbols and runtime
-identifiers, not only filenames. Include generated registries, code generation,
-public exports, package entrypoints, dependencies, file & folder names, folder structure, framework discovery, CI, deployment, and
-documentation.
+Trace the current public entrypoint through registration, configuration, dispatch, persistence, and downstream consumers. Search symbols and runtime identifiers, not only filenames.
 
-Produce two inventories:
+Include:
 
-- required end state: capabilities, public contracts, and supported consumers;
-- removal state: obsolete code, exports, flags, configuration, dependencies,
-  tests, docs, aliases, shims, generated output, and old terminology.
+- package exports and public subpaths;
+- importers and re-exporters;
+- dependency injection/resource construction;
+- framework auto-discovery and generated registries;
+- CLI/app composition;
+- persistence schemas and migrations;
+- feature flags and environment variables;
+- generated code and source generators;
+- tests, fixtures, examples, docs, and benchmarks;
+- CI, build, packaging, and deployment configuration;
+- file/folder names when discovery or public imports depend on them.
 
-## 2. Baseline behavior
+Draw the actual dependency direction before proposing a replacement. An implementation may differ from architecture docs. Treat tested behavior as implementation evidence and label unimplemented design material as proposed.
 
-Record observable inputs, outputs, errors, side effects, ordering, concurrency,
-persistence, performance constraints, permissions, and compatibility promises.
-Use existing tests plus characterization tests where behavior matters but is not
-specified.
+## Define the target and removal inventories
 
-List intentional behavior changes separately. A structural refactor does not
-silently authorize product changes.
+Write two inventories before editing.
 
-## 3. Design the cutover
+### Required end state
 
-Choose one:
+List the capabilities, public contracts, supported runtimes, persisted shapes, user flows, ownership rules, failure behavior, and downstream consumers that must exist afterward.
 
-- atomic replacement when all consumers can move together;
-- expand, migrate, verify, contract for data or distributed-system changes;
-- an explicitly approved compatibility window with an owner, deadline, removal
-  condition, and tests for both paths.
+### Removal state
 
-A compatibility layer is not completion unless it is part of the accepted end
-state. Generated files must be changed through their generator unless the
-repository explicitly treats generated output as authored source.
+List every old element that should disappear:
 
-## 4. Implement and close
+- old files/classes/functions;
+- old exports and namespace members;
+- aliases and compatibility shims;
+- obsolete config/env keys;
+- old schema fields and persisted data when migration is required;
+- tests and fixtures for unsupported behavior;
+- generated outputs;
+- dependencies;
+- current documentation and examples using the old concept;
+- old runtime registration/discovery entries.
 
-Change the controlling path, migrate every consumer, regenerate outputs, update
-tests and docs, and remove newly obsolete dependencies and configuration.
-Search the entire repository for old names and behavior. Confirm that the old
-path is unreachable, not merely unused by one test or some older files.
+The removal inventory prevents the common failure where the new implementation exists but the product still routes through the old one.
 
-For monorepos, verify downstream packages and external consumer fixtures. For
-data migrations, prove idempotency, mixed-version compatibility, rollback or
-forward recovery, and the authority for destructive contraction.
+## Characterize behavior before structural changes
 
-## 5. Verify
+Record observable behavior that must remain stable:
 
-Run focused validation, repository-wide affected gates, the actual capability,
-and at least one clean consumer or clean environment when public contracts
-changed. Compare the implemented result with both inventories. Report any
-approved compatibility residue explicitly rather than hiding it as cleanup.
+```text
+inputs and accepted shapes
+outputs and public types
+error categories and timing
+side effects
+resource ownership
+cancellation and disposal
+ordering and concurrency
+persistence and transaction semantics
+permissions
+time/memory/throughput constraints
+```
 
+Add characterization tests where the behavior is important but under-specified. Do not encode accidental implementation details unless consumers depend on them.
+
+List intentional behavior changes separately. A structural change should not smuggle in product changes, new compatibility behavior, or new defaults without review.
+
+## Choose the cutover model
+
+Use **atomic replacement** when all current consumers can migrate together. This is the normal choice when compatibility was not requested.
+
+Use **expand, migrate, verify, contract** for persisted data or distributed systems that cannot change in one step:
+
+```text
+expand schema/capability
+migrate producers and consumers
+verify mixed-state operation
+migrate durable data
+verify final state
+remove old shape/path
+```
+
+Use an explicit **compatibility window** only when the requirement needs it. Give it an owner, deadline/removal condition, tests, telemetry if useful, and documented cost. Compatibility is not a free default.
+
+## Preserve ownership and lifecycle semantics
+
+Structural refactors often fail in lifecycle behavior even when return values match. Trace:
+
+- who acquires each resource;
+- whether the caller or callee owns disposal;
+- how partial acquisition is unwound;
+- which `AbortSignal` cancels active work;
+- whether terminal state can be overwritten by a late completion;
+- whether cleanup failure can erase the primary operation failure;
+- whether a worker/process/connection remains alive after the new owner exits.
+
+When moving a capability between packages, move the complete lifecycle contract, not only the function body.
+
+## Migrate consumers completely
+
+Change the controlling path first or in a deliberate staged order, then update every consumer. Update public exports, import paths, config, schemas, persisted data, tests, fixtures, docs, examples, benchmark harnesses, generated output, and package dependencies.
+
+For generated files, change the generator rather than hand-editing output unless the repository explicitly treats the generated file as authored source.
+
+For namespace APIs, update current call sites to the final compact operation names rather than preserving obsolete aliases by default.
+
+## Remove obsolete code and prove removal
+
+Search the repository after migration for:
+
+- old symbols and filenames;
+- old import specifiers;
+- old JSON/config/env keys;
+- old public terminology;
+- old registration IDs;
+- stale tests and fixtures;
+- dependencies used only by the removed path.
+
+Then trace the runtime again. “No text match” is useful evidence but does not prove the old implementation is unreachable if dynamic registration or generated code remains.
+
+## Verify the final state
+
+Run:
+
+1. focused tests for the new/changed contract;
+2. lifecycle and failure-path tests;
+3. affected repository-wide gates;
+4. actual user-facing verification;
+5. clean-consumer or clean-environment verification for public API/package changes;
+6. migration verification for persisted data;
+7. artifact inspection for packaging/export changes.
+
+Compare the result against both inventories. Report any intentionally retained compatibility residue as part of the final contract, not as hidden cleanup debt.
+
+## Common failure patterns
+
+- New implementation added, old dispatcher still authoritative.
+- Public export changed, downstream package still imports an internal path.
+- Schema changed, persisted rows or fixtures not migrated.
+- Lifecycle owner moved, cleanup stayed with the old module.
+- Alias kept “temporarily” with no removal condition.
+- Generated registry still points at the old file.
+- Benchmark compares the new path with a different workload.
+- Repository-wide formatter noise hides the functional migration.
+- Tests pass because they target the new module directly while the application still uses the old path.

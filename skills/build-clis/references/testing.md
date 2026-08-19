@@ -53,8 +53,8 @@ actual commands and exit statuses.
 Test authored, sparse, and complete schemas independently.
 
 ```ts
+import { describe, it } from "node:test";
 import { expect } from "@std/expect";
-import { describe, it } from "@std/testing/bdd";
 
 describe("configuration schema stages", () => {
 	it("keeps source patches sparse", () => {
@@ -152,7 +152,7 @@ Table-driven example:
 
 ```ts
 for (const testCase of mergeCases) {
-	Deno.test(testCase.name, () => {
+	test(testCase.name, () => {
 		const before = structuredClone(testCase.layers);
 		const actual = mergeConfigInputs(...testCase.layers);
 		expect(actual).toEqual(testCase.expected);
@@ -235,8 +235,12 @@ Verify:
 - JSON/JSONL/completion/man results reach stdout as exact raw bytes;
 - warnings, debug records, and bootstrap failures never contaminate stdout;
 - diagnostics reach stderr or the configured file;
-- nested secrets, URLs, headers, config envelopes, and error objects are
-  redacted before formatting;
+- verified secret fields are redacted before formatting where that route's
+  policy requires it;
+- diagnostic identifiers, paths, URLs, causes, and other non-secret evidence
+  that the policy is meant to preserve remain visible;
+- stable result routes follow their own result schema/policy rather than
+  inheriting diagnostic redaction automatically;
 - quiet/silent semantics do not hide required machine results or failures;
 - buffers flush on success, failure, and cancellation;
 - sink and resource disposal occurs once.

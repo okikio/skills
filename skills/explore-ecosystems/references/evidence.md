@@ -50,7 +50,7 @@ Use the strongest evidence that actually proves the claim.
 
 Repository-local evidence is strongest for what this repository currently does.
 Official current docs are strongest for current intended usage. Neither replaces
-the other; write the boundary.
+the other; write the interface.
 
 ## Installed, source, published, and current truth
 
@@ -253,7 +253,7 @@ When refreshing, do not overwrite old claim records invisibly. Record prior/new
 version, changed claim, affected decisions, migration, and verification. Preserve
 source digests and evaluation fixtures for released skill guidance.
 
-Skill references should state version boundaries and source status near fragile
+Skill references should state version lines and source status near fragile
 examples. Avoid exact API code for an unresolved/private surface; provide a
 protocol/interface placeholder labelled local and require source inspection.
 
@@ -292,7 +292,7 @@ protocol/interface placeholder labelled local and require source inspection.
   documentation/export discrepancy, observed counterexamples to name- and
   README-based inference; verified 2026-07-17.
 - Pinned registry source records for current deep package references, including
-  exact integrities and explicit prerelease boundaries; verified 2026-07-17.
+  exact integrities and explicit prerelease ranges; verified 2026-07-17.
 
 Re-run source verification and exact-version inspection when the source registry,
 installed graph, or upstream release changes.

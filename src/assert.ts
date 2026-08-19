@@ -1,14 +1,42 @@
 import { isAbsolute, normalize, relative, resolve } from "node:path";
-import { z } from "zod";
-import type { Assertion } from "./eval_schema.ts";
+import * as command from "./command.ts";
+import type { AssertionType } from "./corpus.ts";
+import type { AssertionResultType } from "./evaluation.ts";
 
-export const AssertionResultSchema = z.object({
-  label: z.string(),
-  passed: z.boolean(),
-  evidence: z.string().optional(),
-});
-export type AssertionResult = z.infer<typeof AssertionResultSchema>;
+/** Maximum diagnostics retained from one assertion command stream. */
+const MAX_COMMAND_OUTPUT_BYTES = 64 * 1024;
+/** Maximum command diagnostics persisted as assertion evidence. */
+const MAX_EVIDENCE_CHARACTERS = 2_000;
 
+/** Environment names deterministic fixture verifiers are allowed to inherit. */
+const COMMAND_ENV_NAMES = [
+  "PATH",
+  "HOME",
+  "TMPDIR",
+  "TEMP",
+  "TMP",
+  "SYSTEMROOT",
+  "WINDIR",
+  "COMSPEC",
+  "DENO_DIR",
+] as const;
+
+/** Build a minimal verifier environment without forwarding unrelated secrets. */
+function getCommandEnvironment(): Record<string, string> {
+  const environment: Record<string, string> = {};
+  for (const name of COMMAND_ENV_NAMES) {
+    const value = Deno.env.get(name);
+    if (value !== undefined) environment[name] = value;
+  }
+  return environment;
+}
+
+/**
+ * Resolves an assertion path inside its isolated fixture tree.
+ *
+ * Absolute input and normalized traversal outside `root` are rejected before a
+ * filesystem operation can observe data belonging to the repository or host.
+ */
 function fixturePath(root: string, value: string): string {
   if (isAbsolute(value)) {
     throw new Error("Fixture assertions require relative paths");
@@ -21,6 +49,7 @@ function fixturePath(root: string, value: string): string {
   return target;
 }
 
+/** Returns whether one fixture path exists without hiding non-not-found errors. */
 async function exists(path: string): Promise<boolean> {
   try {
     await Deno.lstat(path);
@@ -34,16 +63,17 @@ async function exists(path: string): Promise<boolean> {
 /**
  * Evaluates deterministic assertions before any qualitative model judge.
  *
- * Commands run inside the isolated fixture with no additional permissions
- * granted by this module. The parent evaluation process controls the sandbox
- * and timeout policy.
+ * File assertions stay inside the isolated fixture. Command assertions receive
+ * only a small runtime/path environment allowlist rather than arbitrary parent
+ * credentials. Their retained output and wall-clock lifetime are bounded by
+ * repository policy.
  */
 export async function evaluateAssertion(
-  assertion: Assertion,
+  assertion: AssertionType,
   output: string,
   fixtureRoot: string,
   baselineRoot?: string,
-): Promise<AssertionResult> {
+): Promise<AssertionResultType> {
   if (assertion.kind === "contains" || assertion.kind === "not-contains") {
     const source = assertion.caseSensitive ? output : output.toLowerCase();
     const expected = assertion.caseSensitive
@@ -55,10 +85,12 @@ export async function evaluateAssertion(
       passed: assertion.kind === "contains" ? contains : !contains,
     };
   }
+
   if (assertion.kind === "regex") {
     const passed = new RegExp(assertion.value, assertion.flags).test(output);
     return { label: `regex:${assertion.value}`, passed };
   }
+
   if (
     assertion.kind === "file-exists" ||
     assertion.kind === "file-not-exists"
@@ -69,8 +101,10 @@ export async function evaluateAssertion(
       passed: assertion.kind === "file-exists" ? present : !present,
     };
   }
+
   if (
-    assertion.kind === "file-unchanged" || assertion.kind === "file-changed"
+    assertion.kind === "file-unchanged" ||
+    assertion.kind === "file-changed"
   ) {
     if (!baselineRoot) {
       throw new Error(`${assertion.kind} requires a baseline fixture root`);
@@ -86,35 +120,30 @@ export async function evaluateAssertion(
       passed: assertion.kind === "file-unchanged" ? same : !same,
     };
   }
-  const [command, ...args] = assertion.command;
-  if (!command) throw new Error("Command assertion requires an executable");
-  const child = new Deno.Command(command, {
-    args,
+
+  const [executable, ...args] = assertion.command;
+  if (!executable) throw new Error("Command assertion requires an executable");
+  const result = await command.call(executable, args, {
     cwd: fixtureRoot,
-    stdout: "piped",
-    stderr: "piped",
-  }).spawn();
-  let timedOut = false;
-  const timer = setTimeout(() => {
-    timedOut = true;
-    try {
-      child.kill("SIGTERM");
-    } catch {
-      // The process may finish between the timeout and signal delivery.
-    }
-  }, assertion.timeoutMs);
-  const result = await child.output();
-  clearTimeout(timer);
-  const stdout = new TextDecoder().decode(result.stdout);
-  const stderr = new TextDecoder().decode(result.stderr);
+    clearEnv: true,
+    env: getCommandEnvironment(),
+    timeoutMs: assertion.timeoutMs,
+    outputBytes: MAX_COMMAND_OUTPUT_BYTES,
+  });
   const stdoutMatches = assertion.stdout === undefined ||
-    new RegExp(assertion.stdout, "m").test(stdout);
+    new RegExp(assertion.stdout, "m").test(result.stdout);
   const stderrMatches = assertion.stderr === undefined ||
-    new RegExp(assertion.stderr, "m").test(stderr);
-  const evidence = `${stdout}\n${stderr}`.slice(0, 2_000);
+    new RegExp(assertion.stderr, "m").test(result.stderr);
+  const truncated = result.stdoutTruncated || result.stderrTruncated;
+  const diagnostics = `${result.stdout}\n${result.stderr}`;
+  const evidence = `${diagnostics.slice(0, MAX_EVIDENCE_CHARACTERS)}${
+    truncated ? "\n[diagnostics truncated]" : ""
+  }`;
+
   return {
     label: `command:${assertion.command.join(" ")}`,
-    passed: !timedOut && result.code === assertion.expectedExitCode &&
+    passed: !result.timedOut && !truncated &&
+      result.code === assertion.expectedExitCode &&
       stdoutMatches && stderrMatches,
     evidence,
   };

@@ -3,7 +3,7 @@
 ## Contents
 
 - [When to load this reference](#when-to-load-this-reference)
-- [Evidence and version boundary](#evidence-and-version-boundary)
+- [Evidence and version line](#evidence-and-version-line)
 - [Capability model](#capability-model)
 - [Choose the API by intent](#choose-the-api-by-intent)
 - [Indent detection and trimming](#indent-detection-and-trimming)
@@ -26,7 +26,7 @@ alignment, line-ending preservation, or terminal-width-sensitive output.
 
 Do not load it merely because a repository depends on `@okikio/undent`.
 
-## Evidence and version boundary
+## Evidence and version line
 
 The reviewed source is `@okikio/undent` `0.3.3`. It exposes the root module and
 an opt-in `@okikio/undent/unicode` entry point. Verify the installed version and
@@ -34,7 +34,7 @@ export map before copying an exact import or relying on implementation details.
 
 The package solves source indentation and interpolation layout. It is not a
 general code formatter, terminal table engine, escaping system, SQL builder, or
-security boundary.
+security trust transition.
 
 ## Capability model
 
@@ -304,7 +304,7 @@ version it is preconfigured with `strategy: "first"` and `trim: "one"`.
 
 - use `undent` for readable static structure;
 - keep values parameterized;
-- treat indentation cleanup and query safety as separate boundaries;
+- treat indentation cleanup and query safety as separate concerns;
 - execute representative syntax through the real parser or database in tests.
 
 ### Snapshots

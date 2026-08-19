@@ -126,7 +126,7 @@ Important direction:
 - process and Node compatibility surfaces continued expanding.
 
 **Operational lesson:** Temporal is attractive for non-trivial date/time logic,
-but database, JSON, API, and older-runtime boundaries still require deliberate
+but database, JSON, API, and older-runtime handoffs still require deliberate
 serialization. Overrides must document why the upstream graph cannot be used
 as-is.
 
@@ -163,7 +163,7 @@ Important direction:
 
 **Operational lesson:** a Node project can often adopt Deno incrementally.
 Testing and supply-chain policy are now architectural capabilities. Desktop
-output must be isolated behind an experimental boundary and validated per
+output must be isolated behind an experimental subpath and validated per
 target.
 
 ## Release-derived rules

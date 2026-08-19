@@ -29,7 +29,7 @@ Keep these invariants across every sequence:
 6. transport stable results and diagnostics through separate LogTape routes when
    LogTape is the selected owner;
 7. persist durable artifacts through typed writers/stores, not log sinks;
-8. render one public failure at one boundary;
+8. render one public failure at one error mapper;
 9. flush/close owned resources before returning an exit status;
 10. verify the exact installed invocation path.
 
@@ -111,7 +111,7 @@ raw argv
 ```
 
 The bootstrap parser must not duplicate domain options. If an early control is
-malformed, use a safe stderr fallback owned by the executable boundary.
+malformed, use a safe stderr fallback owned by the executable layer.
 
 Required cases:
 
@@ -166,7 +166,7 @@ handler emits typed result records
   -> JSONL renderer emits exactly one value and newline
   -> LogTape result sink writes raw bytes to stdout
   -> operational progress goes only to stderr/file categories
-  -> backpressure is awaited at the result writer boundary
+  -> backpressure is awaited at the result writer backpressure point
 ```
 
 Do not accumulate an unbounded array for final `JSON.stringify()`. Do not log the

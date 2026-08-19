@@ -203,7 +203,7 @@ On resume:
 - verify input identity and producer/schema/config versions;
 - validate the last committed artifact segment and checksum;
 - reject ambiguous or incompatible checkpoints;
-- replay from the last committed boundary;
+- replay from the last committed checkpoint;
 - reconcile outputs before marking the resumed run complete.
 
 ## Configuration model
@@ -266,7 +266,7 @@ If a downstream Typesense, QLever, ClickHouse, or PostgreSQL load is required, t
 
 Test at least:
 
-- zero records, one record, and a batch boundary plus one;
+- zero records, one record, and a batch limit plus one;
 - embedded newlines, Unicode normalization, very large values, and invalid encoding;
 - truncated JSONL final line and corrupt middle line;
 - stable Parquet schema with all-null early batches;
@@ -295,7 +295,7 @@ Verification is incomplete until an interruption test proves that no final manif
 
 ## Deliberate exclusions
 
-- Do not require JSONL or Parquet when a database transaction or object is the actual appropriate boundary.
+- Do not require JSONL or Parquet when a database transaction or object is the actual appropriate commit mechanism.
 - Do not prescribe Zod, LogTape, Effect, Python, Deno, or a particular storage provider. Preserve the consumer's chosen schema, logging, runtime, and storage owners.
 - Do not infer schema from sample records for a production load.
 - Do not treat a date-based filename, file existence, or non-zero size as identity or completion.

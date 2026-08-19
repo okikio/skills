@@ -50,7 +50,7 @@ Decorative depth effect
   -> decorative aria-hidden canvas
 ```
 
-The island boundary corresponds to resource ownership, not visual region size.
+The island hydration scope corresponds to resource ownership, not visual region size.
 
 ### Counterexamples/review targets
 
@@ -160,7 +160,7 @@ The client sees enabled provider ids, not server environment configuration. Fiel
 
 ### Useful decisions
 
-The adapter prevents provider records from becoming the page contract. Provider-specific Portable Text remains at the content renderer boundary. Legacy local content can remain migration input without being a second runtime source.
+The adapter prevents provider records from becoming the page contract. Provider-specific Portable Text remains at the content renderer handoff. Legacy local content can remain migration input without being a second runtime source.
 
 ### Counterexample endpoint
 

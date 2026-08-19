@@ -3,7 +3,7 @@
 ## Use this reference
 
 Load this reference whenever a CLI uses two or more of these at the same
-boundary: Optique, c12, defu, LogTape, and Zod. The failure mode is rarely that
+ownership: Optique, c12, defu, LogTape, and Zod. The failure mode is rarely that
 one library is bad. The failure mode is that two good libraries both become the
 owner of the same decision.
 
@@ -50,7 +50,7 @@ result, and one failure, it is not done.
 9. [End-to-end trace and audit](#end-to-end-trace-example)
 10. [Required tests and failure signatures](#required-test-matrix)
 
-For the precise `.default()`/`.prefault()` rules, `@optique/zod` boundary,
+For the precise `.default()`/`.prefault()` rules, `@optique/zod` integration,
 nested-object defaults, and field-level provenance algorithm, load
 [defaults-provenance.md](defaults-provenance.md). For performance work, load
 [benchmarking.md](benchmarking.md); a microbenchmark must not replace the
@@ -82,7 +82,7 @@ Use names that make source state obvious.
 | `ConfigPatch` | normalized sparse ordinary data | No | application resolver |
 | `AppConfig` | complete values consumed by handlers | Yes | Zod complete schema |
 | `CommandResult` | stable machine output | Usually explicit defaults for arrays | Zod result schema |
-| `DiagnosticEvent` | level, category, message, properties | Schema defaults only for stable event fields | LogTape formatter/sink boundary |
+| `DiagnosticEvent` | level, category, message, properties | Schema defaults only for stable event fields | LogTape formatter/sink handoff |
 
 Bad:
 
@@ -622,7 +622,7 @@ const CommandResultSchema = z.object({
 });
 ```
 
-Do not trust TypeScript interfaces at boundaries where JSON, files, subprocess
+Do not trust TypeScript interfaces at external inputs where JSON, files, subprocess
 output, logs, or persisted artifacts are involved.
 
 ## One-snapshot execution recipe
@@ -710,7 +710,8 @@ Ask these before editing:
 8. Does any dynamic config factory run more than once?
 9. Can help/version/completion run when project config is broken?
 10. Does LogTape have a separate raw result route and diagnostic route?
-11. Are secrets redacted before every formatter and sink?
+11. Does each output route have an explicit secret-exposure policy that hides
+    verified secrets without removing required diagnostic evidence?
 12. Does the handler receive all capabilities by injection?
 13. Are generated completion and man surfaces produced from the parser?
 14. Has the installed or compiled artifact been executed?
@@ -731,7 +732,7 @@ Ask these before editing:
 | Defaults | config over default, env over config, CLI over env, final Zod default |
 | Single snapshot | dynamic factory counter equals one |
 | LogTape result | JSON stdout has no diagnostics; diagnostics go to stderr/file |
-| Redaction | nested secret in config, URL, header, error object, result view |
+| Redaction/exposure | verified secret hidden on applicable routes; diagnostic IDs/paths preserved; stable result follows its own schema/policy |
 | Bootstrap failure | invalid config honors raw logging options and leaves stdout empty |
 | Generated surfaces | help, completion shells, man pages, hidden aliases |
 | Package artifact | installed/compiled binary reaches each command |
@@ -787,7 +788,7 @@ When reporting verification, separate:
 
 ## Failure signatures
 
-| Symptom | Likely boundary bug |
+| Symptom | Likely ownership bug |
 |---|---|
 | Config value ignored when CLI flag omitted | Optique default became a sparse CLI value |
 | `extends` is an unknown key | c12 received strict app validation too early |
@@ -795,7 +796,7 @@ When reporting verification, separate:
 | Zod default appears in provenance as user-authored | Complete schema parsed a sparse layer |
 | Help lists choices but completion does not | Choices are handwritten in docs rather than parser terms |
 | Handler sees both `cache` and `no_cache` | Boolean pair was not modelled with `negatableFlag()` |
-| Prompt appears during `--help` or CI | Prompt adapter owns policy instead of executable boundary |
+| Prompt appears during `--help` or CI | Prompt adapter owns policy instead of executable layer |
 | Dynamic config increments twice | Source context and handler both call resolver |
 | JSON output has warning text before it | Result and diagnostic LogTape routes are not isolated |
 | Redaction misses `config show --json` | Secrets were stringified before structured redaction |

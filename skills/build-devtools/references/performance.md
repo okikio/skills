@@ -70,7 +70,7 @@ out, or out-of-memory samples affect the decision; never drop them silently.
 
 ## Workload and protected-workflow design
 
-Build a workload ledger that represents real use and pathological boundaries.
+Build a workload ledger that represents real use and pathological edges.
 
 | Lane | Examples | Purpose |
 |---|---|---|
@@ -152,7 +152,7 @@ Example schedule artifact:
 
 Use monotonic high-resolution timing. Avoid timing setup unrelated to the
 question unless startup is the target. Conversely, do not exclude parsing,
-allocation, I/O, or cleanup that real users pay for. State boundaries exactly.
+allocation, I/O, or cleanup that real users pay for. State ownership scopes exactly.
 
 For asynchronous/concurrent work, control input arrival, concurrency, queue
 depth, backpressure, and completion. Throughput at unbounded queue growth is not
@@ -238,7 +238,7 @@ Run before and after benchmarks:
 - errors, retries, cancellation, timeout, and cleanup;
 - supported runtime/platform/compiler modes;
 - end-to-end consumer workflows;
-- security/permission boundaries;
+- security/permission scopes;
 - package/build checks if optimization affects output.
 
 Optimization may intentionally change output (compression, approximate query,

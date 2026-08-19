@@ -85,7 +85,7 @@
       "skill": "build-clis",
       "reference": "references/five-library-stack.md",
       "capability": "Integrated Optique c12 defu LogTape and Zod CLI stack",
-      "ownership": "The CLI skill owns the cross-library boundary map, default timing, merge algorithm, one-snapshot execution, logging routes, and executable verification plan.",
+      "ownership": "The CLI skill owns the cross-library API map, default timing, merge algorithm, one-snapshot execution, logging routes, and executable verification plan.",
       "status": "normative",
       "sourceIds": [
         "cli-guidebook",
@@ -106,7 +106,7 @@
         "Parser defaults overwrite config, c12 loader metadata is rejected early, standalone operations leak into runtime, defu concatenates arrays accidentally, handlers reload config, or LogTape mixes result and diagnostic routes."
       ],
       "exclusions": [
-        "Do not replace this boundary map with package-name recall, and do not let any one library own defaults, config loading, merging, logging, and execution together."
+        "Do not replace this handoff map with package-name recall, and do not let any one library own defaults, config loading, merging, logging, and execution together."
       ],
       "verification": [
         "Run parser absence/default tests, c12 extends plus operation fixtures, merge tests for falsy values, empty arrays, operation composition, atomic unions, immutability, single dynamic config evaluation, LogTape stdout/stderr isolation, redaction, generated surfaces, and installed-artifact commands."
@@ -336,10 +336,10 @@
       ]
     },
     {
-      "id": "cap-cli-jiti-boundary",
+      "id": "cap-cli-jiti-handoff",
       "skill": "build-clis",
       "reference": "references/unjs.md",
-      "capability": "jiti is an execution boundary",
+      "capability": "jiti is an execution handoff",
       "ownership": "The CLI skill owns the command, configuration, terminal-output, interaction, artifact, and installed-execution contract.",
       "status": "observed-source",
       "sourceIds": [
@@ -347,7 +347,7 @@
         "c12-official"
       ],
       "evalIds": [
-        "deep-cli-jiti-boundary"
+        "deep-cli-jiti-handoff"
       ],
       "decisionQuestions": [
         "Explain when a CLI should use jiti for TypeScript config loading, how native import and c12 fallback relate, and what security, cache, resolution, and side-effect risks must be tested."
@@ -367,7 +367,7 @@
       "skill": "build-apis",
       "reference": "references/service-modules.md",
       "capability": "Complete service-module contract",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance:docs/service-module-authoring.md"
@@ -393,7 +393,7 @@
       "skill": "build-apis",
       "reference": "references/service-modules.md",
       "capability": "Reject orphan service-module surfaces",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance:docs/service-module-authoring.md"
@@ -419,7 +419,7 @@
       "skill": "build-apis",
       "reference": "references/effect-services.md",
       "capability": "Effect service and Layer construction",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "effect-official"
@@ -444,8 +444,8 @@
       "id": "cap-api-effect-errors",
       "skill": "build-apis",
       "reference": "references/effect-services.md",
-      "capability": "Effect typed error boundary",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "capability": "Effect typed error handoff",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "effect-official"
@@ -454,7 +454,7 @@
         "deep-api-effect-errors"
       ],
       "decisionQuestions": [
-        "Represent validation, authentication, upstream, timeout, and defect failures through an Effect service and map them to HTTP responses at one boundary. Do not erase the error channel with catch-all exceptions."
+        "Represent validation, authentication, upstream, timeout, and defect failures through an Effect service and map them to HTTP responses at one handoff. Do not erase the error channel with catch-all exceptions."
       ],
       "failureSignatures": [
         "A surface works in isolation but is unreachable from the registry, bypasses validation or authorization, leaks resources, or changes the published response contract."
@@ -470,8 +470,8 @@
       "id": "cap-api-standard-schema",
       "skill": "build-apis",
       "reference": "references/contracts.md",
-      "capability": "Standard Schema interoperability boundary",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "capability": "Standard Schema interoperability handoff",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance:utils/middleware/validation.ts"
@@ -497,7 +497,7 @@
       "skill": "build-apis",
       "reference": "references/runtime.md",
       "capability": "Middleware ordering is part of the contract",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance",
@@ -524,7 +524,7 @@
       "skill": "build-apis",
       "reference": "references/auth.md",
       "capability": "Better Auth organization authority",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "better-auth-official",
@@ -551,7 +551,7 @@
       "skill": "build-apis",
       "reference": "references/streaming.md",
       "capability": "SSE replay and cursor authority",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance"
@@ -577,7 +577,7 @@
       "skill": "build-apis",
       "reference": "references/streaming.md",
       "capability": "SSE backpressure and cancellation",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance"
@@ -603,7 +603,7 @@
       "skill": "build-apis",
       "reference": "references/deployment.md",
       "capability": "Prove independent service deployability",
-      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment boundaries.",
+      "ownership": "The API skill owns service-module reachability and the request, validation, middleware, auth, streaming, runtime, and deployment handoffs.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance"
@@ -629,7 +629,7 @@
       "skill": "build-workflows",
       "reference": "references/durability.md",
       "capability": "Choose the required durability level",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "experimental",
       "sourceIds": [
         "new-finance:docs/workflows-mental-model.md",
@@ -649,15 +649,15 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
-      "id": "cap-workflow-effect-boundary",
+      "id": "cap-workflow-effect-handoff",
       "skill": "build-workflows",
       "reference": "references/effect-workflow.md",
       "capability": "Effect service versus durable workflow",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "experimental",
       "sourceIds": [
         "effect-official",
@@ -665,7 +665,7 @@
         "new-finance:utils/workflows"
       ],
       "evalIds": [
-        "deep-workflow-effect-boundary"
+        "deep-workflow-effect-handoff"
       ],
       "decisionQuestions": [
         "Explain how Effect services and Layers structure capabilities without themselves persisting execution history. Then show what @effect/workflow adds, marking experimental or unverified APIs instead of inventing exports."
@@ -677,7 +677,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -685,7 +685,7 @@
       "skill": "build-workflows",
       "reference": "references/effect-workflow.md",
       "capability": "@effect/workflow engine selection",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "experimental",
       "sourceIds": [
         "effect-workflow-official",
@@ -695,7 +695,7 @@
         "deep-workflow-effect-workflow-engine"
       ],
       "decisionQuestions": [
-        "Design a durable Effect workflow only after identifying the installed package version, backend/runtime requirements, activity boundary, serialization constraints, retry model, and operational surface. Separate verified API names from pseudocode."
+        "Design a durable Effect workflow only after identifying the installed package version, backend/runtime requirements, activity handoff, serialization constraints, retry model, and operational surface. Separate verified API names from pseudocode."
       ],
       "failureSignatures": [
         "The design claims durability without persisted authority, replay-safe effects, ownership fencing, recovery, or operational evidence after a process failure."
@@ -704,7 +704,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -712,7 +712,7 @@
       "skill": "build-workflows",
       "reference": "references/temporal.md",
       "capability": "Temporal deterministic orchestration",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "temporal-typescript-official"
@@ -730,7 +730,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -738,7 +738,7 @@
       "skill": "build-workflows",
       "reference": "references/temporal.md",
       "capability": "Temporal query, signal, and update semantics",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "temporal-typescript-official"
@@ -756,7 +756,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -764,7 +764,7 @@
       "skill": "build-workflows",
       "reference": "references/temporal.md",
       "capability": "Temporal worker and client deployment",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "temporal-typescript-official"
@@ -782,7 +782,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -790,7 +790,7 @@
       "skill": "build-workflows",
       "reference": "references/atomicity.md",
       "capability": "Transactional outbox recovery",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance:utils/workflows/postgres_store.ts"
@@ -808,7 +808,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -816,7 +816,7 @@
       "skill": "build-workflows",
       "reference": "references/recovery.md",
       "capability": "Lease expiration and ownership recovery",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance:utils/workflows/postgres_store.ts"
@@ -834,7 +834,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -842,7 +842,7 @@
       "skill": "build-workflows",
       "reference": "references/pipelines.md",
       "capability": "Checkpointed pipeline resume",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "popmodern:DATA_PIPELINE.md",
@@ -863,7 +863,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -871,7 +871,7 @@
       "skill": "build-workflows",
       "reference": "references/workers.md",
       "capability": "Durable cancellation contract",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance"
@@ -889,7 +889,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -897,7 +897,7 @@
       "skill": "build-workflows",
       "reference": "references/streams.md",
       "capability": "Workflow events to SSE projection",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance"
@@ -915,7 +915,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -923,7 +923,7 @@
       "skill": "build-workflows",
       "reference": "references/recovery.md",
       "capability": "Recovery is incomplete without reconciliation",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "new-finance"
@@ -941,7 +941,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -949,7 +949,7 @@
       "skill": "build-workflows",
       "reference": "references/temporal.md",
       "capability": "Long-lived workflow code versioning",
-      "ownership": "The workflow skill owns durable authority, orchestration, side-effect boundaries, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
+      "ownership": "The workflow skill owns durable authority, orchestration, side-effect handoffs, workers, checkpoints, replay, cancellation, recovery, and reconciliation.",
       "status": "observed-source",
       "sourceIds": [
         "temporal-typescript-official"
@@ -967,7 +967,7 @@
         "Do not call retries or Effect dependency injection durable, and do not invent engine exports, exactly-once delivery, or transparent replay semantics."
       ],
       "verification": [
-        "Kill and restart the worker at controlled boundaries, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
+        "Kill and restart the worker at controlled handoffs, replay retained history, duplicate delivery, expire ownership, cancel execution, and reconcile external state."
       ]
     },
     {
@@ -1242,7 +1242,7 @@
       "skill": "build-sites",
       "reference": "references/icons.md",
       "capability": "Astro Icon versus Unplugin Icons",
-      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "ownership": "The selected web skill owns renderer and state ownership scopes, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
       "status": "observed-source",
       "sourceIds": [
         "astro-icon-official",
@@ -1270,7 +1270,7 @@
       "skill": "build-sites",
       "reference": "references/fonts.md",
       "capability": "Astro Fonts API versus direct Fontsource",
-      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "ownership": "The selected web skill owns renderer and state ownership scopes, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
       "status": "observed-source",
       "sourceIds": [
         "astro-fonts-official",
@@ -1297,7 +1297,7 @@
       "skill": "build-web",
       "reference": "references/assets.md",
       "capability": "Reject icon renderer mismatch",
-      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "ownership": "The selected web skill owns renderer and state ownership scopes, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
       "status": "observed-source",
       "sourceIds": [
         "unplugin-icons-official",
@@ -1307,7 +1307,7 @@
         "deep-web-icon-renderer-mismatch"
       ],
       "decisionQuestions": [
-        "A Solid component imports an icon compiled for React while Astro renders the surrounding page. Diagnose the ownership mismatch and specify the correct Unplugin Icons compiler/types or an Astro-native boundary."
+        "A Solid component imports an icon compiled for React while Astro renders the surrounding page. Diagnose the ownership mismatch and specify the correct Unplugin Icons compiler/types or an Astro-native handoff."
       ],
       "failureSignatures": [
         "Renderer, provider, ownership, or state authority is mismatched, causing build, hydration, bundle, privacy, accessibility, or authorization failures."
@@ -1324,7 +1324,7 @@
       "skill": "build-web-apps",
       "reference": "references/solid.md",
       "capability": "Select Solid Primitives by lifecycle",
-      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "ownership": "The selected web skill owns renderer and state ownership scopes, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
       "status": "observed-source",
       "sourceIds": [
         "solid-primitives-official",
@@ -1351,7 +1351,7 @@
       "skill": "build-web-apps",
       "reference": "references/tanstack.md",
       "capability": "TanStack ecosystem ownership",
-      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "ownership": "The selected web skill owns renderer and state ownership scopes, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
       "status": "observed-source",
       "sourceIds": [
         "kaiju-site-scope"
@@ -1377,7 +1377,7 @@
       "skill": "build-web-apps",
       "reference": "references/auth.md",
       "capability": "Auth state does not grant authorization",
-      "ownership": "The selected web skill owns renderer and state boundaries, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
+      "ownership": "The selected web skill owns renderer and state ownership scopes, while the site skill owns Astro asset delivery and the app skill owns interactive state and authorization.",
       "status": "observed-source",
       "sourceIds": [
         "better-auth-official",
@@ -1404,7 +1404,7 @@
       "skill": "use-okikio",
       "reference": "references/observables.md",
       "capability": "@okikio/observables lifecycle and backpressure",
-      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration handoff; the surrounding domain skill owns the application architecture.",
       "status": "observed-source",
       "sourceIds": [
         "observables-official"
@@ -1422,7 +1422,7 @@
         "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
       ],
       "verification": [
-        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration handoff separately."
       ]
     },
     {
@@ -1430,7 +1430,7 @@
       "skill": "use-okikio",
       "reference": "references/observables.md",
       "capability": "Observable error modes are semantic",
-      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration handoff; the surrounding domain skill owns the application architecture.",
       "status": "observed-source",
       "sourceIds": [
         "observables-official"
@@ -1448,15 +1448,15 @@
         "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
       ],
       "verification": [
-        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration handoff separately."
       ]
     },
     {
       "id": "cap-okikio-sparql",
       "skill": "use-okikio",
       "reference": "references/sparql.md",
-      "capability": "@okikio/sparql query boundary",
-      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "capability": "@okikio/sparql query handoff",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration handoff; the surrounding domain skill owns the application architecture.",
       "status": "observed-source",
       "sourceIds": [
         "sparql-official"
@@ -1474,7 +1474,7 @@
         "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
       ],
       "verification": [
-        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration handoff separately."
       ]
     },
     {
@@ -1482,7 +1482,7 @@
       "skill": "use-okikio",
       "reference": "references/undent.md",
       "capability": "Undent preserves intentional text structure",
-      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration boundary; the surrounding domain skill owns the application architecture.",
+      "ownership": "The Okikio skill owns source-grounded use of the named public library and its integration handoff; the surrounding domain skill owns the application architecture.",
       "status": "observed-source",
       "sourceIds": [
         "undent:mod.ts",
@@ -1501,7 +1501,7 @@
         "Do not generalize from a package name, an older version, or a neighboring private library; verify the exact public entrypoint before using it."
       ],
       "verification": [
-        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration boundary separately."
+        "Type-check the exact import, run focused lifecycle and error tests, inspect emitted artifacts where relevant, and test the integration handoff separately."
       ]
     },
     {
@@ -1820,10 +1820,10 @@
       ]
     },
     {
-      "id": "cap-cli-unjs-package-path-url-boundaries",
+      "id": "cap-cli-unjs-package-path-url-handoffs",
       "skill": "build-clis",
       "reference": "references/unjs-runtime-config.md",
-      "capability": "Package metadata, path containment, and URL identity boundaries",
+      "capability": "Package metadata, path containment, and URL identity handoffs",
       "ownership": "The CLI skill owns manifest and workspace authority, filesystem containment, URL identity, security, and validation while pkg-types, pathe, and ufo own their exact discovery and transformation mechanics.",
       "status": "observed-source",
       "sourceIds": [
@@ -1946,7 +1946,7 @@
       ],
       "evalIds": [
         "cli-deep-kaiju-casebook-browser-trace",
-        "cli-deep-kaiju-casebook-stage-boundaries",
+        "cli-deep-kaiju-casebook-stage-handoffs",
         "cli-deep-kaiju-casebook-lifecycle-reality"
       ],
       "decisionQuestions": [
@@ -1967,7 +1967,7 @@
       "skill": "build-libraries",
       "reference": "references/architecture.md",
       "capability": "Use-case-first library architecture and deep public modules",
-      "ownership": "The library skill owns consumer-shaped public APIs, information-hiding boundaries, deep common-case facades, focused lower-level capabilities, and the separation between reusable code and application shells.",
+      "ownership": "The library skill owns consumer-shaped public APIs, information-hiding handoffs, deep common-case facades, focused lower-level capabilities, and the separation between reusable code and application shells.",
       "status": "normative",
       "sourceIds": [
         "library-first-guidebook",
@@ -1978,7 +1978,7 @@
         "library-architecture-use-case-first",
         "library-architecture-deep-module",
         "library-architecture-framework-exception",
-        "library-architecture-justify-boundary"
+        "library-architecture-justify-handoff"
       ],
       "decisionQuestions": [
         "Which concrete consumers and use cases define the public programming model, which decisions must each module hide, and when is a framework-style extension protocol genuinely the product?"
@@ -1998,7 +1998,7 @@
       "skill": "build-libraries",
       "reference": "references/composition.md",
       "capability": "Multi-scale library and ecosystem composition",
-      "ownership": "The library skill owns composition across values, data flow, capabilities, policies, ecosystems, lifecycles, package graphs, and operations while preserving the semantics and ownership boundaries of strategic dependencies.",
+      "ownership": "The library skill owns composition across values, data flow, capabilities, policies, ecosystems, lifecycles, package graphs, and operations while preserving the semantics and ownership handoffs of strategic dependencies.",
       "status": "normative",
       "sourceIds": [
         "library-first-guidebook",
@@ -2023,7 +2023,7 @@
         "Do not confuse swappability with composability, wrap strategic dependencies merely to hide their names, or add Hookable and plugin machinery when ordinary functions satisfy all known consumers."
       ],
       "verification": [
-        "Trace one owner per ecosystem boundary, test domain events separately from diagnostics, validate application-owned configuration resolution, and inspect installed dependency and entrypoint reachability for optional integrations."
+        "Trace one owner per ecosystem handoff, test domain events separately from diagnostics, validate application-owned configuration resolution, and inspect installed dependency and entrypoint reachability for optional integrations."
       ]
     },
     {
@@ -2042,7 +2042,7 @@
         "library-data-flow-shape-selection",
         "library-data-flow-batching",
         "library-data-flow-streaming-cleanup-fixture",
-        "library-data-flow-cancellation-boundary"
+        "library-data-flow-cancellation-handoff"
       ],
       "decisionQuestions": [
         "Is the result singular or plural, bounded or incremental, reusable or one-shot, pull-oriented or backpressured, and where should batching or explicit materialization occur?"
@@ -2062,7 +2062,7 @@
       "skill": "build-libraries",
       "reference": "references/data-oriented-design.md",
       "capability": "Transform-first data-oriented library internals",
-      "ownership": "The library skill owns workload-grounded transform graphs, data volume and lifetime analysis, hot and cold field separation, indexing, allocation and locality decisions, and intentional boundaries between ergonomic public values and optimized internal representations.",
+      "ownership": "The library skill owns workload-grounded transform graphs, data volume and lifetime analysis, hot and cold field separation, indexing, allocation and locality decisions, and intentional handoffs between ergonomic public values and optimized internal representations.",
       "status": "normative",
       "sourceIds": [
         "library-first-guidebook",
@@ -2084,7 +2084,7 @@
         "Do not confuse data-oriented design with declarative data-driven policy, use typed arrays as an aesthetic default, or expose packed internal layouts as the public API without a compatibility reason."
       ],
       "verification": [
-        "Benchmark representative transforms with correctness oracles, allocation and memory evidence, compare baseline and optimized representations, and retain conversion boundaries between public records and hot internal batches."
+        "Benchmark representative transforms with correctness oracles, allocation and memory evidence, compare baseline and optimized representations, and retain conversion lines between public records and hot internal batches."
       ]
     },
     {
@@ -2155,7 +2155,7 @@
       "skill": "build-libraries",
       "reference": "references/recovery-refactoring.md",
       "capability": "Precise recovery contracts and CLI-first library extraction",
-      "ownership": "The library skill owns restartable and checkpoint-resumable operation contracts, commit ordering, compatibility fingerprints, idempotent replay boundaries, and phased extraction from application-shaped workflows while durable execution authority remains with build-workflows.",
+      "ownership": "The library skill owns restartable and checkpoint-resumable operation contracts, commit ordering, compatibility fingerprints, idempotent replay handoffs, and phased extraction from application-shaped workflows while durable execution authority remains with build-workflows.",
       "status": "normative",
       "sourceIds": [
         "library-first-guidebook",
@@ -2177,7 +2177,7 @@
         "An iterator index is called a durable checkpoint, checkpoint state advances before output durability, incompatible requests resume silently, or a big-bang refactor preserves the shared runtime under new names without proving a second consumer."
       ],
       "exclusions": [
-        "Do not claim durable orchestration without persisted execution authority and reachable workers, and do not rewrite every package before characterizing one representative command and extracting one use-case boundary."
+        "Do not claim durable orchestration without persisted execution authority and reachable workers, and do not rewrite every package before characterizing one representative command and extracting one use-case handoff."
       ],
       "verification": [
         "Test crash windows around output and checkpoint commits, replay and duplicate handling, fingerprint incompatibility, startup reconciliation, CLI subprocess parity, direct programmatic consumption, and removal of obsolete compatibility surfaces."
@@ -2214,6 +2214,2824 @@
       ],
       "verification": [
         "Maintain deterministic fixtures, rubric and held-out evals, packed-artifact consumers, package graph inspection, lifecycle and recovery fault injection, benchmark baselines and thresholds, cross-skill composition cases, and an honest pass, fail, blocked report."
+      ]
+    },
+    {
+      "id": "cap-build-apis-failures",
+      "skill": "build-apis",
+      "reference": "references/failures.md",
+      "capability": "API failure diagnosis, recovery, and reachability",
+      "ownership": "The API skill owns transport contracts, request validation, authentication/authorization seams, service composition, failures, streaming, deployment behavior, and executable API verification.",
+      "status": "counterexample",
+      "sourceIds": [
+        "new-finance"
+      ],
+      "evalIds": [
+        "system-api-failure-reachability-train",
+        "system-api-failure-middleware-seen",
+        "system-api-failure-ambiguous-commit-heldout"
+      ],
+      "decisionQuestions": [
+        "When API failure diagnosis, recovery, and reachability applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites API failure diagnosis, recovery, and reachability but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat API failure diagnosis, recovery, and reachability as a generic tool checklist, use it outside the concern owned by build-apis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise API failure diagnosis, recovery, and reachability through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-architecture",
+      "skill": "build-clis",
+      "reference": "references/architecture.md",
+      "capability": "CLI architecture",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "library-first-guidebook"
+      ],
+      "evalIds": [
+        "completion-cli-core-train",
+        "completion-cli-core-seen",
+        "composition-library-cli-extraction"
+      ],
+      "decisionQuestions": [
+        "When CLI architecture applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites CLI architecture but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat CLI architecture as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise CLI architecture through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-audit",
+      "skill": "build-clis",
+      "reference": "references/audit.md",
+      "capability": "CLI audit",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "standards-refresh-20260819",
+        "unjs-official"
+      ],
+      "evalIds": [
+        "completion-cli-core-train",
+        "completion-cli-core-seen",
+        "completion-cli-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When CLI audit applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites CLI audit but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat CLI audit as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise CLI audit through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-commands",
+      "skill": "build-clis",
+      "reference": "references/commands.md",
+      "capability": "Command language and Optique",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "standards-refresh-20260819",
+        "unjs-official"
+      ],
+      "evalIds": [
+        "completion-cli-core-train",
+        "completion-cli-core-seen",
+        "completion-cli-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Command language and Optique applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Command language and Optique but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Command language and Optique as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Command language and Optique through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-config",
+      "skill": "build-clis",
+      "reference": "references/config.md",
+      "capability": "Configuration resolution",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "standards-refresh-20260819",
+        "unjs-official"
+      ],
+      "evalIds": [
+        "completion-cli-core-train",
+        "completion-cli-core-seen",
+        "completion-cli-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Configuration resolution applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Configuration resolution but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Configuration resolution as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Configuration resolution through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-distribution",
+      "skill": "build-clis",
+      "reference": "references/distribution.md",
+      "capability": "CLI distribution and installed execution",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official",
+        "deno-software",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-cli-runtime-train",
+        "completion-cli-runtime-seen",
+        "completion-cli-runtime-heldout"
+      ],
+      "decisionQuestions": [
+        "When CLI distribution and installed execution applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites CLI distribution and installed execution but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat CLI distribution and installed execution as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise CLI distribution and installed execution through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-ecosystems",
+      "skill": "build-clis",
+      "reference": "references/ecosystems.md",
+      "capability": "CLI ecosystem ownership map",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "library-first-guidebook",
+        "logtape-official",
+        "unstorage-1-17-5"
+      ],
+      "evalIds": [
+        "completion-cli-core-train",
+        "completion-cli-core-seen",
+        "composition-library-ecosystem-selection"
+      ],
+      "decisionQuestions": [
+        "When CLI ecosystem ownership map applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites CLI ecosystem ownership map but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat CLI ecosystem ownership map as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise CLI ecosystem ownership map through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-interaction",
+      "skill": "build-clis",
+      "reference": "references/interaction.md",
+      "capability": "Human and automation interaction",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official",
+        "deno-software",
+        "standards-refresh-20260819",
+        "cli-audit",
+        "optique-official"
+      ],
+      "evalIds": [
+        "completion-cli-runtime-train",
+        "completion-cli-runtime-seen",
+        "cli-deep-optique-prompt-automation"
+      ],
+      "decisionQuestions": [
+        "When Human and automation interaction applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Human and automation interaction but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Human and automation interaction as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Human and automation interaction through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-lifecycle",
+      "skill": "build-clis",
+      "reference": "references/lifecycle.md",
+      "capability": "Lifecycle, cancellation, resources, and public failures",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official",
+        "deno-software",
+        "standards-refresh-20260819",
+        "kaiju-config-handoff"
+      ],
+      "evalIds": [
+        "completion-cli-runtime-train",
+        "completion-cli-runtime-seen",
+        "cli-deep-kaiju-casebook-lifecycle-reality"
+      ],
+      "decisionQuestions": [
+        "When Lifecycle, cancellation, resources, and public failures applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Lifecycle, cancellation, resources, and public failures but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Lifecycle, cancellation, resources, and public failures as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Lifecycle, cancellation, resources, and public failures through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-output",
+      "skill": "build-clis",
+      "reference": "references/output.md",
+      "capability": "Results, diagnostics, and durable artifacts",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official",
+        "deno-software",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-cli-runtime-train",
+        "cli-deep-kaiju-casebook-stage-handoffs",
+        "completion-cli-runtime-heldout"
+      ],
+      "decisionQuestions": [
+        "When Results, diagnostics, and durable artifacts applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Results, diagnostics, and durable artifacts but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Results, diagnostics, and durable artifacts as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Results, diagnostics, and durable artifacts through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-clis-testing",
+      "skill": "build-clis",
+      "reference": "references/testing.md",
+      "capability": "CLI verification playbook",
+      "ownership": "The CLI skill owns command grammar, configuration sources, terminal interaction, result/diagnostic routes, lifecycle, distribution, and installed-command verification.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "c12-official",
+        "defu-official",
+        "logtape-official",
+        "kaiju-config-handoff"
+      ],
+      "evalIds": [
+        "cli-deep-optique-zod-default-ownership",
+        "cli-deep-five-library-benchmark-plan",
+        "cli-deep-config-verification-oracles"
+      ],
+      "decisionQuestions": [
+        "When CLI verification playbook applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites CLI verification playbook but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat CLI verification playbook as a generic tool checklist, use it outside the concern owned by build-clis, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise CLI verification playbook through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-data-failures",
+      "skill": "build-data",
+      "reference": "references/failures.md",
+      "capability": "Data-system failure diagnosis and recovery",
+      "ownership": "The data skill owns authoritative storage, schema/query contracts, projections, persistence ownership, recovery semantics, and data-system verification.",
+      "status": "normative",
+      "sourceIds": [
+        "new-finance",
+        "popmodern",
+        "clickhouse-official"
+      ],
+      "evalIds": [
+        "system-data-failure-incident-train",
+        "system-data-failure-projection-gap-seen",
+        "system-data-failure-false-complete-heldout"
+      ],
+      "decisionQuestions": [
+        "When Data-system failure diagnosis and recovery applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Data-system failure diagnosis and recovery but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Data-system failure diagnosis and recovery as a generic tool checklist, use it outside the concern owned by build-data, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Data-system failure diagnosis and recovery through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-data-postgres-drizzle",
+      "skill": "build-data",
+      "reference": "references/postgres-drizzle.md",
+      "capability": "PostgreSQL and Drizzle operational design",
+      "ownership": "The data skill owns authoritative storage, schema/query contracts, projections, persistence ownership, recovery semantics, and data-system verification.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance",
+        "drizzle-official"
+      ],
+      "evalIds": [
+        "system-postgres-drizzle-release-train",
+        "system-postgres-drizzle-lifetime-seen",
+        "system-postgres-drizzle-concurrency-heldout"
+      ],
+      "decisionQuestions": [
+        "When PostgreSQL and Drizzle operational design applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites PostgreSQL and Drizzle operational design but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat PostgreSQL and Drizzle operational design as a generic tool checklist, use it outside the concern owned by build-data, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise PostgreSQL and Drizzle operational design through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-data-queries",
+      "skill": "build-data",
+      "reference": "references/queries.md",
+      "capability": "Query execution, safety, pagination, and count semantics",
+      "ownership": "The data skill owns authoritative storage, schema/query contracts, projections, persistence ownership, recovery semantics, and data-system verification.",
+      "status": "normative",
+      "sourceIds": [
+        "new-finance",
+        "sparql-official",
+        "popmodern"
+      ],
+      "evalIds": [
+        "system-data-query-compiler-train",
+        "system-data-query-cursor-context-seen",
+        "system-data-query-sparql-raw-heldout"
+      ],
+      "decisionQuestions": [
+        "When Query execution, safety, pagination, and count semantics applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Query execution, safety, pagination, and count semantics but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Query execution, safety, pagination, and count semantics as a generic tool checklist, use it outside the concern owned by build-data, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Query execution, safety, pagination, and count semantics through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-devtools-generated-artifacts",
+      "skill": "build-devtools",
+      "reference": "references/generated-artifacts.md",
+      "capability": "Generated artifacts",
+      "ownership": "The DevTools skill owns selected toolchain roles, generated artifacts, repository hygiene, packaging, performance gates, releases, and local/CI parity.",
+      "status": "observed-source",
+      "sourceIds": [
+        "undent",
+        "magicast-0-5-3",
+        "automd-0-4-3",
+        "undent:scripts/build_npm.ts"
+      ],
+      "evalIds": [
+        "depth-generated-unicode-authority",
+        "depth-generated-mixed-ownership",
+        "frozen-devtools-generation-release"
+      ],
+      "decisionQuestions": [
+        "When Generated artifacts applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Generated artifacts but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Generated artifacts as a generic tool checklist, use it outside the concern owned by build-devtools, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Generated artifacts through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-devtools-hygiene",
+      "skill": "build-devtools",
+      "reference": "references/hygiene.md",
+      "capability": "Repository hygiene and retained artifacts",
+      "ownership": "The DevTools skill owns selected toolchain roles, generated artifacts, repository hygiene, packaging, performance gates, releases, and local/CI parity.",
+      "status": "normative",
+      "sourceIds": [
+        "wikitext",
+        "undent",
+        "user-memory"
+      ],
+      "evalIds": [
+        "depth-hygiene-binary-classification",
+        "depth-hygiene-dirty-markdown",
+        "frozen-devtools-toolchain-parity"
+      ],
+      "decisionQuestions": [
+        "When Repository hygiene and retained artifacts applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Repository hygiene and retained artifacts but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Repository hygiene and retained artifacts as a generic tool checklist, use it outside the concern owned by build-devtools, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Repository hygiene and retained artifacts through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-devtools-packaging",
+      "skill": "build-devtools",
+      "reference": "references/packaging.md",
+      "capability": "Cross-runtime packaging",
+      "ownership": "The DevTools skill owns selected toolchain roles, generated artifacts, repository hygiene, packaging, performance gates, releases, and local/CI parity.",
+      "status": "observed-source",
+      "sourceIds": [
+        "undent",
+        "unbuild-3-6-1",
+        "pkg-types-2-3-1",
+        "cli-guidebook",
+        "undent:scripts/build_npm.ts"
+      ],
+      "evalIds": [
+        "depth-packaging-deno-node-authority",
+        "depth-packaging-export-conditions",
+        "frozen-devtools-generation-release"
+      ],
+      "decisionQuestions": [
+        "When Cross-runtime packaging applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Cross-runtime packaging but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Cross-runtime packaging as a generic tool checklist, use it outside the concern owned by build-devtools, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Cross-runtime packaging through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-devtools-performance",
+      "skill": "build-devtools",
+      "reference": "references/performance.md",
+      "capability": "Performance experiments",
+      "ownership": "The DevTools skill owns selected toolchain roles, generated artifacts, repository hygiene, packaging, performance gates, releases, and local/CI parity.",
+      "status": "observed-source",
+      "sourceIds": [
+        "wikitext"
+      ],
+      "evalIds": [
+        "depth-performance-protocol-design",
+        "depth-performance-statistical-gate",
+        "depth-performance-stress-evidence"
+      ],
+      "decisionQuestions": [
+        "When Performance experiments applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Performance experiments but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Performance experiments as a generic tool checklist, use it outside the concern owned by build-devtools, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Performance experiments through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-devtools-releases",
+      "skill": "build-devtools",
+      "reference": "references/releases.md",
+      "capability": "Releases, versioning, and recovery",
+      "ownership": "The DevTools skill owns selected toolchain roles, generated artifacts, repository hygiene, packaging, performance gates, releases, and local/CI parity.",
+      "status": "normative",
+      "sourceIds": [
+        "undent",
+        "changelogen-0-6-2",
+        "cli-guidebook",
+        "undent:scripts/build_npm.ts"
+      ],
+      "evalIds": [
+        "depth-release-partial-registries",
+        "depth-release-semver-impact",
+        "frozen-devtools-generation-release"
+      ],
+      "decisionQuestions": [
+        "When Releases, versioning, and recovery applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Releases, versioning, and recovery but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Releases, versioning, and recovery as a generic tool checklist, use it outside the concern owned by build-devtools, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Releases, versioning, and recovery through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-devtools-toolchains",
+      "skill": "build-devtools",
+      "reference": "references/toolchains.md",
+      "capability": "Toolchain Ownership",
+      "ownership": "The DevTools skill owns selected toolchain roles, generated artifacts, repository hygiene, packaging, performance gates, releases, and local/CI parity.",
+      "status": "normative",
+      "sourceIds": [
+        "mise-official",
+        "oxc-official",
+        "unplugin-icons-official",
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "user-memory"
+      ],
+      "evalIds": [
+        "completion-devtools-toolchain-train",
+        "completion-devtools-toolchain-seen",
+        "frozen-devtools-toolchain-parity"
+      ],
+      "decisionQuestions": [
+        "When Toolchain Ownership applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Toolchain Ownership but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Toolchain Ownership as a generic tool checklist, use it outside the concern owned by build-devtools, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Toolchain Ownership through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-sites-astro",
+      "skill": "build-sites",
+      "reference": "references/astro.md",
+      "capability": "Astro site architecture and runtime manual",
+      "ownership": "The sites skill owns content authority, rendering/deployment choices, discoverability, fonts/icons, site quality, and production route verification.",
+      "status": "normative",
+      "sourceIds": [
+        "kaiju-website",
+        "kaiju-site-scope",
+        "new-finance",
+        "thunderstrike-blog"
+      ],
+      "evalIds": [
+        "site-astro-train-route-config",
+        "site-astro-seen-client-router-lifetime",
+        "site-astro-heldout-auto-adapter-assumption"
+      ],
+      "decisionQuestions": [
+        "When Astro site architecture and runtime manual applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Astro site architecture and runtime manual but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Astro site architecture and runtime manual as a generic tool checklist, use it outside the concern owned by build-sites, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Astro site architecture and runtime manual through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-sites-casebook",
+      "skill": "build-sites",
+      "reference": "references/casebook.md",
+      "capability": "Site evidence casebook",
+      "ownership": "The sites skill owns content authority, rendering/deployment choices, discoverability, fonts/icons, site quality, and production route verification.",
+      "status": "observed-source",
+      "sourceIds": [
+        "kaiju-website",
+        "kaiju-site-scope",
+        "new-finance",
+        "thunderstrike-blog",
+        "solid-motion-experiments"
+      ],
+      "evalIds": [
+        "site-casebook-train-evidence-classification",
+        "site-casebook-seen-kaiju-homepage",
+        "site-casebook-heldout-upload-authority"
+      ],
+      "decisionQuestions": [
+        "When Site evidence casebook applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Site evidence casebook but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Site evidence casebook as a generic tool checklist, use it outside the concern owned by build-sites, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Site evidence casebook through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-sites-content",
+      "skill": "build-sites",
+      "reference": "references/content.md",
+      "capability": "Content collections, CMS adapters, rich text, and publishing",
+      "ownership": "The sites skill owns content authority, rendering/deployment choices, discoverability, fonts/icons, site quality, and production route verification.",
+      "status": "normative",
+      "sourceIds": [
+        "thunderstrike-blog",
+        "kaiju-website"
+      ],
+      "evalIds": [
+        "site-content-train-adapter-model",
+        "site-content-seen-local-reference-schema",
+        "site-content-heldout-dual-source"
+      ],
+      "decisionQuestions": [
+        "When Content collections, CMS adapters, rich text, and publishing applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Content collections, CMS adapters, rich text, and publishing but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Content collections, CMS adapters, rich text, and publishing as a generic tool checklist, use it outside the concern owned by build-sites, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Content collections, CMS adapters, rich text, and publishing through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-sites-site-quality",
+      "skill": "build-sites",
+      "reference": "references/site-quality.md",
+      "capability": "Site quality gates",
+      "ownership": "The sites skill owns content authority, rendering/deployment choices, discoverability, fonts/icons, site quality, and production route verification.",
+      "status": "normative",
+      "sourceIds": [
+        "kaiju-website",
+        "thunderstrike-blog",
+        "kaiju-site-scope"
+      ],
+      "evalIds": [
+        "site-quality-train-route-gates",
+        "site-quality-seen-performance-budget",
+        "site-quality-heldout-lighthouse-only"
+      ],
+      "decisionQuestions": [
+        "When Site quality gates applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Site quality gates but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Site quality gates as a generic tool checklist, use it outside the concern owned by build-sites, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Site quality gates through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-components",
+      "skill": "build-web",
+      "reference": "references/components.md",
+      "capability": "Component systems, primitives, styles, and assets",
+      "ownership": "The web skill owns browser surfaces, component/rendering semantics, assets, motion, security, accessibility, and real-browser verification.",
+      "status": "observed-source",
+      "sourceIds": [
+        "kaiju-website",
+        "new-finance",
+        "solid-primitives",
+        "solid-primitives-official"
+      ],
+      "evalIds": [
+        "web-components-train-registry-contract",
+        "web-components-seen-solid-primitives-selection",
+        "web-components-heldout-icon-font-bloat"
+      ],
+      "decisionQuestions": [
+        "When Component systems, primitives, styles, and assets applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Component systems, primitives, styles, and assets but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Component systems, primitives, styles, and assets as a generic tool checklist, use it outside the concern owned by build-web, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Component systems, primitives, styles, and assets through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-failures",
+      "skill": "build-web",
+      "reference": "references/failures.md",
+      "capability": "Web failure signatures and next inspections",
+      "ownership": "The web skill owns browser surfaces, component/rendering semantics, assets, motion, security, accessibility, and real-browser verification.",
+      "status": "observed-source",
+      "sourceIds": [
+        "kaiju-website",
+        "solid-motion-experiments",
+        "new-finance",
+        "thunderstrike-blog",
+        "kaiju-site-scope"
+      ],
+      "evalIds": [
+        "web-failures-train-hydration-diagnosis",
+        "web-failures-seen-cms-auth-chain",
+        "web-failures-heldout-arbitrary-workaround"
+      ],
+      "decisionQuestions": [
+        "When Web failure signatures and next inspections applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Web failure signatures and next inspections but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Web failure signatures and next inspections as a generic tool checklist, use it outside the concern owned by build-web, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Web failure signatures and next inspections through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-motion",
+      "skill": "build-web",
+      "reference": "references/motion.md",
+      "capability": "Motion, presence, canvas, and continuous work",
+      "ownership": "The web skill owns browser surfaces, component/rendering semantics, assets, motion, security, accessibility, and real-browser verification.",
+      "status": "normative",
+      "sourceIds": [
+        "design-motion-skill-20260819",
+        "kaiju-website",
+        "solid-primitives",
+        "kaiju-site-scope"
+      ],
+      "evalIds": [
+        "current-standard-motion-judgment",
+        "web-motion-seen-webgl-resource-owner",
+        "frozen-web-native-first-failure"
+      ],
+      "decisionQuestions": [
+        "When Motion, presence, canvas, and continuous work applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Motion, presence, canvas, and continuous work but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Motion, presence, canvas, and continuous work as a generic tool checklist, use it outside the concern owned by build-web, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Motion, presence, canvas, and continuous work through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-renderers",
+      "skill": "build-web",
+      "reference": "references/renderers.md",
+      "capability": "Renderers, islands, SSR, and hydration",
+      "ownership": "The web skill owns browser surfaces, component/rendering semantics, assets, motion, security, accessibility, and real-browser verification.",
+      "status": "observed-source",
+      "sourceIds": [
+        "kaiju-website",
+        "new-finance",
+        "solid-motion-experiments",
+        "solid-primitives",
+        "kaiju-site-scope"
+      ],
+      "evalIds": [
+        "web-renderer-train-island-escalation",
+        "web-renderer-seen-solid-hydration",
+        "frozen-web-hybrid-surface-ownership"
+      ],
+      "decisionQuestions": [
+        "When Renderers, islands, SSR, and hydration applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Renderers, islands, SSR, and hydration but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Renderers, islands, SSR, and hydration as a generic tool checklist, use it outside the concern owned by build-web, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Renderers, islands, SSR, and hydration through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-security",
+      "skill": "build-web",
+      "reference": "references/security.md",
+      "capability": "Web security and connected-system trust handoffs",
+      "ownership": "The web skill owns browser surfaces, component/rendering semantics, assets, motion, security, accessibility, and real-browser verification.",
+      "status": "normative",
+      "sourceIds": [
+        "new-finance",
+        "better-auth-integration",
+        "thunderstrike-blog",
+        "kaiju-website"
+      ],
+      "evalIds": [
+        "web-security-train-request-handoff",
+        "web-security-seen-webhook-rewrite",
+        "web-security-heldout-rich-snippet-xss"
+      ],
+      "decisionQuestions": [
+        "When Web security and connected-system trust handoffs applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Web security and connected-system trust handoffs but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Web security and connected-system trust handoffs as a generic tool checklist, use it outside the concern owned by build-web, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Web security and connected-system trust handoffs through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-surfaces",
+      "skill": "build-web",
+      "reference": "references/surfaces.md",
+      "capability": "Web surface classification and ownership",
+      "ownership": "The web skill owns browser surfaces, component/rendering semantics, assets, motion, security, accessibility, and real-browser verification.",
+      "status": "observed-source",
+      "sourceIds": [
+        "kaiju-website",
+        "kaiju-site-scope",
+        "new-finance"
+      ],
+      "evalIds": [
+        "web-surface-train-route-ownership",
+        "web-surface-seen-hybrid-cache-handoff",
+        "frozen-web-hybrid-surface-ownership"
+      ],
+      "decisionQuestions": [
+        "When Web surface classification and ownership applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Web surface classification and ownership but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Web surface classification and ownership as a generic tool checklist, use it outside the concern owned by build-web, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Web surface classification and ownership through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-verification",
+      "skill": "build-web",
+      "reference": "references/verification.md",
+      "capability": "Web verification manual",
+      "ownership": "The web skill owns browser surfaces, component/rendering semantics, assets, motion, security, accessibility, and real-browser verification.",
+      "status": "normative",
+      "sourceIds": [
+        "kaiju-website",
+        "new-finance",
+        "solid-motion-experiments",
+        "kaiju-site-scope",
+        "solid-primitives"
+      ],
+      "evalIds": [
+        "web-verify-train-layered-matrix",
+        "web-verify-seen-navigation-leak",
+        "frozen-web-native-first-failure"
+      ],
+      "decisionQuestions": [
+        "When Web verification manual applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Web verification manual but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Web verification manual as a generic tool checklist, use it outside the concern owned by build-web, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Web verification manual through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-apps-data-views",
+      "skill": "build-web-apps",
+      "reference": "references/data-views.md",
+      "capability": "Data views, URL state, tables, virtualization, and selection",
+      "ownership": "The web-app skill owns client application state, forms, auth, routing/query ownership, data views, renderer lifecycle, and end-to-end browser behavior.",
+      "status": "normative",
+      "sourceIds": [
+        "kaiju-site-scope",
+        "new-finance"
+      ],
+      "evalIds": [
+        "webapp-data-train-url-query-ownership",
+        "webapp-data-seen-virtual-table",
+        "webapp-data-heldout-table-implies-virtual"
+      ],
+      "decisionQuestions": [
+        "When Data views, URL state, tables, virtualization, and selection applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Data views, URL state, tables, virtualization, and selection but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Data views, URL state, tables, virtualization, and selection as a generic tool checklist, use it outside the concern owned by build-web-apps, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Data views, URL state, tables, virtualization, and selection through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-apps-forms",
+      "skill": "build-web-apps",
+      "reference": "references/forms.md",
+      "capability": "Forms, validation, and mutation state machines",
+      "ownership": "The web-app skill owns client application state, forms, auth, routing/query ownership, data views, renderer lifecycle, and end-to-end browser behavior.",
+      "status": "normative",
+      "sourceIds": [
+        "new-finance",
+        "better-auth-integration"
+      ],
+      "evalIds": [
+        "webapp-forms-train-auth-state-machine",
+        "webapp-forms-seen-async-races",
+        "webapp-forms-heldout-client-validation-trust"
+      ],
+      "decisionQuestions": [
+        "When Forms, validation, and mutation state machines applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Forms, validation, and mutation state machines but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Forms, validation, and mutation state machines as a generic tool checklist, use it outside the concern owned by build-web-apps, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Forms, validation, and mutation state machines through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-web-apps-verification",
+      "skill": "build-web-apps",
+      "reference": "references/verification.md",
+      "capability": "Web application verification manual",
+      "ownership": "The web-app skill owns client application state, forms, auth, routing/query ownership, data views, renderer lifecycle, and end-to-end browser behavior.",
+      "status": "normative",
+      "sourceIds": [
+        "kaiju-site-scope",
+        "new-finance",
+        "better-auth-integration"
+      ],
+      "evalIds": [
+        "webapp-verify-train-end-to-end",
+        "webapp-verify-seen-auth-switch",
+        "webapp-verify-heldout-mocked-success"
+      ],
+      "decisionQuestions": [
+        "When Web application verification manual applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Web application verification manual but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Web application verification manual as a generic tool checklist, use it outside the concern owned by build-web-apps, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Web application verification manual through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-build-workflows-failures",
+      "skill": "build-workflows",
+      "reference": "references/failures.md",
+      "capability": "Workflow and pipeline failure diagnosis",
+      "ownership": "The workflow skill owns durable execution, identity, retries, timers, signals, leases, checkpoints, recovery, and operator-visible failure semantics.",
+      "status": "counterexample",
+      "sourceIds": [
+        "new-finance",
+        "effect-workflow-official"
+      ],
+      "evalIds": [
+        "system-workflow-failure-capability-audit-train",
+        "system-workflow-failure-lease-fencing-seen",
+        "system-workflow-failure-signal-timeout-heldout"
+      ],
+      "decisionQuestions": [
+        "When Workflow and pipeline failure diagnosis applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Workflow and pipeline failure diagnosis but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Workflow and pipeline failure diagnosis as a generic tool checklist, use it outside the concern owned by build-workflows, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Workflow and pipeline failure diagnosis through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-astro",
+      "skill": "deliver-software",
+      "reference": "references/astro.md",
+      "capability": "Astro Interface Instructions",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-lang-train",
+        "completion-delivery-lang-seen",
+        "completion-delivery-lang-heldout"
+      ],
+      "decisionQuestions": [
+        "When Astro Interface Instructions applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Astro Interface Instructions but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Astro Interface Instructions as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Astro Interface Instructions through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-base",
+      "skill": "deliver-software",
+      "reference": "references/base.md",
+      "capability": "Shared engineering defaults",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819",
+        "current-guides-20260819:luchalibre-agent-handoff.zip"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "current-standard-context-scope"
+      ],
+      "decisionQuestions": [
+        "When Shared engineering defaults applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Shared engineering defaults but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Shared engineering defaults as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Shared engineering defaults through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-benchmarks",
+      "skill": "deliver-software",
+      "reference": "references/benchmarks.md",
+      "capability": "Benchmarking Rules",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-quality-train",
+        "completion-delivery-quality-seen",
+        "completion-delivery-quality-heldout"
+      ],
+      "decisionQuestions": [
+        "When Benchmarking Rules applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Benchmarking Rules but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Benchmarking Rules as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Benchmarking Rules through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-cases",
+      "skill": "deliver-software",
+      "reference": "references/cases.md",
+      "capability": "Delivery decision cases",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Delivery decision cases applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Delivery decision cases but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Delivery decision cases as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Delivery decision cases through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-changes",
+      "skill": "deliver-software",
+      "reference": "references/changes.md",
+      "capability": "Changelog writing",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Changelog writing applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Changelog writing but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Changelog writing as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Changelog writing through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-comments",
+      "skill": "deliver-software",
+      "reference": "references/comments.md",
+      "capability": "TSDoc and comments",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "current-standard-schema-field-docs",
+        "current-standard-name-read-get-internals"
+      ],
+      "decisionQuestions": [
+        "When TSDoc and comments applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites TSDoc and comments but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat TSDoc and comments as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise TSDoc and comments through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-commits",
+      "skill": "deliver-software",
+      "reference": "references/commits.md",
+      "capability": "Commit messages",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "completion-delivery-docs-seen",
+        "completion-delivery-docs-heldout"
+      ],
+      "decisionQuestions": [
+        "When Commit messages applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Commit messages but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Commit messages as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Commit messages through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-composition",
+      "skill": "deliver-software",
+      "reference": "references/composition.md",
+      "capability": "Composition",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-lang-train",
+        "completion-delivery-lang-seen",
+        "completion-delivery-lang-heldout"
+      ],
+      "decisionQuestions": [
+        "When Composition applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Composition but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Composition as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Composition through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-delivery",
+      "skill": "deliver-software",
+      "reference": "references/delivery.md",
+      "capability": "Delivery",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "current-standard-source-authority",
+        "current-standard-replacement-no-shim",
+        "current-standard-exact-artifact-validation"
+      ],
+      "decisionQuestions": [
+        "When Delivery applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Delivery but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Delivery as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Delivery through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-diagrams",
+      "skill": "deliver-software",
+      "reference": "references/diagrams.md",
+      "capability": "Diagram selection and ASCII diagrams",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "current-standard-visual-selection",
+        "completion-delivery-docs-heldout"
+      ],
+      "decisionQuestions": [
+        "When Diagram selection and ASCII diagrams applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Diagram selection and ASCII diagrams but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Diagram selection and ASCII diagrams as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Diagram selection and ASCII diagrams through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-docs",
+      "skill": "deliver-software",
+      "reference": "references/docs.md",
+      "capability": "Documentation writing",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819",
+        "cli-guidebook",
+        "cli-audit"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "completion-delivery-docs-seen",
+        "evidence-markdown-preservation"
+      ],
+      "decisionQuestions": [
+        "When Documentation writing applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Documentation writing but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Documentation writing as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Documentation writing through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-general",
+      "skill": "deliver-software",
+      "reference": "references/general.md",
+      "capability": "General engineering rules",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "completion-delivery-docs-seen",
+        "completion-delivery-docs-heldout"
+      ],
+      "decisionQuestions": [
+        "When General engineering rules applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites General engineering rules but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat General engineering rules as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise General engineering rules through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-implementer",
+      "skill": "deliver-software",
+      "reference": "references/implementer.md",
+      "capability": "Implementer",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Implementer applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Implementer but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Implementer as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Implementer through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-planner",
+      "skill": "deliver-software",
+      "reference": "references/planner.md",
+      "capability": "Planner guidance",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Planner applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Planner but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Planner as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Planner through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-pulls",
+      "skill": "deliver-software",
+      "reference": "references/pulls.md",
+      "capability": "Pull Requests",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "completion-delivery-docs-seen",
+        "completion-delivery-docs-heldout"
+      ],
+      "decisionQuestions": [
+        "When Pull Requests applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Pull Requests but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Pull Requests as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Pull Requests through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-python",
+      "skill": "deliver-software",
+      "reference": "references/python.md",
+      "capability": "Python repository implementation and interoperability",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-python-train",
+        "completion-delivery-python-seen",
+        "completion-delivery-python-heldout"
+      ],
+      "decisionQuestions": [
+        "Which names belong to Python source syntax, which field names belong to an external or durable contract, who owns injected resources, and which native Python/runtime checks prove the change?"
+      ],
+      "failureSignatures": [
+        "Python source style is imposed on wire or persisted data, generic helper modules hide ownership, cancellation is swallowed, injected clients are disposed implicitly, or only static checks are used to claim runtime behavior."
+      ],
+      "exclusions": [
+        "Do not impose TypeScript naming syntax on Python, do not rename external fields for consistency alone, and do not replace the repository-selected Python toolchain without a verified capability gap."
+      ],
+      "verification": [
+        "Run the repository-selected Python formatter/linter/type/test gates, exercise cancellation and cleanup, validate generated or serialized output, and run the real consumer or entrypoint that the change claims to support."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-react",
+      "skill": "deliver-software",
+      "reference": "references/react.md",
+      "capability": "React Interface Instructions",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-lang-train",
+        "completion-delivery-lang-seen",
+        "completion-delivery-lang-heldout"
+      ],
+      "decisionQuestions": [
+        "When React Interface Instructions applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites React Interface Instructions but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat React Interface Instructions as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise React Interface Instructions through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-refactors",
+      "skill": "deliver-software",
+      "reference": "references/refactors.md",
+      "capability": "Refactors and migrations",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Refactors and migrations applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Refactors and migrations but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Refactors and migrations as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Refactors and migrations through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-releases",
+      "skill": "deliver-software",
+      "reference": "references/releases.md",
+      "capability": "Releases",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "completion-delivery-docs-seen",
+        "completion-delivery-docs-heldout"
+      ],
+      "decisionQuestions": [
+        "When Releases applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Releases but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Releases as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Releases through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-review",
+      "skill": "deliver-software",
+      "reference": "references/review.md",
+      "capability": "Code Review",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Code Review applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Code Review but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Code Review as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Code Review through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-solid",
+      "skill": "deliver-software",
+      "reference": "references/solid.md",
+      "capability": "Solid Interface Instructions",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-lang-train",
+        "completion-delivery-lang-seen",
+        "completion-delivery-lang-heldout"
+      ],
+      "decisionQuestions": [
+        "When Solid Interface Instructions applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Solid Interface Instructions but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Solid Interface Instructions as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Solid Interface Instructions through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-standards",
+      "skill": "deliver-software",
+      "reference": "references/standards.md",
+      "capability": "Current software engineering standards",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819",
+        "logtape-official"
+      ],
+      "evalIds": [
+        "completion-delivery-docs-train",
+        "completion-delivery-docs-seen",
+        "current-standard-logtape-route-policy"
+      ],
+      "decisionQuestions": [
+        "When Current software engineering standards applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Current software engineering standards but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Current software engineering standards as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Current software engineering standards through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-testing",
+      "skill": "deliver-software",
+      "reference": "references/testing.md",
+      "capability": "Testing rules",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "current-standard-node-test-deno-first",
+        "completion-delivery-quality-seen",
+        "current-standard-type-inference-fixtures"
+      ],
+      "decisionQuestions": [
+        "When Testing rules applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Testing rules but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Testing rules as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Testing rules through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-typescript",
+      "skill": "deliver-software",
+      "reference": "references/typescript.md",
+      "capability": "TypeScript and Deno rules",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official"
+      ],
+      "evalIds": [
+        "current-standard-schema-type-protocol",
+        "current-standard-schema-field-docs",
+        "current-standard-type-inference-fixtures"
+      ],
+      "decisionQuestions": [
+        "When TypeScript and Deno rules applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites TypeScript and Deno rules but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat TypeScript and Deno rules as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise TypeScript and Deno rules through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-validator",
+      "skill": "deliver-software",
+      "reference": "references/validator.md",
+      "capability": "Validator",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Validator applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Validator but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Validator as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Validator through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-verifier",
+      "skill": "deliver-software",
+      "reference": "references/verifier.md",
+      "capability": "Verifier",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Verifier applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Verifier but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Verifier as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Verifier through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-web",
+      "skill": "deliver-software",
+      "reference": "references/web.md",
+      "capability": "Web Interface Guidelines",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-lang-train",
+        "completion-delivery-lang-seen",
+        "completion-delivery-lang-heldout"
+      ],
+      "decisionQuestions": [
+        "When Web Interface Guidelines applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Web Interface Guidelines but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Web Interface Guidelines as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Web Interface Guidelines through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deliver-software-workflow",
+      "skill": "deliver-software",
+      "reference": "references/workflow.md",
+      "capability": "Delivery Workflow",
+      "ownership": "The delivery skill owns request authority, repository-wide change completion, cleanup, documentation/review quality, validation, real-deliverable verification, and the final verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-delivery-core-train",
+        "completion-delivery-core-seen",
+        "completion-delivery-core-heldout"
+      ],
+      "decisionQuestions": [
+        "When Delivery Workflow applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Delivery Workflow but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Delivery Workflow as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Delivery Workflow through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-01-foundations",
+      "skill": "deno-software",
+      "reference": "references/01-foundations.md",
+      "capability": "Deno foundations",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno foundations applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno foundations but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno foundations as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno foundations through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-02-releases",
+      "skill": "deno-software",
+      "reference": "references/02-releases.md",
+      "capability": "Deno 2.0 through 2.9",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno 2.0 through 2.9 applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno 2.0 through 2.9 but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno 2.0 through 2.9 as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno 2.0 through 2.9 through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-03-repository-discovery",
+      "skill": "deno-software",
+      "reference": "references/03-repository-discovery.md",
+      "capability": "Deno repository discovery",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno repository discovery applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno repository discovery but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno repository discovery as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno repository discovery through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-04-packages",
+      "skill": "deno-software",
+      "reference": "references/04-packages.md",
+      "capability": "Dependencies, manifests, imports, and TypeScript configuration",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Dependencies, manifests, imports, and TypeScript configuration applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Dependencies, manifests, imports, and TypeScript configuration but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Dependencies, manifests, imports, and TypeScript configuration as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Dependencies, manifests, imports, and TypeScript configuration through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-05-workspaces",
+      "skill": "deno-software",
+      "reference": "references/05-workspaces.md",
+      "capability": "Workspaces and monorepos",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Workspaces and monorepos applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Workspaces and monorepos but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Workspaces and monorepos as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Workspaces and monorepos through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-06-security",
+      "skill": "deno-software",
+      "reference": "references/06-security.md",
+      "capability": "Security, permission sets, and private dependencies",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-runtime-train",
+        "completion-deno-runtime-seen",
+        "completion-deno-runtime-heldout"
+      ],
+      "decisionQuestions": [
+        "When Security, permission sets, and private dependencies applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Security, permission sets, and private dependencies but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Security, permission sets, and private dependencies as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Security, permission sets, and private dependencies through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-07-quality",
+      "skill": "deno-software",
+      "reference": "references/07-quality.md",
+      "capability": "Deno quality, testing, CI, and benchmarks",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-runtime-train",
+        "completion-deno-runtime-seen",
+        "completion-deno-runtime-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno quality, testing, CI, and benchmarks applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno quality, testing, CI, and benchmarks but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno quality, testing, CI, and benchmarks as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno quality, testing, CI, and benchmarks through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-08-node-compatibility",
+      "skill": "deno-software",
+      "reference": "references/08-node-compatibility.md",
+      "capability": "Node and npm compatibility",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-runtime-train",
+        "completion-deno-runtime-seen",
+        "completion-deno-runtime-heldout"
+      ],
+      "decisionQuestions": [
+        "When Node and npm compatibility applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Node and npm compatibility but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Node and npm compatibility as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Node and npm compatibility through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-09-libraries",
+      "skill": "deno-software",
+      "reference": "references/09-libraries.md",
+      "capability": "Deno libraries, private packages, JSR, npm, and publication",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-delivery-train",
+        "completion-deno-delivery-seen",
+        "completion-deno-delivery-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno libraries, private packages, JSR, npm, and publication applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno libraries, private packages, JSR, npm, and publication but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno libraries, private packages, JSR, npm, and publication as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno libraries, private packages, JSR, npm, and publication through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-10-artifacts",
+      "skill": "deno-software",
+      "reference": "references/10-artifacts.md",
+      "capability": "Deno artifacts: scripts, CLIs, servers, bundles, binaries, and desktop apps",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-delivery-train",
+        "completion-deno-delivery-seen",
+        "completion-deno-delivery-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno artifacts: scripts, CLIs, servers, bundles, binaries, and desktop apps applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno artifacts: scripts, CLIs, servers, bundles, binaries, and desktop apps but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno artifacts: scripts, CLIs, servers, bundles, binaries, and desktop apps as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno artifacts: scripts, CLIs, servers, bundles, binaries, and desktop apps through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-11-delivery-playbooks",
+      "skill": "deno-software",
+      "reference": "references/11-delivery-playbooks.md",
+      "capability": "Delivery playbooks",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-delivery-train",
+        "completion-deno-delivery-seen",
+        "completion-deno-delivery-heldout"
+      ],
+      "decisionQuestions": [
+        "When Delivery playbooks applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Delivery playbooks but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Delivery playbooks as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Delivery playbooks through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-12-verification",
+      "skill": "deno-software",
+      "reference": "references/12-verification.md",
+      "capability": "Deno verification matrix",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-runtime-train",
+        "completion-deno-runtime-seen",
+        "completion-deno-runtime-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno verification matrix applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno verification matrix but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno verification matrix as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno verification matrix through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-13-command-reference",
+      "skill": "deno-software",
+      "reference": "references/13-command-reference.md",
+      "capability": "Deno Command Reference",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno Command Reference applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno Command Reference but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno Command Reference as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno Command Reference through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-14-sources",
+      "skill": "deno-software",
+      "reference": "references/14-sources.md",
+      "capability": "Deno Source Policy",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno Source Policy applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno Source Policy but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno Source Policy as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno Source Policy through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-15-decision-cases",
+      "skill": "deno-software",
+      "reference": "references/15-decision-cases.md",
+      "capability": "Deno Decision Cases",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evalIds": [
+        "completion-deno-project-train",
+        "completion-deno-project-seen",
+        "completion-deno-project-heldout"
+      ],
+      "decisionQuestions": [
+        "When Deno Decision Cases applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Deno Decision Cases but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Deno Decision Cases as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Deno Decision Cases through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-deno-software-16-standalone",
+      "skill": "deno-software",
+      "reference": "references/16-standalone.md",
+      "capability": "Standalone delivery fallback",
+      "ownership": "The Deno skill owns Deno-specific runtime, manifest/workspace, security, compatibility, artifact, publishing, and native verification contracts.",
+      "status": "normative",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evalIds": [
+        "completion-deno-delivery-train",
+        "completion-deno-delivery-seen",
+        "completion-deno-delivery-heldout"
+      ],
+      "decisionQuestions": [
+        "When Standalone delivery fallback applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Standalone delivery fallback but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Standalone delivery fallback as a generic tool checklist, use it outside the concern owned by deno-software, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Standalone delivery fallback through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-explore-ecosystems-evidence",
+      "skill": "explore-ecosystems",
+      "reference": "references/evidence.md",
+      "capability": "Evidence, versions, and provenance",
+      "ownership": "The ecosystem skill owns source-backed topology, capability ownership, comparison criteria, maturity/status evidence, integration implications, and uncertainty.",
+      "status": "observed-source",
+      "sourceIds": [
+        "c12-official",
+        "c12-4-0-0-beta-5",
+        "live-browser-cli",
+        "wikitext",
+        "old-finance",
+        "new-finance"
+      ],
+      "evalIds": [
+        "depth-evidence-stable-beta-handoff",
+        "depth-evidence-doc-export-conflict",
+        "depth-evidence-duplicate-archives"
+      ],
+      "decisionQuestions": [
+        "When Evidence, versions, and provenance applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Evidence, versions, and provenance but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Evidence, versions, and provenance as a generic tool checklist, use it outside the concern owned by explore-ecosystems, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Evidence, versions, and provenance through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-explore-ecosystems-failures",
+      "skill": "explore-ecosystems",
+      "reference": "references/failures.md",
+      "capability": "Ecosystem failure signatures and anti-hallucination recovery",
+      "ownership": "The ecosystem skill owns source-backed topology, capability ownership, comparison criteria, maturity/status evidence, integration implications, and uncertainty.",
+      "status": "counterexample",
+      "sourceIds": [
+        "optique-official",
+        "cli-guidebook",
+        "wikitext",
+        "better-auth-official",
+        "better-auth-integration",
+        "clickhouse-official",
+        "drizzle-official",
+        "effect-official",
+        "new-finance"
+      ],
+      "evalIds": [
+        "depth-failures-core-too-small",
+        "depth-failures-written-against-missing-export",
+        "depth-failures-cross-system-triage"
+      ],
+      "decisionQuestions": [
+        "When Ecosystem failure signatures and anti-hallucination recovery applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Ecosystem failure signatures and anti-hallucination recovery but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Ecosystem failure signatures and anti-hallucination recovery as a generic tool checklist, use it outside the concern owned by explore-ecosystems, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Ecosystem failure signatures and anti-hallucination recovery through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-explore-ecosystems-integration",
+      "skill": "explore-ecosystems",
+      "reference": "references/integration.md",
+      "capability": "Ecosystem integration procedure",
+      "ownership": "The ecosystem skill owns source-backed topology, capability ownership, comparison criteria, maturity/status evidence, integration implications, and uncertainty.",
+      "status": "normative",
+      "sourceIds": [
+        "kaiju-config-handoff",
+        "cli-guidebook",
+        "c12-official",
+        "defu-official",
+        "logtape-official",
+        "astro-icon-official",
+        "unplugin-icons-official",
+        "astro-fonts-official",
+        "fontsource-official",
+        "kaiju-website",
+        "user-memory",
+        "clickhouse-official",
+        "drizzle-official"
+      ],
+      "evalIds": [
+        "depth-integration-config-vertical",
+        "depth-integration-framework-host",
+        "depth-integration-private-adapter-refusal"
+      ],
+      "decisionQuestions": [
+        "When Ecosystem integration procedure applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Ecosystem integration procedure but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Ecosystem integration procedure as a generic tool checklist, use it outside the concern owned by explore-ecosystems, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Ecosystem integration procedure through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-explore-ecosystems-method",
+      "skill": "explore-ecosystems",
+      "reference": "references/method.md",
+      "capability": "Ecosystem investigation method",
+      "ownership": "The ecosystem skill owns source-backed topology, capability ownership, comparison criteria, maturity/status evidence, integration implications, and uncertainty.",
+      "status": "observed-source",
+      "sourceIds": [
+        "logtape-official",
+        "optique-official",
+        "cli-guidebook",
+        "user-memory",
+        "drizzle-official",
+        "clickhouse-official",
+        "observables-official",
+        "sparql-official"
+      ],
+      "evalIds": [
+        "depth-method-logtape-family",
+        "depth-method-private-library",
+        "depth-method-standalone-stop"
+      ],
+      "decisionQuestions": [
+        "When Ecosystem investigation method applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Ecosystem investigation method but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Ecosystem investigation method as a generic tool checklist, use it outside the concern owned by explore-ecosystems, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Ecosystem investigation method through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-explore-ecosystems-selection",
+      "skill": "explore-ecosystems",
+      "reference": "references/selection.md",
+      "capability": "Capability ownership and ecosystem selection",
+      "ownership": "The ecosystem skill owns source-backed topology, capability ownership, comparison criteria, maturity/status evidence, integration implications, and uncertainty.",
+      "status": "normative",
+      "sourceIds": [
+        "cli-guidebook",
+        "optique-official",
+        "logtape-official",
+        "unjs-official",
+        "effect-official",
+        "effect-workflow-official",
+        "temporal-typescript-official",
+        "new-finance",
+        "library-first-guidebook",
+        "c12-official",
+        "unstorage-1-17-5"
+      ],
+      "evalIds": [
+        "depth-selection-cli-owners",
+        "depth-selection-durable-engine",
+        "composition-library-ecosystem-selection"
+      ],
+      "decisionQuestions": [
+        "When Capability ownership and ecosystem selection applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Capability ownership and ecosystem selection but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Capability ownership and ecosystem selection as a generic tool checklist, use it outside the concern owned by explore-ecosystems, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Capability ownership and ecosystem selection through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-explore-ecosystems-topology",
+      "skill": "explore-ecosystems",
+      "reference": "references/topology.md",
+      "capability": "Ecosystem topology and relationship discovery",
+      "ownership": "The ecosystem skill owns source-backed topology, capability ownership, comparison criteria, maturity/status evidence, integration implications, and uncertainty.",
+      "status": "observed-source",
+      "sourceIds": [
+        "unjs-official",
+        "c12-official",
+        "defu-official",
+        "jiti-official",
+        "solid-primitives",
+        "better-auth-integration",
+        "unplugin-icons-official",
+        "astro-icon-official",
+        "cli-guidebook"
+      ],
+      "evalIds": [
+        "depth-topology-unjs-capabilities",
+        "depth-topology-monorepo-packages",
+        "depth-topology-spec-renderer-trap"
+      ],
+      "decisionQuestions": [
+        "When Ecosystem topology and relationship discovery applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Ecosystem topology and relationship discovery but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Ecosystem topology and relationship discovery as a generic tool checklist, use it outside the concern owned by explore-ecosystems, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Ecosystem topology and relationship discovery through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-use-okikio-backend",
+      "skill": "use-okikio",
+      "reference": "references/backend.md",
+      "capability": "Okikio backend utilities and service-module architecture",
+      "ownership": "The Okikio skill owns verified personal-library/package knowledge and recurring Okikio architecture patterns while deferring implementation ownership to the domain skill.",
+      "status": "observed-source",
+      "sourceIds": [
+        "new-finance",
+        "user-memory"
+      ],
+      "evalIds": [
+        "system-okikio-backend-service-train",
+        "system-okikio-backend-counterexamples-seen",
+        "system-okikio-backend-public-api-heldout"
+      ],
+      "decisionQuestions": [
+        "When Okikio backend utilities and service-module architecture applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Okikio backend utilities and service-module architecture but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Okikio backend utilities and service-module architecture as a generic tool checklist, use it outside the concern owned by use-okikio, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Okikio backend utilities and service-module architecture through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-use-okikio-mediad",
+      "skill": "use-okikio",
+      "reference": "references/mediad.md",
+      "capability": "MediaD Architecture and Parser Patterns",
+      "ownership": "The Okikio skill owns verified personal-library/package knowledge and recurring Okikio architecture patterns while deferring implementation ownership to the domain skill.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-okikio-mediad-train",
+        "completion-okikio-mediad-seen",
+        "completion-okikio-mediad-heldout"
+      ],
+      "decisionQuestions": [
+        "When MediaD Architecture and Parser Patterns applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites MediaD Architecture and Parser Patterns but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat MediaD Architecture and Parser Patterns as a generic tool checklist, use it outside the concern owned by use-okikio, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise MediaD Architecture and Parser Patterns through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-use-okikio-opfs",
+      "skill": "use-okikio",
+      "reference": "references/opfs.md",
+      "capability": "OPFS and Storage Architecture",
+      "ownership": "The Okikio skill owns verified personal-library/package knowledge and recurring Okikio architecture patterns while deferring implementation ownership to the domain skill.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-okikio-opfs-train",
+        "completion-okikio-opfs-seen",
+        "completion-okikio-opfs-heldout"
+      ],
+      "decisionQuestions": [
+        "When OPFS and Storage Architecture applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites OPFS and Storage Architecture but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat OPFS and Storage Architecture as a generic tool checklist, use it outside the concern owned by use-okikio, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise OPFS and Storage Architecture through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-use-okikio-packages",
+      "skill": "use-okikio",
+      "reference": "references/packages.md",
+      "capability": "Okikio package map, evidence, release, and integration protocol",
+      "ownership": "The Okikio skill owns verified personal-library/package knowledge and recurring Okikio architecture patterns while deferring implementation ownership to the domain skill.",
+      "status": "normative",
+      "sourceIds": [
+        "observables-official",
+        "sparql-official",
+        "undent",
+        "user-memory"
+      ],
+      "evalIds": [
+        "system-okikio-packages-ecosystem-train",
+        "system-okikio-packages-dual-release-seen",
+        "frozen-okikio-source-status-gate"
+      ],
+      "decisionQuestions": [
+        "When Okikio package map, evidence, release, and integration protocol applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Okikio package map, evidence, release, and integration protocol but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Okikio package map, evidence, release, and integration protocol as a generic tool checklist, use it outside the concern owned by use-okikio, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Okikio package map, evidence, release, and integration protocol through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-use-okikio-rdf",
+      "skill": "use-okikio",
+      "reference": "references/rdf.md",
+      "capability": "RDF and SPARQL Architecture",
+      "ownership": "The Okikio skill owns verified personal-library/package knowledge and recurring Okikio architecture patterns while deferring implementation ownership to the domain skill.",
+      "status": "normative",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evalIds": [
+        "completion-okikio-rdf-train",
+        "completion-okikio-rdf-seen",
+        "completion-okikio-rdf-heldout"
+      ],
+      "decisionQuestions": [
+        "When RDF and SPARQL Architecture applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites RDF and SPARQL Architecture but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat RDF and SPARQL Architecture as a generic tool checklist, use it outside the concern owned by use-okikio, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise RDF and SPARQL Architecture through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-use-okikio-workflows",
+      "skill": "use-okikio",
+      "reference": "references/workflows.md",
+      "capability": "Okikio finance workflow platform: capabilities and limits",
+      "ownership": "The Okikio skill owns verified personal-library/package knowledge and recurring Okikio architecture patterns while deferring implementation ownership to the domain skill.",
+      "status": "normative",
+      "sourceIds": [
+        "new-finance",
+        "effect-workflow-official"
+      ],
+      "evalIds": [
+        "system-okikio-workflow-map-train",
+        "system-okikio-workflow-productionize-seen",
+        "system-okikio-workflow-crash-heldout"
+      ],
+      "decisionQuestions": [
+        "When Okikio finance workflow platform: capabilities and limits applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+      ],
+      "failureSignatures": [
+        "The implementation cites Okikio finance workflow platform: capabilities and limits but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+      ],
+      "exclusions": [
+        "Do not treat Okikio finance workflow platform: capabilities and limits as a generic tool checklist, use it outside the concern owned by use-okikio, or let an older example override newer repository and upstream evidence."
+      ],
+      "verification": [
+        "Exercise Okikio finance workflow platform: capabilities and limits through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
       ]
     }
   ]

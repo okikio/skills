@@ -18,9 +18,9 @@ precedence, provenance, redaction, output bytes, or cancellation is a defect.
 
 ## Questions worth measuring
 
-Measure a boundary to answer a product question:
+Measure an operation to answer a product question:
 
-| Boundary | Question |
+| Operation | Question |
 |---|---|
 | Optique grammar | Does command count or choice vocabulary make parse/help slow? |
 | Source binding | What does env/config/derived binding add to an ordinary invocation? |

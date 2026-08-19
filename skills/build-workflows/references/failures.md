@@ -87,7 +87,7 @@ In retained code, wait timeout state is updated before resume enqueue; signal fl
 | Checkpoint advances before artifact/sink commit | attempted input treated as progress | committed receipt checkpoint |
 | Duplicate retry corrupts sink | activity not idempotent/version-aware | fail-after-effect replay oracle |
 | All records kept for profile | nominal stream is unbounded | memory-bound large input test |
-| Backfill overwrites newer live change | no authority version compare | snapshot boundary/catch-up and version-aware projector |
+| Backfill overwrites newer live change | no authority version compare | snapshot capture plus catch-up and version-aware projector |
 | Compensation fails silently | compensation treated as magic rollback | compensation state, retry/operator escalation |
 
 Workflow runtimes do not make external effects atomic. Each activity needs an effect identity, timeout/cancellation, retry safety, and compensation/repair where appropriate.

@@ -85,7 +85,7 @@ For incremental APIs test:
 - source throw;
 - abort at admission, active work, and write;
 - deliberate materialization limit;
-- batch count and byte boundaries;
+- batch-count and byte limits;
 - no duplicate or lost records.
 
 A test that only uses ten records cannot establish bounded behavior.

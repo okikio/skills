@@ -19,7 +19,7 @@
 - [Trace: Common Crawl detect](#trace-common-crawl-detect)
 - [Trace: local WARC detect](#trace-local-warc-detect)
 - [Trace: domains verify](#trace-domains-verify)
-- [Stage, artifact, result, and diagnostic boundaries](#stage-artifact-result-and-diagnostic-boundaries)
+- [Stage, artifact, result, and diagnostic routes](#stage-artifact-result-and-diagnostic-routes)
 - [Lifecycle, concurrency, cancellation, and cleanup](#lifecycle-concurrency-cancellation-and-cleanup)
 - [Verification matrix](#verification-matrix)
 - [Failure signatures](#failure-signatures)
@@ -86,7 +86,7 @@ Classify each public term first:
 
 | Term kind | Examples | Ownership |
 |---|---|---|
-| Early control | `--help`, `--version`, raw `--log-format` for bootstrap failure | executable/parser boundary before project config |
+| Early control | `--help`, `--version`, raw `--log-format` for bootstrap failure | executable/parser entrypoint before project config |
 | Source-bearing config | `--out-dir`, `--run-id`, `--range-cache`, source network knobs | Optique parses, adapter emits sparse patch, resolver merges, Zod completes |
 | Domain request input | route values, WARC file path, domains input file | parser/adapter validates shape; source run owns domain semantics |
 | Result selector | `--json`, generated man/completion output | renderer/LogTape result route owns bytes |
@@ -181,7 +181,7 @@ Diagram/documentation policy for future casebooks:
 | Relationship | Preferred doc shape | Why |
 |---|---|---|
 | terminal flows and source precedence | fenced ASCII flow | stable in terminals, diffs, and Markdown previews |
-| ownership boundaries and test matrices | tables | dense relationships stay readable |
+| ownership handoffs and test matrices | tables | dense relationships stay readable |
 | small regular graphs | Mermaid | useful only when auto-layout is predictable |
 | nested architecture or page-constrained docs | prose plus tables or a designed visual | Mermaid auto-layout tends to obscure detail |
 
@@ -193,7 +193,7 @@ surface before claiming it is readable.
 When all five libraries are present, the safe design is not “use everything
 everywhere.” Give each library one crisp job.
 
-| Boundary | Optique | c12 | defu | Zod | LogTape |
+| Owner | Optique | c12 | defu | Zod | LogTape |
 |---|---|---|---|---|---|
 | Public command grammar | Owns command tree, flags, aliases, choices, suggestions, completion, man/help metadata | none | none | value parser adapter only when useful | none |
 | Environment/config/default source binding | May bind one parser term to env/config/derived contexts | Supplies loaded config object for config context | none | validates individual values if used through `@optique/zod` | none |
@@ -919,7 +919,7 @@ schemas, config merge, stage writers, or artifact storage.
 | Stable stdout | dedicated result category and raw sink |
 | Human diagnostics | pretty/plain stderr sink with levels and categories |
 | Machine diagnostics | JSON/JSONL diagnostic sink |
-| Redaction | wrap every result and diagnostic sink before serialization |
+| Redaction | apply a route-specific policy before serialization; prove known secrets are hidden without removing required diagnostic evidence |
 | Bootstrap failures | minimal early configuration from raw logging flags |
 | Library logging | packages receive loggers or structural logger contracts, not sink setup authority |
 | Testability | recorder/test sinks assert category and structured properties |
@@ -1135,7 +1135,7 @@ Key implementation details:
 | Retry file semantics | retry output contains retryable inputs, not all rejects | run test with accepted/rejected/retry rows |
 | Audit mode | writes per-domain stage records and summary | audit path and stage counts asserted |
 
-## Stage, artifact, result, and diagnostic boundaries
+## Stage, artifact, result, and diagnostic routes
 
 Three channels stay separate:
 
@@ -1189,7 +1189,7 @@ Result/diagnostic rules:
 - stable JSON output must not contain pretty diagnostics, colors, timestamps, or
   category labels;
 - diagnostics must not go to stdout in machine-result mode;
-- redaction must happen before rendering;
+- route-specific redaction must happen before rendering when required;
 - pre-handler failures recover only raw logging controls and must leave stdout
   empty unless the command explicitly requested a result.
 
@@ -1235,7 +1235,7 @@ Observed Kaiju behaviors to account for:
 | Zod final defaults | sparse patch parse has no complete defaults; complete schema parse does |
 | Provenance | env/config/default/explicit CLI/equal-value overlay cases are all tested |
 | Result isolation | stdout, stderr, diagnostic file, and result string are separately asserted |
-| Redaction | nested secrets in config, provenance, diagnostics, errors, and result views are redacted before rendering |
+| Redaction/exposure | verified secrets are hidden before rendering on applicable routes, while required diagnostic evidence remains visible |
 | Stage writer | seq, queue ordering, known schemas, JSON fallback, binary rejection, noop snapshot, counts, flush |
 | Browser source | discovery, resume, overwrite, WARC, WACZ, screenshots, failed route stages |
 | Common Crawl source | CDX query/page/row/decision stages, retry stages, rate limiter, range cache, summary counts |
@@ -1255,7 +1255,7 @@ Observed Kaiju behaviors to account for:
 
 ## Failure signatures
 
-| Symptom | Likely boundary bug |
+| Symptom | Likely ownership bug |
 |---|---|
 | Config value ignored when CLI flag omitted | parser default polluted sparse patch |
 | Help default appears in dry-run patch | documented default was implemented as executable source value |
@@ -1267,8 +1267,8 @@ Observed Kaiju behaviors to account for:
 | Equal CLI/config value loses config provenance | provenance inferred from final value only |
 | `config explain` shows only static precedence | resolver did not retain field decisions and shadowed values |
 | JSON stdout contains warning text | LogTape result and diagnostic routes are mixed |
-| Redaction misses a result | object was stringified before field redaction |
-| Stage JSONL contains bytes | artifact writer boundary was bypassed |
+| A result that should hide a secret leaks it | result policy ran after the object was flattened/stringified, or the route inherited the wrong exposure policy |
+| Stage JSONL contains bytes | artifact writer writer was bypassed |
 | WACZ exists but replay fails | package structure was validated without URL-targeted WARC/CDX readback |
 | `Ctrl-C` does not stop work | AbortSignal type exists but is not connected to process and active operations |
 | Retry file contains all rejects | domain retry classification collapsed retry and terminal rejection |
@@ -1289,7 +1289,7 @@ Observed Kaiju behaviors to account for:
 
 - Observed implementation: attached Kaiju CLI source tree, including Optique 1.2
   migration, c12 two-merger config behavior, LogTape routing, stage writer,
-  browser/WARC/Common Crawl/domain source runs, and Zod default boundaries.
+  browser/WARC/Common Crawl/domain source runs, and Zod default application points.
 - Normative source: `productionized-cli-pattern-guidebook-v1.2.md`, reviewed
   2026-07-22.
 - Expansion notes: `productionized-cli-pattern-guidebook-v1.2-notes.md`,

@@ -25,7 +25,7 @@ Keep these terms distinct:
 |---|---|---|
 | `ORDER BY` | Physical sort key and main data-skipping design | Treating it as display order or uniqueness |
 | `PRIMARY KEY` | Sparse index expression; defaults to the sorting key | Expecting an OLTP uniqueness constraint |
-| `PARTITION BY` | Coarse lifecycle and pruning boundary | Partitioning by a high-cardinality identifier |
+| `PARTITION BY` | Coarse lifecycle and pruning unit | Partitioning by a high-cardinality identifier |
 | part | Immutable sorted unit written and merged | Assuming a row is updated in place |
 | granule | Smallest block selected through the sparse index | Expecting point lookup precision |
 | mark | Index/offset entry for a granule | Assuming one index entry per row |
@@ -129,7 +129,7 @@ Define retry identity separately from engine reconciliation:
 
 From ClickHouse 26.1, async-insert deduplication can extend consistently through dependent materialized views. Do not project that behavior onto older versions.
 
-Avoid “exactly once” as an unqualified claim. State the boundary: accepted request, durable source part, dependent views, replicated copies, downstream export, or externally visible effect.
+Avoid “exactly once” as an unqualified claim. State the durability stage: accepted request, durable source part, dependent views, replicated copies, downstream export, or externally visible effect.
 
 ## Corrections, mutations, and consistency
 
@@ -276,7 +276,7 @@ Then prove a clean lifecycle:
 
 ## Sources and freshness
 
-- Primary: [ClickHouse documentation](https://clickhouse.com/docs/) and linked ClickHouse engineering material, verified 2026-07-17 for parts, granules, sparse indexes, insert batching, async inserts, deduplication, mutations, views, projections, TTL, replication, and the stated 26.1/26.3 boundaries.
+- Primary: [ClickHouse documentation](https://clickhouse.com/docs/) and linked ClickHouse engineering material, verified 2026-07-17 for parts, granules, sparse indexes, insert batching, async inserts, deduplication, mutations, views, projections, TTL, replication, and the stated 26.1/26.3 version lines.
 - Attachment: `kaiju-site-scope(17).zip/libs/clickhouse` source and tests, inspected 2026-07-17 as one custom-adapter implementation.
 
 Server settings and SQL behavior are version-sensitive. Recheck the deployed ClickHouse version; do not promote the private Kaiju adapter's names or capabilities into public ClickHouse contracts.

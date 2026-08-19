@@ -21,14 +21,18 @@ verification.
 ## Resolve the controlling instructions
 
 1. Read [base.md](references/base.md) for every task.
-2. Inspect repository-local instructions, configuration, existing code, and
+2. For substantive software, code, documentation, architecture, review, or
+   refactor work, read [standards.md](references/standards.md). It contains the
+   current cross-project naming, schema/type, documentation, formatting,
+   lifecycle, tooling, and completion defaults distilled from recent work.
+3. Inspect repository-local instructions, configuration, existing code, and
    documented project conventions before choosing an implementation shape.
-3. Treat explicit user requirements and project-specific constraints as more
+4. Treat explicit user requirements and project-specific constraints as more
    specific than the bundled defaults. Surface a material conflict before
    editing instead of silently choosing one side.
-4. Read every task and surface reference selected by the routing table. Do not
+5. Read every task and surface reference selected by the routing table. Do not
    load unrelated framework or writing references.
-5. Apply universal references before their specialized layer. For example,
+6. Apply universal references before their specialized layer. For example,
    apply `web.md` before `solid.md`, and `docs.md` before `diagrams.md` when an
    ASCII diagram appears in long-form documentation.
 

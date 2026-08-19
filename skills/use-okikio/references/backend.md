@@ -256,7 +256,7 @@ definition.ts declares public contract
   -> route middleware establishes auth/policy/validation
   -> handler calls domain/data/workflow capability
   -> response helper emits declared status/headers/body
-  -> error boundary maps one stable problem and correlated diagnostic
+  -> error mapper maps one stable problem and correlated diagnostic
   -> shutdown drains and closes owned resources
 ```
 

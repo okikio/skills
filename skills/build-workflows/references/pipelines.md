@@ -27,7 +27,7 @@ Name:
 
 - trigger owner: endpoint, event, webhook, schedule, CLI, or operator;
 - execution authority: workflow store, job database, artifact manifest, or another durable owner;
-- input authority and snapshot/change boundary;
+- input authority and snapshot/change capture point;
 - stage output authority versus rebuildable intermediates;
 - worker/lease owner and deployment;
 - sink authority and required/optional status;
@@ -67,7 +67,7 @@ discover -> fetch -> capture raw -> decode -> observe/profile -> normalize
   -> aggregate -> search/graph/analytics projections -> reconcile -> publish
 ```
 
-For every transition define input/output schema, stable identity, provenance, version compatibility, error policy, resource bounds, and checkpoint boundary. A mapper mutating an in-memory graph may be useful implementation detail but is not itself a stage commit.
+For every transition define input/output schema, stable identity, provenance, version compatibility, error policy, resource bounds, and checkpoint commit point. A mapper mutating an in-memory graph may be useful implementation detail but is not itself a stage commit.
 
 ## Identity, provenance, and versions
 
@@ -120,7 +120,7 @@ For RDF, the retained importer flushes an RDFLib graph every configured batch, w
 
 ## Checkpoints and resume
 
-A checkpoint means outputs through a boundary are committed:
+A checkpoint means outputs through a stage are committed:
 
 ```ts
 interface PipelineCheckpoint {
@@ -153,7 +153,7 @@ Resume preflight:
 2. Verify source identity/version and target still exist.
 3. Verify stage/schema/config compatibility.
 4. Validate last artifact/receipt/checksum.
-5. Determine whether replay of boundary is safe.
+5. Determine whether replay of the stage is safe.
 6. Continue from the last committed position.
 7. Reconcile before final completion.
 
@@ -211,7 +211,7 @@ pipeline:
     base_url: https://example.invalid/api.php
     page_size: 100
     rate_per_second: 1
-    snapshot: revision-boundary
+    snapshot: revision-checkpoint
   execution:
     batch_size: 500
     concurrency: 4
@@ -265,7 +265,7 @@ Cancellation is cooperative. Define whether current batch commits, rolls back, o
 
 ```text
 schedule/operator/API trigger
-  -> create durable run and freeze source boundary
+  -> create durable run and freeze source ownership handoff
   -> worker leases discover stage
   -> fetch page and commit raw artifact
   -> decode/normalize bounded batch
@@ -273,7 +273,7 @@ schedule/operator/API trigger
   -> write versioned projection batches
   -> inspect per-item receipts
   -> commit checkpoint
-  -> continue until source boundary exhausted
+  -> continue until source ownership handoff exhausted
   -> reconcile all required sinks
   -> publish complete manifest and run status
 ```
@@ -297,11 +297,11 @@ schedule/operator/API trigger
 
 Test:
 
-- empty, one-item, batch-boundary, and input much larger than RAM;
+- empty, one-item, batch edge, and input much larger than RAM;
 - duplicate, out-of-order, late, malformed, and oversized source records;
 - source pagination/revision changes and rate limiting;
 - each stage schema/version/config mismatch;
-- process loss before/after every receipt/checkpoint boundary;
+- process loss before/after every receipt/checkpoint commit point;
 - required and optional sink partial/batch failures;
 - per-item bulk rejection;
 - duplicate replay and old-version delivery;

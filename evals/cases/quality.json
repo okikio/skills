@@ -1,10 +1,9 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "cases": [
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-deno-workspace-protocol",
       "title": "Reject workspace protocol in deno imports",
       "skill": "deno-software",
@@ -34,12 +33,16 @@
         "workspace",
         "imports"
       ],
-      "rationale": "Tests a high-frequency Deno configuration hallucination."
+      "rationale": "Tests a high-frequency Deno configuration hallucination.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-deno-hybrid-astro",
       "title": "Classify a Deno-run Astro application",
       "skill": "deno-software",
@@ -69,12 +72,16 @@
         "astro",
         "hybrid"
       ],
-      "rationale": "Prevents ideological Deno migration."
+      "rationale": "Prevents ideological Deno migration.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-deno-private-registry",
       "title": "Protect private registry credentials",
       "skill": "deno-software",
@@ -104,12 +111,16 @@
         "private",
         "security"
       ],
-      "rationale": "Tests security and operability together."
+      "rationale": "Tests security and operability together.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-deno-native-addon",
       "title": "Investigate native npm compatibility",
       "skill": "deno-software",
@@ -139,12 +150,16 @@
         "node",
         "native"
       ],
-      "rationale": "Exercises platform-dependent compatibility."
+      "rationale": "Exercises platform-dependent compatibility.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-deno-dual-publish",
       "title": "Design dual publication",
       "skill": "deno-software",
@@ -178,12 +193,16 @@
         "publish",
         "library"
       ],
-      "rationale": "Tests a multi-registry operational contract."
+      "rationale": "Tests a multi-registry operational contract.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-delivery-diagnose",
       "title": "Do not fix a diagnose-only request",
       "skill": "deliver-software",
@@ -213,12 +232,16 @@
         "diagnose",
         "scope"
       ],
-      "rationale": "Tests authorization, not technical knowledge alone."
+      "rationale": "Tests authorization, not technical knowledge alone.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-delivery-refactor",
       "title": "Complete a cross-module refactor",
       "skill": "deliver-software",
@@ -252,12 +275,16 @@
         "refactor",
         "cleanup"
       ],
-      "rationale": "Tests complete rather than piecemeal refactoring."
+      "rationale": "Tests complete rather than piecemeal refactoring.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-delivery-dirty",
       "title": "Preserve a dirty worktree",
       "skill": "deliver-software",
@@ -287,12 +314,16 @@
         "git",
         "safety"
       ],
-      "rationale": "Tests collaboration with user-owned changes."
+      "rationale": "Tests collaboration with user-owned changes.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-delivery-verification",
       "title": "Reject validation-only completion",
       "skill": "deliver-software",
@@ -322,12 +353,16 @@
         "verification",
         "migration"
       ],
-      "rationale": "Tests executable proof."
+      "rationale": "Tests executable proof.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-composition-deno-refactor",
       "title": "Compose delivery and Deno ownership",
       "skill": "composition",
@@ -366,12 +401,12 @@
         "composition",
         "migration"
       ],
-      "rationale": "Tests positive skill composition."
+      "rationale": "Tests positive skill composition.",
+      "oracleStrength": "trajectory-rubric"
     },
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": false,
       "id": "hq-composition-generic-node",
       "title": "Do not apply Deno specialization",
       "skill": "composition",
@@ -412,7 +447,6 @@
     {
       "requiredReferences": [],
       "forbiddenReferences": [],
-      "shouldActivate": true,
       "id": "hq-composition-release-block",
       "title": "Do not publish without authority",
       "skill": "composition",
@@ -448,7 +482,8 @@
         "composition",
         "authorization"
       ],
-      "rationale": "Tests external mutation boundaries."
+      "rationale": "Tests external mutation handoffs.",
+      "oracleStrength": "trajectory-rubric"
     }
   ]
 }

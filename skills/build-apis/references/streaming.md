@@ -230,7 +230,7 @@ cursor.
 
 - Parse every emitted event against its versioned schema.
 - Connect without auth, with expired auth, and across organizations.
-- Replay from every retained cursor boundary and from expired/ahead/wrong-scope
+- Replay from every retained cursor checkpoint and from expired/ahead/wrong-scope
   cursors.
 - Inject an event at the replay/live handoff and prove it arrives once or is
   safely deduplicable.

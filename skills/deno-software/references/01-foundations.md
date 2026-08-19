@@ -1,112 +1,181 @@
 # Deno foundations
 
-## Contents
+Use this reference for any substantive Deno repository task. It defines the
+baseline mental model before version-specific or package-specific details are
+loaded.
 
-- Deno is an integrated JavaScript system
-- Runtime API selection
-- TypeScript
-- Side effects and entrypoints
-- Cancellation and cleanup
-- Errors
-- Configuration
-- Minimum runtime
+## Deno is a runtime and project toolchain
 
-## Deno is an integrated JavaScript system
+Deno can own several different concerns:
 
-Treat Deno as a runtime, package manager, task runner, formatter, linter, type
-checker, test runner, benchmark runner, documentation generator, dependency
-inspector, auditor, bundler, compiler, and deployment interface. The benefit is
-coherent defaults and fewer contracts between unrelated tools. The risk is
-assuming a built-in tool is automatically the best fit for every established
-repository.
+```text
+runtime / Web APIs / Deno.* APIs
+TypeScript and module execution
+package installation and resolution
+workspace configuration
+formatter / linter / type checking
+test / bench
+tasks
+permissions and security
+bundle / compile / desktop artifacts
+JSR publication
+Node/npm compatibility
+```
 
-Use the integrated toolchain when it satisfies the repository's functional and
-ecosystem requirements. Preserve mature external tooling when replacement would
-lose capability, compatibility, or contributor familiarity without a measurable
-gain.
+Do not assume every Deno repository delegates all of these to Deno. A hybrid
+project can intentionally use package.json, pnpm, Vite, Oxc, Mise, Playwright,
+or another established owner. Inspect the repository before “simplifying” it.
+
+## Current baseline
+
+The repository skill baseline is Deno 2.x through 2.9. Deno 2.9 was released
+2026-06-25. Version-specific behavior must still be verified against the
+repository's pinned/runtime version and current official documentation.
+
+Important 2.9-era facts include stronger Node/package-manager migration,
+workspace/catalog behavior, newer test-runner features, Node.js 26 compatibility,
+and changed `Deno.serve` automatic-compression behavior. Do not apply current
+behavior to an older pinned Deno without checking.
+
+## Classify the project mode first
+
+### Deno-native
+
+Usually:
+
+- `deno.json(c)` owns package/tooling configuration;
+- dependencies use Deno imports/JSR/npm according to project policy;
+- Deno tasks/check/test/fmt/lint are primary;
+- package publication may target JSR.
+
+### package.json-first
+
+Deno runs an existing Node/npm project without migrating its dependency owner.
+`package.json` dependencies/scripts remain valid inputs. Add `deno.json` only
+for Deno-specific tooling/configuration that is actually needed.
+
+### hybrid
+
+Both files intentionally exist. Decide field ownership instead of mirroring all
+configuration into both.
+
+Current Deno docs explicitly treat `package.json` and `deno.json` as first-class,
+optional configuration sources. A hybrid repository is not inherently a
+migration failure.
 
 ## Runtime API selection
 
-Prefer the contract that best matches the problem:
+Prefer stable Web APIs when they express the contract and improve runtime
+portability. Use `Deno.*` when Deno owns a capability or provides stronger
+semantics the repository wants.
 
-- **Web APIs** for portable primitives such as `fetch`, `Request`, `Response`,
-  streams, URL handling, crypto, abort signals, events, and web sockets.
-- **Deno APIs** for runtime-specific concerns such as permissions, serving,
-  filesystem helpers, subprocesses, environment access, KV, or runtime metadata.
-- **Node APIs** when consuming Node libraries, matching Node semantics, or
-  integrating with Node-oriented tooling.
+Examples:
 
-Do not replace a clear web API with a Deno-specific API merely to look
-Deno-native. Do not wrap Node APIs unnecessarily when their semantics are the
-ecosystem contract.
+- `fetch`, `Request`, `Response`, streams, `URL`, `AbortSignal` are portable Web
+  APIs;
+- Deno filesystem, permissions, KV, serve, subprocess, compile, and project
+  tooling are appropriate when the Deno contract is intentional.
+
+Do not add Node compatibility APIs merely because an agent host happens to lack
+Deno. Validation shims belong in disposable validation infrastructure, not in
+production source.
 
 ## TypeScript
 
-Default to:
+Deno runs TypeScript directly, but the repository still has a type contract.
+Follow repository-local strictness and explicit-file-extension rules. For
+cross-runtime libraries:
 
-- strict type checking;
-- ESM;
-- explicit local file extensions;
-- JavaScript-native TypeScript syntax;
-- no generated JavaScript committed unless the artifact requires it;
-- schemas/codecs as the source of truth for external and persisted data.
+- keep one core TypeScript source where practical;
+- isolate runtime-specific adapters behind explicit modules/subpaths;
+- type-check each claimed environment with the right globals;
+- do not let a broad tsconfig accidentally provide browser and server globals to
+  the same source;
+- test public generic inference with compile fixtures when inference is part of
+  the API.
 
-Avoid compiler-only syntax that introduces runtime transformations unless the
-project already depends on it and the target tooling supports it.
+For project data with Zod as owner, use `*Schema` plus schema-derived `*Type` and
+put important field documentation on the schema fields. Standard Schema remains
+an interoperability protocol, not the project's validator implementation.
 
 ## Side effects and entrypoints
 
-Keep reusable modules import-safe:
+A reusable Deno package should normally be import-safe. Importing it should not:
 
-- no server startup on import;
-- no unconditional process exit;
-- no environment reads hidden in module initialization when dependency injection
-  is practical;
-- no filesystem or network operations merely from importing a library;
-- no global mutable singleton unless its lifecycle is explicit.
+- read environment variables unless that module explicitly represents env
+  discovery;
+- install process signal handlers;
+- configure LogTape globally;
+- start a server/worker/subprocess;
+- connect to databases/providers;
+- mutate process-global registries.
 
-Use a thin entrypoint:
-
-```ts
-import { main } from "./app.ts";
-
-if (import.meta.main) {
-  await main(Deno.args);
-}
-```
+Application/CLI entrypoints own composition and host side effects.
 
 ## Cancellation and cleanup
 
-Use `AbortSignal` for operations that can block or outlive a request. Propagate
-the same signal through fetches, streams, database calls, and child processes
-when supported.
+Use `AbortSignal` for cooperative cancellation and explicit resource management
+for cleanup. They are separate contracts.
 
-Close resources deterministically. Use `using` and `await using` for disposable
-resources where the API supports `Symbol.dispose` or `Symbol.asyncDispose`;
-otherwise use `try/finally`.
+Prefer `using`/`await using`, `Disposable`, `AsyncDisposable`, and disposal
+stacks when they improve ownership and the target runtime supports them.
+Injected resources are borrowed by default unless ownership transfer is explicit.
+Partial construction must unwind already-acquired resources; cleanup failure must
+not erase the primary failure.
 
 ## Errors
 
-Errors should preserve causal information and operational context:
-
-- use `cause` when wrapping;
-- separate expected domain errors from programming defects;
-- do not stringify and lose stacks prematurely;
-- map errors to exit codes or HTTP responses at the system edge;
-- keep secrets, tokens, full connection strings, and sensitive payloads out of
-  logs.
+Use errors/typed results according to the local public contract. Keep stable
+machine-readable failures at API/CLI entrypoints and preserve original causes for
+diagnostics. Do not expose raw provider/database errors to users merely because
+Deno includes stack traces.
 
 ## Configuration
 
-Read configuration once at the application boundary, validate it, and pass an
-immutable configuration object inward. Avoid scattered `Deno.env.get()` calls.
+Do not duplicate every option in `deno.json`, `package.json`, Mise, and CI.
+Determine one owner per concern:
 
-For data-bearing configuration, define a Zod v4 schema and infer the TypeScript
-type.
+- package dependencies and scripts;
+- Deno imports/scopes;
+- tasks;
+- workspace membership;
+- formatter/linter/compiler/test settings;
+- publish metadata;
+- permissions;
+- build/package output.
+
+Some Deno workspace options are root-only. Verify exact current rules before
+moving them to members.
 
 ## Minimum runtime
 
-A project must state its minimum supported Deno version when it uses
-version-specific behavior. Pin exact versions in CI for reproducibility; test
-the minimum version and optionally latest stable when maintaining a
-compatibility range.
+Set the minimum Deno version from features actually used and project support
+policy. Do not set it to “latest” without reason. If the package uses a 2.9-only
+feature, encode/document that requirement and test it in CI.
+
+## Failure signatures
+
+| Symptom | Likely mistake |
+|---|---|
+| Node project rewritten to Deno imports for no benefit | project mode not classified |
+| browser globals compile in server code | type environments mixed |
+| library import configures logging/env | application composition leaked into package |
+| agent adds Node shim to production | validation-host limitation mistaken for runtime need |
+| resource closes caller's database | ownership transfer not explicit |
+| task config duplicated in several systems | owner not chosen |
+| current Deno API used against older pin | version line ignored |
+
+## Verification
+
+For substantive work, prove the repository mode and run the actual owning gates:
+
+- configured formatter/linter/type checks;
+- package/runtime tests;
+- claimed cross-runtime lanes;
+- build/bundle/compile/package checks when changed;
+- public/import-safe behavior for libraries;
+- artifact inspection and clean consumer where published.
+
+Use the current official Deno docs for any command, config field, stability,
+workspace, permission, compile, desktop, or compatibility behavior that could
+have changed.

@@ -8,7 +8,7 @@
 - `preferPackageJson`
 - Imports are dependency and resolution aliases
 - Scopes
-- Exports are the Deno package boundary
+- Exports are the Deno package API
 - JSR versus npm decision model
 - `package.json` dependency guidance
 - Node modules modes
@@ -134,9 +134,9 @@ They belong at the workspace root, not workspace members.
 }
 ```
 
-Avoid scopes when a clean package boundary or dependency upgrade is possible.
+Avoid scopes when a clean package API or dependency upgrade is possible.
 
-## Exports are the Deno package boundary
+## Exports are the Deno package API
 
 `exports` declares which modules consumers and sibling workspace members may
 import from a Deno package.

@@ -225,7 +225,7 @@ const RuntimeConfigSchema = z.object({
 
 Adapters may derive their parser term, env key, authoring field, help text, and
 runtime default from this descriptor. Keep adapter construction explicit so a
-library upgrade cannot silently change all boundaries.
+library upgrade cannot silently change all interfaces.
 
 ## A provenance envelope
 

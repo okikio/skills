@@ -3,7 +3,7 @@
 ## Contents
 
 - [When to choose Temporal](#when-to-choose-temporal)
-- [Process and package boundaries](#process-and-package-boundaries)
+- [Process and package APIs](#process-and-package-apis)
 - [Workflow and activity example](#workflow-and-activity-example)
 - [Determinism](#determinism)
 - [Clients and identity](#clients-and-identity)
@@ -28,9 +28,9 @@ Service/Cloud operations, namespaces, task queues, Worker deployment, data
 conversion/encryption, history growth, deterministic code constraints, and safe
 version rollout.
 
-## Process and package boundaries
+## Process and package APIs
 
-| Boundary | Package | Owns | Must not do |
+| Handoff | Package | Owns | Must not do |
 |---|---|---|---|
 | Client/API | `@temporalio/client` | Connect, start, get handles, signal/query/update/cancel/terminate, schedules | Execute workflow code in request process |
 | Workflow | `@temporalio/workflow` | Replay-safe orchestration and state | Direct DB/network/filesystem/Node/DOM I/O |
@@ -254,7 +254,7 @@ validation. A Temporal handle is not an authorization decision.
 
 ### Activity retry
 
-Activities are normally the retry boundary for transient I/O. Configure:
+Activities are normally the retry owner for transient I/O. Configure:
 
 - initial/backoff/maximum interval;
 - maximum attempts or expiration budget;
@@ -384,7 +384,7 @@ find it.
 - Integration-test a real Worker, Client, and representative Activities.
 - Replay stored histories under candidate workflow bundles.
 - Verify activity idempotency after timeout-after-commit and worker kill.
-- Test Signal/Query/Update authorization at the API boundary and semantics in the
+- Test Signal/Query/Update authorization at the API entrypoint and semantics in the
   workflow.
 - Exercise every timeout, retry exhaustion, heartbeat timeout, cancellation, and
   termination path.

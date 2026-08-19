@@ -73,7 +73,7 @@ header should name the generator and source, but must not include a wall-clock
 timestamp unless time is part of the product contract; timestamps destroy
 reproducibility without proving freshness.
 
-Mixed ownership is a risk boundary. Prefer a separate generated file imported
+Mixed ownership is a risky ownership split. Prefer a separate generated file imported
 by an authored file. If the output must share a file with authored prose, use
 unique, non-nesting start/end markers and reject missing, duplicated, reversed,
 or overlapping markers. Never replace text between a pair of loose regex
@@ -306,7 +306,7 @@ an output contains unrelated user edits unless an explicit merge is supported.
 | Second write changes output | nondeterministic order, time, locale, random ID, absolute path | byte diff and complete input inventory |
 | CI passes but clone fails | undeclared local tool/cache/input | clean clone with empty caches |
 | Latest and versioned digests differ | alias advanced mid-run, mirror error, compromised response | identity fetch and immutable URL |
-| Comments disappear from config | value serialization replaced syntax | structured/AST editor boundary |
+| Comments disappear from config | value serialization replaced syntax | structured/AST editor |
 | Generated section consumes following prose | marker missing/duplicated or greedy parser | marker cardinality and span tests |
 | Partially written source after failure | direct destination write | staging/rename protocol |
 | Generator reports no drift but consumer fails | textual comparison without semantic validation | output schema and real consumer test |

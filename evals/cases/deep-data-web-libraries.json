@@ -8,9 +8,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design a ClickHouse events table for tenant-scoped time-range analytics. Explain ORDER BY, sparse primary index, partitioning, granules, batching, late data, corrections, TTL, and the system tables and EXPLAIN checks you would use. Do not treat the primary key as a uniqueness constraint.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/clickhouse.md"],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -35,9 +39,16 @@
         "States version-sensitive behavior without inventing deployed settings."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["clickhouse-official", "kaiju-site-scope"],
+      "sourceIds": [
+        "clickhouse-official",
+        "kaiju-site-scope"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "clickhouse", "physical-design"],
+      "tags": [
+        "deep-data-web",
+        "clickhouse",
+        "physical-design"
+      ],
       "rationale": "Tests the storage-engine mental model instead of keyword recall."
     },
     {
@@ -47,9 +58,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A team wants per-row upserts and immediate uniqueness in ClickHouse. Compare ReplacingMergeTree, deduplicated inserts, FINAL, and mutations; define what is eventually reconciled, what must be enforced before insert, and how to verify convergence.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/clickhouse.md"],
+      "requiredReferences": [
+        "build-data/references/clickhouse.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -74,9 +89,16 @@
         "Includes convergence and failure inspection."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["clickhouse-official"],
+      "sourceIds": [
+        "clickhouse-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "clickhouse", "heldout", "anti-hallucination"],
+      "tags": [
+        "deep-data-web",
+        "clickhouse",
+        "heldout",
+        "anti-hallucination"
+      ],
       "rationale": "A shallow answer often promises uniqueness or synchronous upserts that ClickHouse does not own."
     },
     {
@@ -86,9 +108,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Explain how a Drizzle query moves from table and column metadata through SQL AST, dialect compilation, session, prepared query, driver, and result mapping. Include parameter order, decoders, join nullability, resource lifetime, and where migrations and Drizzle Kit sit.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/drizzle-architecture.md"],
+      "requiredReferences": [
+        "build-data/references/drizzle-architecture.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -108,14 +134,20 @@
         }
       ],
       "rubric": [
-        "Explains boundaries rather than presenting Drizzle as one generic wrapper.",
+        "Explains handoffs rather than presenting Drizzle as one generic wrapper.",
         "Covers both query execution and schema migration ownership.",
         "Identifies resource cleanup and driver-specific semantics."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["drizzle-official"],
+      "sourceIds": [
+        "drizzle-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "drizzle", "architecture"],
+      "tags": [
+        "deep-data-web",
+        "drizzle",
+        "architecture"
+      ],
       "rationale": "Grounds adapter reasoning in the actual layers that must agree."
     },
     {
@@ -125,9 +157,13 @@
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "A custom database exposes db.select().from() and the author claims it therefore supports Drizzle transactions, relational queries, returning(), migrations, and prepared statements exactly like PostgreSQL. Review the claim and produce a capability and conformance plan.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/drizzle-architecture.md"],
+      "requiredReferences": [
+        "build-data/references/drizzle-architecture.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -152,9 +188,16 @@
         "Defines executable conformance evidence."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["drizzle-official"],
+      "sourceIds": [
+        "drizzle-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "drizzle", "heldout", "anti-hallucination"],
+      "tags": [
+        "deep-data-web",
+        "drizzle",
+        "heldout",
+        "anti-hallucination"
+      ],
       "rationale": "Prevents surface syntax from being mistaken for semantic compatibility."
     },
     {
@@ -164,9 +207,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Plan a production Drizzle-like ClickHouse adapter based on an internal implementation. Define the schema DSL, SQL dialect, driver/session, results, writes, mutation model, snapshots/diffs/migrations, seeds, CLI, unsupported features, version matrix, and test gates. Do not invent a public package name.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/clickhouse-adapter.md"],
+      "requiredReferences": [
+        "build-data/references/clickhouse-adapter.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -197,7 +244,11 @@
         "drizzle-official"
       ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "clickhouse-adapter", "custom-orm"],
+      "tags": [
+        "deep-data-web",
+        "clickhouse-adapter",
+        "custom-orm"
+      ],
       "rationale": "Exercises the complete adapter architecture rather than a query-builder sketch."
     },
     {
@@ -207,9 +258,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A custom ClickHouse migrator crashes after executing DDL but before recording migration history. Design snapshot identity, checksums, locking, repair/resume behavior, destructive-change review, and integration tests without claiming transactional DDL.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/clickhouse-adapter.md"],
+      "requiredReferences": [
+        "build-data/references/clickhouse-adapter.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -234,9 +289,17 @@
         "Includes empty-install, upgrade, interruption, and retry tests."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-site-scope", "clickhouse-official"],
+      "sourceIds": [
+        "kaiju-site-scope",
+        "clickhouse-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "clickhouse-adapter", "heldout", "recovery"],
+      "tags": [
+        "deep-data-web",
+        "clickhouse-adapter",
+        "heldout",
+        "recovery"
+      ],
       "rationale": "Crash behavior exposes whether the adapter design is operationally complete."
     },
     {
@@ -246,9 +309,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "An Astro site has static .astro components plus Solid and React islands. Define when Astro Icon versus Unplugin Icons owns rendering, show representative configuration, cover local SVG collections, accessibility, bundle control, and production verification.",
-      "expectedSkills": ["build-sites"],
+      "expectedSkills": [
+        "build-sites"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-sites/references/icons.md"],
+      "requiredReferences": [
+        "build-sites/references/icons.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -268,7 +335,7 @@
         }
       ],
       "rubric": [
-        "Chooses by renderer boundary while retaining visual-system consistency.",
+        "Chooses by renderer handoff while retaining visual-system consistency.",
         "Covers local provenance, accessibility, and finite bundling.",
         "Uses installed-version verification for virtual modules and compilers."
       ],
@@ -279,19 +346,28 @@
         "kaiju-website"
       ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "icons", "astro", "renderers"],
+      "tags": [
+        "deep-data-web",
+        "icons",
+        "astro",
+        "renderers"
+      ],
       "rationale": "Prevents one icon package from being forced across incompatible renderers."
     },
     {
       "id": "heldout-site-icon-dynamic-name",
-      "title": "Dynamic icon names and bundling boundaries",
+      "title": "Dynamic icon names and bundling handoffs",
       "skill": "build-sites",
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "A CMS stores arbitrary icon names and the team wants runtime string interpolation into an Unplugin Icons virtual import, with a fallback to raw uploaded SVG. Review the security, build, accessibility, and provenance failures and propose a bounded registry.",
-      "expectedSkills": ["build-sites"],
+      "expectedSkills": [
+        "build-sites"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-sites/references/icons.md"],
+      "requiredReferences": [
+        "build-sites/references/icons.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -316,9 +392,17 @@
         "Preserves accessible naming and collection provenance."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["astro-icon-official", "unplugin-icons-official"],
+      "sourceIds": [
+        "astro-icon-official",
+        "unplugin-icons-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "icons", "heldout", "security"],
+      "tags": [
+        "deep-data-web",
+        "icons",
+        "heldout",
+        "security"
+      ],
       "rationale": "Tests the unsafe dynamic lookup case omitted by surface setup guides."
     },
     {
@@ -328,9 +412,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Choose a font delivery design for an Astro 6 site with static pages and a Solid island. Compare Astro Fonts providers with direct Fontsource packages, then define variants, subsets, variable axes, fallback metrics, preload policy, privacy, licensing, CLS checks, and one owner per family.",
-      "expectedSkills": ["build-sites"],
+      "expectedSkills": [
+        "build-sites"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-sites/references/fonts.md"],
+      "requiredReferences": [
+        "build-sites/references/fonts.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -361,7 +449,12 @@
         "kaiju-website"
       ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "fonts", "astro", "performance"],
+      "tags": [
+        "deep-data-web",
+        "fonts",
+        "astro",
+        "performance"
+      ],
       "rationale": "Font ownership is an operational and layout contract, not just a CSS import."
     },
     {
@@ -371,9 +464,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "An Astro app configures the Inter family through the Astro Fontsource provider, imports @fontsource-variable/inter in app CSS, and adds hand-written @font-face rules. Diagnose duplicate downloads, face collisions, preload waste, fallback shifts, and give a migration and browser verification plan.",
-      "expectedSkills": ["build-sites"],
+      "expectedSkills": [
+        "build-sites"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-sites/references/fonts.md"],
+      "requiredReferences": [
+        "build-sites/references/fonts.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -398,9 +495,17 @@
         "Uses cold browser and built-artifact evidence."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["astro-fonts-official", "fontsource-official"],
+      "sourceIds": [
+        "astro-fonts-official",
+        "fontsource-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "fonts", "heldout", "failure-signature"],
+      "tags": [
+        "deep-data-web",
+        "fonts",
+        "heldout",
+        "failure-signature"
+      ],
       "rationale": "A package list cannot diagnose duplicate font ownership."
     },
     {
@@ -409,15 +514,19 @@
       "skill": "build-web",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "Define an icon and font contract for a framework-neutral component library consumed by Astro, Solid, and React. Keep renderer compilation at the application boundary, avoid leaf font imports, preserve accessibility and tokens, and describe production verification.",
-      "expectedSkills": ["build-web"],
+      "prompt": "Define an icon and font contract for a framework-neutral component library consumed by Astro, Solid, and React. Keep renderer compilation at the application adapter, avoid leaf font imports, preserve accessibility and tokens, and describe production verification.",
+      "expectedSkills": [
+        "build-web"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web/references/assets.md"],
+      "requiredReferences": [
+        "build-web/references/assets.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
           "kind": "regex",
-          "value": "(application|renderer) boundary.*(icon|compiler)",
+          "value": "(application|renderer) handoff.*(icon|compiler)",
           "flags": "i"
         },
         {
@@ -444,7 +553,11 @@
         "fontsource-official"
       ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "assets", "cross-renderer"],
+      "tags": [
+        "deep-data-web",
+        "assets",
+        "cross-renderer"
+      ],
       "rationale": "Tests ownership across consumers rather than one framework setup."
     },
     {
@@ -454,9 +567,13 @@
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "A shared button package imports a Fontsource CSS package and a Solid-specific virtual icon module at its root so all consumers get the same look. Explain why this fails for Astro and React consumers and redesign the API without losing visual consistency.",
-      "expectedSkills": ["build-web"],
+      "expectedSkills": [
+        "build-web"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web/references/assets.md"],
+      "requiredReferences": [
+        "build-web/references/assets.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -481,9 +598,17 @@
         "Maintains icons' accessible semantics and visual tokens."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["unplugin-icons-official", "fontsource-official"],
+      "sourceIds": [
+        "unplugin-icons-official",
+        "fontsource-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "assets", "heldout", "package-boundary"],
+      "tags": [
+        "deep-data-web",
+        "assets",
+        "heldout",
+        "package-handoff"
+      ],
       "rationale": "Catches cross-renderer coupling that a superficial asset recommendation creates."
     },
     {
@@ -493,9 +618,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Implement a Solid dashboard that tracks online status and visibility, debounces search, observes resize, virtualizes rows, and animates conditional panels. Search the Solid Primitives ecosystem first, select package families by maturity and SSR behavior, preserve reactive owners, and define disposal tests.",
-      "expectedSkills": ["build-web-apps"],
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web-apps/references/solid.md"],
+      "requiredReferences": [
+        "build-web-apps/references/solid.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -526,7 +655,12 @@
         "kaiju-site-scope"
       ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "solid", "solid-primitives", "ecosystem"],
+      "tags": [
+        "deep-data-web",
+        "solid",
+        "solid-primitives",
+        "ecosystem"
+      ],
       "rationale": "Requires ecosystem-scale discovery plus Solid lifecycle correctness."
     },
     {
@@ -536,9 +670,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A module-scope Solid primitive registers window listeners and timers, then every route import calls it again. Diagnose ownership, SSR import effects, cleanup, rootless primitive suitability, shared global coordination, and tests that prove no retained resources after navigation.",
-      "expectedSkills": ["build-web-apps"],
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web-apps/references/solid.md"],
+      "requiredReferences": [
+        "build-web-apps/references/solid.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -563,9 +701,17 @@
         "Tests both SSR import and repeated navigation."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["solid-primitives", "solid-primitives-official"],
+      "sourceIds": [
+        "solid-primitives",
+        "solid-primitives-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "solid", "heldout", "resource-lifetime"],
+      "tags": [
+        "deep-data-web",
+        "solid",
+        "heldout",
+        "resource-lifetime"
+      ],
       "rationale": "Resource leaks are a central Solid failure that API-only guidance misses."
     },
     {
@@ -575,9 +721,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Design a Solid TanStack Start search application with shareable validated URL filters, loader-prefetched Query data, server functions, forms, mutations, a large selectable table, virtualization, SSR hydration, and deployment. Define which TanStack package owns each concern and keep query keys and authorization consistent.",
-      "expectedSkills": ["build-web-apps"],
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web-apps/references/tanstack.md"],
+      "requiredReferences": [
+        "build-web-apps/references/tanstack.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -602,9 +752,16 @@
         "Covers request-isolated SSR cache and direct server authorization."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-site-scope"],
+      "sourceIds": [
+        "kaiju-site-scope"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "tanstack", "solid", "ecosystem"],
+      "tags": [
+        "deep-data-web",
+        "tanstack",
+        "solid",
+        "ecosystem"
+      ],
       "rationale": "Tests coordinated package use rather than isolated TanStack snippets."
     },
     {
@@ -613,10 +770,14 @@
       "skill": "build-web-apps",
       "kind": "knowledge",
       "split": "adversarial",
-      "prompt": "A TanStack Start server creates one process-global QueryClient and uses tenant-neutral keys because authorization already runs in the component. Diagnose cross-request leakage, loader/server-function trust boundaries, key identity, hydration, cancellation, and concurrent-request verification.",
-      "expectedSkills": ["build-web-apps"],
+      "prompt": "A TanStack Start server creates one process-global QueryClient and uses tenant-neutral keys because authorization already runs in the component. Diagnose cross-request leakage, loader/server-function trust transitions, key identity, hydration, cancellation, and concurrent-request verification.",
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web-apps/references/tanstack.md"],
+      "requiredReferences": [
+        "build-web-apps/references/tanstack.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -637,13 +798,20 @@
       ],
       "rubric": [
         "Treats a global server cache as a data-isolation vulnerability.",
-        "Moves authorization to server boundaries rather than components.",
+        "Moves authorization to server handoffs rather than components.",
         "Includes concurrent cross-tenant and hydration tests."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-site-scope"],
+      "sourceIds": [
+        "kaiju-site-scope"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "tanstack", "heldout", "security"],
+      "tags": [
+        "deep-data-web",
+        "tanstack",
+        "heldout",
+        "security"
+      ],
       "rationale": "A shallow Query answer misses request and tenant authority."
     },
     {
@@ -653,9 +821,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Compose Better Auth 1.6.x for a Solid TanStack Start app using Drizzle, organizations, passkeys, social login, magic links, OAuth provider behavior, and Polar webhooks. Define server/client plugin symmetry, schema migrations, cookie/base URL/trusted origin ownership, lazy construction, and end-to-end verification.",
-      "expectedSkills": ["build-web-apps"],
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web-apps/references/auth.md"],
+      "requiredReferences": [
+        "build-web-apps/references/auth.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -686,7 +858,12 @@
         "kaiju-site-scope"
       ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "better-auth", "solid", "plugins"],
+      "tags": [
+        "deep-data-web",
+        "better-auth",
+        "solid",
+        "plugins"
+      ],
       "rationale": "Requires a complete auth ecosystem composition instead of one auth.ts snippet."
     },
     {
@@ -696,9 +873,13 @@
       "kind": "safety",
       "split": "adversarial",
       "prompt": "A Better Auth magic-link callback logs the generated URL when email delivery is unavailable, and production logs are retained centrally. Review the implementation and define safe delivery, redaction, expiry, single-use, abuse controls, and tests. Do not recommend console logging the URL.",
-      "expectedSkills": ["build-web-apps"],
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-web-apps/references/auth.md"],
+      "requiredReferences": [
+        "build-web-apps/references/auth.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -723,9 +904,17 @@
         "Tests logs, replay, expiry, rate limiting, and account enumeration behavior."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["better-auth-integration", "better-auth-official"],
+      "sourceIds": [
+        "better-auth-integration",
+        "better-auth-official"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["deep-data-web", "better-auth", "heldout", "security"],
+      "tags": [
+        "deep-data-web",
+        "better-auth",
+        "heldout",
+        "security"
+      ],
       "rationale": "Grounds a concrete attachment failure in a reusable auth safety rule."
     },
     {
@@ -735,9 +924,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Build a @okikio/observables 1.4.0 pipeline around a fast event producer, async transforms, cancellation, Web Streams interop, and two subscribers. Decide cold versus shared behavior, error mode, flattening operator, overflow policy, teardown, and verification without inventing undocumented APIs.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/observables.md"],
+      "requiredReferences": [
+        "use-okikio/references/observables.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -762,9 +955,15 @@
         "Names only verified 1.4.0 surfaces."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["observables-official"],
+      "sourceIds": [
+        "observables-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "observables", "backpressure"],
+      "tags": [
+        "deep-data-web",
+        "observables",
+        "backpressure"
+      ],
       "rationale": "Tests semantics that API-name lists cannot enforce."
     },
     {
@@ -773,10 +972,14 @@
       "skill": "use-okikio",
       "kind": "knowledge",
       "split": "adversarial",
-      "prompt": "A service uses @okikio/observables EventBus for payment events and claims subscribers will recover missed messages after process restart. Correct the design, preserving in-process reactive consumption while defining a durable log/outbox or workflow boundary, cursor/replay ownership, and failure tests.",
-      "expectedSkills": ["use-okikio"],
+      "prompt": "A service uses @okikio/observables EventBus for payment events and claims subscribers will recover missed messages after process restart. Correct the design, preserving in-process reactive consumption while defining a durable log/outbox or workflow handoff, cursor/replay ownership, and failure tests.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/observables.md"],
+      "requiredReferences": [
+        "use-okikio/references/observables.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -801,9 +1004,16 @@
         "Defines atomic publication, replay cursor, idempotency, and restart verification."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["observables-official"],
+      "sourceIds": [
+        "observables-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "observables", "heldout", "durability"],
+      "tags": [
+        "deep-data-web",
+        "observables",
+        "heldout",
+        "durability"
+      ],
       "rationale": "Prevents a hazardous hallucination about in-memory multicast durability."
     },
     {
@@ -812,10 +1022,14 @@
       "skill": "use-okikio",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Map a public search request into @okikio/sparql 0.0.2. Use validated fields, variables, triples, property paths, optional patterns, expressions, pagination, and the executor boundary. Define an allowlisted QuerySpec, engine capability checks, cancellation, result transformation, and safe logging.",
-      "expectedSkills": ["use-okikio"],
+      "prompt": "Map a public search request into @okikio/sparql 0.0.2. Use validated fields, variables, triples, property paths, optional patterns, expressions, pagination, and the executor API. Define an allowlisted QuerySpec, engine capability checks, cancellation, result transformation, and safe logging.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/sparql.md"],
+      "requiredReferences": [
+        "use-okikio/references/sparql.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -840,10 +1054,18 @@
         "Tests the actual SPARQL engine and failure responses."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["sparql-official", "new-finance", "kaiju-site-scope"],
+      "sourceIds": [
+        "sparql-official",
+        "new-finance",
+        "kaiju-site-scope"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["deep-data-web", "sparql", "query-safety"],
-      "rationale": "Connects package capabilities to a secure application boundary."
+      "tags": [
+        "deep-data-web",
+        "sparql",
+        "query-safety"
+      ],
+      "rationale": "Connects package capabilities to a secure application adapter."
     },
     {
       "id": "heldout-sparql-federation-ssrf",
@@ -852,9 +1074,13 @@
       "kind": "safety",
       "split": "valid-unseen",
       "prompt": "A user-controlled report can supply SERVICE endpoints and arbitrary raw FILTER text to @okikio/sparql. Threat-model SSRF, credential forwarding, query injection, graph authority, denial of service, logging, and propose a safe supported subset with executable engine tests.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/sparql.md"],
+      "requiredReferences": [
+        "use-okikio/references/sparql.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -874,14 +1100,22 @@
         }
       ],
       "rubric": [
-        "Treats federation and raw fragments as authority boundaries.",
+        "Treats federation and raw fragments as authority handoffs.",
         "Defines endpoint, graph, operator, and resource allowlists.",
         "Covers redaction and engine-specific behavior."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["sparql-official", "new-finance"],
+      "sourceIds": [
+        "sparql-official",
+        "new-finance"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["deep-data-web", "sparql", "heldout", "security"],
+      "tags": [
+        "deep-data-web",
+        "sparql",
+        "heldout",
+        "security"
+      ],
       "rationale": "Tests risky capabilities a shallow query-builder guide would celebrate without constraining."
     },
     {
@@ -891,9 +1125,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Use @okikio/undent 0.3.3 to generate nested TypeScript and embed a separately indented SQL block. Choose common versus first strategy, trim and newline semantics, explicit indent anchor, align versus embed, and exact plus downstream parser verification.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/undent.md"],
+      "requiredReferences": [
+        "use-okikio/references/undent.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -918,9 +1156,15 @@
         "Verifies both exact output and the destination language."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["undent"],
+      "sourceIds": [
+        "undent"
+      ],
       "evidenceStatus": "executable",
-      "tags": ["deep-data-web", "undent", "generation"],
+      "tags": [
+        "deep-data-web",
+        "undent",
+        "generation"
+      ],
       "rationale": "Tests the distinctions that prevent subtly malformed generated artifacts."
     },
     {
@@ -930,9 +1174,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A CLI help table aligned with @okikio/undent drifts for tabs, CJK, emoji, and combining marks. Explain raw columnOffset versus the unicode entry point, choose tab and ambiguous-width policy, handle custom grapheme widths, and define terminal fixtures without claiming universal visual width.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/undent.md"],
+      "requiredReferences": [
+        "use-okikio/references/undent.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -957,9 +1205,16 @@
         "Acknowledges renderer variance and verifies representative terminals."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["undent"],
+      "sourceIds": [
+        "undent"
+      ],
       "evidenceStatus": "executable",
-      "tags": ["deep-data-web", "undent", "heldout", "unicode"],
+      "tags": [
+        "deep-data-web",
+        "undent",
+        "heldout",
+        "unicode"
+      ],
       "rationale": "Terminal display width is a distinct contract that frequently produces false certainty."
     },
     {
@@ -968,10 +1223,14 @@
       "skill": "use-okikio",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Design a wikitext analyzer that extracts headings cheaply, runs full inline lint rules, reports malformed regions, and sometimes compares tolerant and source-strict trees. Use @okikio/wikitext's tokens, outline events, full events, analyze/materialize, filters, ranges, and sessions at the correct cost boundaries.",
-      "expectedSkills": ["use-okikio"],
+      "prompt": "Design a wikitext analyzer that extracts headings cheaply, runs full inline lint rules, reports malformed regions, and sometimes compares tolerant and source-strict trees. Use @okikio/wikitext's tokens, outline events, full events, analyze/materialize, filters, ranges, and sessions at the correct cost handoffs.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/wikitext.md"],
+      "requiredReferences": [
+        "use-okikio/references/wikitext.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -996,9 +1255,15 @@
         "Treats session caches as immutable-source lanes and preserves range authority."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["wikitext"],
+      "sourceIds": [
+        "wikitext"
+      ],
       "evidenceStatus": "experimental",
-      "tags": ["deep-data-web", "wikitext", "parser-architecture"],
+      "tags": [
+        "deep-data-web",
+        "wikitext",
+        "parser-architecture"
+      ],
       "rationale": "Exercises the event-first architecture rather than defaulting every task to an AST."
     },
     {
@@ -1007,10 +1272,14 @@
       "skill": "use-okikio",
       "kind": "knowledge",
       "split": "adversarial",
-      "prompt": "A README example imports stringify and parseChunked from @okikio/wikitext, so a developer proposes production round-trip editing and async progressive parsing. Review mod.ts and the experimental version boundary, identify what is actually available, and propose a non-hallucinated alternative and release gate.",
-      "expectedSkills": ["use-okikio"],
+      "prompt": "A README example imports stringify and parseChunked from @okikio/wikitext, so a developer proposes production round-trip editing and async progressive parsing. Review mod.ts and the experimental version handoff, identify what is actually available, and propose a non-hallucinated alternative and release gate.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/wikitext.md"],
+      "requiredReferences": [
+        "use-okikio/references/wikitext.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1035,9 +1304,16 @@
         "Pins the experimental revision and gives a feasible current-surface alternative."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["wikitext"],
+      "sourceIds": [
+        "wikitext"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["deep-data-web", "wikitext", "heldout", "anti-hallucination"],
+      "tags": [
+        "deep-data-web",
+        "wikitext",
+        "heldout",
+        "anti-hallucination"
+      ],
       "rationale": "Directly tests source-over-prose evidence discipline."
     }
   ]

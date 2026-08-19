@@ -5,15 +5,15 @@
 - Ownership rules
 - Icon contract
 - Font contract
-- Component-library boundaries
+- Component-library integration
 - Verification
 - Sources and freshness
 
 ## Ownership rules
 
-Choose the asset integration at the rendering boundary:
+Choose the asset integration where the renderer owns the output:
 
-| Boundary | Icon owner | Font owner |
+| Rendering context | Icon owner | Font owner |
 |---|---|---|
 | Astro static component | Astro Icon or local SVG/Astro component | Astro Fonts API/local provider |
 | Solid island/application | Unplugin Icons with Solid compiler | app-root Fontsource import or inherited site font CSS |
@@ -45,7 +45,7 @@ An icon-only button gets its accessible name from the button. Decorative SVGs re
 Record:
 
 - family role and CSS token;
-- provider/source, version, license, and privacy boundary;
+- provider/source, version, license, and privacy policy;
 - exact weights/styles/subsets/variable axes;
 - self-hosted asset/caching owner;
 - fallback sequence and metric adjustment;
@@ -56,7 +56,7 @@ Record:
 
 Avoid duplicate owners such as an Astro provider plus a Fontsource CSS import for the same family. Preload only exact first-paint faces. A configured variable weight range must match the file's axes.
 
-## Component-library boundaries
+## Component-library integration
 
 Open-code component registries such as shadcn/Zaidan can carry icons and font classes from a different renderer or design system. After generation:
 
@@ -80,7 +80,7 @@ Run the production server/client build, inspect built HTML/CSS, trace network fo
 
 ## Sources and freshness
 
-- Primary: [Astro Icon](https://www.astroicon.dev/), [Unplugin Icons](https://github.com/unplugin/unplugin-icons), [Astro Fonts](https://docs.astro.build/en/guides/fonts/), and [Fontsource](https://fontsource.org/docs/), verified 2026-07-17.
+- Primary: [Astro Icon](https://www.astroicon.dev/), [Unplugin Icons](https://github.com/unplugin/unplugin-icons), [Astro Fonts](https://docs.astro.build/en/guides/fonts/), and [Fontsource](https://fontsource.org/docs/). Unplugin Icons was rechecked 2026-08-19 for on-demand imports, Vite/Rollup/Webpack/Nuxt/Rspack adapters, React/Solid compilers, SSR/SSG, custom collections, auto import, and TypeScript support.
 - Attachments: `kaiju-site-scope(17).zip/apps/frontend`, `kaiju-site-scope(17).zip/apps/docs`, and `kaiju-website(6).zip`, inspected 2026-07-17 for cross-renderer asset ownership.
 
 Renderer compilers, Astro APIs, and generated virtual modules are version-sensitive. This reference defines ownership; exact imports must be verified against the target framework and lockfile.

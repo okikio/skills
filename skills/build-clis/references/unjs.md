@@ -47,7 +47,7 @@ present; it does not prove every mapped package is installed or used.
 | std-env | CI/provider/debug/color/minimal-environment signals | `EnvironmentPolicy` | Does not replace per-stream TTY probes |
 | pathe | Normalized cross-platform paths | `PathPolicy` | Does not define ownership/security |
 | ofetch | Cross-runtime fetch, parsing, timeout, retry, interceptors | `HttpClient` | Does not decide idempotency or business retry policy |
-| ufo | URL parsing, joining, normalization, query composition | URL boundary helper | Do not use normalization that changes domain identity silently |
+| ufo | URL parsing, joining, normalization, query composition | URL composition helper | Do not use normalization that changes domain identity silently |
 | unstorage | Async key-value API, drivers, mounts, metadata, watch/snapshot/hydration where supported | `CheckpointStore` or `Cache` | Key-value persistence alone is not durability semantics |
 | ohash | Deterministic hashing over canonicalizable inputs | `Fingerprint` | A hash is not an idempotency/recovery protocol |
 | hookable | Typed/application hook mechanism | extension adapter | Do not create a plugin system without lifecycle/error policy |
@@ -144,7 +144,7 @@ Propagate the root abort signal.
 Use interceptors for correlation and structured LogTape events, not to hide
 global mutable policy. Redact credentials and query parameters before logging.
 
-Use ufo at URL boundaries where its parsing/composition helpers materially
+Use ufo at URL fields where its parsing/composition helpers materially
 reduce mistakes. Preserve URL identity rules for signing, cache keys, crawls,
 and user-provided opaque URLs. A “cleaner” URL can be a different resource.
 
@@ -252,7 +252,7 @@ When fetching templates or presets through giget or a similar adapter:
 Citty can be the command owner when a lightweight grammar, nested/lazy commands,
 aliases, generated usage, hooks, and plugins are sufficient. Choose it instead
 of Optique after comparing requirements. Do not parse some subcommands with
-Optique and others with Citty without an explicit stable boundary.
+Optique and others with Citty without an explicit stable contract.
 
 Consola can be the output owner for applications that choose its reporter model.
 Do not add it for spinners or friendly messages when LogTape already owns
@@ -302,7 +302,7 @@ Optique/Clack gathers missing non-secret values only on a TTY
 
 Use real integration fixtures for package-manager locks, config formats, fetch
 failures, storage drivers, and packed artifacts. Mocking every package at the
-adapter boundary can prove domain isolation but not ecosystem compatibility.
+adapter API can prove domain isolation but not ecosystem compatibility.
 
 | Signature | Likely ownership error | Verification |
 |---|---|---|
@@ -310,7 +310,7 @@ adapter boundary can prove domain isolation but not ecosystem compatibility.
 | CI receives color or prompt | std-env signal replaced explicit per-stream policy | Run with redirected streams and CI env |
 | POST executes twice | ofetch retries without domain idempotency policy | Capture request attempts and method rules |
 | Resume accepts different inputs | ohash fingerprint omits normalized identity/version | Mutate one material field and assert rejection |
-| “Durable” run disappears after restart | unstorage driver is memory/local-only | Kill process and resume from claimed boundary |
+| “Durable” run disappears after restart | unstorage driver is memory/local-only | Kill process and resume from claimed checkpoint |
 | Generated config loses comments | structured serializer used on TS/JSONC source | Compare source-preserving edit and diff |
 | Wrong package manager changes lockfile | nypm detection/workspace root unchecked | Exercise npm/pnpm/Yarn/Bun/Deno fixtures |
 | Package works in repo but not consumer | unbuild/pkg-types export or packed-file drift | Install packed tarball in a clean project |

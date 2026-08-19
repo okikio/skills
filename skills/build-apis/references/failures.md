@@ -11,7 +11,7 @@ Use this reference to diagnose API behavior that is wrong, unreachable, unsafe, 
 - Authentication and authorization failures
 - Resource and dependency failures
 - Error and observability failures
-- Workflow/stream boundary failures
+- Workflow/stream failure paths
 - Recovery protocol
 - Failure-injection matrix
 - Executable verification
@@ -66,7 +66,7 @@ The retained service guides make `mod.ts` the contract registry and `index.ts` t
 | OpenAPI response passes but client fails | schema models payload, not status/headers/envelope variants | contract actual response tuples/variants |
 | Type uses schema object rather than inferred data | `typeof Schema.Input`/similar misconception | verified schema-library inference helper |
 | Default sort/count changes unnoticed | semantic contract not in schema diff | behavioral compatibility snapshots |
-| Validation error becomes 500 | expected issues cross wrong error boundary | stable 400/422 mapping and issue paths |
+| Validation error becomes 500 | expected issues cross wrong error mapper | stable 400/422 mapping and issue paths |
 
 If using Standard Schema, inspect `~standard.validate` result shape and async behavior at the installed implementation. If using Zod or another owner, preserve its supported inference and error APIs. Do not force either.
 
@@ -75,7 +75,7 @@ If using Standard Schema, inspect `~standard.validate` result shape and async be
 Middleware executes as an ordered/onion system. Establish ownership:
 
 ```text
-host/root: proxy trust, request ID, correlation, access diagnostics, CORS/security, final error boundary
+host/root: proxy trust, request ID, correlation, access diagnostics, CORS/security, final error mapper
 service: long-lived/request-scoped dependency adaptation and service policy
 route: authentication/authorization, validation, rate/capability policy
 handler: domain call and response shaping
@@ -129,7 +129,7 @@ Health, readiness, and startup are different. Liveness should not flap for a tra
 One failure should produce:
 
 - one stable client problem without secrets/internal messages;
-- one primary correlated diagnostic at the owner boundary;
+- one primary correlated diagnostic at the ownership scope;
 - structured cause chain retained internally;
 - trace/request ID shared across middleware, dependency calls, workflow start, and stream where applicable;
 - retryability and operator action classification.
@@ -147,14 +147,14 @@ Failure signatures:
 
 Do not require LogTape. If it is selected, configure it once at the application composition root, not in a reusable server module. Otherwise use the selected observability owner with the same category/correlation/redaction contract.
 
-## Workflow/stream boundary failures
+## Workflow/stream failure paths
 
 | Signature | Defect | Proof |
 |---|---|---|
 | Start returns 202 but no durable record/queue | acceptance precedes durable commit | execution/status immediately readable; restart test |
 | Status says success while required sink failed | global workflow state collapses per-stage results | stage/sink manifest and response policy |
 | Cancel endpoint returns success but runtime cannot cancel | capability inferred from definition | runtime adapter/conformance and terminal-state test |
-| SSE reconnect loses events | no durable event ID/replay boundary | `Last-Event-ID` replay fixture |
+| SSE reconnect loses events | no durable event ID/replay checkpoint | `Last-Event-ID` replay fixture |
 | Slow stream client grows memory | no backpressure/bounds | slow-reader memory oracle |
 | Request abort leaves work running unintentionally | cancellation ownership absent | abort trace and explicit detach policy |
 | Workflow runtime adapter returns “not implemented” | public route exposed before capability | unregister/501/readiness until implemented |
@@ -166,7 +166,7 @@ Do not require LogTape. If it is selected, configure it once at the application 
 3. Reproduce with the smallest real request and record status/headers/body/side effects.
 4. Determine whether the request was rejected before commit, committed, partially committed, or completed with response loss.
 5. Retry only if idempotency and commit evidence make it safe.
-6. Repair registry/config/schema/dependency ownership at the failing boundary.
+6. Repair registry/config/schema/dependency ownership at the failing interface.
 7. Run positive, negative, interruption, and restart tests.
 8. Update readiness/capability reporting so the same partial state is visible.
 

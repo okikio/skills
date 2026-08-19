@@ -218,7 +218,7 @@ Use `fromStreamPair(() => new CompressionStream("gzip"))` to adapt readable/writ
 
 Use `fromObservableOperator()` for RxJS operator functions. Standard RxJS operators need a `sourceAdapter`, commonly RxJS `from(source)`. Alias overlapping imports. The wrapper accepts a wider direct-subscribable result than `Observable.from()` and wraps synchronous subscription failures as `ObservableError` values.
 
-Interop has cost and semantic risk. Verify cancellation, error, scheduling, hot/cold behavior, backpressure, and teardown across the boundary.
+Interop has cost and semantic risk. Verify cancellation, error, scheduling, hot/cold behavior, backpressure, and teardown across the handoff.
 
 ## Selection guide
 
@@ -243,7 +243,7 @@ Interop has cost and semantic risk. Verify cancellation, error, scheduling, hot/
 | error appears as ordinary value | pass-through mode not handled | add error operator or select `throw` |
 | two subscribers duplicate request | cold source assumed hot | share through deliberate bus/cache owner |
 | EventBus loses restart events | in-memory bus used durably | durable workflow/queue/outbox |
-| RxJS stage leaks | interop teardown not propagated | boundary lifecycle test |
+| RxJS stage leaks | interop teardown not propagated | lifecycle handoff test |
 | typing fails at giant chain | over 19 operators/inference depth | split named pipelines |
 
 ## Verification
@@ -263,4 +263,4 @@ Interop has cost and semantic risk. Verify cancellation, error, scheduling, hot/
 - Primary: [JSR `@okikio/observables@1.4.0`](https://jsr.io/@okikio/observables/1.4.0), inspected 2026-07-17 for the documented lifecycle, operators, error modes, events, streams, interop, and runtime support.
 - Attachment status: no `@okikio/observables` source archive was provided in this evidence set; uploaded consumers are not treated as package API authority.
 
-Version 1.4.0 is the verified boundary. Undocumented exports, exact scheduler/backpressure internals, and APIs from other versions remain unverified until the target export map, declarations, and source are inspected.
+Version 1.4.0 is the verified version line. Undocumented exports, exact scheduler/backpressure internals, and APIs from other versions remain unverified until the target export map, declarations, and source are inspected.

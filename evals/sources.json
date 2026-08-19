@@ -74,7 +74,9 @@
       "role": "Astro marketing site, Solid islands, Zaidan styles, icons, and WebGL fallbacks",
       "verifiedDate": "2026-07-13",
       "sha256": "1fcda20543cc9c1620ae1ba784e7d9a716da76d52fb5696c444718ccf78618fa",
-      "claimPaths": ["src/components/home/FaqSection.astro"]
+      "claimPaths": [
+        "src/components/home/FaqSection.astro"
+      ]
     },
     {
       "id": "kaiju-site-scope",
@@ -117,7 +119,10 @@
       "role": "Astro live CMS mapping plus unsafe webhook and renderer counterexamples",
       "verifiedDate": "2026-07-13",
       "sha256": "afefda29d9548be83f1f70aad9b992f0fe033c1bf5bf1091529887b39260a318",
-      "claimPaths": ["src/pages/api/webhook.ts", "src/pages/homepage.astro"]
+      "claimPaths": [
+        "src/pages/api/webhook.ts",
+        "src/pages/homepage.astro"
+      ]
     },
     {
       "id": "new-finance",
@@ -225,23 +230,25 @@
       "status": "unresolved",
       "role": "Discovery hints for private or unavailable packages",
       "verifiedDate": "2026-07-13",
-      "claimPaths": ["custom-clickhouse-drizzle"]
+      "claimPaths": [
+        "custom-clickhouse-drizzle"
+      ]
     },
     {
       "id": "optique-official",
       "artifact": "https://optique.dev/llms-full.txt",
       "kind": "official-docs",
       "status": "observed-source",
-      "role": "Optique parser combinators, runners, discovery, generated surfaces, and integrations",
-      "verifiedDate": "2026-07-17"
+      "role": "Optique parser combinators, runners, discovery, generated surfaces, integrations, and stable release history",
+      "verifiedDate": "2026-08-19"
     },
     {
       "id": "logtape-official",
       "artifact": "https://logtape.org/llms-full.txt",
       "kind": "official-docs",
       "status": "observed-source",
-      "role": "LogTape categories, inheritance, sinks, filters, formatters, redaction, adapters, and testing",
-      "verifiedDate": "2026-07-17"
+      "role": "LogTape library-first diagnostics, categories, inheritance, sinks, filters, formatters, redaction, adapters, and testing",
+      "verifiedDate": "2026-08-19"
     },
     {
       "id": "c12-official",
@@ -264,7 +271,7 @@
       "artifact": "https://github.com/unjs/jiti",
       "kind": "official-docs",
       "status": "observed-source",
-      "role": "jiti runtime module loading, transformation, resolution, interop, and cache boundaries",
+      "role": "jiti runtime module loading, transformation, resolution, interop, and cache scopes",
       "verifiedDate": "2026-07-17"
     },
     {
@@ -329,8 +336,8 @@
       "artifact": "https://github.com/unplugin/unplugin-icons",
       "kind": "official-docs",
       "status": "observed-source",
-      "role": "Unplugin Icons bundler adapters, renderer compilers, virtual imports, custom collections, types, and auto import",
-      "verifiedDate": "2026-07-17"
+      "role": "Unplugin Icons on-demand bundler adapters, renderer compilers, virtual imports, SSR/SSG, custom collections, types, and auto import",
+      "verifiedDate": "2026-08-19"
     },
     {
       "id": "astro-fonts-official",
@@ -475,7 +482,7 @@
       "artifact": "https://registry.npmjs.org/ohash/-/ohash-2.0.11.tgz",
       "kind": "official-docs",
       "status": "observed-source",
-      "role": "Published ohash 2.0.11 declarations and implementation for serialization, hashing, equality, diffing, object hashing, and v1 compatibility boundaries",
+      "role": "Published ohash 2.0.11 declarations and implementation for serialization, hashing, equality, diffing, object hashing, and v1 compatibility handoffs",
       "verifiedDate": "2026-07-17",
       "notes": "npm integrity sha512-RdR9FQrFwNBNXAr4GixM8YaRZRJ5PUWbKYbE5eOsrwAjJW0q2REGcf79oYPsLyskQCZG1PLN+S/K1V00joZAoQ=="
     },
@@ -661,6 +668,62 @@
       "verifiedDate": "2026-07-23"
     },
     {
+      "id": "kaiju-config-resolution-20260819",
+      "artifact": "kaiju-config-resolution-handoff(1).md",
+      "kind": "handoff",
+      "status": "normative",
+      "role": "Current Kaiju configuration resolution design for c12 loading, sparse layers, precedence, declarative array operations, defu integration, Zod validation, and Optique-facing patches",
+      "verifiedDate": "2026-08-19",
+      "sha256": "75d2f5b6318594a07f3ee42a318f953d06b69f0131ec54a41b12eebf7ff4b9a7",
+      "notes": "Byte-identical to kaiju-config-resolution-handoff.md inside the verified guides.zip attachment; registered separately because it was also supplied as a standalone current attachment."
+    },
+    {
+      "id": "current-guides-20260819",
+      "artifact": "guides.zip",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Current user-provided Kaiju, MediaD, OPFS, Luchalibre, and Testrange engineering conventions and handoffs",
+      "verifiedDate": "2026-08-19",
+      "sha256": "e5b6a9ba08480294ccc241b6a9228d2c02780e3b11ffc247d9e07f7a58f356fa",
+      "claimPaths": [
+        "kaiju-code-formatting-guide.md",
+        "kaiju-naming-and-folder-structure-guide.md",
+        "kaiju-readable-markdown-plain-technical-english-handbook.md",
+        "Kaiju Platform Programming Model.md",
+        "library_first_architecture_guidebook.md",
+        "mediad-implementation-handoff.txt",
+        "kaiju-config-resolution-handoff.md",
+        "luchalibre-agent-handoff.zip",
+        "testrange-agent-handoff.zip"
+      ]
+    },
+    {
+      "id": "design-motion-skill-20260819",
+      "artifact": "great-design-animation-motion-skill.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Current design and motion judgment, accessibility, interruption, performance, and interaction-frequency guidance",
+      "verifiedDate": "2026-08-19",
+      "sha256": "78e854198e45acbb859a470ec73021c86dacaa6ba463ed3477cc4c1c247fb8cd"
+    },
+    {
+      "id": "visual-explanation-guide-20260819",
+      "artifact": "diagram-chart-visual-explanation-guidebook.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Visual selection by reader task, representation grammar, review, and diagram/chart tradeoffs",
+      "verifiedDate": "2026-08-19",
+      "sha256": "e88542fb330fb2f65c9f9355047c07af0f2381e3ff8347f276f01ba3faa3fc90"
+    },
+    {
+      "id": "standard-schema-official",
+      "artifact": "https://standardschema.dev/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Standard Schema validator interoperability and separate Standard JSON Schema representation contracts",
+      "verifiedDate": "2026-08-19"
+    },
+    {
       "id": "decision-justification-guide",
       "artifact": "how-to-justify-decisions-properly(1).md",
       "kind": "guidebook",
@@ -668,6 +731,74 @@
       "role": "Architecture decision objectives, constraints, causal diagnosis, alternatives, trade-offs, defeaters, and conditional-necessity discipline",
       "verifiedDate": "2026-07-23",
       "sha256": "f8166af2e7d468e1195369c3db9889640b00fc79972f816530d23255a608d5a4"
+    },
+    {
+      "id": "oxc-official",
+      "artifact": "https://oxc.rs/docs/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Oxc parser, transformer, linter, formatter, resolver, and repository-selected JavaScript/TypeScript toolchain behavior",
+      "verifiedDate": "2026-08-19"
+    },
+    {
+      "id": "standards-refresh-20260819",
+      "artifact": "okikio-engineering-standards-refresh-20260819.zip",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Newer user-provided standards refresh covering naming, schema/type roles, internal documentation, LogTape and Optique ownership, tooling reuse, testing defaults, replacement policy, and validation reporting",
+      "verifiedDate": "2026-08-19",
+      "sha256": "ee82f80642ca14cd5dc43323b288a44b20265a605f2fdb133e8fc4b8e787e4c6",
+      "claimPaths": [
+        "kaiju-standards-refresh/CHANGE-REPORT.md",
+        "kaiju-standards-refresh/VALIDATION.md",
+        "kaiju-standards-refresh/okikio-engineering-standards-20260819.md"
+      ]
+    },
+    {
+      "id": "skills-refresh-20260819",
+      "artifact": "okikio-skills(1).zip",
+      "kind": "codebase",
+      "status": "normative",
+      "role": "Newest supplied skills source used as the merge base so refreshed CLI, API, workflow, Deno, data, devtools, and delivery guidance is not lost",
+      "verifiedDate": "2026-08-19",
+      "sha256": "b2640ca5c6c07138ddef50f0ec18f53068fb9dbe74105231c8d5b2ba011e570c"
+    },
+    {
+      "id": "deno-2-9-official",
+      "artifact": "https://deno.com/blog/v2.9",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Deno 2.9 release behavior and newly introduced runtime, compatibility, test, migration, and artifact capabilities",
+      "verifiedDate": "2026-08-19",
+      "claimPaths": [],
+      "notes": "Use only for version-sensitive behavior introduced or changed in Deno 2.9; repository pins still control availability."
+    },
+    {
+      "id": "deno-workspaces-official",
+      "artifact": "https://docs.deno.com/runtime/fundamentals/workspaces/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Current Deno workspace membership, manifest ownership, workspace protocol, catalog, and root/member configuration behavior",
+      "verifiedDate": "2026-08-19",
+      "claimPaths": []
+    },
+    {
+      "id": "deno-config-official",
+      "artifact": "https://docs.deno.com/runtime/fundamentals/configuration/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Current Deno project configuration ownership and deno.json/deno.jsonc behavior",
+      "verifiedDate": "2026-08-19",
+      "claimPaths": []
+    },
+    {
+      "id": "deno-node-official",
+      "artifact": "https://docs.deno.com/runtime/fundamentals/node/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Current Deno Node and npm compatibility behavior and migration constraints",
+      "verifiedDate": "2026-08-19",
+      "claimPaths": []
     }
   ]
 }

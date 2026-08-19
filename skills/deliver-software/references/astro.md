@@ -20,7 +20,7 @@ Write Astro so that:
 - Islands are narrow and intentional.
 - Hydration directives match the interaction urgency.
 - Client scripts are used only for page-level browser behavior that does not need framework state.
-- Server/client boundaries do not leak secrets, browser APIs, or non-serializable values.
+- Server/client handoffs do not leak secrets, browser APIs, or non-serializable values.
 
 ## Work in priority order
 
@@ -338,7 +338,7 @@ Ensure:
 - Code blocks and embedded media preserve accessibility.
 - `set:html` or equivalent raw insertion has a documented trusted source.
 
-Avoid mixing trusted and untrusted content paths without a clear boundary.
+Avoid mixing trusted and untrusted content paths without a clear handoff.
 
 ## Model async, errors, and loading in Astro surfaces
 
@@ -395,13 +395,13 @@ Review:
 
 Do not turn a mostly static page into an SPA without a product reason.
 
-## Test Astro through rendered output and boundaries
+## Test Astro through rendered output and handoffs
 
 Test:
 
 - Rendered HTML semantics.
 - Slot presence and wrappers.
-- Hydration directives and island boundaries.
+- Hydration directives and island hydration scopes.
 - Forms and actions.
 - Routing, content collection behavior, and missing content.
 - Client scripts across navigation and view transitions.

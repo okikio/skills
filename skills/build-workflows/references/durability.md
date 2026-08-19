@@ -21,7 +21,7 @@ Classify each capability separately:
 | Start survives API loss | Durable intent exists before acknowledgement |
 | Work survives worker loss | Another worker can reclaim/replay it |
 | Timer survives process loss | Deadline is persisted or engine-owned |
-| External effect is safe to retry | Idempotency/deduplication at effect boundary |
+| External effect is safe to retry | Idempotency/deduplication at effect retry owner |
 | Wait survives restart | Wait identity, payload contract, and wake path persisted |
 | Cancellation is durable | Request/state is persisted and observed after restart |
 | Progress is inspectable | Authoritative history/timeline plus projection |
@@ -113,7 +113,7 @@ Selection questions:
 ## Delivery and effect semantics
 
 Assume retryable work and messages are at least once unless the selected engine
-and effect boundary prove stronger. “Exactly once workflow execution” does not
+and effect retry owner prove stronger. “Exactly once workflow execution” does not
 make an external HTTP call exactly once.
 
 For every external effect record:
@@ -179,7 +179,7 @@ completed-with-warning only if the public contract names that state.
   implemented and restarted.
 - Do not use Redis or an in-memory queue as the sole authority merely because it
   is fast.
-- Do not claim exactly-once external effects without effect-boundary evidence.
+- Do not claim exactly-once external effects without effect retry evidence.
 - Do not build custom operator/control-plane features already required from a
   selected platform without first identifying the product-specific gap.
 

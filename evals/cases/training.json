@@ -8,9 +8,14 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "A logging core package lacks pretty output, file sinks, redaction, and test recorders. Investigate its repository and organization before selecting packages.",
-      "expectedSkills": ["explore-ecosystems"],
+      "expectedSkills": [
+        "explore-ecosystems"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "workspace|sibling|adapter|plugin" }
+        {
+          "kind": "regex",
+          "value": "workspace|sibling|adapter|plugin"
+        }
       ],
       "rubric": [
         "Establishes identity",
@@ -18,10 +23,16 @@
         "Records exclusions"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-audit"],
+      "sourceIds": [
+        "cli-audit"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["explore-ecosystems", "training"],
-      "rationale": "The optimizer needs a complete topology trajectory."
+      "tags": [
+        "explore-ecosystems",
+        "training"
+      ],
+      "rationale": "The optimizer needs a complete topology trajectory.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-ecosystem-alternative",
@@ -30,19 +41,30 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "An Optique CLI already uses LogTape. Decide whether to add Consola and Citty as ecosystem companions.",
-      "expectedSkills": ["explore-ecosystems"],
+      "expectedSkills": [
+        "explore-ecosystems"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "alternative|duplicate|overlap" }
+        {
+          "kind": "regex",
+          "value": "alternative|duplicate|overlap"
+        }
       ],
       "rubric": [
         "Treats overlapping parser/logger owners as alternatives",
         "Preserves justified adapters"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-audit"],
+      "sourceIds": [
+        "cli-audit"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["explore-ecosystems", "training"],
-      "rationale": "Ecosystem awareness must not maximize package count."
+      "tags": [
+        "explore-ecosystems",
+        "training"
+      ],
+      "rationale": "Ecosystem awareness must not maximize package count.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-cli-public-trace",
@@ -51,7 +73,9 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Add --quiet to an Optique CLI that already has --silent. Plan every parser, schema, output, help, completion, man, docs, and subprocess-test change while keeping the semantics distinct.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "assertions": [
         {
           "kind": "regex",
@@ -63,10 +87,17 @@
         "Defines quiet versus silent"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["cli-guidebook", "live-browser-cli"],
+      "sourceIds": [
+        "cli-guidebook",
+        "live-browser-cli"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "training"],
-      "rationale": "Flag changes fail when generated and runtime surfaces drift."
+      "tags": [
+        "build-clis",
+        "training"
+      ],
+      "rationale": "Flag changes fail when generated and runtime surfaces drift.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-cli-config-shapes",
@@ -75,9 +106,14 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Support replace, append, and prepend operations for include filters across project, environment, and CLI sources using c12 and defu.",
-      "expectedSkills": ["build-clis"],
+      "expectedSkills": [
+        "build-clis"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "authored.*patch.*runtime|sparse.*default" }
+        {
+          "kind": "regex",
+          "value": "authored.*patch.*runtime|sparse.*default"
+        }
       ],
       "rubric": [
         "Separates three shapes",
@@ -85,10 +121,17 @@
         "Removes operations before runtime"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-config-handoff"],
+      "sourceIds": [
+        "kaiju-config-handoff"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-clis", "config", "training"],
-      "rationale": "The config handoff supplies the optimizer's worked decision model."
+      "tags": [
+        "build-clis",
+        "config",
+        "training"
+      ],
+      "rationale": "The config handoff supplies the optimizer's worked decision model.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-web-surface-classification",
@@ -97,20 +140,38 @@
       "kind": "composition",
       "split": "train",
       "prompt": "Classify a monorepo containing a static Astro docs app, a runtime Astro CMS, and a TanStack Start product frontend. Assign rendering, state, and verification owners independently.",
-      "expectedSkills": ["build-web", "build-sites", "build-web-apps"],
+      "expectedSkills": [
+        "build-web",
+        "build-sites",
+        "build-web-apps"
+      ],
       "assertions": [
-        { "kind": "contains", "value": "Astro" },
-        { "kind": "contains", "value": "TanStack" }
+        {
+          "kind": "contains",
+          "value": "Astro"
+        },
+        {
+          "kind": "contains",
+          "value": "TanStack"
+        }
       ],
       "rubric": [
         "Does not force one rendering policy",
         "Routes site and app work separately"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-site-scope"],
+      "sourceIds": [
+        "kaiju-site-scope"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-web", "build-sites", "build-web-apps", "training"],
-      "rationale": "The attached monorepo demonstrates three different web surfaces."
+      "tags": [
+        "build-web",
+        "build-sites",
+        "build-web-apps",
+        "training"
+      ],
+      "rationale": "The attached monorepo demonstrates three different web surfaces.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-web-renderer-binding",
@@ -119,7 +180,9 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "An Astro page contains a Solid island but uses the React icon compiler and a generic Better Auth client copied from a React example.",
-      "expectedSkills": ["build-web"],
+      "expectedSkills": [
+        "build-web"
+      ],
       "assertions": [
         {
           "kind": "regex",
@@ -131,10 +194,18 @@
         "Rejects API-name compatibility assumptions"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-website", "kaiju-site-scope"],
+      "sourceIds": [
+        "kaiju-website",
+        "kaiju-site-scope"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-web", "renderer", "training"],
-      "rationale": "Renderer mismatch is a recurring cross-ecosystem failure."
+      "tags": [
+        "build-web",
+        "renderer",
+        "training"
+      ],
+      "rationale": "Renderer mismatch is a recurring cross-ecosystem failure.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-site-island-decision",
@@ -143,29 +214,46 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "For an Astro marketing page, choose implementations for a FAQ, a narrow hash-link behavior, an above-fold pointer card, and a below-fold WebGL scene.",
-      "expectedSkills": ["build-sites"],
+      "expectedSkills": [
+        "build-sites"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "details|native" },
-        { "kind": "regex", "value": "client:visible|island" }
+        {
+          "kind": "regex",
+          "value": "details|native"
+        },
+        {
+          "kind": "regex",
+          "value": "client:visible|island"
+        }
       ],
       "rubric": [
         "Uses the least hydration that owns each behavior",
         "Provides a WebGL fallback"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["kaiju-website"],
+      "sourceIds": [
+        "kaiju-website"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-sites", "build-web", "training"],
-      "rationale": "The site evidence supports a concrete native-to-island decision ladder."
+      "tags": [
+        "build-sites",
+        "build-web",
+        "training"
+      ],
+      "rationale": "The site evidence supports a concrete native-to-island decision ladder.",
+      "forbiddenSkills": []
     },
     {
-      "id": "seen-site-cms-boundary",
+      "id": "seen-site-cms-handoff",
       "title": "Map CMS records into stable page models",
       "skill": "build-sites",
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "A runtime Astro blog spreads raw CMS records through routes and components while local legacy Markdown remains in the repository.",
-      "expectedSkills": ["build-sites"],
+      "expectedSkills": [
+        "build-sites"
+      ],
       "assertions": [
         {
           "kind": "regex",
@@ -173,14 +261,21 @@
         }
       ],
       "rubric": [
-        "Creates a project-owned mapping boundary",
+        "Creates a project-owned mapping layer",
         "Classifies legacy content as migration input or runtime owner"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["thunderstrike-blog"],
+      "sourceIds": [
+        "thunderstrike-blog"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-sites", "cms", "training"],
-      "rationale": "Pages need stable models and one runtime source of truth."
+      "tags": [
+        "build-sites",
+        "cms",
+        "training"
+      ],
+      "rationale": "Pages need stable models and one runtime source of truth.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-webapp-state-map",
@@ -189,11 +284,22 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design a Solid/TanStack search page with shareable filters, page, remote results, an input draft, selected rows, an open dialog, and organization scope.",
-      "expectedSkills": ["build-web-apps"],
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "Router|URL" },
-        { "kind": "contains", "value": "Query" },
-        { "kind": "contains", "value": "signal" }
+        {
+          "kind": "regex",
+          "value": "Router|URL"
+        },
+        {
+          "kind": "contains",
+          "value": "Query"
+        },
+        {
+          "kind": "contains",
+          "value": "signal"
+        }
       ],
       "rubric": [
         "Places state by lifetime and authority",
@@ -204,8 +310,14 @@
         "kaiju-site-scope:apps/frontend/src/routes/(product)/_app/(search)/components/LeadSearchPage.tsx"
       ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-web-apps", "tanstack", "solid", "training"],
-      "rationale": "The application evidence provides a complete state ownership map."
+      "tags": [
+        "build-web-apps",
+        "tanstack",
+        "solid",
+        "training"
+      ],
+      "rationale": "The application evidence provides a complete state ownership map.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-webapp-solid-lifetime",
@@ -214,20 +326,36 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "A Solid component destructures live props and starts pointer listeners, ResizeObserver, requestAnimationFrame, and a timeout without cleanup.",
-      "expectedSkills": ["build-web-apps"],
+      "expectedSkills": [
+        "build-web-apps"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "destructur|live.*prop" },
-        { "kind": "regex", "value": "cleanup|dispose|onCleanup" }
+        {
+          "kind": "regex",
+          "value": "destructur|live.*prop"
+        },
+        {
+          "kind": "regex",
+          "value": "cleanup|dispose|onCleanup"
+        }
       ],
       "rubric": [
         "Keeps reactive access",
         "Pairs every resource with owner cleanup and SSR gating"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["solid-primitives", "solid-motion-experiments"],
+      "sourceIds": [
+        "solid-primitives",
+        "solid-motion-experiments"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-web-apps", "solid", "training"],
-      "rationale": "React-shaped lifecycle translations break Solid ownership."
+      "tags": [
+        "build-web-apps",
+        "solid",
+        "training"
+      ],
+      "rationale": "React-shaped lifecycle translations break Solid ownership.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-api-service-reachability",
@@ -236,7 +364,9 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design a Hono service module with endpoint definition, handler, group registry, service registry, one root server, validator middleware, OpenAPI, and request tests.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "assertions": [
         {
           "kind": "regex",
@@ -248,10 +378,17 @@
         "Proves validation and reachability"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance:docs/service-module-authoring.md"],
+      "sourceIds": [
+        "new-finance:docs/service-module-authoring.md"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["build-apis", "service-module", "training"],
-      "rationale": "Typed definitions are incomplete until mounted and requested."
+      "tags": [
+        "build-apis",
+        "service-module",
+        "training"
+      ],
+      "rationale": "Typed definitions are incomplete until mounted and requested.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-api-better-auth",
@@ -260,10 +397,18 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Configure Better Auth organization, passkey, and OAuth-provider plugins for a mounted Hono API and Solid client, with organization-bound queries.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "server.*client.*plugin|plugin.*symmetry" },
-        { "kind": "regex", "value": "authorization|membership" }
+        {
+          "kind": "regex",
+          "value": "server.*client.*plugin|plugin.*symmetry"
+        },
+        {
+          "kind": "regex",
+          "value": "authorization|membership"
+        }
       ],
       "rubric": [
         "Aligns mount/issuer/cookies",
@@ -271,10 +416,18 @@
         "Keeps construction import-safe"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance:utils/auth", "better-auth-integration"],
+      "sourceIds": [
+        "new-finance:utils/auth",
+        "better-auth-integration"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-apis", "better-auth", "training"],
-      "rationale": "The integration requires paired plugins and server-owned policy."
+      "tags": [
+        "build-apis",
+        "better-auth",
+        "training"
+      ],
+      "rationale": "The integration requires paired plugins and server-owned policy.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-workflow-durability-ladder",
@@ -283,7 +436,9 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Audit a workflow package containing definitions, a store, worker loops, timers, signals, and API docs. Determine what is authored, registered, reachable, durable, recoverable, and operator-controlled.",
-      "expectedSkills": ["build-workflows"],
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "assertions": [
         {
           "kind": "regex",
@@ -295,10 +450,16 @@
         "Does not equate source presence with deployment"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance:utils/workflows"],
+      "sourceIds": [
+        "new-finance:utils/workflows"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-workflows", "training"],
-      "rationale": "Optimization must learn capability-status precision."
+      "tags": [
+        "build-workflows",
+        "training"
+      ],
+      "rationale": "Optimization must learn capability-status precision.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-workflow-crash-gaps",
@@ -306,22 +467,40 @@
       "skill": "build-workflows",
       "kind": "knowledge",
       "split": "valid-seen",
-      "prompt": "Execution insert, timeline append, queue enqueue, and engine start cannot all share one transaction. Design transaction boundaries, idempotency, crash tests, and reconciliation.",
-      "expectedSkills": ["build-workflows"],
+      "prompt": "Execution insert, timeline append, queue enqueue, and engine start cannot all share one transaction. Design transaction scopes, idempotency, crash tests, and reconciliation.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "transaction|atomic" },
-        { "kind": "regex", "value": "idempoten" },
-        { "kind": "regex", "value": "reconcil" }
+        {
+          "kind": "regex",
+          "value": "transaction|atomic"
+        },
+        {
+          "kind": "regex",
+          "value": "idempoten"
+        },
+        {
+          "kind": "regex",
+          "value": "reconcil"
+        }
       ],
       "rubric": [
         "Groups database writes",
         "Treats cross-system gaps as repairable sagas"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance:utils/workflows/postgres_store.ts"],
+      "sourceIds": [
+        "new-finance:utils/workflows/postgres_store.ts"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["build-workflows", "atomicity", "training"],
-      "rationale": "Crash points reveal real durability semantics."
+      "tags": [
+        "build-workflows",
+        "atomicity",
+        "training"
+      ],
+      "rationale": "Crash points reveal real durability semantics.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-data-storage-ownership",
@@ -330,21 +509,39 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Place organizations and billing, high-volume observations, full-text search, RDF queries, retained raw records, and typed analytical batches across PostgreSQL, ClickHouse, Typesense, QLever, JSONL, and Parquet.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "assertions": [
-        { "kind": "contains", "value": "PostgreSQL" },
-        { "kind": "contains", "value": "ClickHouse" },
-        { "kind": "regex", "value": "projection|rebuild" }
+        {
+          "kind": "contains",
+          "value": "PostgreSQL"
+        },
+        {
+          "kind": "contains",
+          "value": "ClickHouse"
+        },
+        {
+          "kind": "regex",
+          "value": "projection|rebuild"
+        }
       ],
       "rubric": [
         "Names authority for each fact",
         "Defines projection and artifact recovery"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern", "new-finance"],
+      "sourceIds": [
+        "popmodern",
+        "new-finance"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-data", "training"],
-      "rationale": "The attached systems demonstrate complementary stores with drift risks."
+      "tags": [
+        "build-data",
+        "training"
+      ],
+      "rationale": "The attached systems demonstrate complementary stores with drift risks.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-data-query-count",
@@ -353,10 +550,18 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Design a tenant-scoped collection query with filters, compound sorting, cursor pagination, and optional exact, planned, estimated, or absent counts.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "base filter|tenant" },
-        { "kind": "regex", "value": "exact|planned|estimated" }
+        {
+          "kind": "regex",
+          "value": "base filter|tenant"
+        },
+        {
+          "kind": "regex",
+          "value": "exact|planned|estimated"
+        }
       ],
       "rubric": [
         "Defines stable cursor ordering",
@@ -369,8 +574,13 @@
         "new-finance:utils/execution/db.ts"
       ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-data", "query", "training"],
-      "rationale": "Count and pagination strategies are distinct public contracts."
+      "tags": [
+        "build-data",
+        "query",
+        "training"
+      ],
+      "rationale": "Count and pagination strategies are distinct public contracts.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-devtools-generator",
@@ -379,10 +589,18 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design a generator that syncs mutable upstream Unicode data into source while remaining safe in CI and review.",
-      "expectedSkills": ["build-devtools"],
+      "expectedSkills": [
+        "build-devtools"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "check.*write|write.*check" },
-        { "kind": "regex", "value": "version|digest|SHA" }
+        {
+          "kind": "regex",
+          "value": "check.*write|write.*check"
+        },
+        {
+          "kind": "regex",
+          "value": "version|digest|SHA"
+        }
       ],
       "rubric": [
         "Uses immutable provenance",
@@ -390,10 +608,17 @@
         "Avoids unrelated formatting"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["undent:scripts/sync_unicode_east_asian_width.ts"],
+      "sourceIds": [
+        "undent:scripts/sync_unicode_east_asian_width.ts"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-devtools", "generator", "training"],
-      "rationale": "The attached generator is a concrete production pattern."
+      "tags": [
+        "build-devtools",
+        "generator",
+        "training"
+      ],
+      "rationale": "The attached generator is a concrete production pattern.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-devtools-cross-runtime-package",
@@ -402,20 +627,35 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Publish a Deno-first library with root and ./unicode exports as an npm package from the same source and version.",
-      "expectedSkills": ["build-devtools"],
+      "expectedSkills": [
+        "build-devtools"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "Deno.*Node|Node.*Deno" },
-        { "kind": "regex", "value": "consumer|package contents|exports" }
+        {
+          "kind": "regex",
+          "value": "Deno.*Node|Node.*Deno"
+        },
+        {
+          "kind": "regex",
+          "value": "consumer|package contents|exports"
+        }
       ],
       "rubric": [
         "Separates source and generated checks",
         "Tests every public export in a clean consumer"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["undent:scripts/build_npm.ts"],
+      "sourceIds": [
+        "undent:scripts/build_npm.ts"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["build-devtools", "packaging", "training"],
-      "rationale": "Cross-runtime publication needs separate executable proof."
+      "tags": [
+        "build-devtools",
+        "packaging",
+        "training"
+      ],
+      "rationale": "Cross-runtime publication needs separate executable proof.",
+      "forbiddenSkills": []
     },
     {
       "id": "train-okikio-undent",
@@ -424,21 +664,40 @@
       "kind": "knowledge",
       "split": "train",
       "prompt": "Choose among undent, undent.string, align, embed, indent, and the Unicode column offset for generated multiline terminal help.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "assertions": [
-        { "kind": "contains", "value": "embed" },
-        { "kind": "contains", "value": "align" },
-        { "kind": "contains", "value": "Unicode" }
+        {
+          "kind": "contains",
+          "value": "embed"
+        },
+        {
+          "kind": "contains",
+          "value": "align"
+        },
+        {
+          "kind": "contains",
+          "value": "Unicode"
+        }
       ],
       "rubric": [
         "Distinguishes dedent and alignment",
         "Accounts for display width only when needed"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["undent:mod.ts", "undent:unicode.ts"],
+      "sourceIds": [
+        "undent:mod.ts",
+        "undent:unicode.ts"
+      ],
       "evidenceStatus": "executable",
-      "tags": ["use-okikio", "undent", "training"],
-      "rationale": "The package exposes a real decision surface beyond generic dedent."
+      "tags": [
+        "use-okikio",
+        "undent",
+        "training"
+      ],
+      "rationale": "The package exposes a real decision surface beyond generic dedent.",
+      "forbiddenSkills": []
     },
     {
       "id": "seen-okikio-package-status",
@@ -447,10 +706,18 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A personal package is version 0.0.0; the README imports stringify, the README later says it is unimplemented, and mod.ts exports no stringify. Decide what usage code and claims are allowed.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "assertions": [
-        { "kind": "regex", "value": "experimental|0\\.0\\.0" },
-        { "kind": "regex", "value": "not implemented|missing export" }
+        {
+          "kind": "regex",
+          "value": "experimental|0\\.0\\.0"
+        },
+        {
+          "kind": "regex",
+          "value": "not implemented|missing export"
+        }
       ],
       "rubric": [
         "Uses source precedence",
@@ -458,10 +725,17 @@
         "Names available alternatives"
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["wikitext"],
+      "sourceIds": [
+        "wikitext"
+      ],
       "evidenceStatus": "experimental",
-      "tags": ["use-okikio", "wikitext", "training"],
-      "rationale": "Personal library guidance must be especially resistant to memory-based hallucination."
+      "tags": [
+        "use-okikio",
+        "wikitext",
+        "training"
+      ],
+      "rationale": "Personal library guidance must be especially resistant to memory-based hallucination.",
+      "forbiddenSkills": []
     }
   ]
 }

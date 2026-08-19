@@ -129,7 +129,7 @@ Decide:
 - connect, idle, statement, and pool wait timeouts;
 - TLS and certificate verification;
 - application name and server settings;
-- retry boundary;
+- retry owner;
 - health/readiness query;
 - shutdown order and in-flight drain;
 - query logging/redaction owned by the application's observability layer.
@@ -138,7 +138,7 @@ The retained `createDatabase()` constructs the client internally and returns onl
 
 ## Configuration model
 
-Validate lazily at the composition boundary:
+Validate lazily at the composition scope:
 
 ```ts
 interface DatabaseConfig {
@@ -205,7 +205,7 @@ Drizzle transaction types do not establish that a custom adapter or serverless d
 
 ## Error policy
 
-Classify at the database boundary:
+Classify at the database handoff:
 
 | Category | Example response policy |
 |---|---|
@@ -250,7 +250,7 @@ schema edit -> generate -> review SQL/snapshot -> empty install -> upgrade fixtu
 | Importing schema requires env | config at module scope | import-safe schema and lazy config |
 | Idempotency race creates duplicates/errors | read-before-insert | database constraint and atomic insert policy |
 | Queue work executes twice | claim split or lease semantics incomplete | concurrent workers and atomic claim oracle |
-| Raw constraint message reaches caller | boundary leakage | stable mapping plus redacted cause |
+| Raw constraint message reaches caller | provider detail leakage | stable mapping plus redacted cause |
 
 ## Test matrix
 

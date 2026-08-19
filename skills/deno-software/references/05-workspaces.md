@@ -88,7 +88,7 @@ Consequences:
 - undeclared deep imports bypass the intended contract and must be removed;
 - container builds must preserve the root config, dependent members, and the
   relative directory structure;
-- a package name without exports is not a complete Deno package boundary.
+- a package name without exports is not a complete Deno package API.
 
 ## Deno members versus npm members
 
@@ -206,7 +206,7 @@ Root imports are useful for versions shared by Deno members:
 {
   "workspace": ["packages/*"],
   "imports": {
-    "@std/assert": "jsr:@std/assert@^1",
+    "@std/expect": "jsr:@std/expect@^1.0.20",
     "zod": "npm:zod@^4"
   }
 }
@@ -295,7 +295,7 @@ compiler options are inherited, then member options are merged.
 ```
 
 Do not add DOM libraries to the root merely because one frontend package needs
-them. Keep environment-specific globals at the member boundary.
+them. Keep environment-specific globals at the member module.
 
 Existing tsconfig project references can coexist. Determine precedence and which
 tools still consume them before deleting any TSConfig.

@@ -10,6 +10,13 @@ evaluations, decision questions, failure signatures, deliberate exclusions,
 and verification method. A package mention without that chain is not counted
 as capability coverage.
 
+Repository validation also checks **reference completeness**: every Markdown
+reference shipped under `skills/*/references/` must be linked from the owning
+`SKILL.md` and represented by at least one capability record. Each mapped
+reference must have train, valid-seen, and held-out behavioral coverage. A skill
+with rich prose but no capability ledger therefore fails validation instead of
+being treated as complete.
+
 Routing cases measure activation precision and recall. Knowledge cases exercise
 contracts models commonly misremember. Trajectory cases score inspection,
 decisions, tool order, and honest reporting. Artifact cases use repositories
@@ -21,9 +28,12 @@ SkillOpt may read train and valid-seen cases. Candidate selection may use
 valid-unseen. Cross-model runs use transfer. Release review uses adversarial and
 then test-frozen. Frozen cases never enter optimizer prompts or failure reports.
 
-Deterministic assertions and repository commands control outcome scores. An LLM
-judge may grade qualitative rubric items but cannot override failed executable
-acceptance criteria.
+Deterministic assertions and repository commands run before qualitative
+judging and remain authoritative. `trajectory-rubric` and `mixed` cases require
+an explicitly configured judge adapter. The judge receives the original prompt,
+rubric criteria, and redacted target trajectory evidence, but no fixture path,
+hidden baseline, mutable skill tree, or evaluator answer key. A favorable judge
+result cannot override a failed deterministic acceptance criterion.
 
 ## Generic skill telemetry
 
@@ -38,10 +48,7 @@ roles and different variant and target-skill revisions. A no-skill baseline may
 omit the target; the candidate may not. At least three paired repetitions are
 required by default.
 
-The first-generation `activation.deliverSoftware` and
-`activation.denoSoftware` case field remains readable during migration but does
-not satisfy telemetry for the new skills. New and materially revised cases use
-`expectedSkills` and `forbiddenSkills`.
+All cases use generic `expectedSkills` and `forbiddenSkills`; the evaluator no longer accepts first-generation per-skill activation fields.
 
 ## Corpus tiers
 
@@ -52,8 +59,9 @@ keyword assertions cannot establish task success.
 The quality, evidence, deep-capability, and domain-specific files are the
 decision corpus. Their cases combine behavioral assertions with task-specific
 rubrics and include frozen composition, authorization, negative-routing,
-security, compatibility, and executable-proof scenarios. Rubric-defined cases
-still require a rollout and judge runner; they are not executable outcomes.
+security, compatibility, and executable-proof scenarios. `trajectory-rubric` and `mixed` cases require both target rollout and the
+explicit judge path. Routing-smoke rubric prose is explanatory and does not
+automatically spend judge tokens.
 Release claims must use real trajectories and executable cases, not the smoke
 corpus or raw case totals.
 

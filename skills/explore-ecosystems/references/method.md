@@ -43,7 +43,7 @@ be able to answer:
 - which statements were observed, documented, inferred, or unresolved;
 - what executable verification ran and what remains blocked.
 
-The output is not a package catalog. It is a capability and boundary decision.
+The output is not a package catalog. It is a capability and ownership decision.
 
 ## The ecosystem hypothesis
 
@@ -150,7 +150,7 @@ Names are ambiguous. Resolve:
 
 Inspect exact installed exports and source before current docs. Then inspect
 current stable/prerelease lines and release notes to learn migration/deprecation.
-Write the boundary: "repository resolves c12 3.3.4; source record also examined
+Write the interface: "repository resolves c12 3.3.4; source record also examined
 4.0.0-beta.5 for future capability; beta APIs are not available to current
 code." Never merge versions into a fictional superset API.
 
@@ -178,7 +178,7 @@ not a semantic edge.
 Build a capability owner table. Split packages only where their concerns differ.
 For a CLI, Optique can own command grammar while LogTape owns output transport,
 c12 owns discovery/layers, defu/custom merge owns fallback algebra, Zod owns the
-application schema, and Standard Schema owns an interoperability boundary. If
+application schema, and Standard Schema owns an interoperability contract. If
 two tools own the same concern, select one or write an explicit composition rule.
 
 ## Phase 4: inspect behavior and operations
@@ -189,7 +189,7 @@ For each selected candidate inspect the complete lifecycle:
 2. configuration shapes, defaults, precedence, environment, and provenance;
 3. runtime behavior, concurrency, lifecycle/disposal, errors, retries, timeout,
    cancellation, and recovery;
-4. framework/runtime/driver adapters and exact version/peer boundaries;
+4. framework/runtime/driver adapters and exact version and peer ranges;
 5. security/trust/secrets/permissions and supply-chain concerns;
 6. persistence/schema/migration/data authority where applicable;
 7. build/bundle/tree-shaking/generated/package/publication behavior;
@@ -214,7 +214,7 @@ to implement/verify. A recommendation must include:
 - chosen version/components and exact roles;
 - rejected plausible siblings/alternatives and reasons;
 - config/runtime/generated/deploy migration sequence;
-- compatibility and rollback boundary;
+- compatibility and rollback point;
 - minimal proof and real connected workflow;
 - unresolved claims and evidence needed next.
 
@@ -236,7 +236,7 @@ Identity
   exact package/import/product/protocol:
   installed version/revision/integrity:
   canonical owner/repository/license/status:
-  current stable/prerelease boundary:
+  current stable/prerelease range:
 
 Topology
   actual topology classification:

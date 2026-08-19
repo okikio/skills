@@ -214,7 +214,7 @@ The migration runner:
 - records successful or failed attempts;
 - cannot roll back prior statements in the file.
 
-Seeds need their own identifiers/hashes/history. Make callbacks idempotent or rely on a proven ClickHouse deduplication boundary. A failed seed may have written data before the process died.
+Seeds need their own identifiers/hashes/history. Make callbacks idempotent or rely on a proven ClickHouse deduplication guarantee. A failed seed may have written data before the process died.
 
 ## Public API shape
 

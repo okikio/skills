@@ -14,7 +14,7 @@ and duplicate handling.
 
 ### Checkpoint-resumable
 
-The operation can continue after a committed boundary. Requirements include a
+The operation can continue after a committed checkpoint. Requirements include a
 durable checkpoint owner, compatibility metadata, output receipts, replay rules,
 and reconciliation.
 
@@ -68,7 +68,7 @@ A resume preflight validates:
 - output receipts and target state;
 - configuration digest and relevant policy;
 - checkpoint schema;
-- replay safety at the last boundary.
+- replay safety at the last committed checkpoint.
 
 A fingerprint is an identity aid, not proof of security or semantic
 compatibility. Version the canonicalization algorithm. Do not hash secrets into
@@ -95,7 +95,7 @@ output identity
 Retries create new attempts, not new logical outputs. Metrics and diagnostics
 should preserve both.
 
-## Library and workflow boundary
+## Library and workflow ownership
 
 A library may own:
 
@@ -208,7 +208,7 @@ Do not maintain two orchestration paths without:
 - a named owner;
 - parity tests;
 - a removal condition;
-- a deadline or release boundary;
+- a deadline or release condition;
 - explicit consumer inventory.
 
 ## Failure signatures
@@ -241,7 +241,7 @@ Do not maintain two orchestration paths without:
 
 - Library-first guidebook, reviewed 2026-07-23.
 - Existing build-workflows durability, checkpoint, and pipeline references.
-- Temporal TypeScript documentation for durable orchestration boundaries,
+- Temporal TypeScript documentation for durable orchestration handoffs,
   reviewed 2026-07-23.
 - unstorage and ohash source evidence for adapter and fingerprint limitations,
   reviewed 2026-07-23.

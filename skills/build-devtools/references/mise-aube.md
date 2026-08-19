@@ -66,10 +66,10 @@ Set a minimum Mise version when configuration uses newer semantics:
 min_version = { hard = "2026.7.0", soft = "2026.6.0" }
 ```
 
-Choose the real compatibility boundary rather than copying this version.
+Choose the real compatibility requirement rather than copying this version.
 
 Mise requires trust before executing configuration in an untrusted project.
-Treat this as a code-execution boundary: configuration can install tools, render
+Treat this as a code-execution trust transition: configuration can install tools, render
 templates, load environment values, and run tasks. Do not globally trust an
 arbitrary checkout merely to make automation green. CI should install from the
 reviewed revision and use an explicit trust policy.
@@ -151,7 +151,7 @@ Important task properties include:
 - `run`, `run_windows`, `file`, and `shell` for execution;
 - `depends`, `depends_post`, and `wait_for` for graph order;
 - structured task references with arguments and environment overrides;
-- `tools`, `env`, `dir`, and `usage` for an execution boundary;
+- `tools`, `env`, `dir`, and `usage` for an execution scope;
 - `sources` and `outputs` for freshness and watch behavior;
 - `timeout`, `confirm`, `hide`, `quiet`, `silent`, `raw`, and `interactive` for
   control and output behavior.
@@ -185,7 +185,7 @@ Secrets can still leak through child tools, command arguments, debug logs,
 artifacts, or structured output.
 
 Activation mutates the interactive shell. `mise exec -- command` or task-local
-tools often produce a clearer CI boundary than relying on shell startup files.
+tools often produce a clearer CI environment than relying on shell startup files.
 Shims do not provide every activation feature. Test the selected mode in clean
 shells on supported platforms.
 
@@ -246,7 +246,7 @@ command may rewrite the lockfile or contact the registry.
 ## Aube workspaces, catalogs, and deploys
 
 Aube discovers workspaces from `aube-workspace.yaml` and can consume an existing
-`pnpm-workspace.yaml`. The file is an ownership boundary for package globs,
+`pnpm-workspace.yaml`. The file is an ownership handoff for package globs,
 catalogs, lifecycle-build policy, and several settings.
 
 ```yaml

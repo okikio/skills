@@ -1,73 +1,154 @@
-# Base Engineering Instructions
+# General engineering rules
 
-Use a principles-first style. The goal is not just to make the code work, but to make it feel obvious, predictable, explainable, easy to self-serve, and easy to trust.
+Use the current cross-project standard in [`base.md`](./base.md) as the authority for naming, schemas, documentation, testing, ownership, compatibility, and delivery. This reference explains the general engineering decisions that apply when no language- or domain-specific reference is more precise.
 
-Prefer JavaScript-native constructs and runtime shapes whenever JavaScript already expresses the idea clearly. Use TypeScript to describe and sharpen JavaScript, not to replace it with extra ceremony. Avoid TypeScript-only syntax when JavaScript already carries the intent well. For example, do not add `public` by default, prefer `#private` when real private state is needed and supported, and use `protected` only when inheritance genuinely requires it.
+## Start from the repository
 
-Let the role of the code decide its shape. Do not blindly force one naming rule onto every construct. When naming rules conflict, apply them in this order: (1) mirror the boundary you are modeling, (2) preserve the data-versus-behavior distinction, (3) fall back to the construct kind.
+Inspect the current repository before changing it. Map the relevant entrypoints, exports, imports, schemas, public types, runtime paths, tests, documentation, generated artifacts, and installed toolchain first.
 
-If a type must simultaneously satisfy an external contract and an internal domain interface, always define two separate types: one mirroring the external shape and one using internal naming. Map between them explicitly at the boundary. Never reuse a boundary type as a domain type, even when their shapes are identical at a point in time.
+Do not infer architecture from a single file. Trace the requested behavior from its public entrypoint through the dependencies that actually own it. Include error paths, cancellation, cleanup, retries, persistence, and generated output when they affect the result.
 
-Make data look like data, and make behavior look like behavior.
+When documentation and code disagree, distinguish the intended contract from verified behavior. Do not silently convert an old implementation detail into a current requirement.
 
-Use `snake_case` for fields in plain records, normalized payloads, persistence-oriented fields, schema-like data, and other shapes that are primarily stable data.
+## Name the exact concept
 
-Use `camelCase` for functions, methods, variables, parameters, getters, setters, class properties, and other runtime behavior. If a class property intentionally stores stable record data, let the data rule win for that property; for example, `class UserRow { user_id: string; refreshToken(): void }` keeps `user_id` as data and `refreshToken` as behavior.
+Use surrounding context to keep names short. Prefer one concrete word. Add a second or third word only when the shorter name would be ambiguous.
 
-Use `PascalCase` for classes, interfaces, types, and other major abstractions. If an interface or type models a plain record, its fields should follow the plain-record style. If it models a behavioral or class-like API, its members should follow that API style.
+Project-owned runtime operations should use concrete verbs such as `get`, `create`, `open`, `save`, `inspect`, `plan`, `convert`, `write`, `close`, `pause`, `resume`, and `cancel`.
 
-Use `UPPER_SNAKE_CASE` for true constants and environment variables.
+Use `get` for addressable retrieval. Use `read` when the operation actually consumes or reads a byte stream, file, cursor, archive, socket, or another sequential source.
 
-At boundaries, keep naming honest. Mirror the naming used by external APIs, libraries, file formats, protocols, or other systems while you are still at the boundary. When an external API uses `camelCase` for its payload fields, keep `camelCase` in the boundary type that mirrors that API. Apply `snake_case` only when normalizing those fields into the internal domain model. Normalize into the project’s internal naming style only once data crosses into the project’s own domain model. Do not blur boundary types and internal types together.
+Avoid vague project-owned nouns and verbs such as `manager`, `helper`, `common`, `shared`, `misc`, `process`, `handle`, or `execute` when a more exact concept exists. External APIs and protocols can keep their exact terminology.
 
-Prefer the shortest name that still communicates the real intent. Do not make names longer just to sound explicit. Add more words only when they remove real ambiguity. Favor names that stay visually light and easy to scan.
+Do not introduce generic architecture words where a specific term communicates the real relationship. Name the exact API entrypoint, ownership handoff, validation stage, transaction scope, publication commit point, renderer handoff, version line, or other concrete concept.
 
-Treat files as part of the design. Use a leading underscore, such as `_utils.ts` or `_helpers.ts`, for support modules and helper modules that are not the primary entry point for understanding a feature. Do not use this convention for entry points, adapters, or infrastructure files that are primary to their own concern. The underscore marks the file as secondary, not forbidden.
+## Keep data contracts explicit
 
-Prefer JavaScript-native representations over TypeScript-only constructs when both can express the same idea clearly. For named finite value sets, prefer constant objects plus derived types over TypeScript `enum`. Keep the runtime shape plain and make the type derive from the runtime source of truth.
+Project-owned TypeScript and JSON fields normally use `camelCase`. Preserve external field naming while data still mirrors an external API, protocol, persisted format, or compatibility contract. Convert once at the explicit handoff when the project intentionally owns a different shape.
 
-Prefer plain, cheap, inspectable runtime structures. For membership checks, default to plain object literals when simple key existence is all that is needed and prototype keys are not a concern. Use `Object.create(null)` for dictionary-style lookup tables when you need prototype-free semantics or want to avoid collisions with inherited keys. Freeze static lookup tables when immutability helps communicate intent and prevent accidental drift. For simple dense numeric or byte-range checks, prefer `Uint8Array`. Still choose the structure that best matches the real problem when semantics matter more than micro-optimization.
+Do not invent a second internal record solely to change letter casing. Introduce a separate shape only when the semantics, ownership, validation stage, or lifecycle are actually different.
 
-Allow deliberate complexity only when you can state (a) the specific runtime cost it reduces, (b) the measured or well-understood magnitude of that cost in the target workload, and (c) why the readability or maintenance tradeoff is acceptable. If you cannot state all three, prefer the simpler form.
+For Zod-owned data:
 
-When code becomes less straightforward because of performance, memory, allocation, caching, batching, scheduling, I/O, concurrency, or other systems concerns, treat that as a design decision that must be explained. Do not introduce cleverness silently.
+```ts
+export const SourceSchema = z.strictObject({
+  kind: z.literal("url"),
+  url: z.url().describe("HTTP or HTTPS resource inspected by the caller."),
+});
 
-Write documentation, comments, and TSDoc to explain intent, constraints, assumptions, tradeoffs, and behavior that are not easy to infer from a quick read.
+export type SourceType = z.output<typeof SourceSchema>;
+```
 
-A reader should be able to complete the task using the docs without guessing missing commands, hidden assumptions, unstated prerequisites, or external project knowledge.
+Every project-owned Zod schema constant ends in `Schema`. Project-owned schema-derived data normally ends in `Type`. Behavior interfaces and classes use the concrete domain noun without a `Type` suffix.
 
-Good explanatory writing should make clear:
-- what problem is being solved
-- what is being done
-- why this approach matters
-- what it enables going forward
+Put important field documentation on the schema that owns the authoring contract. Do not maintain a duplicate handwritten interface merely to carry comments.
 
-When explaining how something works, focus on the parts that are genuinely hard to grasp from the code alone. This includes:
-- binary parsing, encoding, offsets, and low-level data handling
-- regular expressions and tricky matching behavior
-- complex array or object transformations
-- normalization and boundary conversion logic
-- external I/O and interactions with filesystems, networks, processes, or databases
-- concurrency, scheduling, coordination, cancellation, and lifecycle management
-- caching, pooling, and allocation-sensitive code
-- invariants, assumptions, failure modes, and edge cases
-- performance-sensitive code and deliberate optimizations
+Use Standard Schema when a reusable integration should accept multiple validator libraries. Do not confuse Standard Schema with JSON Schema or with the project's own authoring schema.
 
-Do not waste comments on code that already reads clearly. Do not narrate every assignment, loop, or obvious control-flow step. Comments should earn their keep by surfacing reasoning, tradeoffs, hidden constraints, workload assumptions, or behavior that a careful reader would otherwise have to reverse-engineer.
+## Put code in the layer that owns the concept
 
-When code is made less straightforward for performance or systems reasons, explain the full chain clearly:
-- what the optimization is
-- how it works mechanically
-- what runtime cost it reduces
-- why that cost matters in this specific workload or code path
-- why the gain is worth the added readability or maintenance cost
+Use the repository's established dependency direction.
 
-Explain performance decisions in terms of the real workload and access pattern, not vague claims like "this is faster" or "this is more efficient".
+```text
+utils/
+  generic programming models and execution mechanics
 
-Use familiar language by default. When a technical term is worth keeping, explain the concrete behavior first, then introduce the term only if it still helps. Ground abstract ideas in a real behavior, cost, failure mode, input/output shape, or downstream effect.
+packages/
+  concrete domain and product capabilities
 
-Prefer code and prose that teach as they go. A careful reader should be able to understand not only what the code does, but why it takes this shape and what future work it is preparing for.
+registry/
+  declarative definitions and catalogs
 
-Default to explicitness, high signal, correctness, maintainability, standards alignment, and least privilege. Do not invent files, APIs, config, behavior, or guarantees that are not visible in the code or task. If something is unclear, state the assumption and give a concrete verification step.
+clis/ and apps/
+  executable composition and product policy
+```
 
-When modifying existing code that contains a stated assumption that no longer holds, let the developer know so their mental model reflects the current reality before completing the task. Do not leave a documented assumption that contradicts the updated code.
+Do not create `common/`, `shared/`, `misc/`, `helpers/`, or a generic `utils/` dumping ground inside a concrete package. Use the precise capability name.
+
+Use underscore-prefixed support entries only when an auto-discovered tree requires a verified non-discoverable entry. An underscore is not the normal marker for "secondary" modules.
+
+Public entrypoints must be intentional. Keep runtime-specific adapters or integrations on explicit subpaths when importing them from the root would make unrelated runtimes evaluate incompatible code.
+
+## Prefer JavaScript-native TypeScript
+
+Use TypeScript to describe JavaScript rather than replace it with extra ceremony.
+
+Prefer runtime values plus derived types over TypeScript-only representations when both express the contract clearly. For example, prefer a constant object or schema over `enum` when the runtime value is itself useful.
+
+Do not add `public` by default. Use JavaScript private fields when true private state is required and the supported runtimes permit them. Use inheritance-specific syntax only when inheritance is the real design.
+
+Public inference is part of the API. Reusable generic APIs should have compile fixtures for the inference that callers depend on, including expected type errors where they protect a contract.
+
+## Make ownership and lifetime visible
+
+Acquisition, cancellation, terminal results, and cleanup are separate concerns.
+
+- Use `AbortSignal` to request cancellation.
+- Use explicit disposal to release resources.
+- Treat injected resources as borrowed unless an option explicitly transfers ownership.
+- Unwind resources acquired before a later acquisition fails.
+- Do not let a cleanup fault erase the primary operation fault.
+- Keep observations separate from authority for cancellation, terminal results, or durable state.
+
+A `ctx` parameter is appropriate when one typed execution context clearly owns the operation lifetime. It must not become an ambient bag of unrelated services.
+
+Any operation whose memory, queue, retry count, concurrency, request count, result size, or retained state can grow needs an explicit limit or a documented reason why it cannot grow without limit.
+
+## Explain the hard parts
+
+Documentation is part of the implementation contract. Public symbols need useful TSDoc, and important internal symbols need the same treatment when they own behavior a reader cannot safely infer from the name and syntax alone.
+
+Common documentation targets include:
+
+- parser tables and parser state;
+- regular expressions with non-obvious semantics;
+- leases, generations, caches, queues, and retry rules;
+- resource factories and cleanup paths;
+- transaction and publication invariants;
+- binary layouts, offsets, and encodings;
+- deliberate performance structures;
+- benchmark workloads and fixtures whose shape affects interpretation.
+
+Explain what the symbol means here, why it exists, its important options, ownership, cancellation, limits, failures, and a concrete example when the API is reusable. Build the reader's mental model progressively. Do not assume they already understand the rest of the repository.
+
+Local comments should preserve a rule or explain reasoning. Do not narrate obvious syntax.
+
+## Optimize only with a named cost
+
+Prefer plain, cheap, inspectable structures until evidence justifies something more complex.
+
+A deliberate optimization should identify:
+
+1. the concrete runtime cost it reduces;
+2. the target workload where that cost matters;
+3. the measured or well-supported magnitude;
+4. the semantic tradeoff, if any;
+5. how to disable it when it can change observable behavior.
+
+Benchmark representative workloads. Preserve benchmark fixtures and configuration when changing them would make comparisons misleading.
+
+## Reuse the repository's selected owners
+
+Before adding a dependency or second tool path, inspect what the repository already selected for the concern. Reuse it when it directly supports the requirement.
+
+Examples include LogTape for diagnostics, Optique for CLI grammar, Oxc for selected compiler/lint/format work, Unplugin for selected build-tool integrations, Mise for development tasks, Playwright for browser behavior, and Mitata for cross-runtime benchmarks.
+
+These tools are not universal requirements. They are owners only where the repository has selected them.
+
+## Validate the behavior you claim
+
+The current Okikio/Kaiju default for package tests is `node:test` with `@std/expect`. The same source should run in Deno and Node when the package claims both. Runtime-specific suites remain necessary for behavior that only exists in browsers, workers, Deno, Bun, Node, databases, containers, or other concrete environments.
+
+A type-only green check is not enough for runtime behavior. Run the relevant formatter, lint, strict type checks, tests, builds, runtime smoke tests, output inspection, public consumer/type fixtures, and user flows.
+
+Keep functional changes separate from unrelated formatting, import sorting, line-ending normalization, or generated-file churn. Inspect the final diff and revert incidental changes.
+
+When delivering an archive, validate the exact archive: create it, extract it into a clean directory, compare files and hashes, recreate only allowed validation-side infrastructure, and rerun the available checks against the extracted artifact.
+
+Report every native gate that ran, every result, and every gate that the execution environment prevented. Do not convert an unavailable runtime into a passed check.
+
+## Replace obsolete behavior completely
+
+Do not preserve obsolete compatibility unless the current task explicitly requires it.
+
+A replacement updates all current consumers, tests, exports, documentation, configuration, generated artifacts, persisted data, and user flows that depend on the old behavior. Remove the obsolete path only after those current consumers have moved.

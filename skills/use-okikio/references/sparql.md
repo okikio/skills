@@ -7,7 +7,7 @@
 - Graph patterns
 - Query construction
 - Updates
-- Executor boundary
+- Executor interface
 - Safe public query mapping
 - Federation and engine differences
 - Failure signatures
@@ -145,7 +145,7 @@ await incrementAge.execute({ endpoint: updateEndpoint });
 
 Updates require separate authorization, endpoint capability, graph ownership, idempotency, timeout, audit, and partial-failure semantics. A builder prevents some syntax defects; it does not make arbitrary graph mutation safe.
 
-## Executor boundary
+## Executor interface
 
 The uploaded consumer uses:
 

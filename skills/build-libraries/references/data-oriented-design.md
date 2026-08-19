@@ -23,7 +23,7 @@ data-oriented.
 
 ## Start with the transformation graph
 
-Document the actual data path before selecting classes or package boundaries:
+Document the actual data path before selecting classes or package APIs:
 
 ```text
 TargetDefinition[]
@@ -45,7 +45,7 @@ For each transform record:
 - concurrency and batch policy;
 - lifetime and retention;
 - error and rejection path;
-- materialization and persistence boundary.
+- materialization and persistence points.
 
 Optimize the dominant transform, not the most visually complex type.
 
@@ -74,7 +74,7 @@ interface ObservationColumns {
 }
 ```
 
-Keep conversion at explicit boundaries. Do not expose an internal packed layout
+Keep conversion at explicit ownership points. Do not expose an internal packed layout
 unless consumers need and can support that compatibility contract.
 
 ## Hot and cold data
@@ -104,7 +104,7 @@ conversion cost. Measure both.
 
 ### Stable objects
 
-Use ordinary objects for small or irregular data, public boundaries, rich
+Use ordinary objects for small or irregular data, public APIs, rich
 metadata, and code where clarity dominates. Keep hot object shapes stable:
 
 - create properties in consistent order;
@@ -131,7 +131,7 @@ Account for:
 - null or optional values;
 - precision and overflow;
 - endianness for serialized formats;
-- conversion at public boundaries;
+- conversion at public APIs;
 - debug and diagnostic ergonomics;
 - worker transfer and ownership.
 

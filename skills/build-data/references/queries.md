@@ -4,7 +4,7 @@ Use this reference when translating a normalized query contract into SQL, SPARQL
 
 ## Contents
 
-- Ownership boundaries
+- Ownership handoffs
 - Normalized query model
 - Field and operator registries
 - Server-owned constraints
@@ -21,7 +21,7 @@ Use this reference when translating a normalized query contract into SQL, SPARQL
 - Deliberate exclusions
 - Sources and freshness
 
-## Ownership boundaries
+## Ownership handoffs
 
 Keep these layers separate:
 
@@ -173,7 +173,7 @@ interface CursorV2 {
   version: 2
   resource: 'accounts'
   sort: Array<{ field: string; direction: 'asc' | 'desc' }>
-  boundary: Record<string, string | number>
+  position: Record<string, string | number>
   filterDigest: string
   authorityDigest?: string
   issuedAt: string
@@ -181,7 +181,7 @@ interface CursorV2 {
 }
 ```
 
-Sign or authenticate opaque cursors where clients must not tamper with boundaries. Canonicalize payloads before HMAC. Use constant-time signature comparison where the runtime provides it. Rotate secrets with a key/version identifier. Never include secret or private row data merely because the token is base64url encoded.
+Sign or authenticate opaque cursors where clients must not tamper with cursor positions. Canonicalize payloads before HMAC. Use constant-time signature comparison where the runtime provides it. Rotate secrets with a key/version identifier. Never include secret or private row data merely because the token is base64url encoded.
 
 The retained finance cursor includes one primary sort plus tiebreaker, direction, and creation time. It does not visibly bind the cursor to filter/resource context in the inspected schema. A cursor reused across filters can yield incorrect pages even with a valid HMAC. Add a context digest or enforce an equivalent server-side binding.
 
@@ -240,7 +240,7 @@ decode query/json/form source
   -> compile parameterized SQL/SPARQL/search request
   -> execute with timeout/cancellation/resource bounds
   -> decode rows/bindings and fetch one extra row if using cursor continuation
-  -> construct signed next/previous cursor from actual boundary rows
+  -> construct signed next/previous cursor from actual position rows
   -> execute declared count strategy
   -> shape stable response metadata
 ```

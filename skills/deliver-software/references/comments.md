@@ -1,115 +1,166 @@
+# TSDoc and comments
 
-# TSDoc and Comments
+## Purpose
 
-## What comments are for
+Documentation should let a reader understand what a symbol does, why it exists, how it participates in the larger flow, and which rules must remain true without reconstructing that knowledge from call sites and tests.
 
-Comments and TSDoc should explain:
-- intent
-- constraints
-- assumptions
-- edge cases
-- invariants
-- reasoning behind tricky choices
-- the concrete rule that must stay true, when that matters
-- what future work or usage this design enables, when that matters
+Do not write comments only to satisfy coverage. A comment should add information that the name, types, and syntax do not already make obvious.
 
-Do not use comments to restate obvious code.
+## What needs documentation
 
-## TSDoc defaults
+Every exported symbol needs useful TSDoc unless it is a direct re-export whose source documentation remains complete.
 
-For public APIs, start with:
-- what this thing is
-- why it exists
-- what problem it solves for the caller
-- what the caller gets from using it
+Also document important non-exported symbols. This includes private or internal:
 
-Then explain the high-level approach if the implementation model matters.
+- functions and methods;
+- schemas and data types;
+- interfaces and classes;
+- constants, lookup tables, regular expressions, parser tables, and token maps;
+- fields whose unit, ownership, default, or lifecycle is not obvious;
+- parser/tokenizer/scanner state;
+- state machines and transition tables;
+- resource owners and cleanup adapters;
+- algorithms whose correctness depends on a hidden invariant;
+- performance-sensitive or allocation-sensitive code;
+- benchmark fixture builders when they define the workload being measured.
 
-Use plain English by default.
-When a technical term is worth keeping, define it in grounded language the first time it matters.
-Do not stop at a shorter or softer paraphrase if the reader still cannot picture the idea in this codebase.
+A private helper can contain the most important invariant in a module. Its visibility does not make the invariant less important.
 
-## Section and header discipline in TSDoc
+Document internal state with the same care when it controls leases, generations, retirement markers, caches, retry state, parser cursors, sequence numbers, checkpoints, publication order, or cleanup. The review test is semantic importance, not export visibility.
 
-Do not add section headers inside a doc block unless they improve navigation.
-A section label must be specific and useful on its own.
-If the prose naturally continues the same idea, use a transition sentence instead of a header.
+When a Zod object schema is the authoring source for project data, document important fields directly on the schema properties. Include the concrete meaning, unit, default, allowed-value effect, or example that a caller needs. Do not create a duplicate TypeScript interface only to hold those field comments.
 
-## Grounding complex and abstract ideas
+For example:
 
-When code is not easy to infer from a quick read, explain it in plain English and anchor the explanation in something concrete.
-This especially applies to:
-- parser recovery
-- offset math
-- regular expressions
-- binary or bitwise logic
-- state machines
-- boundary normalization
-- performance-sensitive code
-- tricky boolean conditions
-- concurrency and lifecycle coordination
-- domain-specific parsing or transformation terms
+```ts
+export const RetrySchema = z.strictObject({
+  /** Maximum attempts including the initial request. @default 3 */
+  attempts: z.int().min(1).default(3),
+});
+```
 
-When useful, include:
-- the problem being handled
-- the key invariant and what it protects against
-- the step-by-step logic
-- a short example with real input or output
-- an ASCII diagram if it makes the logic easier to follow
-- the practical meaning of any jargon that remains
+Trivial glue can remain self-explanatory. `return left + right` does not need a paragraph when the function name already communicates the complete rule.
 
-A good explanation answers both of these:
-- `What does this term mean?`
-- `What does it mean here, in this code?`
+## Narrative shape
 
-## Diagram depth in comments and TSDoc
+For a significant symbol, build the explanation progressively instead of dumping disconnected facts.
 
-Use diagrams in comments when the local code is hard to understand because order,
-ownership, state transitions, or data-shape changes matter. Do not overcompress a
-multi-step lifecycle into a one-line pipeline when the omitted branch, fallback,
-or cleanup path is the point of the comment.
+A useful order is:
 
-For TSDoc, keep diagrams smaller than long-form documentation, but still large
-enough to preserve the behavior that matters. When the full lifecycle would make
-a doc block hard to scan, move the detailed diagram to Markdown docs and keep a
-short local diagram or link-style reference in the TSDoc.
+1. Say what the symbol represents or does in concrete terms.
+2. Explain the problem or role that makes it necessary.
+3. Connect it to the larger operation or lifecycle.
+4. Explain important options and their concrete effects.
+5. Show a realistic example when the API is reusable.
+6. Explain ownership, cancellation, cleanup, limits, failure, and performance only where they affect callers or maintainers.
+7. State the invariant or design reason that future changes must preserve.
 
-A useful comment diagram can show:
-- the trigger for the local lifecycle
-- the owner of each step
-- the shape that enters and leaves the function
-- the branch, retry, cleanup, or invalidation rule that protects correctness
+Use transition sentences when the prose continues the same subject. Add an internal heading only when the reader is entering a substantial new topic.
 
-## Performance-related explanation
+Do not use generic labels such as `Impact:` merely to manufacture structure. State the concrete effect directly in the prose.
 
-When a performance optimization makes the code less obvious, explain it clearly.
+## Local comments
+
+Local comments should explain the rule the following code preserves.
+
+Weak:
+
+```ts
+// Write the bytes.
+await writer.write(write);
+```
+
+Useful:
+
+```ts
+// Preserve the explicit position because a muxer can rewrite earlier container metadata during finalization.
+await writer.write(write);
+```
+
+Good local comments explain one of these:
+
+- why an apparently unnecessary step is required;
+- what race, corruption, leak, or compatibility defect the step prevents;
+- which source or downstream state the code deliberately preserves;
+- why an optimization uses a less obvious representation;
+- why cleanup must happen in a specific order;
+- why a malformed input is recovered instead of rejected;
+- why a limit exists and what resource it protects.
+
+Do not narrate syntax or repeat the identifier names.
+
+## Ground technical terms in this code
+
+If the explanation uses a specialized term, explain what it means here before relying on it.
+
+For example, do not only say that a parser is `chunk-invariant`. State that the same bytes must produce the same semantic events whether they arrive in one chunk, one-byte chunks, or chunks split inside a UTF-8 sequence.
+
+A good explanation answers both:
+
+- What does this term mean?
+- What does it mean in this implementation?
+
+## Examples
+
+Use examples when the API is reusable, configurable, surprising, or failure-sensitive.
+
+Prefer examples with real inputs and outputs. A non-trivial public API should normally show the common path and, when useful, one edge case or configuration that reveals a material rule.
+
+Do not bury the only explanation in code comments inside the example. Introduce what the example demonstrates in prose first.
+
+## Diagrams, tables, and lists
+
+Use a small ASCII diagram when order, ownership, state, retries, cleanup, data shape, or publication order is hard to communicate linearly.
+
+Use a table when the reader must compare exact options, states, units, or tradeoffs. Use a list when sequence or membership matters more than relationships.
+
+Do not repeat the same rounded-box flow grammar for every concept. Choose the representation that answers the reader's question.
+
+## Ownership, cancellation, and resources
+
+When a symbol acquires, borrows, transfers, cancels, pauses, resumes, closes, or disposes a live resource, document that lifecycle explicitly.
+
 State:
-- what the optimization is
-- how it works
-- what runtime cost it reduces
-- why that matters for this workload
-- why the gain is worth the extra readability or maintenance cost
 
-Do not quietly trade readability for speed without documenting the reason.
+- who owns the resource;
+- whether the caller transfers ownership;
+- what cancellation stops;
+- what disposal releases;
+- whether cleanup is idempotent;
+- what happens after partial failure;
+- whether a late completion can still change terminal state.
 
-## Examples and diagrams
+Do not use a generic lifecycle sentence when the actual close/abort/cancel ordering is the important contract.
 
-Use examples for:
-- public APIs
-- surprising behavior
-- edge cases
-- config-sensitive behavior
+## Performance and limits
 
-Prefer examples that show a real caller scenario, not a toy snippet with no context.
-Use diagrams only when they make the code easier to understand.
-For lifecycle-heavy code, prefer enough detail to show order, ownership, handoff shapes, retries, cleanup, and invalidation. Do not reduce a complex flow to a tiny abstract pipeline when the missing detail is what explains the behavior.
-Every diagram and example must match the real behavior of the implementation.
+When performance makes the code less obvious, explain the physical work being avoided or reduced.
+
+State the relevant facts, such as:
+
+- bytes retained in JavaScript memory;
+- active requests or workers;
+- allocation avoided by spans or indexes;
+- number of provider operations;
+- reason for batching, pooling, or caching;
+- maximum queue, part, buffer, or response size;
+- semantic effect of disabling the optimization.
+
+Do not write `faster` or `optimized` without the workload and mechanism that make the claim meaningful.
+
+## Style
+
+Use plain technical English by default. Apply formal ASD-STE100 only when the task explicitly asks for it.
+
+Use active voice and concrete nouns. Avoid em dashes, self-reference, HTML-like escaping in prose, and headings that interrupt a continuous explanation.
 
 ## Anti-patterns
 
-- Do not write essay-length doc blocks for simple APIs.
-- Do not invent generic section labels.
-- Do not restate parameter names without adding meaning.
-- Do not explain obvious syntax while skipping the real reasoning.
-- Do not use comments to compensate for poor naming when renaming would be clearer.
-- Do not write comments that sound more certain than the implementation really is.
+- coverage-only TSDoc such as `Gets the root.`;
+- restating a parameter name without explaining its meaning or effect;
+- documenting exports while leaving the internal state machine undocumented;
+- describing planned behavior as implemented behavior;
+- hiding resource ownership or cancellation in a distant guide when callers need it at the API;
+- essay-length doc blocks for trivial wrappers;
+- comments that compensate for an imprecise name when the symbol should be renamed;
+- stale diagrams or examples that no longer match the implementation.

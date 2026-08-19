@@ -8,8 +8,8 @@ metadata:
     - denoland/skills
     - deliver-software
   knowledge_baseline: Deno 2.0 through 2.9
-  version: "2.1.0"
-  last_reviewed: "2026-07-10"
+  version: "2.2.0"
+  last_reviewed: "2026-08-19"
 ---
 
 # Deno Software
@@ -65,6 +65,29 @@ second discovery, plan, or completion workflow.
 Use `references/13-command-reference.md` to confirm command intent. Use current
 official documentation when a command, option, API, stability status, or
 platform guarantee could have changed.
+
+### Complete reference index
+
+The table above is the loading guide. These links make every shipped reference an
+explicit part of the skill contract and allow validation/evaluation tooling to
+trace it directly:
+
+- [Foundations](references/01-foundations.md)
+- [Release history and version-sensitive behavior](references/02-releases.md)
+- [Repository discovery](references/03-repository-discovery.md)
+- [Packages and dependency ownership](references/04-packages.md)
+- [Workspaces](references/05-workspaces.md)
+- [Security and permissions](references/06-security.md)
+- [Quality, tests, CI, and benchmarks](references/07-quality.md)
+- [Node and npm compatibility](references/08-node-compatibility.md)
+- [Libraries and publishing](references/09-libraries.md)
+- [Artifacts](references/10-artifacts.md)
+- [Delivery playbooks](references/11-delivery-playbooks.md)
+- [Verification](references/12-verification.md)
+- [Command reference](references/13-command-reference.md)
+- [Source policy](references/14-sources.md)
+- [Decision cases](references/15-decision-cases.md)
+- [Standalone lifecycle fallback](references/16-standalone.md)
 
 ### Reference-loading discipline
 
@@ -122,13 +145,15 @@ change.
    package.json-first, or hybrid before editing dependencies.
 4. **Investigate the dependency ecosystem.** For a material dependency, inspect
    the owning workspace or organization, sibling packages, official adapters,
-   registry metadata, exports, consumers, and version boundaries. Treat
+   registry metadata, exports, consumers, and version lines. Treat
    monorepo/ecosystem status as a hypothesis to verify, not a fact or a reason to
    install every sibling. Use `explore-ecosystems` as the evidence owner when it
    is available.
-5. **Preserve working compatibility.** Existing package.json, npm packages, Node
-   APIs, and foreign lockfiles are valid inputs. Do not rewrite them for
-   ideological purity.
+5. **Respect the requested compatibility posture.** Existing package.json, npm
+   packages, Node APIs, and foreign lockfiles are valid inputs. Do not rewrite
+   them for ideological purity. When the project is pre-release or the user asks
+   for replacement rather than compatibility, migrate current consumers and
+   remove obsolete aliases/shims instead of preserving them by default.
 6. **Prefer complete changes.** Remove obsolete implementations, exports, tasks,
    docs, tests, dependencies, and compatibility shims made unnecessary by the
    completed change.
@@ -141,8 +166,14 @@ change.
 10. **Use least privilege.** Permissions are part of the application contract,
    not incidental CLI flags.
 11. **Keep runtime and data contracts aligned.** For external, persisted,
-    configuration, or cross-process data, prefer Zod v4 schemas/codecs as the
-    source of truth and infer TypeScript types.
+    configuration, or cross-process project data, prefer Zod v4 schemas/codecs
+    as the source of truth and infer TypeScript types. End schema constants in
+    `Schema`; project-owned schema-derived data types normally end in `Type`;
+    behavior interfaces/classes keep their concrete domain noun.
+12. **Run the repository's real task authority.** When mise owns tasks/CI, use
+    the mise tasks. For current Okikio/Kaiju projects, preserve `node:test` plus
+    `@std/expect` where selected and still run Deno-specific runtime, permission,
+    package, build, and clean-consumer checks that the changed surface requires.
 
 
 ## Output quality contract

@@ -4,10 +4,11 @@ Use this reference when implementing or reviewing animation, transitions, presen
 
 ## Contents
 
+- Judgment before mechanism
 - Evidence and capability inventory
 - Selection ladder
 - State and priority model
-- Solid motion adapter boundaries
+- Solid motion adapter contracts
 - Presence and exit retention
 - SSR and hydration
 - Layout motion
@@ -16,6 +17,16 @@ Use this reference when implementing or reviewing animation, transitions, presen
 - Failure signatures
 - Verification
 - Sources and freshness
+
+## Judgment before mechanism
+
+Motion is behavior, not decoration. Before choosing a library or timing curve, state the job of the motion in the current interaction. Useful jobs include preserving continuity, showing origin or destination, confirming an action, explaining a state change, guiding attention, or expressing deliberate product character.
+
+Use interaction frequency to control intensity. A one-time onboarding transition can be more expressive. A menu, command palette, or repeated keyboard action should be short and quiet. If motion slows a frequent task or makes state harder to follow, remove or reduce it.
+
+Production motion should normally be interruptible. Reversing an action should reverse from the current visual state rather than wait for the previous animation to finish. Test reduced motion, keyboard use, touch behavior, offscreen suspension, cleanup, and real-device performance with production-like data.
+
+For spatial UI, choose the origin from the real relationship. A popover opened from a top-right trigger should not scale from the center unless that is the intended product behavior.
 
 ## Evidence and capability inventory
 
@@ -95,7 +106,7 @@ type ActiveTargets = Map<MotionLane, Record<string, unknown>>;
 
 The map alone is not an implementation. A resolver must merge channels in documented priority order and a renderer must animate/cancel values.
 
-## Solid motion adapter boundaries
+## Solid motion adapter contracts
 
 Keep framework-neutral animation work separate from Solid ownership:
 
@@ -143,7 +154,7 @@ Presence separates:
 - logical presence: the item remains in application state;
 - physical presence: the DOM and reactive owner remain long enough to complete exit.
 
-Solid control flow normally disposes a removed branch. Starting an exit effect after disposal is too late. The parent presence boundary must own retained records:
+Solid control flow normally disposes a removed branch. Starting an exit effect after disposal is too late. The parent presence owner must retain the records:
 
 ```text
 next keyed records
@@ -165,7 +176,7 @@ interface PresenceHandle {
   dispose(): void;
 }
 
-interface PresenceBoundary {
+interface PresenceOwner {
   isPresent: boolean;
   register(handle: PresenceHandle): () => void;
   onExitComplete(id: symbol): void;
@@ -223,7 +234,7 @@ Invert: apply delta transform
 Play: animate to identity
 ```
 
-Fine-grained updates make the pre-mutation capture boundary difficult. Start with explicit `layoutDependency` or invalidation rather than installing observers everywhere. Validate:
+Fine-grained updates make the pre-mutation capture point difficult. Start with explicit `layoutDependency` or invalidation rather than installing observers everywhere. Validate:
 
 - read/write phase separation;
 - transforms and existing transform composition;
@@ -281,7 +292,7 @@ Also:
 | Signature | Likely cause | Next inspection |
 |---|---|---|
 | Removed item never disappears | Exit completion never settles | Registration, cancellation, zero-animation path |
-| Item disappears before exit | Parent did not retain owner | Control-flow/presence boundary |
+| Item disappears before exit | Parent did not retain owner | Control-flow presence owner |
 | Same key renders twice | Reentry policy missing | Record identity and cancel/replace rules |
 | Hydration flash | Initial style differs server/client | Pure resolver and serialized markup |
 | Hover/tap sticks | Lane release/cancellation missing | Priority resolver and event cleanup |

@@ -175,7 +175,7 @@ Test:
 - all flow-control policies under concurrency and time advancement;
 - atomic initial state/timeline/ready intent;
 - engine-start/projection failure in both directions;
-- public auth/org boundaries and safe result/error policy;
+- public auth/org interfaces and safe result/error policy;
 - worker absent/incompatible readiness;
 - legacy route detection and actual runtime effect;
 - operator recovery and audit timeline.

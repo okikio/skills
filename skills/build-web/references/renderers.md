@@ -8,7 +8,7 @@ Use this reference when a route mixes Astro, Solid, React, plain scripts, custom
 - Escalation ladder
 - Astro client and server directives
 - Solid runtime contract
-- React and cross-renderer boundaries
+- React and cross-renderer handoffs
 - SSR and hydration invariants
 - Navigation and lifetime
 - Failure signatures
@@ -106,7 +106,7 @@ Do not write `const { points } = props` or `const points = props.points` when th
 
 Returning a function from `onMount` is not Solid cleanup. Register `onCleanup` explicitly. Cleanup follows reactive ownership, which is not always the same as physical DOM insertion/removal; retained presence systems require a deliberate owner-retention design.
 
-## React and cross-renderer boundaries
+## React and cross-renderer handoffs
 
 React and Solid may coexist at route level, but never mount both into the same DOM subtree. Keep shared contracts serializable or framework-neutral:
 
@@ -118,7 +118,7 @@ server/domain data
       -> Solid island B
 ```
 
-Do not pass renderer-specific contexts, elements, hooks, signals, refs, or event objects across that boundary. If both islands need the same remote data, either render it into their initial models or define a server/query contract; do not synchronize through hidden DOM mutation.
+Do not pass renderer-specific contexts, elements, hooks, signals, refs, or event objects between those renderer islands. If both islands need the same remote data, either render it into their initial models or define a server/query contract; do not synchronize through hidden DOM mutation.
 
 Renderer-specific libraries must align:
 

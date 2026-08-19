@@ -48,7 +48,7 @@ For every route state:
 - changing filter/query/sort/page-size resets dependent page;
 - local dialog/selection/draft state does not pollute URL;
 - protected route redirects preserve only allowlisted callback state;
-- route error/not-found/pending boundaries render distinct usable views.
+- route error/not-found/pending states render distinct usable views.
 
 Test the pure URL patch/reset functions and the actual router. A pure function passing does not prove browser history behavior.
 
@@ -99,13 +99,13 @@ Verify committed domain state at the server/repository, not only a success toast
 - personalized routes are private/no-store as designed;
 - logout/session invalidation clears protected state.
 
-Test authorization at repository/service boundaries. A route redirect and hidden button are insufficient.
+Test authorization at repository/service APIs. A route redirect and hidden button are insufficient.
 
 ## Data-view and virtualization oracles
 
 - stable sorting with deterministic tie-breaker;
 - filter/facet/count semantics under combinations;
-- pagination boundaries after insert/delete;
+- pagination edges after insert/delete;
 - selected id remains the same record across sort/refresh;
 - selection scope (page/ids/all-matching) matches bulk request;
 - server reauthorizes every bulk target;
@@ -163,7 +163,7 @@ Performance:
 
 ## Failure matrix
 
-| Boundary | Required cases |
+| Handoff | Required cases |
 |---|---|
 | URL/router | malformed, defaults, reload, back/forward, unknown route |
 | Query | slow, stale, offline, abort, reordered, invalid response |
@@ -185,7 +185,7 @@ Passed
 - exact check and contract proved
 
 Failed
-- observed signature and owning boundary
+- observed signature and owning component
 
 Blocked
 - missing target/credential/authority/runtime and remaining risk

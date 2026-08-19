@@ -1,9 +1,9 @@
-# API deployment and resource boundaries
+# API deployment and resource ownership handoffs
 
 ## Contents
 
 - [Deployment contract](#deployment-contract)
-- [Configuration boundary](#configuration-boundary)
+- [Configuration ownership](#configuration-ownership)
 - [Resource graph](#resource-graph)
 - [Health and readiness](#health-and-readiness)
 - [Shutdown and draining](#shutdown-and-draining)
@@ -30,7 +30,7 @@ For every API artifact, record:
 An import-safe library package is not an independently deployable service until
 an executable host proves this contract.
 
-## Configuration boundary
+## Configuration ownership
 
 Resolve configuration once. If c12/defu merge files, environment, and CLI
 overrides, complete that merge before constructing service resources. Validate
@@ -124,7 +124,7 @@ a SIGKILL; leases, idempotency, and reconciliation must.
 |---|---|
 | Health is green but every request 500s | Liveness used as readiness |
 | 202 returned while worker absent | Durable admission not part of readiness |
-| Service imports monolith root | Boundary is organizational only |
+| Service imports monolith root | Separation is organizational only |
 | Deploy requires undocumented env | Import-time or scattered config |
 | Rollback fails after migration | No schema compatibility window |
 | Shutdown drops accepted work | Admission/drain ordering wrong |
@@ -133,7 +133,7 @@ a SIGKILL; leases, idempotency, and reconciliation must.
 ## Sources and freshness
 
 - Attachments, verified 2026-07-17: `evidence/app/new-finance/docs/intent-doc.md`,
-  `utils/server/`, and `utils/workflows/` (normative boundary plus observed and
+  `utils/server/`, and `utils/workflows/` (normative contract plus observed and
   incomplete runtime evidence).
 - Hono official documentation: https://hono.dev/docs/getting-started/basic
   (primary source; deployment adapters differ).

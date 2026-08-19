@@ -76,7 +76,7 @@ bench(matcher): compare script-url indexing with full registry scans
 Weak:
 
 ```text
-refactor(popup): isolate refresh lifecycle state derivation boundary
+refactor(popup): isolate refresh lifecycle state derivation owner
 docs(api): document offset contract semantics
 fix(parser): remediate malformed table continuation behavior
 ```

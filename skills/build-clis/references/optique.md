@@ -8,7 +8,7 @@
 - [Typed grammar](#typed-grammar)
 - [Sparse sources and precedence](#sparse-sources-and-precedence)
 - [Schemas and validation](#schemas-and-validation)
-- [Optique 1.2 features](#optique-12-features)
+- [Version-specific features](#version-specific-features)
 - [Discovery, running, and packaging](#discovery-running-and-packaging)
 - [Help, completion, and manuals](#help-completion-and-manuals)
 - [Prompts and interaction adapters](#prompts-and-interaction-adapters)
@@ -24,10 +24,7 @@ Treat the productionized CLI guidebook as normative architecture and the
 attached Kaiju CLI as observed implementation. Do not claim an Optique feature
 works merely because the package appears in a manifest or guide.
 
-Older attached implementations mixed stable Optique 1.1.1 packages with
-`1.2.0-dev.2329+7836254a` packages. Current Kaiju work has moved the active CLI
-line to Optique 1.2.0. Before editing any repository, still verify the installed
-line rather than assuming a guidebook or previous lockfile is current:
+Older attached implementations mixed stable Optique 1.1.1 packages with prerelease 1.2 builds. Current official documentation lists 1.2.1 as the latest stable release as of 2026-08-19, while the unstable changelog also contains unreleased 1.3 material. Before editing any repository, verify the installed line rather than assuming this guidebook or a previous lockfile is current:
 
 1. inventory the root manifest, CLI manifest, import map, and lockfile;
 2. group every `@optique/*` package by the exact resolved version;
@@ -38,8 +35,7 @@ line rather than assuming a guidebook or previous lockfile is current:
 
 Do not normalize a prerelease version to a caret range or stable line without a
 documented migration. Do not copy a current documentation example into an older
-installed version without checking its exports. When 1.2.0 is installed, prefer
-its native parser features over local compatibility shims.
+installed version without checking its exports. When the installed stable line already provides the required behavior, prefer its native feature over a project-local compatibility shim.
 
 ## Package capability map
 
@@ -55,7 +51,7 @@ Select packages by owned capability. Do not install the entire ecosystem.
 | Derived fallbacks | `@optique/derived-defaults` | Values computed after a first parse without becoming CLI values |
 | Zod value parsing | `@optique/zod` | Zod diagnostics, transformations, and schema-derived metadata |
 | Valibot value parsing | `@optique/valibot` | Modular validation and picklist-derived metadata where available |
-| Validator-neutral boundary | Standard Schema integration | Interoperable validation; not rich completion metadata by itself |
+| Validator-neutral validation seam | Standard Schema integration | Interoperable validation; not rich completion metadata by itself |
 | Prompts | `@optique/prompt` | Missing-value prompt binding and prompt contract |
 | Clack presentation | `@optique/clack` | Clack-backed implementation of Optique prompt behavior |
 | Inquirer presentation | Optique Inquirer integration | Alternative prompt renderer; verify exact installed package/export |
@@ -239,9 +235,9 @@ Choose adapters intentionally:
 - use Zod v4 when schemas own transformations, codecs, JSON Schema, complex
   refinements, or broad server-side integration;
 - use Valibot when modular imports and client bundle size materially matter;
-- accept Standard Schema at portable library/plugin boundaries;
+- accept Standard Schema at portable library and plugin APIs;
 - use the Optique-specific Zod or Valibot adapter when it provides richer
-  diagnostics or completion metadata than the generic boundary.
+  diagnostics or completion metadata than the generic schema adapter.
 
 Example Zod parser:
 
@@ -274,7 +270,7 @@ Remote/asynchronous validation used for completion must be bounded, cached, and
 optional. Completion should degrade to no dynamic suggestions rather than block
 ordinary parsing or hang the shell.
 
-## Optique 1.2 features
+## Version-specific features
 
 Use `negatableFlag()` for paired Boolean options:
 
@@ -306,7 +302,7 @@ is a `DeferredValue` function; calling it returns the specified value or runs
 the fallback. This is not an ordinary defaulting mechanism and should not be
 used for static config defaults.
 
-Optique 1.2 value parsers carry type-appropriate placeholders used during
+Optique 1.2-era value parsers carry type-appropriate placeholders used during
 deferred prompt resolution. The placeholder exists to keep first-pass parsing
 and `map()` transforms structurally valid. It is not user intent and must not
 be serialized into sparse patches, provenance, or final command requests.
@@ -372,7 +368,7 @@ compiled artifact. A generator may create the static registry, but commit or
 generate it before compilation and add drift detection.
 
 Use `@optique/run` for a direct parser runner where a command-module program is
-unnecessary. Do not add both runners without an explicit composition boundary.
+unnecessary. Do not add both runners without an explicit composition seam.
 
 ## Help, completion, and manuals
 
@@ -437,7 +433,7 @@ import path.
 
 ## Error ownership
 
-Optique may render syntax and value-parser failures. The application boundary
+Optique may render syntax and value-parser failures. The application entrypoint
 owns merged-source validation, domain failures, public diagnostics, and exit
 classes.
 
@@ -449,7 +445,7 @@ Do not:
 - silently reinterpret typos;
 - expose raw schema internals without a user-facing path and correction.
 
-Normalize Deno task separators only at the executable boundary if tasks inject
+Normalize Deno task separators only at the executable entrypoint if tasks inject
 an extra `--`. Keep that compatibility adapter outside the domain parser and
 test direct binary and task invocation separately.
 
@@ -498,12 +494,12 @@ Use table-driven tests for every public term:
 
 - Normative source: `productionized-cli-pattern-guidebook-v1.2.md`, reviewed 2026-07-22.
 - Normative ecosystem audit: `cli-guidelines-audit-and-expansion(1).md`, reviewed 2026-07-17.
-- Observed implementation: current Kaiju CLI Optique 1.2.0 migration and earlier `live-browser-cli(41).zip/clis/main` evidence.
+- Observed implementation: current Kaiju CLI Optique migration and earlier `live-browser-cli(41).zip/clis/main` evidence.
 - Official project documentation: <https://optique.dev/>, discovery pointer for current APIs; re-verify against the installed package exports.
 - Official source: <https://github.com/dahlia/optique>, discovery pointer for package/version history and implementation details.
-- Official JSR API documentation: <https://jsr.io/@optique/core@1.2.0> and <https://jsr.io/@optique/discover@1.2.0>, verified for `deferredValue()`, `negatableFlag()`, placeholders, and hooks on 2026-07-22.
+- Official Optique documentation and changelog were rechecked on 2026-08-19. Stable 1.2.1 fixes shell-completion descriptions; unstable 1.3 material must not be treated as released behavior.
 
 Freshness status: package names and architectural capabilities are grounded in
-the attached sources plus the 2026-07-22 Optique 1.2.0 verification. Exact
+the attached sources plus the 2026-08-19 official Optique verification. Exact
 examples remain version-bound evidence. Inspect the current official docs,
 installed types, and lockfile before implementation.

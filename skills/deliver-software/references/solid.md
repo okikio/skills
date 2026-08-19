@@ -60,7 +60,7 @@ When writing or reviewing Solid, reason in this order:
 5. Use Solid control flow for conditional regions and list identity.
 6. Keep events explicit: delegated or native based on behavior.
 7. Model async resources, transitions, Suspense, errors, and retries deliberately.
-8. Keep hydration, SSR, and client boundaries stable.
+8. Keep hydration, SSR, and client handoffs stable.
 9. Clean up listeners, observers, timers, animation loops, and imperative integrations.
 
 The priority order governs trade-offs between sections. When a specific section rule conflicts with a higher-priority item, the priority order wins.
@@ -71,7 +71,7 @@ cleanup, and descendant consumption when those details affect correctness. Do no
 compress the workflow into a tiny component tree if the missing owner or cleanup
 path is the actual source of bugs.
 
-## Design Solid APIs around composition and reactive boundaries
+## Design Solid APIs around composition and reactive scopes
 
 Use composition over configuration.
 
@@ -353,11 +353,11 @@ createEffect(
 
 Use `untrack` sparingly and only when a non-dependency read is intentional. Do not use `untrack` to hide a data-flow problem.
 
-## Keep owner, root, and cleanup boundaries explicit
+## Keep owner, root, and cleanup scopes explicit
 
-Solid owner boundaries determine context lookup, cleanup, resource lifetime, error boundaries, and disposal.
+Solid ownership scopes determine context lookup, cleanup, resource lifetime, error mappers, and disposal.
 
-Use `createRoot` only for a deliberate lifetime boundary outside normal component disposal. Keep and call the `dispose` function.
+Use `createRoot` only for a deliberate lifetime scope outside normal component disposal. Keep and call the `dispose` function.
 
 ```tsx
 import { createRoot } from "solid-js"
@@ -493,7 +493,7 @@ Do not use transitions to hide incorrect state ownership or uncontrolled async r
 
 ## Place Suspense and ErrorBoundaries around recoverable regions
 
-Suspense boundaries should wrap meaningful loading regions and preserve stable layout where possible.
+Suspense regions should wrap meaningful loading regions and preserve stable layout where possible.
 
 ```tsx
 <DashboardShell>
@@ -503,7 +503,7 @@ Suspense boundaries should wrap meaningful loading regions and preserve stable l
 </DashboardShell>
 ```
 
-Error boundaries should match product recovery regions.
+Error mappers should match product recovery regions.
 
 The fallback should explain what failed and offer retry, reset, or navigation where possible. Do not only log errors to the console.
 

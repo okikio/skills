@@ -1,11 +1,11 @@
-# Web security and connected-system boundaries
+# Web security and connected-system trust handoffs
 
 Use this reference for pages, forms, server functions, Astro endpoints, webhooks, auth routes, embeds, CMS rendering, file/media flows, and client-side navigation. A UI that renders correctly can still leak tenant data, secrets, or executable content.
 
 ## Contents
 
 - Threat and authority inventory
-- Server/client boundary
+- Server/client handoff
 - Output and content safety
 - Forms and mutations
 - Authentication and authorization
@@ -38,7 +38,7 @@ Verification source/signature:
 
 Trace authority from the server-observed identity into the database/provider query. A client-provided `organizationId`, hidden button, route guard, or disabled control is not authorization.
 
-## Server/client boundary
+## Server/client handoff
 
 Server secrets and authority must not enter client bundles or serialized props. Inspect import reachability, not only variable prefixes.
 
@@ -58,7 +58,7 @@ Keep server-only modules in explicit server paths and add a build/test that impo
 Framework interpolation escapes text by default; raw HTML APIs change the contract. For Astro `set:html`, React `dangerouslySetInnerHTML`, CMS rich text, Markdown plugins, SVG, and search snippets:
 
 1. Identify whether the value is trusted source code, sanitized rich text, or untrusted user/provider input.
-2. Parse or sanitize at one named boundary with a defined allowlist.
+2. Parse or sanitize at one named handoff with a defined allowlist.
 3. Preserve structured content as data instead of concatenating HTML when possible.
 4. Test script elements, event attributes, `javascript:` URLs, SVG/script combinations, malformed markup, and encoded payloads.
 5. Apply Content Security Policy as defense in depth, not a replacement for output encoding.
@@ -125,7 +125,7 @@ Validate redirect destinations against an allowlist or same-origin policy. URL p
 
 ## Headers and caching
 
-Set policy at the deployment/server boundary and verify the final response:
+Set policy at the deployment/server response stage and verify the final response:
 
 - `Content-Security-Policy` appropriate to scripts, styles, images, fonts, frames, and connections;
 - `X-Content-Type-Options: nosniff`;
@@ -166,7 +166,7 @@ Provider error messages may contain request data or internal identifiers. Map th
 
 ## Browser and third-party resources
 
-Treat analytics, embeds, iframes, scripts, OAuth popups, WebGL textures, fonts, and icon SVGs as supply-chain and privacy boundaries:
+Treat analytics, embeds, iframes, scripts, OAuth popups, WebGL textures, fonts, and icon SVGs as supply-chain and privacy constraints:
 
 - pin or control dependency versions and provenance;
 - minimize third-party origins in CSP;
@@ -204,7 +204,7 @@ Distinguish 401 (authentication required/invalid), 403 (authenticated but forbid
 2. Send valid, malformed, oversized, duplicate, replayed, and cross-origin requests.
 3. Verify cookie attributes and actual credentialed browser behavior.
 4. Test CSRF and redirect allowlists with encoded and scheme-relative inputs.
-5. Inject XSS payloads into every raw/rich content boundary and inspect rendered DOM.
+5. Inject XSS payloads into every raw/rich content rendering path and inspect rendered DOM.
 6. Inspect final deployed CSP, cache, frame, MIME, referrer, and permissions headers.
 7. Verify public/client bundles and HTML contain no server secret names or values.
 8. Search logs/test capture for secrets, cookies, tokens, raw payloads, and PII.

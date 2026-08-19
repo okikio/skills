@@ -1,57 +1,161 @@
 # Command language and Optique
 
-For package-level Optique APIs, ecosystem selection, version boundaries, and
-worked parser/source examples, load [optique.md](optique.md).
+Use this reference when changing the public command language: commands,
+subcommands, options, arguments, aliases, help, completion, manuals, suggestions,
+or parser-owned invalid states. For exact current Optique packages and APIs load
+[optique.md](optique.md).
 
-## Design the language first
+## Start from the user language
 
-Define nouns, verbs, nesting, defaults, aliases, destructive operations, output
-modes, and no-argument behavior before wiring handlers. Prefer names that remain
-clear in scripts and error messages.
+Before choosing parser combinators, write the command grammar in user terms:
 
-Prevent impossible token combinations structurally when the parser can express
-them. Examples include positive/negative flag pairs, singular/plural alternatives,
-and mutually exclusive selectors. Keep cross-source and domain rules in the
-final schema.
+```text
+program
+  inspect <target>
+    --format <human|json|jsonl>
+    --verbose / --quiet
 
-## Sparse source rule
+  config show
+  config explain [field]
+  config files
 
-Parser defaults are user-interface conveniences, not automatically authored
-configuration. Preserve whether a value was absent so lower-precedence sources
-can participate. Normalize aliases once into a canonical runtime value.
+  run <target>
+    --dry-run
+    --apply
+```
 
-## Optique ecosystem
+Decide:
 
-Inspect the whole relevant Optique package set before implementing around only
-the core parser. Depending on the installed version, capabilities may be split
-across core, run, discover, environment, config, prompts, Git, LogTape, Temporal,
-Zod, Valibot, Standard Schema, completion, and manual-generation packages.
+- nouns/verbs and subcommand depth;
+- required/optional positional values;
+- aliases and deprecations;
+- repeated options;
+- positive/negative boolean forms;
+- mutually exclusive selectors;
+- no-argument behavior;
+- destructive/expensive plan/apply flow;
+- output and diagnostic controls;
+- stable automation-friendly spelling.
 
-Use static command registration when bundlers or compiled binaries must see the
-entire graph. If dynamic discovery is chosen, prove it in the packaged target.
+Do not design from the handler's internal object shape.
 
-Do not add Citty beside Optique merely for nested commands. Treat overlapping
-parsers as alternatives unless an explicit boundary justifies both.
+## Parser-owned invalidity
 
-## Schema composition trap
+Prevent invalid forms structurally when the parser can express them cleanly:
 
-When building a final schema from component shapes, inventory refinements,
-transforms, defaults, and brands. Copying `.shape` does not necessarily preserve
-cross-field refinements. Reapply shared semantic checks deliberately and test
-the final schema.
+- exactly one of several authentication modes;
+- mutually exclusive `--foo`/`--no-foo` forms;
+- a subcommand that requires its own argument;
+- repeated or singular options according to the public grammar;
+- option choices/enums with parser-aware suggestions.
+
+Keep rules that depend on merged config, environment, dynamic data, or domain
+state in the final schema/domain validation. A parser should not load the world
+to decide syntax.
+
+## Sparse source contract
+
+A missing option means “this source did not author a value.” It does **not** mean
+“insert the product default here.” Preserve absence so lower-precedence sources
+can win.
+
+```text
+argv missing --timeout
+        |
+        v
+CLI patch has no timeout field
+        |
+        v
+resolver can inherit env/config
+        |
+        v
+final runtime schema applies product default if still missing
+```
+
+Help can display a documented default without manufacturing an authored CLI
+value. See `defaults-provenance.md`.
+
+## Schema adapters
+
+Parser adapters for Zod/Valibot/Standard Schema can improve value parsing and
+help. They do not change ownership:
+
+- parser validates one token/value representation;
+- resolver chooses among independent sources;
+- final runtime schema validates the complete request.
+
+When composing Zod objects, preserve refinements/transforms/brands/default
+semantics. Copying `.shape` can lose object-level constraints. Test the final
+schema, not only component schemas.
+
+## Optique ownership when selected
+
+Optique can own:
+
+- typed parser grammar;
+- options/arguments/subcommands;
+- source contexts supported by the selected packages;
+- choices/suggestions;
+- help and usage;
+- command discovery;
+- shell completion;
+- manual generation;
+- optional prompt, Git, logging, Temporal, time, or schema integrations when
+  their packages are selected.
+
+Do not add another command parser for a capability Optique already owns unless
+the architecture deliberately isolates two separate CLIs.
+
+Use static registration when bundlers/compiled artifacts need a closed command
+graph. Dynamic discovery must be proven in the packaged target.
 
 ## Generated surfaces
 
-Help, completion, and manuals should derive from the same command model where
+Help, completion, and manuals should derive from the same command model wherever
 possible. Verify:
 
-- concise root and subcommand help;
-- help without valid project config;
-- version and no-argument behavior;
-- aliases, defaults, enum values, and deprecations;
-- Bash, zsh, fish, PowerShell, and Nushell where claimed;
-- man-page command and option parity;
-- typo suggestions and stable error wording.
+- root and subcommand help;
+- help/version before project configuration loads;
+- aliases and deprecated spellings;
+- choices/default descriptions;
+- typo suggestions;
+- shell completion for each claimed shell;
+- man-page parity;
+- static discovery under bundled/compiled execution.
 
-Generated output must have drift detection. A command is not complete when its
-parser changed but help, completion, docs, or man output remained stale.
+Generated output needs a drift check or deterministic regeneration step.
+
+## Naming and documentation
+
+Command names should be concrete and script-friendly. Avoid vague verbs such as
+`process`, `handle`, or `execute` when the actual operation can be named.
+
+Document non-obvious parser contracts and internal grammar helpers. A private
+combinator can encode the rule that prevents an impossible public command form.
+
+## Failure signatures
+
+| Symptom | Likely cause |
+|---|---|
+| config values ignored unless flag supplied | parser inserted defaults into CLI patch |
+| invalid flag combination reaches handler | grammar did not encode structural exclusivity |
+| help needs valid project config | bootstrap parser coupled to resolver/execution |
+| completion lists stale commands | generated surface not derived/regenerated |
+| compiled binary misses subcommands | dynamic discovery not visible to build |
+| schema refinement disappears | object reconstructed from `.shape` without reapplying invariant |
+| option aliases produce two runtime fields | normalization owner missing |
+
+## Verification
+
+Test parser semantics separately from execution:
+
+1. table/property tests for valid and invalid token sequences;
+2. sparse absence/default behavior;
+3. aliases/repetition/choices/suggestions;
+4. root/subcommand help and version with broken/missing config;
+5. completion/manual generation;
+6. packaged/compiled command discovery;
+7. final runtime schema for cross-source/domain rules.
+
+Version-sensitive Optique behavior must be checked against the installed version
+and current official documentation before implementation claims.

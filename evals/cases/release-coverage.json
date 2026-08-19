@@ -49,7 +49,8 @@
         "frozen",
         "hybrid"
       ],
-      "rationale": "Frozen root-router case for cross-surface ownership rather than framework-name recall."
+      "rationale": "Frozen root-router case for cross-surface ownership rather than framework-name recall.",
+      "forbiddenSkills": []
     },
     {
       "id": "frozen-web-native-first-failure",
@@ -99,7 +100,8 @@
         "frozen",
         "native-first"
       ],
-      "rationale": "Frozen adversarial case for common cross-renderer hallucinations."
+      "rationale": "Frozen adversarial case for common cross-renderer hallucinations.",
+      "forbiddenSkills": []
     },
     {
       "id": "frozen-devtools-generation-release",
@@ -149,7 +151,8 @@
         "generation",
         "release"
       ],
-      "rationale": "Frozen developer-tooling case joining generation to real release evidence."
+      "rationale": "Frozen developer-tooling case joining generation to real release evidence.",
+      "forbiddenSkills": []
     },
     {
       "id": "frozen-devtools-toolchain-parity",
@@ -157,7 +160,7 @@
       "skill": "build-devtools",
       "kind": "trajectory",
       "split": "test-frozen",
-      "prompt": "A repository has Mise, Deno tasks, package-manager scripts, editor tasks, and CI commands with different names, permissions, environment defaults, and lockfile behavior. Produce an ownership table, canonical command graph, cold setup and upgrade checks, offline/proxy boundaries, and removal plan for redundant wrappers without inventing private Aube configuration.",
+      "prompt": "A repository has Mise, Deno tasks, package-manager scripts, editor tasks, and CI commands with different names, permissions, environment defaults, and lockfile behavior. Produce an ownership table, canonical command graph, cold setup and upgrade checks, offline/proxy conditions, and removal plan for redundant wrappers without inventing private Aube configuration.",
       "expectedSkills": [
         "build-devtools"
       ],
@@ -197,7 +200,8 @@
         "frozen",
         "toolchain"
       ],
-      "rationale": "Frozen anti-hallucination case for overlapping public and private toolchains."
+      "rationale": "Frozen anti-hallucination case for overlapping public and private toolchains.",
+      "forbiddenSkills": []
     },
     {
       "id": "frozen-sites-font-icon-ownership",
@@ -249,7 +253,8 @@
         "fonts",
         "icons"
       ],
-      "rationale": "Second frozen site case protects two volatile asset ecosystems."
+      "rationale": "Second frozen site case protects two volatile asset ecosystems.",
+      "forbiddenSkills": []
     },
     {
       "id": "frozen-okikio-source-status-gate",
@@ -300,7 +305,8 @@
         "frozen",
         "anti-hallucination"
       ],
-      "rationale": "Second frozen personal-library case enforces evidence status and consumer ownership."
+      "rationale": "Second frozen personal-library case enforces evidence status and consumer ownership.",
+      "forbiddenSkills": []
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 ## Contents
 
-- [Status and evidence boundary](#status-and-evidence-boundary)
+- [Status and evidence limit](#status-and-evidence-limit)
 - [Core Effect architecture](#core-effect-architecture)
 - [Workflow definition and Layer](#workflow-definition-and-layer)
 - [Runtime separation](#runtime-separation)
@@ -15,7 +15,7 @@
 - [Failure signatures](#failure-signatures)
 - [Verification](#verification)
 
-## Status and evidence boundary
+## Status and evidence limit
 
 Official Effect material currently describes Workflows as alpha. The uploaded
 repositories pin `effect` 3.21.x and `@effect/workflow` 0.18.x in package
@@ -102,7 +102,7 @@ export const WorkflowLive = Layer.mergeAll(
 The in-memory engine is appropriate for unit tests and capability spikes. It is
 not a production durability proof.
 
-Validate payloads at both public transport and workflow runtime boundaries. The
+Validate payloads at both public transport and workflow runtime handoffs. The
 transport schema can accept product-specific syntax; the workflow payload should
 be a stable serializable object with explicit schema/version. Do not pass Hono
 context, open streams, database clients, class instances, or large file contents.
@@ -230,7 +230,7 @@ Separate:
 | Defect | invariant violation, impossible state | Fail, diagnose, repair code/data |
 | Cancellation/interruption | operator/user/shutdown request | Cooperative cleanup and terminal policy |
 
-Use Effect `Schedule` at the activity/effect boundary where retry is safe. Record
+Use Effect `Schedule` at the activity/effect retry owner where retry is safe. Record
 attempt, delay, and final cause. Workflow/control-plane retries and activity
 retries are different budgets; do not multiply them accidentally.
 
@@ -304,7 +304,7 @@ Until then expose the driver as experimental/unavailable, not production.
 | Workflow starts but projection stays pending | Engine/control-plane gap | Poll/reconcile authority |
 | Wait is timed out with no resume item | Non-atomic router | Transactional completion + recovery scan |
 | Worker logs ready with zero active loops | Boot object mistaken for runtime | Reachable dispatch test |
-| Same effect runs twice | Missing effect-boundary idempotency | Operation key and provider lookup |
+| Same effect runs twice | Missing effect idempotency | Operation key and provider lookup |
 | Loop fiber dies silently | Detached supervision | Worker failure/readiness policy |
 | Upgrade fails old executions | No version/replay gate | Frozen history compatibility test |
 
@@ -312,7 +312,7 @@ Until then expose the driver as experimental/unavailable, not production.
 
 - Run workflow definition against memory Layer for fast logic tests.
 - Run full production adapter in a real database/engine fixture.
-- Kill API after durable start and worker at every activity boundary.
+- Kill API after durable start and worker at every activity checkpoint.
 - Poll, interrupt, and resume from a different process.
 - Race signal, timeout, cancellation, and duplicate signal.
 - Restart across durable sleep/deferred.

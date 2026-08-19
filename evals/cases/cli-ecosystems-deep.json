@@ -32,7 +32,7 @@
       "rubric": [
         "Removes parser default from a source-bearing term",
         "Applies the default only after source precedence",
-        "Shows a concrete parser and resolver boundary"
+        "Shows a concrete parser and resolver handoff"
       ],
       "oracleStrength": "trajectory-rubric",
       "sourceIds": [
@@ -47,11 +47,12 @@
         "config",
         "precedence"
       ],
-      "rationale": "Parser defaults are a recurring source-precedence failure."
+      "rationale": "Parser defaults are a recurring source-precedence failure.",
+      "forbiddenSkills": []
     },
     {
-      "id": "cli-deep-optique-package-version-boundary",
-      "title": "Respect mixed Optique version boundaries",
+      "id": "cli-deep-optique-package-version-handoff",
+      "title": "Respect mixed Optique version lines",
       "skill": "build-clis",
       "kind": "trajectory",
       "split": "valid-unseen",
@@ -94,7 +95,8 @@
         "optique",
         "versions"
       ],
-      "rationale": "The attached implementation contains a real stable/prerelease split."
+      "rationale": "The attached implementation contains a real stable/prerelease split.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-optique-static-registration",
@@ -141,7 +143,8 @@
         "optique",
         "distribution"
       ],
-      "rationale": "Source discovery can succeed while compiled commands disappear."
+      "rationale": "Source discovery can succeed while compiled commands disappear.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-optique-prompt-automation",
@@ -193,7 +196,8 @@
         "clack",
         "automation"
       ],
-      "rationale": "A prompt package does not own the automation policy."
+      "rationale": "A prompt package does not own the automation policy.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-c12-operation-order",
@@ -201,7 +205,7 @@
       "skill": "build-clis",
       "kind": "knowledge",
       "split": "train",
-      "prompt": "Resolve routes when file provides [file], environment prepends [env], and CLI appends [cli]. The public merge call lists inputs highest-to-lowest. Give the correct result, traversal order, and defu boundary needed to avoid operation objects merging into each other.",
+      "prompt": "Resolve routes when file provides [file], environment prepends [env], and CLI appends [cli]. The public merge call lists inputs highest-to-lowest. Give the correct result, traversal order, and defu handoff needed to avoid operation objects merging into each other.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -247,7 +251,8 @@
         "defu",
         "arrays"
       ],
-      "rationale": "Operation composition is the most fragile part of the merge contract."
+      "rationale": "Operation composition is the most fragile part of the merge contract.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-c12-atomic-union",
@@ -293,7 +298,8 @@
         "defu",
         "unions"
       ],
-      "rationale": "Generic recursive merging corrupts discriminated unions."
+      "rationale": "Generic recursive merging corrupts discriminated unions.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-c12-factory-once",
@@ -328,7 +334,7 @@
         }
       ],
       "rubric": [
-        "Loads at the composition/source-context boundary",
+        "Loads at the composition/source-context handoff",
         "Shares the resolved value",
         "Uses an executable side-effect counter"
       ],
@@ -345,7 +351,8 @@
         "optique",
         "frozen"
       ],
-      "rationale": "Static inspection cannot prove dynamic factories execute once."
+      "rationale": "Static inspection cannot prove dynamic factories execute once.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-c12-provenance",
@@ -399,7 +406,8 @@
         "c12",
         "provenance"
       ],
-      "rationale": "Configuration inspection must answer field-specific decisions."
+      "rationale": "Configuration inspection must answer field-specific decisions.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-logtape-result-isolation",
@@ -453,7 +461,8 @@
         "logtape",
         "stdout"
       ],
-      "rationale": "One transport requires category isolation to preserve composability."
+      "rationale": "One transport requires category isolation to preserve composability.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-logtape-structured-redaction",
@@ -504,7 +513,8 @@
         "redaction",
         "security"
       ],
-      "rationale": "Field redaction cannot inspect opaque serialized values."
+      "rationale": "Field redaction cannot inspect opaque serialized values.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-logtape-bootstrap",
@@ -560,10 +570,11 @@
         "bootstrap",
         "frozen"
       ],
-      "rationale": "Fallible configuration precedes normal logger setup."
+      "rationale": "Fallible configuration precedes normal logger setup.",
+      "forbiddenSkills": []
     },
     {
-      "id": "cli-deep-logtape-artifact-boundary",
+      "id": "cli-deep-logtape-artifact-handoff",
       "title": "Keep durable stage data out of logger persistence",
       "skill": "build-clis",
       "kind": "knowledge",
@@ -609,7 +620,8 @@
         "logtape",
         "artifacts"
       ],
-      "rationale": "Sole process output transport does not make a logger the data store."
+      "rationale": "Sole process output transport does not make a logger the data store.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-unjs-package-selection",
@@ -617,7 +629,7 @@
       "skill": "build-clis",
       "kind": "knowledge",
       "split": "transfer",
-      "prompt": "Design a project-aware CLI that loads layered config, detects CI/color, edits TypeScript config, performs bounded HTTP requests, persists resumable checkpoints, detects the project package manager, and builds a distributable library. Select focused UnJS packages, their boundaries, and what each does not own.",
+      "prompt": "Design a project-aware CLI that loads layered config, detects CI/color, edits TypeScript config, performs bounded HTTP requests, persists resumable checkpoints, detects the project package manager, and builds a distributable library. Select focused UnJS packages, their handoffs, and what each does not own.",
       "expectedSkills": [
         "build-clis",
         "explore-ecosystems"
@@ -672,7 +684,8 @@
         "explore-ecosystems",
         "unjs"
       ],
-      "rationale": "The ecosystem is valuable only when package ownership remains explicit."
+      "rationale": "The ecosystem is valuable only when package ownership remains explicit.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-unjs-overlap-rejection",
@@ -724,7 +737,8 @@
         "ownership",
         "safety"
       ],
-      "rationale": "Ecosystem accumulation creates conflicting public contracts."
+      "rationale": "Ecosystem accumulation creates conflicting public contracts.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-unjs-recovery-honesty",
@@ -782,7 +796,8 @@
         "durability",
         "frozen"
       ],
-      "rationale": "Persistence adapters do not establish exactly-once recovery."
+      "rationale": "Persistence adapters do not establish exactly-once recovery.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-end-to-end-source-trace",
@@ -846,15 +861,16 @@
         "audit",
         "integration"
       ],
-      "rationale": "A public term is incomplete when any ownership arrow is missing."
+      "rationale": "A public term is incomplete when any ownership arrow is missing.",
+      "forbiddenSkills": []
     },
     {
-      "id": "cli-deep-unjs-adapter-boundaries-seen",
+      "id": "cli-deep-unjs-adapter-handoffs-seen",
       "title": "Keep focused UnJS packages behind application contracts",
       "skill": "build-clis",
       "kind": "knowledge",
       "split": "valid-seen",
-      "prompt": "Sketch the adapter boundaries for a CLI using ofetch, unstorage, ohash, and nypm. For each package, name the application policy it must not decide and one executable test that crosses the real adapter.",
+      "prompt": "Sketch the adapter APIs for a CLI using ofetch, unstorage, ohash, and nypm. For each package, name the application policy it must not decide and one executable test that crosses the real adapter.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -900,7 +916,8 @@
         "unjs",
         "adapters"
       ],
-      "rationale": "A seen case teaches selection without reducing the ecosystem to package-name recall."
+      "rationale": "A seen case teaches selection without reducing the ecosystem to package-name recall.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-integration-normal-path-seen",
@@ -966,7 +983,8 @@
         "integration",
         "lifecycle"
       ],
-      "rationale": "A seen composition case prevents individually correct references from producing a broken lifecycle."
+      "rationale": "A seen composition case prevents individually correct references from producing a broken lifecycle.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-five-library-audit",
@@ -974,7 +992,7 @@
       "skill": "build-clis",
       "kind": "trajectory",
       "split": "valid-unseen",
-      "prompt": "Review a CLI that uses Optique, c12, defu, LogTape, and Zod. Determine whether the libraries are being used together ideally. Produce a boundary-by-boundary audit and identify concrete fixes for defaults, config loading, merging, logging, and verification.",
+      "prompt": "Review a CLI that uses Optique, c12, defu, LogTape, and Zod. Determine whether the libraries are being used together ideally. Produce a owner-by-owner audit and identify concrete fixes for defaults, config loading, merging, logging, and verification.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -1011,7 +1029,7 @@
         }
       ],
       "rubric": [
-        "Assigns one owner per boundary",
+        "Assigns one owner per concern",
         "Rejects parser defaults as sparse source values",
         "Requires one resolved config and logger resource for handlers",
         "Includes executable verification, not only static inspection"
@@ -1034,7 +1052,8 @@
         "logtape",
         "zod"
       ],
-      "rationale": "The hardest failures happen at ownership boundaries between otherwise good libraries."
+      "rationale": "The hardest failures happen at ownership handoffs between otherwise good libraries.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-five-library-stack-train",
@@ -1042,7 +1061,7 @@
       "skill": "build-clis",
       "kind": "knowledge",
       "split": "train",
-      "prompt": "A CLI uses Optique, c12, defu, LogTape, and Zod. Give the correct owner for token grammar, config discovery, loader merging, app merge semantics, runtime defaults, diagnostics/results, and handler execution. Include one failure signature for each boundary.",
+      "prompt": "A CLI uses Optique, c12, defu, LogTape, and Zod. Give the correct owner for token grammar, config discovery, loader merging, app merge semantics, runtime defaults, diagnostics/results, and handler execution. Include one failure signature for each handoff.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -1076,7 +1095,7 @@
         }
       ],
       "rubric": [
-        "Maps every library to its boundary",
+        "Maps every library to its handoff",
         "Names what each library must not own",
         "Includes concrete failure signatures"
       ],
@@ -1098,7 +1117,8 @@
         "logtape",
         "zod"
       ],
-      "rationale": "Agents need the integrated stack map before applying detailed implementation rules."
+      "rationale": "Agents need the integrated stack map before applying detailed implementation rules.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-five-library-stack-seen",
@@ -1168,7 +1188,8 @@
         "defaults",
         "verification"
       ],
-      "rationale": "A seen value trace proves the reference is usable, not just conceptually complete."
+      "rationale": "A seen value trace proves the reference is usable, not just conceptually complete.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-five-library-mental-model",
@@ -1176,7 +1197,7 @@
       "skill": "build-clis",
       "kind": "knowledge",
       "split": "valid-unseen",
-      "prompt": "Give another agent a detailed implementation mental model for a Deno CLI using Optique, c12, defu, LogTape, and Zod. Include diagrams or maps, wrong/right examples, ownership tables, defaulting logic, the actual merge algorithm, and a verification matrix detailed enough to prevent common boundary mistakes.",
+      "prompt": "Give another agent a detailed implementation mental model for a Deno CLI using Optique, c12, defu, LogTape, and Zod. Include diagrams or maps, wrong/right examples, ownership tables, defaulting logic, the actual merge algorithm, and a verification matrix detailed enough to prevent common handoff mistakes.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -1190,7 +1211,7 @@
         },
         {
           "kind": "regex",
-          "value": "ownership.*table|Boundary.*Owner"
+          "value": "ownership.*table|Handoff.*Owner"
         },
         {
           "kind": "regex",
@@ -1226,7 +1247,7 @@
         }
       ],
       "rubric": [
-        "Explains data flow through every library boundary",
+        "Explains data flow through every library handoff",
         "Shows concrete wrong and right implementation shapes",
         "Details the c12 loader merger, app merger, operation lowering, and final sparse validation",
         "Distinguishes documented defaults, parser defaults, deferred fallbacks, and Zod runtime defaults",
@@ -1250,7 +1271,8 @@
         "logtape",
         "zod"
       ],
-      "rationale": "The skill must transfer enough structure that another agent can implement safely, not merely recall package names."
+      "rationale": "The skill must transfer enough structure that another agent can implement safely, not merely recall package names.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-optique-12-deferred-defaults",
@@ -1309,7 +1331,8 @@
         "zod",
         "defaults"
       ],
-      "rationale": "Optique 1.2 makes deferred values tempting, but most defaults still belong to schemas."
+      "rationale": "Optique 1.2 makes deferred values tempting, but most defaults still belong to schemas.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-c12-two-mergers",
@@ -1384,7 +1407,8 @@
         "config",
         "testing"
       ],
-      "rationale": "The single-merger shortcut breaks loader semantics before application validation can help."
+      "rationale": "The single-merger shortcut breaks loader semantics before application validation can help.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-five-library-benchmark-baseline",
@@ -1431,7 +1455,7 @@
       ],
       "rubric": [
         "Defines process startup separately from reusable in-process work",
-        "Names representative deterministic workloads for each library boundary",
+        "Names representative deterministic workloads for each library API",
         "Requires semantic output checks before timing",
         "Reports a distribution, sample context, and meaningful absolute and relative changes"
       ],
@@ -1450,7 +1474,8 @@
         "startup",
         "mitata"
       ],
-      "rationale": "Agents need a baseline measurement vocabulary before reviewing a specific performance claim."
+      "rationale": "Agents need a baseline measurement vocabulary before reviewing a specific performance claim.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-optique-zod-default-ownership",
@@ -1515,7 +1540,8 @@
         "defaults",
         "provenance"
       ],
-      "rationale": "The adapter boundary is where parser-visible metadata is most often mistaken for runtime default ownership."
+      "rationale": "The adapter handoff is where parser-visible metadata is most often mistaken for runtime default ownership.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-provenance-equal-value",
@@ -1583,7 +1609,8 @@
         "config",
         "optique"
       ],
-      "rationale": "Equal values are the simplest counterexample to provenance reconstructed after merging."
+      "rationale": "Equal values are the simplest counterexample to provenance reconstructed after merging.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-five-library-benchmark-plan",
@@ -1659,11 +1686,12 @@
         "startup",
         "provenance"
       ],
-      "rationale": "Component throughput and user-visible command latency require different evidence."
+      "rationale": "Component throughput and user-visible command latency require different evidence.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-config-verification-oracles",
-      "title": "Prove config defaults and merger behavior through real boundaries",
+      "title": "Prove config defaults and merger behavior through real handoffs",
       "skill": "build-clis",
       "kind": "trajectory",
       "split": "transfer",
@@ -1736,7 +1764,8 @@
         "provenance",
         "benchmark"
       ],
-      "rationale": "The refactor crosses enough boundaries that no single test layer can establish correctness."
+      "rationale": "The refactor crosses enough handoffs that no single test layer can establish correctness.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-kaiju-casebook-browser-trace",
@@ -1802,10 +1831,11 @@
         "artifacts",
         "provenance"
       ],
-      "rationale": "The browser command combines nearly every CLI boundary and catches generic advice."
+      "rationale": "The browser command combines nearly every CLI concern and catches generic advice.",
+      "forbiddenSkills": []
     },
     {
-      "id": "cli-deep-kaiju-casebook-stage-boundaries",
+      "id": "cli-deep-kaiju-casebook-stage-handoffs",
       "title": "Keep stages artifacts results and diagnostics separate",
       "skill": "build-clis",
       "kind": "knowledge",
@@ -1869,7 +1899,8 @@
         "logtape",
         "redaction"
       ],
-      "rationale": "Artifact/log boundary mistakes are high-risk in capture pipelines."
+      "rationale": "Artifact/log handoff mistakes are high-risk in capture pipelines.",
+      "forbiddenSkills": []
     },
     {
       "id": "cli-deep-kaiju-casebook-lifecycle-reality",
@@ -1934,7 +1965,8 @@
         "cancellation",
         "concurrency"
       ],
-      "rationale": "Cancellation and cleanup are easy to overclaim without end-to-end signal tracing."
+      "rationale": "Cancellation and cleanup are easy to overclaim without end-to-end signal tracing.",
+      "forbiddenSkills": []
     }
   ]
 }

@@ -27,7 +27,7 @@ already has an owner for the concern.
 ## Outcome
 
 Choose the smallest coherent set of exact components that covers required
-capabilities with one canonical owner per concern, explicit adapter boundaries,
+capabilities with one canonical owner per concern, explicit adapter APIs,
 understood operations, and executable proof. Record plausible exclusions so
 future agents do not rediscover and install them reflexively.
 
@@ -60,8 +60,8 @@ capabilities that are unnecessary here.
 Use these roles consistently:
 
 - **Owner:** canonical source of behavior/policy for one concern.
-- **Companion:** owns a different required concern and composes at a documented
-  boundary.
+- **Companion:** owns a different required concern and composes through a documented
+  interface.
 - **Adapter:** translates between owners/hosts without becoming an independent
   policy source.
 - **Alternative:** could own the same concern instead; normally choose one.
@@ -74,8 +74,8 @@ Examples:
 
 - Optique and LogTape are companions; `@optique/logtape` is their adapter.
 - Optique and Citty are command-grammar alternatives for most applications.
-- Zod can own application schemas while Standard Schema is an adapter/spec
-  boundary. Standard Schema does not replace optional Zod metadata automatically.
+- Zod can own application schemas while Standard Schema is an interoperability
+  contract. Standard Schema does not replace optional Zod metadata automatically.
 - c12 owns layer loading; defu/custom merger implements merge mechanics. Neither
   should apply application defaults a second time after final validation.
 - PostgreSQL and ClickHouse can be transactional owner plus analytical projection,
@@ -169,7 +169,7 @@ only renames an upstream API increases ownership without isolation value.
 Separate adoption phases:
 
 1. prove in isolated fixture/spike;
-2. introduce local boundary/adapter and compatibility tests;
+2. introduce local adapter/adapter and compatibility tests;
 3. dual-read/compare only when data migration requires it and authority is clear;
 4. move one capability owner at a time;
 5. verify connected consumers/deployment;
@@ -252,7 +252,7 @@ popular" or "did not appear in first search" is not sufficient.
 | Tool chosen for brand consistency | capability fit missing | hard gates and behavior proof |
 | Beta API leaks into public contract | maturity/reversibility ignored | pin, isolate, fixture, fallback |
 | Types fit but integration fails | portability reduced to types | exact host matrix and behavior |
-| New wrapper adds no policy | abstraction without ownership value | use upstream or define real boundary |
+| New wrapper adds no policy | abstraction without ownership value | use upstream or define a real owned interface |
 | Migration needs indefinite dual write | cutover/authority absent | primary, reconciliation, stop condition |
 | Alternative score looks precise but evidence missing | false numeric confidence | hard gates/unknowns first |
 | Existing mature wrapper discarded | repository ownership ignored | compare policy and migration benefit |

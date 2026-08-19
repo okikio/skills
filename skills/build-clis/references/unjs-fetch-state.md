@@ -3,7 +3,7 @@
 ## Contents
 
 - [When to load this reference](#when-to-load-this-reference)
-- [Version and evidence boundary](#version-and-evidence-boundary)
+- [Version and evidence limit](#version-and-evidence-limit)
 - [Capability ownership](#capability-ownership)
 - [ofetch](#ofetch)
 - [unstorage](#unstorage)
@@ -32,7 +32,7 @@ make a package direct merely because it appears in a lockfile, and it does not
 upgrade a cache into a durable workflow, a hash into an idempotency protocol, or
 a hook collection into a trusted plugin system.
 
-## Version and evidence boundary
+## Version and evidence limit
 
 The exact stable package artifacts verified on 2026-07-17 are:
 
@@ -68,7 +68,7 @@ Likewise, do not use a v6-only Hookable surface in a package pinned to v5.
 | Awaitable in-process callbacks | `hookable` | hook vocabulary, payload schema, ordering, timeout, cancellation, trust, failure policy, cleanup |
 
 Prefer small application adapters over exporting package instances throughout a
-codebase. This keeps package-version details at one boundary and prevents
+codebase. This keeps package-version details in one module and prevents
 interceptors, driver options, fingerprints, and hooks from becoming invisible
 global policy.
 
@@ -195,7 +195,7 @@ Do not mutate a shared object after creating clients and expect isolated state.
 
 ### Errors
 
-Map package errors once at the HTTP adapter boundary:
+Map package errors once at the HTTP adapter API:
 
 ```ts
 try {
@@ -307,7 +307,7 @@ const raw = response._data;
 ```
 
 `_data` is package-specific, not a standard `Response` property. Do not return
-the extended response across the domain boundary when a smaller owned result
+the extended response across the domain interface when a smaller owned result
 will do.
 
 For a stream, request `responseType: "stream"`, own the reader, propagate
@@ -317,7 +317,7 @@ the reader in `finally`. `ofetch` selects `stream` automatically for
 duplicate suppression, backpressure, and terminal event semantics remain the
 application's responsibility.
 
-### Node dispatcher boundary
+### Node dispatcher integration
 
 The 1.5.1 declarations expose `dispatcher` for Node 18+ Undici-compatible
 dispatchers and `agent` for the older Node polyfill path. This is runtime-
@@ -467,7 +467,7 @@ requires a feature. In the verified 1.17.5 core, a normal `setItem` returns
 without writing if the driver has no `setItem`; some read-only options also make
 driver mutations no-ops. A resolved promise is not proof that state changed.
 For critical state, write, read back, and verify identity/version at the claimed
-consistency boundary.
+consistency guarantee.
 
 Representative verified drivers:
 
@@ -483,7 +483,7 @@ Representative verified drivers:
 `preConnect` in the verified Redis driver initializes inside a `try/catch` that
 writes a failure with `console.error`. In a LogTape-only CLI, avoid relying on
 that path for lifecycle reporting; initialize/health-check the native client at
-an owned boundary or verify a later operation and map the error through the
+an owned component or verify a later operation and map the error through the
 CLI's diagnostic transport.
 
 Driver options and peer ranges are version-sensitive. The table is not a reason
@@ -512,7 +512,7 @@ documents such a contract.
 
 `snapshot(storage, base)` enumerates keys and reads them in parallel.
 `restoreSnapshot(storage, snapshot, base)` writes entries in parallel. The
-snapshot does not include a transaction boundary, metadata protocol, or
+snapshot does not include a transaction scope, metadata protocol, or
 concurrent-writer exclusion. Use it for controlled fixtures, migrations under a
 lock, or best-effort cache transfer, not as a database backup or crash-consistent
 checkpoint.
@@ -650,7 +650,7 @@ for (const change of changes) {
 `redactForDiff` and `diagnostics` are application-owned. Do not log
 `newValue`/`oldValue` blindly; the diff object can retain original values.
 
-### Version boundary
+### Version line
 
 `ohash` v2 has different documentation and outputs from the maintained v1 line.
 Persist a fingerprint algorithm/version beside the value. On upgrade, either
@@ -733,7 +733,7 @@ Choose and document one policy per hook:
 - compensatable hook with an application-owned rollback protocol.
 
 Hookable supplies only the invocation primitive. Add timeout/cancellation in
-the handler contract, and do not swallow hook failure at the command boundary.
+the handler contract, and do not swallow hook failure at the command entrypoint.
 
 `beforeEach` and `afterEach` register synchronous spy callbacks. In v6 the
 `afterEach` callbacks are run from `finally` when an async hook call rejects.
@@ -767,11 +767,11 @@ LogTape is the sole output transport:
 
 - do not enable `createDebugger` in production command paths;
 - do not delegate public deprecation rendering to Hookable;
-- normalize deprecated hook names at the application/plugin boundary and emit
+- normalize deprecated hook names at the application/plugin interface and emit
   the warning through the owned LogTape category;
 - capture stdout/stderr in tests to prove no package helper bypasses transport.
 
-### Plugin boundary
+### Plugin interface
 
 Hookable is not a plugin loader or sandbox. If third-party code registers hooks,
 the application must define:
@@ -826,7 +826,7 @@ CLI validates request and resolves source identity
 ```
 
 This can support application recovery only when the selected driver survives the
-claimed failure, writes meet the required consistency boundary, domain effects
+claimed failure, writes meet the required consistency guarantee, domain effects
 are idempotent or reconcilable, and crash tests prove the order. Calling the
 state a checkpoint does not make it durable.
 
@@ -958,7 +958,7 @@ checks:
 - batch partial failure and lack of assumed atomicity;
 - metadata and TTL only where documented;
 - same-instance and external-process watch behavior;
-- process kill/restart at each checkpoint boundary;
+- process kill/restart at each checkpoint commit point;
 - corrupted and old-version values;
 - optional peer missing, authentication failure, network partition, and
   permission denial;
@@ -989,7 +989,7 @@ Assert:
 - unregister, `hookOnce`, bulk add/remove, and shutdown cleanup;
 - signal/timeout propagation in every async handler;
 - reentrant calls and recursive hook policy;
-- typed payload plus runtime validation at external plugin boundaries;
+- typed payload plus runtime validation at external plugin interfaces;
 - no `console.*` output on production paths;
 - compatibility against every supported installed major.
 
@@ -1003,7 +1003,7 @@ Verified 2026-07-17 from primary package artifacts and official documentation:
 - `ofetch@1.5.1` registry artifact:
   <https://registry.npmjs.org/ofetch/-/ofetch-1.5.1.tgz>, integrity
   `sha512-2W4oUZlVaqAPAil6FUg/difl6YhqhUR7x2eZY4bQCko22UXg3hptq9KLQdqFClV+Wu85UX7hNtdGTngi/1BxcA==`.
-- Official ofetch repository/tag and v1 documentation boundary:
+- Official ofetch repository/tag and v1 documentation line:
   <https://github.com/unjs/ofetch/tree/v1.5.1> and
   <https://github.com/unjs/ofetch/tree/v1>.
 - `unstorage@1.17.5` registry artifact:
@@ -1015,7 +1015,7 @@ Verified 2026-07-17 from primary package artifacts and official documentation:
 - `ohash@2.0.11` registry artifact:
   <https://registry.npmjs.org/ohash/-/ohash-2.0.11.tgz>, integrity
   `sha512-RdR9FQrFwNBNXAr4GixM8YaRZRJ5PUWbKYbE5eOsrwAjJW0q2REGcf79oYPsLyskQCZG1PLN+S/K1V00joZAoQ==`.
-- Official ohash v2.0.11 source and migration boundary:
+- Official ohash v2.0.11 source and migration line:
   <https://github.com/unjs/ohash/tree/v2.0.11>.
 - `hookable@6.1.1` registry artifact:
   <https://registry.npmjs.org/hookable/-/hookable-6.1.1.tgz>, integrity

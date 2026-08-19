@@ -1,6 +1,6 @@
 # Storage ownership and authority
 
-Use this reference before introducing, removing, or integrating a database, search engine, graph store, cache, artifact format, or queue. The goal is not to assign one fashionable product per workload. The goal is to name the authority, guarantees, failure boundary, recovery path, and operational owner for every fact.
+Use this reference before introducing, removing, or integrating a database, search engine, graph store, cache, artifact format, or queue. The goal is not to assign one fashionable product per workload. The goal is to name the authority, guarantees, failure path, recovery path, and operational owner for every fact.
 
 ## Contents
 
@@ -39,7 +39,7 @@ For each fact/domain, record:
 
 | Question | Required answer |
 |---|---|
-| Who accepts the authoritative write? | Named store/table/object plus transaction boundary |
+| Who accepts the authoritative write? | Named store/table/object plus transaction scope |
 | What invariant is guaranteed there? | Constraint, isolation, append identity, or documented absence |
 | Who serves reads? | Direct authority or named projection/cache |
 | What lag is allowed? | Objective and measurement |
@@ -161,7 +161,7 @@ For every runtime client, identify:
 - readiness/health semantics;
 - shutdown and drain method;
 - cancellation of in-flight requests;
-- test replacement/fake boundary.
+- test replacement/fake interface.
 
 The retained finance `createDatabase()` creates a `postgres.js` client and returns only the Drizzle wrapper. That shape can obscure `client.end()` from the composition root. A production design can return `{ db, client, close }`, accept an externally owned client, or otherwise make shutdown reachable. Do not claim graceful shutdown from a wrapper type alone.
 
@@ -173,7 +173,7 @@ When changing ownership:
 
 1. Document current writer/readers and recovery evidence.
 2. Define the future authority and invariant contract.
-3. Add durable change capture or a named snapshot boundary.
+3. Add durable change capture or a named snapshot point.
 4. Backfill a versioned target.
 5. Reconcile identities, content, tenant policy, and domain invariants.
 6. Dual-read or shadow-query when it produces useful evidence.

@@ -1,13 +1,15 @@
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  type EvalCase,
+  type EvalCaseType,
   EvalCaseFileSchema,
   SkillIdSchema,
-  SkillOptWorkspaceSchema,
-} from "../src/eval_schema.ts";
+} from "../src/corpus.ts";
+import { SkillOptWorkspaceSchema } from "../src/workspace.ts";
 import { collectedArguments, stringArgument } from "../src/args.ts";
 import { copyDirectory, walkFiles } from "../src/files.ts";
+import * as hash from "../src/hash.ts";
+import * as tree from "../src/tree.ts";
 
 const targetSkill = SkillIdSchema.parse(
   stringArgument("skill", "deno-software"),
@@ -75,25 +77,6 @@ for (const skill of companions) {
   );
 }
 
-const encoder = new TextEncoder();
-async function digest(value: string): Promise<string> {
-  const bytes = await crypto.subtle.digest("SHA-256", encoder.encode(value));
-  return Array.from(new Uint8Array(bytes))
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-async function treeDigest(path: string): Promise<string> {
-  const entries: string[] = [];
-  for await (const entry of walkFiles(path)) {
-    const name = relative(path, entry);
-    entries.push(
-      `${name}\0${await digest(await Deno.readTextFile(entry))}`,
-    );
-  }
-  return await digest(entries.sort().join("\n"));
-}
-
 const casePaths: string[] = [];
 for await (const path of walkFiles(join(root, "evals", "cases"))) {
   if (path.endsWith(".json")) casePaths.push(path);
@@ -110,7 +93,9 @@ const allCases = (
 ).flat();
 
 const installed = new Set([targetSkill, ...companions]);
-function targetsSkill(item: EvalCase): boolean {
+
+/** Return whether one case belongs to the selected skill/reference export. */
+function targetsSkill(item: EvalCaseType): boolean {
   const compositionSkills = new Set([
     ...item.expectedSkills,
     ...item.forbiddenSkills,
@@ -162,7 +147,7 @@ for (const split of [...allowedSplits]) {
 
 const caseRecords = await Promise.all(cases.map(async (item) => ({
   id: item.id,
-  digest: await digest(JSON.stringify(item)),
+  digest: await hash.text(JSON.stringify(item)),
 })));
 const mutablePaths = exportMode !== "optimize"
   ? []
@@ -191,7 +176,7 @@ const sortedImmutablePaths = [...new Set(immutablePaths)].sort();
 const immutableDigests = Object.fromEntries(
   await Promise.all(sortedImmutablePaths.map(async (path) => [
     path,
-    await digest(await Deno.readTextFile(join(destination, path))),
+    await hash.file(join(destination, path)),
   ])),
 );
 const manifest = SkillOptWorkspaceSchema.parse({
@@ -207,11 +192,11 @@ const manifest = SkillOptWorkspaceSchema.parse({
   skillRevisions: Object.fromEntries(
     await Promise.all([targetSkill, ...companions].map(async (skill) => [
       skill,
-      await treeDigest(join(skillRoot, skill)),
+      await tree.getDigest(join(skillRoot, skill)),
     ])),
   ),
   cases: caseRecords,
-  caseSetDigest: await digest(
+  caseSetDigest: await hash.text(
     caseRecords.map((item) => `${item.id}:${item.digest}`).sort().join("\n"),
   ),
 });

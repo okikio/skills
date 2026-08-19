@@ -1,83 +1,154 @@
 ---
 name: explore-ecosystems
-description: Investigate a material library, framework, tool, protocol, or service as a possible monorepo or wider ecosystem before selecting, integrating, replacing, upgrading, or recommending it. Use when sibling packages, official adapters, plugins, companion repositories, specifications, or adjacent systems could change the decision. Do not use for incidental imports or a purely local edit with no dependency decision.
+description: Investigate a material library, framework, tool, protocol, service, or standard as a possible monorepo or wider ecosystem before selecting, integrating, replacing, upgrading, or recommending it. Use when sibling packages, official adapters, plugins, companion repositories, specifications, releases, or adjacent systems could change the decision. Do not use for incidental imports or a purely local edit with no dependency decision.
 ---
 
 # Explore ecosystems
 
-Treat every material dependency as an ecosystem hypothesis. This is a required
-investigation posture, not permission to claim that every project is a monorepo.
+Treat every material dependency as an **ecosystem hypothesis**. Investigate the
+hypothesis. Do not turn it into the false claim that every package belongs to a
+monorepo or that every sibling should be installed.
+
+This skill owns dependency identity, topology, capability ownership, source
+strength, alternatives, exclusions, compatibility evidence, and integration
+selection. `deliver-software` owns edits and completion. Domain skills own the
+actual implementation semantics once a dependency choice is made.
 
 ## Outcome
 
-Produce an evidence-backed map that answers:
+Produce a source-backed decision map:
 
-- what the target actually is and who owns it;
-- which first-party and interoperable projects matter to this task;
-- which package owns each required capability;
-- which alternatives or siblings deliberately remain excluded;
-- what versions, runtimes, hosts, licenses, and maturity boundaries constrain it;
-- how the chosen set integrates with the existing repository;
-- which executable checks can prove the important claims.
+```text
+exact target identity
+      |
+      v
+canonical owner/repository/org
+      |
+      +--> workspace siblings
+      +--> official adapters/plugins
+      +--> companion repositories
+      +--> standards/specifications
+      +--> alternatives
+      |
+      v
+capability ownership + constraints
+      |
+      v
+smallest coherent selected set
+      |
+      v
+integration and executable proof
+```
+
+Every material recommendation should state what was verified, what was inferred,
+what was excluded, and what remains unresolved.
 
 ## Materiality and stopping
 
-Use two levels of investigation:
+Use two investigation levels:
 
-1. Every dependency in the task's dependency inventory gets a cheap ecosystem
-   identity check. Inspect its manifest identity and canonical repository or
-   organization metadata for workspace packages, official adapters, plugins,
-   and companion projects. Record verified, standalone, or unresolved status.
-2. Material dependencies get the full topology, capability, compatibility,
-   failure, integration, exclusion, and verification analysis below.
+1. **Cheap identity check for every material dependency in scope.** Inspect the
+   installed manifest/lockfile identity and canonical repository or organization
+   metadata. Record standalone, monorepo, multi-repo ecosystem, plugin/spec
+   ecosystem, or unresolved status.
+2. **Deep mapping only when the decision can change.** A dependency is material
+   when its selection/integration can affect architecture, runtime/host support,
+   public contracts, security, operations, generated artifacts, deployment,
+   licensing, or verification.
 
-A dependency is material when its selection or integration can change
-architecture, manifests, runtime or host compatibility, public contracts,
-security, operations, generated artifacts, deployment, or verification.
-Incidental imports and unchanged local helpers do not qualify for the deep
-mapping pass merely because they appear in source.
+Stop when capability ownership, compatibility, deliberate exclusions, and
+verification evidence are sufficient for the named decision. More browsing is
+not automatically better research.
 
-Research is read-only unless the request authorizes changes. Stop when capability
-ownership, compatibility, exclusions, and verification evidence are sufficient
-for the named decision. Record unresolved claims and the exact next evidence
-instead of expanding research without a decision boundary.
+## Evidence ladder
+
+Prefer evidence by the claim being made:
+
+1. current installed/exported source and executable tests;
+2. current official documentation/specification and canonical repository;
+3. release/changelog/registry metadata;
+4. issue/discussion/PR evidence for unresolved or emergent behavior;
+5. reputable secondary material for context;
+6. memory only as a search hint.
+
+A README may describe an API that is no longer exported. A recently uploaded old
+archive may have a new file timestamp. Use content and executable behavior, not
+metadata alone, to establish freshness.
 
 ## Procedure
 
-1. Name the decision. Do not research an ecosystem without stating what choice
-   the evidence must support.
-2. Establish identity from installed manifests, lockfiles, source imports, the
-   package registry, the canonical repository, and official documentation.
-3. Classify the topology as a verified monorepo, verified multi-repository
-   ecosystem, plugin ecosystem, specification ecosystem, standalone project,
-   or unresolved.
-4. Map first-party siblings, adapters, plugins, presets, integrations, examples,
-   and adjacent specifications. Label community and experimental work clearly.
-5. Trace the repository's actual capability owners before proposing additions.
-   Avoid installing a second parser, logger, configuration loader, router, ORM,
-   or schema owner without an explicit coexistence contract.
-6. Inspect failure behavior, configuration, security, compatibility, lifecycle,
-   and deliberate exclusions, not only the happy-path API.
-7. Re-evaluate the original choice. Prefer the smallest coherent capability set,
-   not the largest number of same-organization packages.
-8. Verify material claims through source, tests, a minimal executable workflow,
-   or a clean consumer. Report unresolved claims as unresolved.
+1. **Name the decision.** State the capability or trade-off the research must
+   resolve before searching.
+2. **Resolve exact identity.** Package name, repository, organization, version,
+   license, runtime, manifest exports, and active consumers.
+3. **Map topology.** Discover verified workspace siblings, official adapters,
+   plugins, presets, integration packages, companion repos, standards, and
+   protocol implementations. Classify every edge.
+4. **Map capability ownership.** Determine which component owns parser,
+   transport, configuration, schema, persistence, rendering, observability,
+   release, or other needed behavior. Do not choose packages by brand proximity.
+5. **Inspect compatibility and lifecycle.** Runtimes, frameworks, deployment,
+   resource ownership, cancellation/disposal, security, configuration, and
+   operational constraints.
+6. **Compare alternatives under fixed criteria.** Establish criteria first,
+   rank options, gather additional evidence, then reassess the ranking using the
+   same criteria to avoid recency bias.
+7. **Record exclusions.** Explain why obvious siblings/alternatives are not
+   selected. Exclusion is part of a trustworthy ecosystem map.
+8. **Prove the material claim.** Use source/tests/minimal integration/clean
+   consumer where possible. Mark unresolved claims honestly.
+9. **Hand implementation a bounded contract.** Exact packages/versions,
+   integration owner, configuration/resource/lifecycle seams, expected failures,
+   and verification steps.
+
+## Anti-hallucination rules
+
+- Similar names do not establish a relationship.
+- Same organization does not mean same runtime contract or recommended bundle.
+- A monorepo package is not public merely because source exists.
+- An adapter file does not prove a stable exported adapter.
+- Type compatibility does not prove runtime support.
+- Experimental/prerelease code does not become stable because documentation is
+  polished.
+- Do not infer support from framework branding. Verify exact renderer/runtime
+  bindings.
+- Do not invent a missing package or private export to make the proposed
+  architecture cleaner.
+- Do not search adjacent packages indefinitely after the decision is resolved.
+
+## Integration handoff
+
+Before a selected dependency is implemented, provide:
+
+- exact dependency and owning package;
+- version/stability evidence;
+- public import/export surface;
+- configuration and environment ownership;
+- resource lifetime and cleanup;
+- errors/retries/cancellation where material;
+- runtime and deployment requirements;
+- coexistence/removal plan for the current owner;
+- tests/fixtures/clean-consumer checks that prove the integration.
 
 ## Reference routing
 
-- Read [evidence.md](references/evidence.md) to establish identity, provenance,
-  freshness, and claim strength.
-- Read [topology.md](references/topology.md) to discover and classify related
-  projects without inventing relationships.
-- Read [selection.md](references/selection.md) when choosing packages,
-  alternatives, or ownership boundaries.
-- Read [integration.md](references/integration.md) before changing manifests or
-  connecting packages to an existing system.
-- Read [failures.md](references/failures.md) for investigation traps, failure
-  signatures, and counterexamples.
-- Read [method.md](references/method.md) for the compact reusable worksheet.
+- [evidence.md](references/evidence.md): identity, source strength, freshness,
+  provenance, contradictions, claim ledgers, and executable evidence.
+- [topology.md](references/topology.md): monorepos, multi-repository ecosystems,
+  plugins, standards, relationship taxonomy, and discovery algorithm.
+- [selection.md](references/selection.md): capability ownership, alternatives,
+  hard gates, comparative criteria, maturity, portability, and supply-chain cost.
+- [integration.md](references/integration.md): dependency/manifests, vertical
+  integration, configuration, lifecycle, failure paths, and connected surfaces.
+- [failures.md](references/failures.md): research and integration failure
+  signatures, false relationships, missing exports, and recovery.
+- [method.md](references/method.md): reusable decision/capability/evidence
+  worksheet and stopping process.
 
-Workflow skills own implementation semantics. `deliver-software` owns request
-authority, repository change, and the final completion verdict. This skill owns
-dependency topology and evidence. When composed, discover the repository once
-and share one evidence map.
+## Completion gate
+
+Ecosystem research is complete when the requested decision can be made from
+traceable evidence, material alternatives and exclusions are explicit, version
+and runtime constraints are known, no public API was invented, and the selected
+integration has executable verification steps. Unresolved material claims remain
+listed as unresolved rather than being averaged into a confident conclusion.

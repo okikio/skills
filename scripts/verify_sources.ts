@@ -3,7 +3,8 @@ import { createReadStream } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { stringArgument } from "../src/args.ts";
-import { SourceRegistrySchema } from "../src/eval_schema.ts";
+import * as command from "../src/command.ts";
+import { SourceRegistrySchema } from "../src/corpus.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const attachments = stringArgument("attachments");
@@ -47,20 +48,20 @@ for (const [artifact, expected] of [...expectedByArtifact].sort()) {
   }
   const claimPaths = claimPathsByArtifact.get(artifact) ?? new Set<string>();
   if (!artifact.endsWith(".zip") || claimPaths.size === 0) continue;
-  const listing = await new Deno.Command("unzip", {
-    args: ["-Z1", path],
-    stdout: "piped",
-    stderr: "piped",
-  }).output();
-  if (!listing.success) {
-    failures.push(
-      `${artifact}: cannot inspect archive entries: ${
-        new TextDecoder().decode(listing.stderr).trim()
-      }`,
-    );
+  const listing = await command.call("unzip", ["-Z1", path], {
+    timeoutMs: 60_000,
+    outputBytes: 8 * 1024 * 1024,
+  });
+  if (!listing.success || listing.timedOut || listing.stdoutTruncated) {
+    const reason = listing.timedOut
+      ? "archive listing timed out"
+      : listing.stdoutTruncated
+      ? "archive listing exceeded 8 MiB"
+      : listing.stderr.trim();
+    failures.push(`${artifact}: cannot inspect archive entries: ${reason}`);
     continue;
   }
-  const entries = new TextDecoder().decode(listing.stdout).split("\n");
+  const entries = listing.stdout.split("\n");
   for (const claimPath of claimPaths) {
     const normalized = claimPath.replace(/^\.\//, "").replace(/\/$/, "");
     if (

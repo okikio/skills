@@ -49,7 +49,7 @@ export type CreateImportJson = z.output<typeof CreateImportJson>
 Input and output types differ when a schema coerces, defaults, transforms, or
 brands. Choose deliberately.
 
-Use Standard Schema at a validator-neutral library boundary:
+Use Standard Schema at a validator-neutral library API:
 
 ```ts
 export async function validateWith<TSchema extends StandardSchemaV1>(
@@ -240,7 +240,7 @@ under a new schema while an older worker remains responsible for the run.
 | Type compiles but runtime returns string | `z.input`/`z.output` confusion or missing transform | Test parsed output |
 | Client cannot handle actual response | Payload-only schema | Declare full variants/status/headers |
 | OpenAPI route returns 404 | Generator catalog differs from runtime registry | One registry plus reachability test |
-| Validation returns 500 | Transform threw outside normalized validation boundary | Normalize schema and thrown validator errors |
+| Validation returns 500 | Transform threw outside normalized validation stage | Normalize schema and thrown validator errors |
 | Cross-org ID passes schema | Validation mistaken for authorization | Server-owned policy after identity |
 | Generated client breaks after “additive” change | Strict decoder or operation ID drift | Compatibility test the real client |
 | Raw SQL appears in problem detail | Cause copied to public response | Stable problem and redacted diagnostic |

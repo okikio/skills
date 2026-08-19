@@ -1,10 +1,13 @@
-import assert from "node:assert/strict";
+import { expect } from "@std/expect";
+import { describe, it } from "node:test";
 import { evaluateAssertion } from "../src/assert.ts";
-import { redact } from "../src/redact.ts";
+import { redact, redactValue } from "../src/redact.ts";
 
-const assertEquals: (actual: unknown, expected: unknown) => void =
-  assert.deepEqual;
-async function assertRejects(
+/**
+ * Assert that an async operation rejects with the expected error class and
+ * message fragment.
+ */
+async function expectRejects(
   operation: () => Promise<unknown>,
   errorClass: { [Symbol.hasInstance](value: unknown): boolean },
   message: string,
@@ -12,88 +15,114 @@ async function assertRejects(
   try {
     await operation();
   } catch (error) {
-    assert.ok(error instanceof errorClass);
-    assert.match(String(error), new RegExp(message));
+    expect(error instanceof errorClass).toBe(true);
+    expect(String(error)).toMatch(new RegExp(message));
     return;
   }
-  assert.fail("Expected operation to reject");
+  throw new Error("Expected operation to reject");
 }
 
-Deno.test("redaction removes overlapping secrets without recording values", () => {
-  assertEquals(
-    redact("token-long token", { SHORT: "token", LONG: "token-long" }),
-    "[REDACTED:LONG] [REDACTED:SHORT]",
-  );
-});
+describe("evaluation assertions", () => {
+  it("redacts overlapping secrets without recording values", () => {
+    expect(redact("token-long token", { SHORT: "token", LONG: "token-long" }))
+      .toBe("[REDACTED:LONG] [REDACTED:SHORT]");
+  });
 
-Deno.test("text assertions distinguish required and forbidden output", async () => {
-  const root = await Deno.makeTempDir();
-  try {
-    assertEquals(
-      (await evaluateAssertion(
+  it("redacts structured strings before JSON escaping", () => {
+    const secret = 'quoted"\\token';
+    const value = redactValue(
+      { nested: [secret, { text: `prefix ${secret} suffix` }] },
+      { API_KEY: secret },
+    );
+    const serialized = JSON.stringify(value);
+
+    expect(serialized).not.toContain("quoted");
+    expect(serialized).toContain("[REDACTED:API_KEY]");
+  });
+
+  it("distinguishes required and forbidden output", async () => {
+    const root = await Deno.makeTempDir();
+    try {
+      expect((await evaluateAssertion(
         { kind: "contains", value: "verified", caseSensitive: false },
         "VERIFIED",
         root,
-      )).passed,
-      true,
-    );
-    assertEquals(
-      (await evaluateAssertion(
+      )).passed).toBe(true);
+      expect((await evaluateAssertion(
         { kind: "not-contains", value: "published", caseSensitive: false },
         "validated locally",
         root,
-      )).passed,
-      true,
-    );
-  } finally {
-    await Deno.remove(root, { recursive: true });
-  }
-});
+      )).passed).toBe(true);
+    } finally {
+      await Deno.remove(root, { recursive: true });
+    }
+  });
 
-Deno.test("file assertions cannot escape the fixture", async () => {
-  const root = await Deno.makeTempDir();
-  try {
-    await assertRejects(
-      () =>
-        evaluateAssertion(
+  it("prevents file assertions from escaping the fixture", async () => {
+    const root = await Deno.makeTempDir();
+    try {
+      await expectRejects(
+        () => evaluateAssertion(
           { kind: "file-exists", value: "../outside" },
           "",
           root,
         ),
-      Error,
-      "escapes",
-    );
-  } finally {
-    await Deno.remove(root, { recursive: true });
-  }
-});
+        Error,
+        "escapes",
+      );
+    } finally {
+      await Deno.remove(root, { recursive: true });
+    }
+  });
 
-Deno.test("file-change assertions compare against an isolated baseline", async () => {
-  const baseline = await Deno.makeTempDir();
-  const candidate = await Deno.makeTempDir();
-  try {
-    await Deno.writeTextFile(`${baseline}/doc.md`, "original\n");
-    await Deno.writeTextFile(`${candidate}/doc.md`, "changed\n");
-    assertEquals(
-      (await evaluateAssertion(
+  it("does not forward unrelated parent environment values to command assertions", async () => {
+    const root = await Deno.makeTempDir();
+    const name = "SKILLOPT_TEST_SECRET";
+    const previous = Deno.env.get(name);
+    Deno.env.set(name, "must-not-leak");
+    try {
+      const result = await evaluateAssertion({
+        kind: "command",
+        command: [
+          Deno.execPath(),
+          "eval",
+          `console.log(Deno.env.get("${name}") ?? "missing")`,
+        ],
+        expectedExitCode: 0,
+        stdout: "^missing$",
+        timeoutMs: 2_000,
+      }, "", root);
+
+      expect(result.passed).toBe(true);
+      expect(result.evidence).not.toContain("must-not-leak");
+    } finally {
+      if (previous === undefined) Deno.env.delete(name);
+      else Deno.env.set(name, previous);
+      await Deno.remove(root, { recursive: true });
+    }
+  });
+
+  it("compares file changes against an isolated baseline", async () => {
+    const baseline = await Deno.makeTempDir();
+    const candidate = await Deno.makeTempDir();
+    try {
+      await Deno.writeTextFile(`${baseline}/doc.md`, "original\n");
+      await Deno.writeTextFile(`${candidate}/doc.md`, "changed\n");
+      expect((await evaluateAssertion(
         { kind: "file-changed", value: "doc.md" },
         "",
         candidate,
         baseline,
-      )).passed,
-      true,
-    );
-    assertEquals(
-      (await evaluateAssertion(
+      )).passed).toBe(true);
+      expect((await evaluateAssertion(
         { kind: "file-unchanged", value: "doc.md" },
         "",
         candidate,
         baseline,
-      )).passed,
-      false,
-    );
-  } finally {
-    await Deno.remove(baseline, { recursive: true });
-    await Deno.remove(candidate, { recursive: true });
-  }
+      )).passed).toBe(false);
+    } finally {
+      await Deno.remove(baseline, { recursive: true });
+      await Deno.remove(candidate, { recursive: true });
+    }
+  });
 });

@@ -36,9 +36,9 @@ Check:
 
 Check:
 - are errors explicit
-- are trust boundaries clear
+- are trust transitions clear
 - are unsafe patterns introduced
-- are inputs validated at boundaries
+- are inputs validated at input entrypoints
 - does the change introduce hidden assumptions
 - does the change affect `deno doc --lint` compliance
 
@@ -48,7 +48,7 @@ Check:
 - avoid `any`
 - use unions, generics, and narrowing where appropriate
 - public signatures only reference exported public types
-- return types are explicit and narrow at module boundaries
+- return types are explicit and narrow at module APIs
 
 ### 4. Readability and educational clarity
 
@@ -56,7 +56,7 @@ Check:
 - names reveal intent
 - non-obvious or complex logic is explained
 - comments explain why, and when needed what or how
-- comments connect local logic to the larger behavior instead of labeling vague boundaries
+- comments connect local logic to the larger behavior instead of labeling vague concepts
 - cohesive logic is kept together unless extraction improves naming, reuse, policy isolation, or testability
 - early returns are preferred when they let each branch show validation, work, and result together
 - diagrams preserve enough detail to explain lifecycle, ownership, state, and failure-sensitive order

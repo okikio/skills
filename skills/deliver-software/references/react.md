@@ -18,7 +18,7 @@ Write React so that:
 - Composition is visible in JSX.
 - Effects synchronize with external systems, not normal derivation.
 - Components preserve native HTML semantics.
-- Server and client boundaries are intentional.
+- Server and client handoffs are intentional.
 
 Default to React 19 patterns for new code unless the project is pinned to React 18 or earlier.
 
@@ -31,9 +31,9 @@ When writing or reviewing React, reason in this order:
 3. Keep state ownership clear: local, URL, server, form, external store, transition, or context state.
 4. Use composition instead of boolean configuration.
 5. Keep effects limited to external synchronization.
-6. Model async work, pending state, error recovery, and Suspense boundaries deliberately.
+6. Model async work, pending state, error recovery, and Suspense regions deliberately.
 7. Preserve identity for lists, keys, IDs, refs, focus, and retained state.
-8. Keep server rendering, hydration, and client boundaries stable.
+8. Keep server rendering, hydration, and client handoffs stable.
 9. Use memoization only when it protects real work or stable identity.
 
 ## Design component APIs around composition
@@ -88,7 +88,7 @@ For static regions, use children or named compound components instead.
 
 Use compound components when a family of components shares state, actions, IDs, refs, or metadata.
 
-Keep the provider boundary explicit. Components that need shared state do not need to be visually nested inside the root frame, but they must be inside the provider.
+Keep the provider API explicit. Components that need shared state do not need to be visually nested inside the root frame, but they must be inside the provider.
 
 ```tsx
 import { createContext, use, useMemo, useState, type ReactNode } from "react"
@@ -467,7 +467,7 @@ useEffect(() => {
 }, [query])
 ```
 
-## Place Suspense and error boundaries around recoverable regions
+## Place Suspense and error mappers around recoverable regions
 
 Use Suspense for meaningful loading regions, not as a blanket replacement for the entire app when stable layout can remain visible.
 
@@ -479,7 +479,7 @@ Use Suspense for meaningful loading regions, not as a blanket replacement for th
 </DashboardShell>
 ```
 
-Use error boundaries around product recovery regions. The fallback should explain what failed and offer a reset, retry, or navigation path when possible.
+Use error mappers around product recovery regions. The fallback should explain what failed and offer a reset, retry, or navigation path when possible.
 
 Avoid full-page fallbacks that hide navigation or stable context unnecessarily.
 
@@ -508,7 +508,7 @@ When using portals, ensure:
 </Dialog.Root>
 ```
 
-## Keep server and client boundaries explicit
+## Keep server and client handoffs explicit
 
 For frameworks with server components or route loaders, keep browser-only code out of server-only modules.
 
@@ -517,7 +517,7 @@ Ensure:
 - Server-rendered markup matches initial client markup.
 - Browser APIs are read in client-safe code.
 - Client components are as narrow as possible.
-- Serializable props cross server-client boundaries.
+- Serializable props cross server-client handoffs.
 - Secrets, tokens, and privileged data never enter client bundles.
 - Random IDs, dates, locale output, media query values, and viewport values cannot create accidental hydration mismatch.
 
@@ -573,7 +573,7 @@ Test:
 - List identity after reorder.
 - Portals and focus restoration.
 - Suspense, error, empty, pending, and success states.
-- Server-client boundaries when applicable.
+- Server-client handoffs when applicable.
 - Accessible names and keyboard behavior.
 
 Prefer DOM-facing tests over implementation snapshots.
@@ -588,7 +588,7 @@ Before considering React UI complete, ask:
 - Are effects only synchronizing external systems?
 - Are async states visible and recoverable?
 - Are keys, refs, IDs, and focus stable?
-- Are server/client boundaries explicit and safe?
+- Are server/client handoffs explicit and safe?
 - Is memoization justified by cost or identity?
 
 For every important finding, show the concrete React fix.

@@ -9,7 +9,7 @@ Use this reference before choosing a framework, renderer, hydration directive, s
 - Ownership decisions
 - Worked repository cases
 - Decision record
-- Failure boundaries
+- Failure paths
 - Verification
 - Sources and freshness
 
@@ -48,7 +48,7 @@ Classify at route or route-group granularity. A repository can contain several s
 | Product application | Application router | SSR plus client reactivity | URL, query cache, local UI, session, server | Long-lived workflows or offline synchronization |
 | Hybrid product/marketing | Route-level split | Static public routes plus SSR app routes | Different owner per route group | Shared shell must not erase cache/security differences |
 | Embedded widget | Host document plus isolated component | Script/custom element or island | Explicit embed instance | Cross-origin messaging, versioned embed contract |
-| Browser extension | Extension runtime | Manifest/context-specific | Extension storage/background context | Content-script, service-worker, and permission boundaries |
+| Browser extension | Extension runtime | Manifest/context-specific | Extension storage/background context | Content-script, service-worker, and permission scopes |
 
 Ask these questions for every route:
 
@@ -65,7 +65,7 @@ Do not infer that `output: "server"` makes every route dynamic. An Astro server 
 
 ## Ownership decisions
 
-Write down one primary owner per concern. Split ownership by boundary, not by convenience.
+Write down one primary owner per concern. Split ownership by concern, not by convenience.
 
 | Concern | Valid owner examples | Invalid split |
 |---|---|---|
@@ -90,7 +90,7 @@ URL state: query, technology filters, sort, page, page size
 Remote state: canonical query-options factory keyed by organization + validated URL
 Local state: query draft before debounce, selected row ids, open dialogs
 Security: server derives organization; client cannot supply authority
-Failure: route error boundary, retry, empty state, expired-session redirect
+Failure: route error region, retry, empty state, expired-session redirect
 Verification: direct URL, reload, back/forward, cross-org request, SSR hydration
 ```
 
@@ -131,7 +131,7 @@ The architecture is not “Astro versus React.” Astro owns request routing, la
 
 ### ThunderStrike CMS site
 
-The site has a runtime CMS integration and a project-owned `cms.ts` adapter. The adapter maps provider records into article, author, topic, category, image, and page models. This boundary is reusable. The webhook file is counterexample evidence: it logs environment/secrets and payload data, lacks a trustworthy verification boundary, and mixes extraction, provider mapping, and delivery.
+The site has a runtime CMS integration and a project-owned `cms.ts` adapter. The adapter maps provider records into article, author, topic, category, image, and page models. This adapter interface is reusable. The webhook file is counterexample evidence: it logs environment/secrets and payload data, lacks a trustworthy verification step, and mixes extraction, provider mapping, and delivery.
 
 Never generalize “the repository uses this” into “this is approved.” Inspect behavior and tests.
 
@@ -146,7 +146,7 @@ Before implementation, record:
 ```text
 Surface and routes:
 Active entrypoints:
-Static/request-time/deferred boundaries:
+Static/request-time/deferred execution modes:
 Document owner:
 Interactive owners:
 URL state:
@@ -164,7 +164,7 @@ Unresolved evidence:
 
 If evidence is unresolved, use conditional language and inspect the installed version or source. Do not fill a missing runtime contract with a familiar framework pattern.
 
-## Failure boundaries
+## Failure paths
 
 Define what the user sees and what operators can inspect for:
 
@@ -192,7 +192,7 @@ Verify classification with evidence, not a prose review:
 5. Disable JavaScript for surfaces claiming progressive enhancement.
 6. Capture cache and security headers for public and personalized routes.
 7. Count shipped JavaScript/islands and compare with the ownership record.
-8. Run one failure for each connected system and verify the intended boundary owns it.
+8. Run one failure for each connected system and verify the intended owner handles it.
 9. Trace an authorization decision from request identity through the server query.
 
 ## Sources and freshness

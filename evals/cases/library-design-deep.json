@@ -7,7 +7,7 @@
       "skill": "build-libraries",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "A CLI has parse, configure, acquire, collect, verify, detect, export, and upload stages plus a shared RuntimeContext. Design the reusable library API without preserving the CLI flowchart as its module structure. Show common and advanced consumer call sites, request/result/failure/event contracts, and the application boundary.",
+      "prompt": "A CLI has parse, configure, acquire, collect, verify, detect, export, and upload stages plus a shared RuntimeContext. Design the reusable library API without preserving the CLI flowchart as its module structure. Show common and advanced consumer call sites, request/result/failure/event contracts, and the application adapter.",
       "expectedSkills": [
         "build-libraries"
       ],
@@ -151,7 +151,7 @@
       "skill": "build-libraries",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Design a library that uses LogTape diagnostics, receives c12-resolved configuration, stores optional checkpoints through unstorage, and offers a Hookable plugin surface. Map value, data-flow, capability, policy, ecosystem, lifecycle, package, and operational composition, with one owner per boundary.",
+      "prompt": "Design a library that uses LogTape diagnostics, receives c12-resolved configuration, stores optional checkpoints through unstorage, and offers a Hookable plugin surface. Map value, data-flow, capability, policy, ecosystem, lifecycle, package, and operational composition, with one owner per concern.",
       "expectedSkills": [
         "build-libraries"
       ],
@@ -339,7 +339,7 @@
       ],
       "rubric": [
         "Matches shape to cardinality and semantics",
-        "Uses arrays as explicit materialization boundaries",
+        "Uses arrays as explicit materialization points",
         "Distinguishes domain async iteration from transport streams"
       ],
       "oracleStrength": "trajectory-rubric",
@@ -508,7 +508,7 @@
       "skill": "build-libraries",
       "kind": "knowledge",
       "split": "valid-seen",
-      "prompt": "Each fact candidate currently embeds a large evidence object and string technology name. The hot loop repeatedly groups and scores millions of candidates. Propose a measured internal representation, evidence store, identifiers, index lifetime, and conversion boundary while keeping the public API readable.",
+      "prompt": "Each fact candidate currently embeds a large evidence object and string technology name. The hot loop repeatedly groups and scores millions of candidates. Propose a measured internal representation, evidence store, identifiers, index lifetime, and conversion point while keeping the public API readable.",
       "expectedSkills": [
         "build-libraries"
       ],
@@ -527,7 +527,7 @@
         },
         {
           "kind": "regex",
-          "value": "public.*boundary|conversion"
+          "value": "public.*handoff|conversion"
         },
         {
           "kind": "regex",
@@ -765,7 +765,7 @@
       "skill": "build-libraries",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Design package.json exports and source boundaries for a core analysis library plus browser, PostgreSQL, ClickHouse, LogTape, and Temporal adapters. Preserve ESM, explicit extensions, declarations, optional dependency behavior, and a small root facade without eager adapter imports.",
+      "prompt": "Design package.json exports and source ownership for a core analysis library plus browser, PostgreSQL, ClickHouse, LogTape, and Temporal adapters. Preserve ESM, explicit extensions, declarations, optional dependency behavior, and a small root facade without eager adapter imports.",
       "expectedSkills": [
         "build-libraries"
       ],
@@ -811,7 +811,7 @@
         "packaging",
         "training"
       ],
-      "rationale": "Selective adoption depends on physical package boundaries."
+      "rationale": "Selective adoption depends on physical package APIs."
     },
     {
       "id": "library-packaging-side-effects",
@@ -1223,12 +1223,12 @@
       "rationale": "Library completion often spans several existing domain skills."
     },
     {
-      "id": "library-data-flow-cancellation-boundary",
+      "id": "library-data-flow-cancellation-handoff",
       "title": "Preserve cancellation and ownership across iterable-stream adapters",
       "skill": "build-libraries",
       "kind": "knowledge",
       "split": "valid-unseen",
-      "prompt": "A library adapts an AsyncIterable<Record> into a ReadableStream<Record> for fetch integration. The current adapter keeps pulling after stream cancellation, materializes pending records, and leaves the source resource open when the reader releases its lock. Redesign the boundary and explain cancellation, return(), backpressure, buffering, and ownership semantics without pretending the two protocols are identical.",
+      "prompt": "A library adapts an AsyncIterable<Record> into a ReadableStream<Record> for fetch integration. The current adapter keeps pulling after stream cancellation, materializes pending records, and leaves the source resource open when the reader releases its lock. Redesign the handoff and explain cancellation, return(), backpressure, buffering, and ownership semantics without pretending the two protocols are identical.",
       "expectedSkills": [
         "build-libraries"
       ],
@@ -1259,7 +1259,7 @@
         }
       ],
       "rubric": [
-        "Treats protocol adaptation as a semantic boundary",
+        "Treats protocol adaptation as a semantic handoff",
         "Stops upstream production and cleanup on cancellation",
         "Defines buffer and ownership behavior explicitly"
       ],
@@ -1405,7 +1405,7 @@
       "skill": "composition",
       "kind": "routing",
       "split": "adversarial",
-      "prompt": "Add --quiet and generated shell completion to an existing Optique CLI. No reusable API or package boundary changes.",
+      "prompt": "Add --quiet and generated shell completion to an existing Optique CLI. No reusable API or package API changes.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -1557,7 +1557,7 @@
       "skill": "composition",
       "kind": "trajectory",
       "split": "transfer",
-      "prompt": "Choose the smallest LogTape and UnJS package set for a reusable SDK that needs library-safe diagnostics, project config in its CLI adapter, optional checkpoint storage, and no plugin system. Inspect official siblings and exclusions, then define the library boundaries.",
+      "prompt": "Choose the smallest LogTape and UnJS package set for a reusable SDK that needs library-safe diagnostics, project config in its CLI adapter, optional checkpoint storage, and no plugin system. Inspect official siblings and exclusions, then define the library APIs.",
       "expectedSkills": [
         "build-libraries",
         "explore-ecosystems",
@@ -1661,7 +1661,7 @@
       ],
       "rubric": [
         "Produces one integrated implementation and cleanup plan",
-        "Preserves all specialist ownership boundaries",
+        "Preserves all specialist ownership handoffs",
         "Requires executable package, lifecycle, performance, and recovery evidence"
       ],
       "oracleStrength": "trajectory-rubric",
@@ -1681,12 +1681,12 @@
       "rationale": "Frozen cross-skill topology for the full library-first migration."
     },
     {
-      "id": "library-architecture-justify-boundary",
-      "title": "Justify a library boundary without slogans",
+      "id": "library-architecture-justify-handoff",
+      "title": "Justify a library API without slogans",
       "skill": "build-libraries",
       "kind": "trajectory",
       "split": "valid-unseen",
-      "prompt": "A team says library-first architecture is necessary and proposes splitting every internal module into a separately published package. Evaluate and justify the boundary decision. Name the protected objective, hard constraints, diagnosis and causal chain, credible alternatives including doing nothing or a reversible pilot, exact rejection reasons, accepted trade-offs, assumptions or defeaters, and whether the proposal is necessary, conditionally necessary, prudent, preferred, or unjustified.",
+      "prompt": "A team says library-first architecture is necessary and proposes splitting every internal module into a separately published package. Evaluate and justify the handoff decision. Name the protected objective, hard constraints, diagnosis and causal chain, credible alternatives including doing nothing or a reversible pilot, exact rejection reasons, accepted trade-offs, assumptions or defeaters, and whether the proposal is necessary, conditionally necessary, prudent, preferred, or unjustified.",
       "expectedSkills": [
         "build-libraries"
       ],
@@ -1725,7 +1725,7 @@
         }
       ],
       "rubric": [
-        "Connects the situation, mechanism, constraints, and evidence to the boundary decision",
+        "Connects the situation, mechanism, constraints, and evidence to the handoff decision",
         "Compares weaker and more reversible options before accepting package proliferation",
         "Qualifies the conclusion and exposes evidence that would change it"
       ],

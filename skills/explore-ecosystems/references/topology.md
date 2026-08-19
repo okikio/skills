@@ -11,7 +11,7 @@
 - [Multi-repository ecosystem discovery](#multi-repository-ecosystem-discovery)
 - [Specification and framework ecosystems](#specification-and-framework-ecosystems)
 - [Private, personal, and generated ecosystems](#private-personal-and-generated-ecosystems)
-- [Capability graph and boundaries](#capability-graph-and-boundaries)
+- [Capability graph and ownership map](#capability-graph-and-ownership-map)
 - [Stopping and completeness](#stopping-and-completeness)
 - [Failure signatures](#failure-signatures)
 - [Sources and freshness](#sources-and-freshness)
@@ -111,7 +111,7 @@ Assign one primary label and evidence/status to each edge.
 | Implements specification | named/versioned contract and conformance evidence | verify optional behavior separately |
 | Generates | one node deterministically produces another | generator/source ownership required |
 | Publishes | source/build maps to registry artifact | artifact/version integrity required |
-| Alternative/replacement | overlapping owner boundary | choose; do not stack silently |
+| Alternative/replacement | overlapping ownership scope | choose; do not stack silently |
 | Community integration | third party, no first-party support promise | higher verification/maintenance burden |
 | Experimental | explicitly unstable/prerelease/research | isolate and version-pin |
 | Deprecated/superseded | canonical deprecation/migration evidence | avoid new adoption; plan migration |
@@ -171,7 +171,7 @@ cross-dependencies connect focused tools, but each package owns a narrow concern
 - Automd owns bounded generated Markdown; Giget acquires templates; Magicast
   edits supported static-ish JS/TS shapes.
 
-They can work together because capability boundaries align, not because all
+They can work together because capability ownership aligns, not because all
 come from UnJS. Select by required owner. For example, using c12 does not require
 unbuild or unstorage. Citty and Optique normally compete for command grammar;
 they are not companions merely because Citty is used by other UnJS tools.
@@ -222,7 +222,7 @@ Duplicate archives or mirrors require content comparison. Same paths/digests
 mean one evidence body with multiple archive identities, not two evolutionary
 stages. Forks require base revision plus patch set and update policy.
 
-## Capability graph and boundaries
+## Capability graph and ownership map
 
 Prefer a table for review and a graph only when topology is genuinely complex.
 

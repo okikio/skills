@@ -2,7 +2,7 @@
 
 ## Contents
 
-- [Evidence and version boundaries](#evidence-and-version-boundaries)
+- [Evidence and version lines](#evidence-and-version-lines)
 - [Responsibility map](#responsibility-map)
 - [Configuration shapes](#configuration-shapes)
 - [Resolution stages](#resolution-stages)
@@ -15,13 +15,13 @@
 - [Atomic unions and special fields](#atomic-unions-and-special-fields)
 - [Provenance and inspection](#provenance-and-inspection)
 - [Configuration mutation](#configuration-mutation)
-- [Validation boundaries](#validation-boundaries)
+- [Validation stages](#validation-stages)
 - [Testing strategy](#testing-strategy)
 - [Failure signatures](#failure-signatures)
 - [Extension checklist](#extension-checklist)
 - [Sources and freshness](#sources-and-freshness)
 
-## Evidence and version boundaries
+## Evidence and version lines
 
 Treat the configuration handoff as the normative merge contract. Treat the
 attached Kaiju `@kaiju/config` package as observed implementation that still
@@ -149,7 +149,7 @@ Decide each capability explicitly:
 - configuration creation/update hooks.
 
 Do not enable remote `extends` casually. Remote presets expand the trust and
-reproducibility boundary. Prefer installed, version-pinned presets. If remote
+reproducibility requirement. Prefer installed, version-pinned presets. If remote
 fetching is allowed, document protocol, cache, integrity, offline behavior,
 credentials, redirects, and failure policy.
 
@@ -524,7 +524,7 @@ config or discard comments in a user-authored file without authorization.
 `rc9` can own XDG-aware user RC reads/writes. Keep user config distinct from
 project config and document their precedence and uninstall/preservation policy.
 
-## Validation boundaries
+## Validation stages
 
 Validate retained source layers, not only c12's final merged object. A malformed
 scalar export can be hidden or collapsed during generic merging.
@@ -555,7 +555,7 @@ Render the layer path and schema issue path without leaking secrets.
 
 ## Testing strategy
 
-Test three boundaries:
+Test three stages:
 
 1. merger unit tests: generic pair orientation, field exceptions, immutability,
    operations, arrays, and atomic unions;
@@ -604,7 +604,7 @@ indexed writes.
 | TS error on `target[key]` | Generic defu indexed assignment | Use one documented mutation adapter |
 | Config works on one package only | c12 major/prerelease lines diverge | Pin owner and run version-specific fixtures |
 | `.env` winner differs by command | Multiple loaders own same environment setting | Create one source algebra and visible precedence |
-| Remote preset changes without lock update | Mutable `extends` trust boundary | Pin installed preset or require integrity/cache policy |
+| Remote preset changes without lock update | Mutable `extends` trust transition | Pin installed preset or require integrity/cache policy |
 
 ## Extension checklist
 

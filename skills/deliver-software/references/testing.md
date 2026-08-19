@@ -1,94 +1,132 @@
+# Testing rules
 
-# Testing Rules
+## Canonical tools
 
-## Tools
-
-Default to:
-- `jsr:@std/testing/bdd` for `describe` and `it`
-- `jsr:@std/expect` for assertions
-- `npm:fast-check` for property-based tests
-
-Imports should usually follow this shape:
+For Deno-first TypeScript libraries, default to the same source tests across runtimes:
 
 ```ts
-import { describe, it } from 'jsr:@std/testing/bdd';
-import { expect } from 'jsr:@std/expect';
-import * as fc from 'npm:fast-check';
+import { describe, it } from "node:test";
+import { expect } from "@std/expect";
+import * as fc from "fast-check";
 ```
 
-If a local project already uses a Jest-style `expect` surface through another compatible test runner such as Vitest, keep the same assertion style rather than fighting the local tool.
-Prefer consistency of test ergonomics when the underlying assertion model is effectively the same.
+Use:
 
-The rules around test quality and structure still apply regardless of the test runner or assertion library. There are also integrations for `fast-check` with test runners, e.g. `@fast-check/vitest` try taking advantage of those when using `fast-check` with a compatible test runner.
+- `node:test` for `describe`, `it`, lifecycle hooks, and the normal test runner contract;
+- `@std/expect` for Jest-style expectations;
+- `fast-check` for high-value properties and adversarial generated inputs;
+- Playwright Test for real browser capabilities and browser lifecycle behavior;
+- Mitata for benchmarks.
 
-## Core principle
+Preserve a repository's established runner when the project deliberately uses another one, such as Vitest for a frontend application. Do not create duplicate test implementations just to satisfy Deno and Node.
 
-Test behavior, not implementation.
-Treat each module as a black box.
-Call the public API and assert on observable results.
-Do not assert on private state, internal helpers, or incidental implementation details when public behavior is available.
+Runtime-specific tests are appropriate when they prove a capability that cannot exist in the other runtime, such as OPFS, WebCodecs, a Node filesystem adapter, or a Bun-specific API.
 
-## Determinism and independence
+## Test the contract, not the current line structure
 
-- No shared mutable state between tests.
-- No ordering dependencies.
-- No wall-clock or environment dependence unless explicitly isolated.
-- One logical behavior per test.
+A test should state which contract or regression it protects.
 
-If a test description needs the word `and`, it is probably two tests.
+Prefer public behavior over private implementation state. Internal unit tests are appropriate for a complex parser, planner, state machine, or algorithm when that internal operation is itself a stable reasoning unit, but do not mirror private lines merely to increase coverage.
 
-## Clarity over DRYness
+Tests are executable documentation. Keep the setup visible when it explains the scenario.
 
-Tests are documentation.
-Prefer straightforward setup over clever helper layers that hide intent.
-Use the AAA pattern:
-- Arrange
-- Act
-- Assert
+Tests must be deterministic and independent unless the test deliberately models shared state. Avoid order dependence, ambient wall-clock dependence, and shared mutable fixtures. Use a direct Arrange -> Act -> Assert story when it makes the protected contract easier to read. Do not over-abstract setup merely to remove repeated lines.
 
-Human-written expected values are better than generated expected values that repeat the implementation logic.
+Public type inference is also part of the API. For schema-derived config helpers, generic APIs, overloads, discriminated unions, and adapter factories, compile small consumer fixtures that must succeed and fixtures that must fail. Check the inferred call-site surface directly instead of assuming implementation type checks prove caller ergonomics.
 
-Tests for lifecycle-heavy behavior should tell the same story a maintainer needs
-to debug the feature. Keep setup visible when it explains the behavior. Extract a
-helper only when it names a real fixture concept, repeated scenario, policy,
-lifecycle operation, or independently reusable assertion.
+## Cover the lifecycle, not only the happy path
 
-For non-trivial setup, add a short comment that explains:
-- what behavior is protected
-- why the setup has this shape
-- what regression the test would catch
-- how the behavior connects to the larger lifecycle or algorithm
+For a non-trivial capability, inspect and test the relevant layers:
+
+- valid common path;
+- invalid schema or malformed input;
+- empty and minimum-size inputs;
+- maximum configured limits and one step beyond;
+- cancellation before start and during active work;
+- cleanup after success, failure, and cancellation;
+- close/abort or commit/rollback exclusivity;
+- retries and exhausted retry policy;
+- concurrency and stale/out-of-order completion;
+- bounded memory and producer cancellation;
+- partial reads/writes and range behavior;
+- resource ownership and explicit disposal;
+- real runtime behavior where the capability depends on runtime APIs.
+
+Do not assume a type check proves I/O, streaming, browser storage, process signals, media behavior, or provider semantics.
 
 ## Property-based tests
 
-Use `fast-check` for invariants.
-High-value properties often include:
-- never-throw behavior where relevant
-- round-trip stability
-- schema validation and parsing stability
-- schema edge cases such as empty input, missing fields, extra fields, and malformed input
-- input poisoning and fuzzing patterns relevant to the domain
-- content preservation where applicable
-- idempotence where applicable
-- structural well-formedness
-- oracle comparison where a trustworthy baseline exists
+Use `fast-check` for invariants where many equivalent inputs or operation sequences can reveal defects.
 
-## Edge cases
+High-value properties include:
 
-Always look for edge cases that match the local domain.
-Common examples include:
-- empty input
-- single-item input
-- boundary counts such as 0, 1, and 2
-- mixed line endings when text processing matters
-- malformed or partial input
-- Unicode edge cases when text handling matters
-- extremely long inputs or repeated structures
+- parser chunk invariance;
+- round-trip stability;
+- canonicalization idempotence;
+- no virtual-root escape after path normalization;
+- schema acceptance/rejection stability;
+- equivalence between optimized and reference implementations;
+- state-machine legality under generated operation sequences;
+- source preservation when an editor changes an unrelated field;
+- no stale completion replacing a terminal canceled/failed state.
+
+A property needs an independent oracle or invariant. Do not generate the expected result by calling the same logic under test.
+
+## Browser tests
+
+Use Playwright for actual browser APIs instead of reproducing browser policy in Node.
+
+Probe capabilities rather than hard-code browser brand assumptions. Test fresh and persistent contexts when persistence matters. Use real workers, iframes, service workers, user activation, storage, media, or permission flows where those are part of the contract.
+
+Keep portable algorithms in `node:test`; do not move path math, record adapters, or pure planners into Playwright merely because the final application runs in a browser.
+
+## Benchmarks
+
+Benchmarks answer performance questions; tests answer correctness questions. Keep them separate.
+
+Use Mitata with representative inputs. Measure the physical work that matters, such as throughput, latency, allocations, heap growth, requests, writes, process count, or cancellation latency. Compare against a baseline or alternative when the result is meant to justify an optimization.
+
+Do not tune implementation on a tiny benchmark that does not resemble the production access pattern.
+
+## Cross-runtime validation
+
+When a package claims Deno, Node, Bun, browser, or worker support, use separate type/runtime views so one environment cannot accidentally provide globals for another.
+
+The normal goal is:
+
+```text
+same deterministic TypeScript source
+        |
+        +-- Deno runtime tests
+        +-- Node runtime tests
+        +-- Bun runtime tests
+        `-- browser tests where Web APIs require a browser
+```
+
+If the current host lacks a runtime, record that check as blocked. Do not replace production imports with host-specific shims merely to make an agent environment green. Validation-only shims belong in disposable validation infrastructure such as `.agents/`.
+
+## Artifact tests
+
+For a release or ZIP deliverable, rerun the relevant validation against the exact extracted artifact.
+
+At minimum:
+
+1. build or create the deliverable;
+2. extract it into a clean directory;
+3. compare expected source/package file lists;
+4. recreate only validation-side host setup when needed;
+5. rerun the applicable type, test, build, and package checks;
+6. inspect generated ESM/declarations/manifests or other produced output;
+7. compute and report a hash when practical.
+
+A source tree passing while the delivered archive fails is a failed delivery.
 
 ## Anti-patterns
 
-- Do not assert giant multi-line strings when a structural assertion is more robust.
-- Do not run a code path without asserting anything meaningful.
-- Do not over-abstract test helpers.
-- Do not rely on timing assertions in normal unit tests.
-- Do not test internals when public behavior is available.
+- tests that only execute code without meaningful assertions;
+- generated expected values that reproduce the implementation;
+- giant snapshots for contracts better expressed structurally;
+- timing-sensitive sleeps when an explicit signal/state transition can be awaited;
+- hiding the scenario behind generic test helpers;
+- marking browser or Bun behavior passed from type checking alone;
+- using a compatibility shim as the only proof that the intended runtime works.

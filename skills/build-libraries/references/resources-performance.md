@@ -103,7 +103,7 @@ A cancellation path should:
 abort signal observed
   -> stop admitting work
   -> cancel or drain bounded in-flight work
-  -> close iterator/stream boundaries
+  -> close iterator/stream cleanup points
   -> settle or abort writes according to contract
   -> dispose owned resources
   -> flush bounded diagnostics
@@ -265,7 +265,7 @@ A before/after heap subtraction without lifecycle repetition is not a leak test.
 
 - use runtime resource and operation sanitizers where available;
 - instrument acquisition, active count, queue depth, and disposal count;
-- force partial-construction failures at every acquisition boundary;
+- force partial-construction failures at every resource acquisition point;
 - cancel while waiting, active, writing, and cleaning up;
 - run repeated lifecycle cycles and inspect plateau behavior;
 - benchmark cold and warm paths separately;

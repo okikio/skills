@@ -1,6 +1,6 @@
 # Content collections, CMS adapters, rich text, and publishing
 
-Use this reference for local Astro content, live/runtime CMS data, migrations, previews, taxonomies, media, rich text, feeds, and SEO. The project should have one explicit runtime source of truth per route and a stable view-model boundary.
+Use this reference for local Astro content, live/runtime CMS data, migrations, previews, taxonomies, media, rich text, feeds, and SEO. The project should have one explicit runtime source of truth per route and a stable view-model interface.
 
 ## Contents
 
@@ -99,7 +99,7 @@ Do not model every field optional to make a migration pass. Separate incomplete 
 
 ## Runtime/live CMS adapter
 
-The ThunderStrike upload uses one Emdash live collection and queries named content types through provider functions. Its `cms.ts` maps provider entries into project-owned `CmsArticle`, `CmsAuthor`, `CmsTopic`, `CmsCategory`, `CmsImage`, heading, and page types. This boundary is the reusable architecture; the provider API is version-sensitive.
+The ThunderStrike upload uses one Emdash live collection and queries named content types through provider functions. Its `cms.ts` maps provider entries into project-owned `CmsArticle`, `CmsAuthor`, `CmsTopic`, `CmsCategory`, `CmsImage`, heading, and page types. This adapter interface is the reusable architecture; the provider API is version-sensitive.
 
 Adapter responsibilities:
 
@@ -133,7 +133,7 @@ Do not silently use `new Date(0)` for required publish dates without a product p
 
 ## Relationships and taxonomy
 
-Define identity at every boundary:
+Define identity at every handoff:
 
 - provider/database id;
 - stable content id;
@@ -162,7 +162,7 @@ Define missing-relation behavior: build failure, draft exclusion, omitted option
 
 ## Rich text and media
 
-Keep provider-specific rich text at a named renderer boundary. Support only inspected block/mark types and define unknown behavior.
+Keep provider-specific rich text at a named renderer handoff. Support only inspected block/mark types and define unknown behavior.
 
 ```text
 Portable Text block
@@ -256,7 +256,7 @@ Never merge local and CMS arrays at runtime to “avoid losing content” withou
 | Missing author crashes whole listing | Required relation not validated | Publish schema and mapper policy |
 | Article date is 1970 | Silent epoch fallback | Invalid-date mapping |
 | Rich text loses links/marks | Plain-text fallback treated as full renderer | Block/mark capability matrix |
-| Search snippet executes markup | Provider HTML inserted raw | Sanitization/mapping boundary |
+| Search snippet executes markup | Provider HTML inserted raw | Sanitization/mapping stage |
 | Local and CMS article both render | Dual runtime source | Route query and migration switch |
 | Preview leaks publicly | Auth/cache key missing | Preview route and headers |
 | Image works locally, fails deployed | Storage/image service URL mismatch | Adapter, remote domain, base URL |

@@ -73,7 +73,7 @@ Choose the adapter from the deployment runtime and features. Verify environment 
 
 ## Page, layout, and endpoint ownership
 
-Astro owns document structure, routes, layouts, metadata, static content, and server response boundaries. Keep layout contracts explicit:
+Astro owns document structure, routes, layouts, metadata, static content, and server response stages. Keep layout contracts explicit:
 
 ```astro
 ---
@@ -160,7 +160,7 @@ Cache policy follows response authority:
 - auth forms: avoid stale tokens/session-dependent output;
 - static fingerprinted assets: long immutable cache;
 - public documents/JSON: public validators/max-age with invalidation policy;
-- CMS pages: provider cache hints mapped through one boundary.
+- CMS pages: provider cache hints mapped through one interface.
 
 Verify final deployed headers, since the adapter/host may change them.
 
@@ -244,7 +244,7 @@ Review this ownership table:
 | Auth page cached across users | Route intent/header policy wrong | Middleware and deployed headers |
 | Page-load action fires repeatedly | Navigation listener duplication | ClientRouter lifecycle cleanup |
 | Server island fails only in production | Adapter binding/runtime mismatch | Target deployment output |
-| OpenAPI docs build needs secrets | Service factory not boundary-safe | Factory imports and env access |
+| OpenAPI docs build needs secrets | Service factory performs unsafe import-time work | Factory imports and env access |
 | Sitemap/canonical uses localhost | `site`/environment contract wrong | Built artifacts |
 | Island ships but never interactive | Missing/wrong client directive | Server HTML, chunk and console |
 | CSP disabled to make plugins work | Resource/nonces not inventoried | CSP reports and integration origins |

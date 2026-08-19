@@ -57,7 +57,7 @@ Put only shareable/navigable state in search parameters: query, filters, sort, p
 
 Do not put transient hover, open dialog, local row selection, draft keystrokes, secrets, or opaque remote objects in the URL.
 
-Use a schema as the route boundary:
+Use a schema as the route entrypoint:
 
 ```ts
 const leadSearchSchema = z.object({
@@ -119,7 +119,7 @@ Do not mirror query results into signals. Derive presentation through memos/sele
 
 ## Server functions
 
-A server function is a transport boundary, not a service-module replacement.
+A server function is a transport handoff, not a service-module replacement.
 
 ```ts
 export const searchLeads = createServerFn({ method: "GET" })
@@ -140,7 +140,7 @@ Exact middleware/input APIs are versioned. Preserve this sequence regardless:
 6. map known failures to a safe stable result;
 7. record redacted diagnostics/correlation.
 
-Never trust the `organizationId`, price, plan, role, or redirect URL supplied by the browser. The attached Kaiju app wraps billing and auth operations in server functions and forwards request headers to Better Auth; inspect that boundary for every mutation.
+Never trust the `organizationId`, price, plan, role, or redirect URL supplied by the browser. The attached Kaiju app wraps billing and auth operations in server functions and forwards request headers to Better Auth; inspect that server-function handoff for every mutation.
 
 ## Mutations and invalidation
 
@@ -231,7 +231,7 @@ The attached Kaiju app combines TanStack Solid Start, Nitro Vite, and a target d
 
 ## Sources and freshness
 
-- Primary starting points: [TanStack Start](https://tanstack.com/start/latest), [Router](https://tanstack.com/router/latest), [Query](https://tanstack.com/query/latest), [Form](https://tanstack.com/form/latest), [Table](https://tanstack.com/table/latest), and [Virtual](https://tanstack.com/virtual/latest), checked 2026-07-17 for current product boundaries.
+- Primary starting points: [TanStack Start](https://tanstack.com/start/latest), [Router](https://tanstack.com/router/latest), [Query](https://tanstack.com/query/latest), [Form](https://tanstack.com/form/latest), [Table](https://tanstack.com/table/latest), and [Virtual](https://tanstack.com/virtual/latest), checked 2026-07-17 for current product scope.
 - Attachment: `kaiju-site-scope(17).zip/apps/frontend`, inspected 2026-07-17 for a Solid/Start composition, route structure, query ownership, and auth integration.
 
 TanStack package signatures and Start deployment behavior evolve quickly and vary by renderer. Exact imports, server-function APIs, generated route behavior, and adapters are version-sensitive; verify the target lockfile and primary docs.

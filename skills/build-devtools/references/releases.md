@@ -112,7 +112,7 @@ candidate changelog, then review it against the actual public diff and migration
 requirements. Notes should distinguish:
 
 - user-facing additions, fixes, removals, and security changes;
-- upgrade actions, version/runtime boundaries, and deprecations;
+- upgrade actions, version/runtime handoffs, and deprecations;
 - known limitations and deliberately unchanged behavior;
 - contributors and commit links when policy permits;
 - artifact/checksum/install information when users need it.

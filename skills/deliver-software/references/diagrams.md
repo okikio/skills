@@ -1,6 +1,10 @@
 
 # Diagram selection and ASCII diagrams
 
+Choose the representation from the reader's question, the information structure, and the output medium. Do not choose it because a diagram tool is already open. Use the least complicated representation that preserves the truth the reader needs.
+
+Visual grammar should change when the reader's task changes. A sequence diagram makes vertical order mean time. A swimlane makes lane position mean ownership. A state machine makes connections mean legal transitions. A matrix makes row-column intersections mean relationships. A chart can make position, length, area, or width mean quantity. Reusing one box-and-arrow grammar for all of those questions hides meaning instead of clarifying it.
+
 Choose the representation before drawing. Mermaid is useful for small,
 structurally regular, auto-layout-tolerant diagrams. Reject Mermaid when two or
 more complexity signals appear: roughly 15-20 nodes, 25-30 edges, hubs, more than
@@ -62,10 +66,16 @@ Choose one primary job before drawing:
 | Concept map | The important nouns and how they relate. |
 | Component map | Which modules, services, runtimes, or UI regions own behavior. |
 | Data flow | How a shape changes as it moves through stages. |
+| Sequence diagram | Ordered interaction between a small set of participants. |
+| Swimlane | Which owner is responsible for each stage in a workflow. |
 | Lifecycle walkthrough | What happens over time from trigger to cleanup. |
 | State machine | Which states exist and which transitions are legal. |
+| Decision table | Exact combinations of conditions and outcomes. |
+| Matrix | Pairwise relationships or classifications across two dimensions. |
 | Failure path | How retries, fallbacks, cancellation, and recovery work. |
 | Storage or revision flow | How persisted state is written, compared, invalidated, or read. |
+| Timeline | When events occur and the elapsed distance between them. |
+| Quantitative chart | Magnitude, change, distribution, uncertainty, or comparison where geometry encodes values. |
 
 Do not use a component map when the real question is lifecycle order. Do not use
 a one-line data pipeline when the real question is ownership, concurrency,

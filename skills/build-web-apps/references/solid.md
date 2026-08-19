@@ -10,7 +10,7 @@
 - Solid Primitives ecosystem map
 - Selection procedure
 - Scheduling and global event coordination
-- Motion and presence boundary
+- Motion and presence lifecycle
 - Failure signatures
 - Verification
 - Sources and freshness
@@ -64,7 +64,7 @@ Every effect that starts a resource needs a teardown or a resource whose primiti
 
 ## SSR and hydration
 
-Server and first client render must agree. Guard browser globals, measurements, random values, current time, storage, media queries, and feature detection behind an SSR-aware primitive or mount boundary.
+Server and first client render must agree. Guard browser globals, measurements, random values, current time, storage, media queries, and feature detection behind an SSR-aware primitive or mount scope.
 
 Do not create shared singleton state at module scope in SSR. It can leak one request's state into another. The uploaded Solid Primitives `rootless` package marks hydratable singleton behavior experimental; inspect the installed version before depending on it.
 
@@ -150,7 +150,7 @@ For many pointer/scroll/animation consumers, prefer one shared requestAnimationF
 
 EventBus is appropriate for hot one-to-many notifications. Do not replace routable URL state, remote query state, or durable workflow events with an in-memory bus.
 
-## Motion and presence boundary
+## Motion and presence lifecycle
 
 Treat the attached Solid motion package as experimental. The evidence notes incomplete gesture types and SSR/presence caveats. Use proven Solid Primitives or Web Animations/CSS where they satisfy the behavior. A type-compatible motion prototype is not production parity.
 

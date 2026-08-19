@@ -3,7 +3,7 @@
 ## Contents
 
 - [When to load this reference](#when-to-load-this-reference)
-- [Evidence and maturity boundary](#evidence-and-maturity-boundary)
+- [Evidence and maturity line](#evidence-and-maturity-line)
 - [Architectural model](#architectural-model)
 - [Choose the cheapest result](#choose-the-cheapest-result)
 - [Text and position contracts](#text-and-position-contracts)
@@ -29,7 +29,7 @@ Do not load it for general Markdown, MediaWiki template expansion, HTML
 rendering, or serialization unless the task also requires the current parser
 surface and its limitations.
 
-## Evidence and maturity boundary
+## Evidence and maturity line
 
 The reviewed repository declares version `0.0.0` and is explicitly
 experimental. Confirm the target revision and public export map before using an
@@ -124,7 +124,7 @@ offsets.
 When integrating with a byte-oriented store or a grapheme-oriented editor:
 
 - retain the source and UTF-16 range as the parser's authority;
-- perform explicit coordinate conversion at the boundary;
+- perform explicit coordinate conversion at the handoff;
 - never treat `start`/`end` as UTF-8 byte offsets;
 - test astral emoji, combining sequences, CRLF, and non-Latin text.
 
@@ -335,7 +335,7 @@ does not make every unified plugin semantically compatible.
 
 ### MediaWiki systems
 
-Parsing source is only one boundary. Template expansion, link resolution,
+Parsing source is only one interface. Template expansion, link resolution,
 namespace rules, HTML rendering, sanitization, permissions, and remote fetches
 belong to connected systems. Do not attribute their behavior to this package.
 
@@ -346,7 +346,7 @@ The reviewed README, manifest include list, or design documents mention
 the root module does not export either function. Lazy tree building is also
 listed as in progress.
 
-This is an anti-hallucination boundary:
+This is an anti-hallucination rule:
 
 ```ts
 // Do not write this against the reviewed revision.
@@ -379,7 +379,7 @@ Test invariants at the selected layer:
 - tokens tile the expected source ranges without overlap or gaps where the
   contract requires it;
 - enter/exit events are properly nested and deterministic;
-- outline and full-event results agree on block boundaries;
+- outline and full-event results agree on block edges;
 - source slices match UTF-16 ranges for ASCII, astral, combining, RTL, and
   newline-heavy fixtures;
 - arbitrary malformed input does not throw;
@@ -397,7 +397,7 @@ Test invariants at the selected layer:
 
 For experimental adoption, pin a revision or exact version, keep a corpus of
 real and pathological documents, and record the parser version with stored
-diagnostics or indexes. Public claims should state the maturity boundary and
+diagnostics or indexes. Public claims should state the maturity line and
 should not promise MediaWiki equivalence or round-trip serialization.
 
 ## Sources and freshness

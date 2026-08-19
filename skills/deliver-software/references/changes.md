@@ -110,12 +110,12 @@ A changelog entry may summarize one commit or many commits.
 When multiple commits contribute to the same outcome, combine them into one clear story instead of listing each commit separately.
 
 Example commit history:
-- `fix(tokenizer): stop merging adjacent pipe runs across template boundaries`
-- `test(tokenizer): cover adjacent pipe runs across template boundaries`
+- `fix(tokenizer): stop merging adjacent pipe runs across template scopes`
+- `test(tokenizer): cover adjacent pipe runs across template scopes`
 - `bench(tokenizer): add delimiter-run hot-path scenario`
 
 Good changelog entry:
-- `Fix tokenizer handling for adjacent pipe runs across template boundaries, with new regression coverage and benchmark scenarios`
+- `Fix tokenizer handling for adjacent pipe runs across template scopes, with new regression coverage and benchmark scenarios`
 
 The changelog should not force the reader to reconstruct the story from fragments.
 

@@ -27,7 +27,7 @@ Static/server/deferred output:
 Renderer and island directives:
 URL/query/local/session state:
 Forms and mutations:
-Auth/tenant boundary:
+Auth/tenant authority:
 CMS/API/provider dependencies:
 Assets/icons/fonts/motion:
 Deployment adapter:
@@ -136,7 +136,7 @@ Inspect the browser accessibility tree for complex primitives and custom element
 
 ## Security and connected systems
 
-Exercise real boundaries:
+Exercise real handoffs:
 
 - allowed and rejected auth states;
 - cross-tenant queries and mutations;
@@ -203,7 +203,7 @@ For content sites verify canonical URL, title/description, social image, structu
 
 At minimum inject:
 
-| Boundary | Failure |
+| Handoff | Failure |
 |---|---|
 | Server data | timeout, invalid schema, 401/403/404/409/429/500 |
 | Client query | offline, stale cache, reordered responses |

@@ -8,9 +8,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design an import run that captures immutable provider responses, emits normalized JSONL and Parquet, and publishes only complete artifacts. Define run and record identity, schemas, bounded writes, manifests, checksums, checkpoint ordering, required and optional outputs, retention, and restart behavior. Include representative contracts and executable failpoints.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/artifacts.md"],
+      "requiredReferences": [
+        "build-data/references/artifacts.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -35,9 +39,15 @@
         "Proves bounded memory and resume through deterministic interruption tests."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "artifacts", "training"],
+      "tags": [
+        "system-handoffs",
+        "artifacts",
+        "training"
+      ],
       "rationale": "Exercises the complete artifact commit contract rather than choosing file extensions."
     },
     {
@@ -47,9 +57,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Review a MediaWiki pipeline that writes date-based raw JSON and appended JSONL, stores all normalized records for profiling, writes Parquet from list(records), catches most exceptions, optionally COPY-loads inferred columns into PostgreSQL, writes count-only YAML, and always prints complete. Identify which artifacts and stages are authoritative or incomplete, then give a staged repair plan without rewriting unrelated code.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/artifacts.md"],
+      "requiredReferences": [
+        "build-data/references/artifacts.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -74,9 +88,15 @@
         "Preserves raw evidence and introduces manifests/checkpoints without broad churn."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "artifacts", "review"],
+      "tags": [
+        "system-handoffs",
+        "artifacts",
+        "review"
+      ],
       "rationale": "Tests whether concrete uploaded implementation details change the recommendation."
     },
     {
@@ -86,9 +106,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A worker died after writing several Parquet row groups but before the footer, while its input cursor was already advanced. A JSONL sibling segment may have an unterminated final line. Explain the authority problem, the safe recovery procedure, the checkpoint redesign, and the tests that prove no final reader sees partial output or skipped source records.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/artifacts.md"],
+      "requiredReferences": [
+        "build-data/references/artifacts.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -104,26 +128,36 @@
       ],
       "rubric": [
         "Does not attempt to bless the incomplete Parquet file as complete.",
-        "Rewinds to proven output and makes duplicate boundary replay safe.",
+        "Rewinds to proven output and makes duplicate handoff replay safe.",
         "Includes failpoints around close, rename/pointer, manifest, and checkpoint publication."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "artifacts", "heldout", "recovery"],
+      "tags": [
+        "system-handoffs",
+        "artifacts",
+        "heldout",
+        "recovery"
+      ],
       "rationale": "A crash window reveals whether artifact and checkpoint authority are genuinely understood."
     },
-
     {
       "id": "system-projections-versioned-build-train",
       "title": "Design versioned search and graph projection cutover",
       "skill": "build-data",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "PostgreSQL owns product records while Typesense serves search and QLever serves RDF queries. Design the durable change or snapshot boundary, document and subject identities, versioned target build, per-item receipts, deletes, reconciliation, alias/router cutover, rollback, lag objectives, and operator repair. Include backfill racing live changes.",
-      "expectedSkills": ["build-data"],
+      "prompt": "PostgreSQL owns product records while Typesense serves search and QLever serves RDF queries. Design the durable change or snapshot handoff, document and subject identities, versioned target build, per-item receipts, deletes, reconciliation, alias/router cutover, rollback, lag objectives, and operator repair. Include backfill racing live changes.",
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/projections.md"],
+      "requiredReferences": [
+        "build-data/references/projections.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -148,9 +182,15 @@
         "Defines live catch-up, cutover, rollback, and full/targeted repair."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "projections", "training"],
+      "tags": [
+        "system-handoffs",
+        "projections",
+        "training"
+      ],
       "rationale": "Tests the entire projection lifecycle across two unlike engines."
     },
     {
@@ -160,9 +200,13 @@
       "kind": "safety",
       "split": "valid-seen",
       "prompt": "A tenant record is deleted in PostgreSQL but remains in Typesense, an appended N-Triples dataset, an old QLever index, Parquet backfill artifacts, and ClickHouse aggregates. Produce a fact-level authority map, containment plan, deletion propagation/rebuild protocol, verification, retention handling, and evidence for completion.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/projections.md"],
+      "requiredReferences": [
+        "build-data/references/projections.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -187,10 +231,17 @@
         "Uses identity/content verification across every affected projection."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern", "clickhouse-official"],
+      "sourceIds": [
+        "popmodern",
+        "clickhouse-official"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "projections", "privacy"],
-      "rationale": "Deletion crosses every authority and retention boundary shallow projection advice omits."
+      "tags": [
+        "system-handoffs",
+        "projections",
+        "privacy"
+      ],
+      "rationale": "Deletion crosses every authority and retention handoff shallow projection advice omits."
     },
     {
       "id": "system-projections-placeholder-heldout",
@@ -199,9 +250,13 @@
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "A pipeline author says Typesense projection support is implemented because a plugin is registered and logs how many RDF triples it would write. Another path calls bulk import but ignores document-level results. Review the capability claim and define the minimum implementation and conformance evidence before search is required for run success.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/projections.md"],
+      "requiredReferences": [
+        "build-data/references/projections.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -221,17 +276,18 @@
         "Defines required-sink completion only after item receipts and executable search queries."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "counterexample",
       "tags": [
-        "system-boundaries",
+        "system-handoffs",
         "projections",
         "heldout",
         "anti-hallucination"
       ],
       "rationale": "Directly punishes capability hallucination from a familiar class name."
     },
-
     {
       "id": "system-storage-authority-map-train",
       "title": "Assign fact-level authority across a polyglot data platform",
@@ -239,9 +295,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "A platform uses PostgreSQL for memberships and financial records, object storage for provider payloads, ClickHouse for events, Typesense for search, QLever for RDF, and a queue for workers. Create a fact-level authority and recovery map including invariants, writers, serving stores, lag, deletion, lifetimes, backup/restore, projection rebuild, and operational ownership. Challenge unnecessary products.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/storage-ownership.md"],
+      "requiredReferences": [
+        "build-data/references/storage-ownership.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -266,9 +326,17 @@
         "Removes or challenges stores whose benefit does not justify recovery complexity."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "popmodern", "clickhouse-official"],
+      "sourceIds": [
+        "new-finance",
+        "popmodern",
+        "clickhouse-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "storage-ownership", "training"],
+      "tags": [
+        "system-handoffs",
+        "storage-ownership",
+        "training"
+      ],
       "rationale": "Tests architectural ownership rather than a database comparison list."
     },
     {
@@ -277,15 +345,19 @@
       "skill": "build-data",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "Move product search reads from PostgreSQL to a new search engine while writes continue. Plan the snapshot/change boundary, durable handoff, backfill, catch-up, shadow reads, reconciliation, reader cutover, rollback, deletion handling, and when the old path can be removed. Explicitly prevent prolonged dual authority.",
-      "expectedSkills": ["build-data"],
+      "prompt": "Move product search reads from PostgreSQL to a new search engine while writes continue. Plan the snapshot/change handoff, durable handoff, backfill, catch-up, shadow reads, reconciliation, reader cutover, rollback, deletion handling, and when the old path can be removed. Explicitly prevent prolonged dual authority.",
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/storage-ownership.md"],
+      "requiredReferences": [
+        "build-data/references/storage-ownership.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
           "kind": "regex",
-          "value": "(snapshot|boundary).*(outbox|change).*(backfill|catch-up)",
+          "value": "(snapshot|handoff).*(outbox|change).*(backfill|catch-up)",
           "flags": "is"
         },
         {
@@ -300,9 +372,16 @@
         "Retains rollback and deletion correctness through the transition."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "popmodern"],
+      "sourceIds": [
+        "new-finance",
+        "popmodern"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "storage-ownership", "migration"],
+      "tags": [
+        "system-handoffs",
+        "storage-ownership",
+        "migration"
+      ],
       "rationale": "Migration sequencing reveals whether authority and serving roles remain separate."
     },
     {
@@ -312,9 +391,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A README mentions Blazegraph, current scripts include a Qleverfile and QLever container, old migrations mention exporter tables, and application code has a SPARQL endpoint variable. Determine what can and cannot be claimed about the active graph store, what evidence to gather, and how to keep a migration plan from inventing update and inference capabilities.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/storage-ownership.md"],
+      "requiredReferences": [
+        "build-data/references/storage-ownership.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -334,17 +417,18 @@
         "Avoids assigning unverified engine capabilities."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "counterexample",
       "tags": [
-        "system-boundaries",
+        "system-handoffs",
         "storage-ownership",
         "heldout",
         "anti-hallucination"
       ],
       "rationale": "Conflicting repository evidence tests source criticism."
     },
-
     {
       "id": "system-data-query-compiler-train",
       "title": "Compile a safe normalized query into SQL and SPARQL",
@@ -352,9 +436,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design a storage query layer that accepts normalized filters, sorts, fields, cursor pagination, and count mode, then targets PostgreSQL and an RDF SPARQL endpoint. Define public-to-storage registries, server-owned tenant scope, parameter and RDF term serialization, backend capability differences, resource limits, stable total ordering, error categories, and real-engine verification.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/queries.md"],
+      "requiredReferences": [
+        "build-data/references/queries.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -379,10 +467,17 @@
         "Includes cancellation, bounds, query plans, escaping, and cross-tenant tests."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "sparql-official"],
+      "sourceIds": [
+        "new-finance",
+        "sparql-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "data-queries", "training"],
-      "rationale": "Exercises the compiler/execution boundary, not request parsing alone."
+      "tags": [
+        "system-handoffs",
+        "data-queries",
+        "training"
+      ],
+      "rationale": "Exercises the compiler/execution handoff, not request parsing alone."
     },
     {
       "id": "system-data-query-cursor-context-seen",
@@ -391,9 +486,13 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "A cursor HMAC covers sort field/value, tiebreaker/value, direction, and creation time but not resource, filters, API version, or authority context. It can be replayed on another filtered endpoint. Redesign the payload, rotation, comparison, execution predicate, and concurrency tests while preserving opaque client behavior.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/queries.md"],
+      "requiredReferences": [
+        "build-data/references/queries.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -414,13 +513,19 @@
       ],
       "rubric": [
         "Recognizes a valid signature does not establish correct query context.",
-        "Defines stable compound order and matching boundary predicate.",
+        "Defines stable compound order and matching handoff predicate.",
         "Does not place secrets or authorization authority in an encoded cursor."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "data-queries", "cursor"],
+      "tags": [
+        "system-handoffs",
+        "data-queries",
+        "cursor"
+      ],
       "rationale": "Tests a concrete omission in the observed cursor schema."
     },
     {
@@ -430,9 +535,13 @@
       "kind": "safety",
       "split": "adversarial",
       "prompt": "A SPARQL adapter implements in, not-in, between, and cursor predicates by joining builder .value strings into raw expressions. It turns Date cursor values into YYYY-MM-DD and compares the tiebreaker through STR(). Review injection, RDF datatype, precision, ordering, engine, and tenant-scope risks. Specify corrections and malicious/real-engine tests without inventing @okikio/sparql exports.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/queries.md"],
+      "requiredReferences": [
+        "build-data/references/queries.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -457,12 +566,20 @@
         "Requires actual engine execution and authority-isolation fixtures."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "sparql-official", "popmodern"],
+      "sourceIds": [
+        "new-finance",
+        "sparql-official",
+        "popmodern"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "data-queries", "heldout", "sparql"],
+      "tags": [
+        "system-handoffs",
+        "data-queries",
+        "heldout",
+        "sparql"
+      ],
       "rationale": "Prevents fluent-builder types from masking raw protocol hazards."
     },
-
     {
       "id": "system-postgres-drizzle-release-train",
       "title": "Release a cross-schema Drizzle migration safely",
@@ -470,9 +587,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Add a tenant-scoped finance table in a Drizzle/PostgreSQL workspace that references an existing composite organization/id key and will be used by another schema. Define schema ownership, unique constraint versus index, generated migration review, empty install, representative upgrade, data backfill, lock/destructive review, application integration, and forward repair.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/postgres-drizzle.md"],
+      "requiredReferences": [
+        "build-data/references/postgres-drizzle.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -497,9 +618,16 @@
         "Verifies both clean installation and realistic upgrade behavior."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "drizzle-official"],
+      "sourceIds": [
+        "new-finance",
+        "drizzle-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["system-boundaries", "postgres-drizzle", "training"],
+      "tags": [
+        "system-handoffs",
+        "postgres-drizzle",
+        "training"
+      ],
       "rationale": "Covers the real composite-key migration edge documented by the uploaded database package."
     },
     {
@@ -508,10 +636,14 @@
       "skill": "build-data",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "A createDatabase helper constructs postgres.js internally and returns only the Drizzle wrapper. Tests and CLIs hang, workers cannot drain predictably, and callers do not know whether prepare=false or pool max=10 are topology requirements. Redesign the resource/configuration boundary, import safety, readiness, logging integration, cancellation, and shutdown tests without requiring LogTape.",
-      "expectedSkills": ["build-data"],
+      "prompt": "A createDatabase helper constructs postgres.js internally and returns only the Drizzle wrapper. Tests and CLIs hang, workers cannot drain predictably, and callers do not know whether prepare=false or pool max=10 are topology requirements. Redesign the resource/configuration handoff, import safety, readiness, logging integration, cancellation, and shutdown tests without requiring LogTape.",
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/postgres-drizzle.md"],
+      "requiredReferences": [
+        "build-data/references/postgres-drizzle.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -536,9 +668,16 @@
         "Keeps logging/config owners separate from database creation."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "drizzle-official"],
+      "sourceIds": [
+        "new-finance",
+        "drizzle-official"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "postgres-drizzle", "resource-lifetime"],
+      "tags": [
+        "system-handoffs",
+        "postgres-drizzle",
+        "resource-lifetime"
+      ],
       "rationale": "Tests a concrete lifecycle omission in the retained client factory."
     },
     {
@@ -548,9 +687,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A PostgreSQL workflow store checks idempotency then inserts, assigns timeline sequence as existing.length + 1, and claims queue rows through select then conditional update. Analyze each concurrency contract independently, propose constraints/transactions/claim fencing, and define multi-connection tests. Do not assume Drizzle types make the operations atomic.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/postgres-drizzle.md"],
+      "requiredReferences": [
+        "build-data/references/postgres-drizzle.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -575,27 +718,33 @@
         "Uses real concurrent connections and crash windows as verification."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "drizzle-official"],
+      "sourceIds": [
+        "new-finance",
+        "drizzle-official"
+      ],
       "evidenceStatus": "counterexample",
       "tags": [
-        "system-boundaries",
+        "system-handoffs",
         "postgres-drizzle",
         "heldout",
         "concurrency"
       ],
       "rationale": "Directly tests whether ORM-shaped code is mistaken for atomic behavior."
     },
-
     {
       "id": "system-data-failure-incident-train",
       "title": "Run a source-to-projection data incident triage",
       "skill": "build-data",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Customers report missing and duplicate records across PostgreSQL, Typesense, QLever, ClickHouse, JSONL, and Parquet after a failed import. Produce the evidence-preservation and triage sequence, determine last committed boundaries, classify fact authority, choose replay/rebuild/restore/forward repair, record limitations, and define post-repair reconciliation. Do not retry blindly.",
-      "expectedSkills": ["build-data"],
+      "prompt": "Customers report missing and duplicate records across PostgreSQL, Typesense, QLever, ClickHouse, JSONL, and Parquet after a failed import. Produce the evidence-preservation and triage sequence, determine last committed handoffs, classify fact authority, choose replay/rebuild/restore/forward repair, record limitations, and define post-repair reconciliation. Do not retry blindly.",
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/failures.md"],
+      "requiredReferences": [
+        "build-data/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -620,9 +769,17 @@
         "Keeps structural, blocked, and executable verification distinct."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "popmodern", "clickhouse-official"],
+      "sourceIds": [
+        "new-finance",
+        "popmodern",
+        "clickhouse-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "data-failures", "training"],
+      "tags": [
+        "system-handoffs",
+        "data-failures",
+        "training"
+      ],
       "rationale": "Combines operational triage and recovery instead of listing symptoms."
     },
     {
@@ -632,9 +789,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Typesense contains document version 8, PostgreSQL authority is version 8, but the projector checkpoint says version 7 after a worker crash. Explain why deleting the document or advancing the checkpoint by hand is unsafe, then design idempotent replay, receipt comparison, targeted reconciliation, audit evidence, and the regression failpoint.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/failures.md"],
+      "requiredReferences": [
+        "build-data/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -654,9 +815,15 @@
         "Adds deterministic crash-and-restart coverage."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "data-failures", "projection-recovery"],
+      "tags": [
+        "system-handoffs",
+        "data-failures",
+        "projection-recovery"
+      ],
       "rationale": "Tests recovery of a common at-least-once projection window."
     },
     {
@@ -666,9 +833,13 @@
       "kind": "safety",
       "split": "adversarial",
       "prompt": "An operator proposes rerunning a pipeline until its final complete message appears. The previous run swallowed raw-capture, cleaning, Parquet, PostgreSQL-loader, and metrics errors; its run YAML only has counts. Explain what cannot be trusted, how to contain and recover, what evidence must be added, and when the run may be called complete.",
-      "expectedSkills": ["build-data"],
+      "expectedSkills": [
+        "build-data"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-data/references/failures.md"],
+      "requiredReferences": [
+        "build-data/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -688,17 +859,18 @@
         "Defines explicit required/optional stages and completion receipts."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "counterexample",
       "tags": [
-        "system-boundaries",
+        "system-handoffs",
         "data-failures",
         "heldout",
         "false-success"
       ],
       "rationale": "Punishes reliance on process output instead of durable evidence."
     },
-
     {
       "id": "system-api-query-contract-train",
       "title": "Author a complete collection query API",
@@ -706,9 +878,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design GET /organizations/:organization_id/accounts with bracket filters, enum/range/null operators, compound sorting, explicit field selection, signed cursor pagination, no exact count, current membership policy, stable problem variants, OpenAPI examples, generated-client checks, and query complexity limits. Show the normalized contract and executable request matrix.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-apis/references/queries.md"],
+      "requiredReferences": [
+        "build-apis/references/queries.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -733,9 +909,15 @@
         "Tests actual response variants and client encoding, not schema generation alone."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "api-queries", "training"],
+      "tags": [
+        "system-handoffs",
+        "api-queries",
+        "training"
+      ],
       "rationale": "Exercises the complete public collection contract."
     },
     {
@@ -745,9 +927,13 @@
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "A refactor keeps the same request and response JSON schemas but changes default sort, case-insensitive filter collation, wildcard field expansion, cursor TTL/context, count from exact to estimated, and operationId. Classify compatibility, propose version/migration policy, and define release tests for existing clients and cursors.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-apis/references/queries.md"],
+      "requiredReferences": [
+        "build-apis/references/queries.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -767,9 +953,15 @@
         "Includes old-client/cursor fixtures and explicit version handling."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "api-queries", "compatibility"],
+      "tags": [
+        "system-handoffs",
+        "api-queries",
+        "compatibility"
+      ],
       "rationale": "Protects semantic behavior that schema-only evals miss."
     },
     {
@@ -779,9 +971,13 @@
       "kind": "safety",
       "split": "adversarial",
       "prompt": "A user has a correctly signed cursor minted while they belonged to organization A. Their membership is revoked, but the session and cursor remain unexpired. They replay it against the accounts endpoint and request exact count plus fields=*. Define authorization, cursor context, response/non-disclosure, count and field behavior, and tests.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-apis/references/queries.md"],
+      "requiredReferences": [
+        "build-apis/references/queries.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -801,12 +997,19 @@
         "Tests revocation and cursor replay through a real request."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "better-auth-integration"],
+      "sourceIds": [
+        "new-finance",
+        "better-auth-integration"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "api-queries", "heldout", "authorization"],
+      "tags": [
+        "system-handoffs",
+        "api-queries",
+        "heldout",
+        "authorization"
+      ],
       "rationale": "Separates cursor integrity from live authorization."
     },
-
     {
       "id": "system-api-failure-reachability-train",
       "title": "Diagnose a documented endpoint that is unreachable",
@@ -814,9 +1017,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "An endpoint definition and handler exist and OpenAPI lists the route, but the group mod omits the definition, the handler registry key differs by name, and startup only warns. Diagnose using an evidence ladder, repair registration/readiness policy, and define standalone boot, route inventory, middleware, request, side-effect, and shutdown verification.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-apis/references/failures.md"],
+      "requiredReferences": [
+        "build-apis/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -836,9 +1043,15 @@
         "Uses a real request and side-effect oracle."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "api-failures", "training"],
+      "tags": [
+        "system-handoffs",
+        "api-failures",
+        "training"
+      ],
       "rationale": "Targets the most common service-module reachability hallucination."
     },
     {
@@ -848,9 +1061,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A Hono service calls the root server factory in the service and two endpoint groups. Request IDs change, access logs repeat, CORS runs multiple times, and importing the server configures a global logger with top-level await. Redesign root/service/route ownership, logging/configuration lifetime, error completion, and exact-once tests without requiring a particular logger.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-apis/references/failures.md"],
+      "requiredReferences": [
+        "build-apis/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -875,9 +1092,15 @@
         "Ensures one stable client problem and one primary diagnostic per failure."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "api-failures", "middleware"],
+      "tags": [
+        "system-handoffs",
+        "api-failures",
+        "middleware"
+      ],
       "rationale": "Uses concrete retained server counterexamples rather than generic middleware advice."
     },
     {
@@ -887,9 +1110,13 @@
       "kind": "safety",
       "split": "valid-unseen",
       "prompt": "A POST request times out after the database may have committed and before the response reached the client. The handler caught an error and returned a generic 500; the client wants to retry. Define evidence preservation, idempotency/resource lookup, retry authorization, stable response behavior, diagnostic ownership, and a failpoint test around commit and serialization.",
-      "expectedSkills": ["build-apis"],
+      "expectedSkills": [
+        "build-apis"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-apis/references/failures.md"],
+      "requiredReferences": [
+        "build-apis/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -909,12 +1136,18 @@
         "Tests response loss separately from transaction failure and preserves safe diagnostics."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "api-failures", "heldout", "recovery"],
+      "tags": [
+        "system-handoffs",
+        "api-failures",
+        "heldout",
+        "recovery"
+      ],
       "rationale": "Forces commit semantics and recovery into API error handling."
     },
-
     {
       "id": "system-pipeline-durable-contract-train",
       "title": "Design a resumable multi-stage multi-sink import",
@@ -922,9 +1155,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design a pipeline from discovery and raw capture through decode, normalize, PostgreSQL authority load, ClickHouse events, Typesense search, RDF/QLever, JSONL, and Parquet. Define execution/stage identities, schemas, bounded channels, leases, item dispositions, required and optional sinks, receipts/checkpoints, operator controls, cancellation, restart, and final reconciliation. Do not assume a workflow engine makes external writes atomic.",
-      "expectedSkills": ["build-workflows"],
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-workflows/references/pipelines.md"],
+      "requiredReferences": [
+        "build-workflows/references/pipelines.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -949,9 +1186,16 @@
         "Includes worker deployment, operator controls, failpoints, and real sink verification."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern", "new-finance"],
+      "sourceIds": [
+        "popmodern",
+        "new-finance"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "pipelines", "training"],
+      "tags": [
+        "system-handoffs",
+        "pipelines",
+        "training"
+      ],
       "rationale": "Exercises the complete durable pipeline rather than a stage list."
     },
     {
@@ -961,9 +1205,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A source iterator processes pages incrementally and flushes RDF every 5,000 records, but it also stores every normalized record for profiling and Parquet, appends daily staging files, batches search documents, and serially writes sinks. Identify every resource bound, redesign backpressure/profiling/artifact/sink flow, and define a large synthetic memory and interruption oracle.",
-      "expectedSkills": ["build-workflows"],
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-workflows/references/pipelines.md"],
+      "requiredReferences": [
+        "build-workflows/references/pipelines.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -988,9 +1236,15 @@
         "Measures memory against input much larger than RAM and tests restart."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern"],
+      "sourceIds": [
+        "popmodern"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "pipelines", "boundedness"],
+      "tags": [
+        "system-handoffs",
+        "pipelines",
+        "boundedness"
+      ],
       "rationale": "Prevents an iterator from being mislabeled streaming while side paths materialize all data."
     },
     {
@@ -1000,9 +1254,13 @@
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "For batch 42, PostgreSQL and JSONL committed, Typesense partially rejected documents, QLever input was written but no index built, ClickHouse timed out with an unknown result, and Parquet was optional and failed. The process died before checkpoint. Define the durable state, safe per-sink recovery, ambiguity resolution, completion predicate, operator choices, and failpoint regression tests.",
-      "expectedSkills": ["build-workflows"],
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-workflows/references/pipelines.md"],
+      "requiredReferences": [
+        "build-workflows/references/pipelines.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1027,12 +1285,19 @@
         "Keeps optional failure visible and gates completion on every required sink."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["popmodern", "clickhouse-official"],
+      "sourceIds": [
+        "popmodern",
+        "clickhouse-official"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "pipelines", "heldout", "multi-sink"],
+      "tags": [
+        "system-handoffs",
+        "pipelines",
+        "heldout",
+        "multi-sink"
+      ],
       "rationale": "A mixed sink outcome tests whether the model has a real commit protocol."
     },
-
     {
       "id": "system-workflow-failure-capability-audit-train",
       "title": "Audit a workflow platform without overstating durability",
@@ -1040,9 +1305,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Audit a workflow repository with rich definitions, PostgreSQL tables, control-plane code, queue workers, a memory Effect adapter, a SQL adapter whose methods all fail not-implemented, an event-dispatcher tick that returns zero, and incomplete cron support. Classify each capability on an evidence ladder, identify atomicity/recovery gaps, and build a productionization and failpoint plan.",
-      "expectedSkills": ["build-workflows"],
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-workflows/references/failures.md"],
+      "requiredReferences": [
+        "build-workflows/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1067,9 +1336,16 @@
         "Prioritizes atomicity, reconciliation, worker deployment, real runtime, and restart tests."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "effect-workflow-official"],
+      "sourceIds": [
+        "new-finance",
+        "effect-workflow-official"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "workflow-failures", "training"],
+      "tags": [
+        "system-handoffs",
+        "workflow-failures",
+        "training"
+      ],
       "rationale": "Directly tests anti-hallucination classification of an ambitious incomplete platform."
     },
     {
@@ -1079,9 +1355,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Worker A leases a queue item, stalls past expiry, and still runs the external effect. Worker B recovers the lease and runs it. A then acknowledges by queue_item_id without proving current ownership. Design claim identity, lease renewal, fencing, effect idempotency, acknowledgement conditions, retry/dead policy, shutdown, and a two-worker deterministic test.",
-      "expectedSkills": ["build-workflows"],
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-workflows/references/failures.md"],
+      "requiredReferences": [
+        "build-workflows/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1106,10 +1386,16 @@
         "Tests expiry and interleaving with two actual workers/connections."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "inferred",
-      "tags": ["system-boundaries", "workflow-failures", "leases"],
-      "rationale": "Tests a subtle durability boundary beyond conditional ready-row updates."
+      "tags": [
+        "system-handoffs",
+        "workflow-failures",
+        "leases"
+      ],
+      "rationale": "Tests a subtle durability commit point beyond conditional ready-row updates."
     },
     {
       "id": "system-workflow-failure-signal-timeout-heldout",
@@ -1118,9 +1404,13 @@
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "A signal is stored, then the process dies before updating the wait and enqueueing resume. Meanwhile the timeout worker marks the same wait timed out and also dies before enqueue. After restart, both durable inputs exist but no resume row does. Define the single-winner invariant, transaction/outbox or reconciler, occurrence identities, terminal policy, operator repair, and concurrency/failpoint tests.",
-      "expectedSkills": ["build-workflows"],
+      "expectedSkills": [
+        "build-workflows"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["build-workflows/references/failures.md"],
+      "requiredReferences": [
+        "build-workflows/references/failures.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1145,27 +1435,32 @@
         "Tests signal, timeout, and cancellation interleavings after process restart."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "counterexample",
       "tags": [
-        "system-boundaries",
+        "system-handoffs",
         "workflow-failures",
         "heldout",
         "waits-signals"
       ],
       "rationale": "Combines two known multi-write gaps into a realistic recovery scenario."
     },
-
     {
       "id": "system-okikio-backend-service-train",
       "title": "Build a complete Okikio-style private service module",
       "skill": "use-okikio",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Inside the retained finance workspace, design an accounts service using the verified @utils endpoint, response, query, middleware, db, and server boundaries. Include definition/handler/group/service registries, domain/data seams, one composition root, current organization authorization, exact validators, query execution, problem mapping, standalone boot, migration/readiness, real requests, and shutdown. Do not add workflows unless needed.",
-      "expectedSkills": ["use-okikio"],
+      "prompt": "Inside the retained finance workspace, design an accounts service using the verified @utils endpoint, response, query, middleware, db, and server handoffs. Include definition/handler/group/service registries, domain/data seams, one composition root, current organization authorization, exact validators, query execution, problem mapping, standalone boot, migration/readiness, real requests, and shutdown. Do not add workflows unless needed.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/backend.md"],
+      "requiredReferences": [
+        "use-okikio/references/backend.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1190,9 +1485,15 @@
         "Proves the service through real boot/request/dependency/shutdown behavior."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["system-boundaries", "okikio-backend", "training"],
+      "tags": [
+        "system-handoffs",
+        "okikio-backend",
+        "training"
+      ],
       "rationale": "Turns the detailed service-module guides into an executable architecture."
     },
     {
@@ -1202,9 +1503,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Review a retained finance service where reusable server import configures LogTape with top-level await, CORS defaults to every origin, nested groups call createServer, DB creation hides the postgres client, raw database messages reach problems, and a workflow folder contains no deployed worker. Produce prioritized findings and minimal repairs while preserving a consumer that selected a different logger/validator/runtime.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/backend.md"],
+      "requiredReferences": [
+        "use-okikio/references/backend.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1229,9 +1534,15 @@
         "Prioritizes security, reachability, lifetime, and honesty before style refactors."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "okikio-backend", "review"],
+      "tags": [
+        "system-handoffs",
+        "okikio-backend",
+        "review"
+      ],
       "rationale": "Tests whether source grounding includes rejecting flawed local patterns."
     },
     {
@@ -1241,9 +1552,13 @@
       "kind": "safety",
       "split": "valid-unseen",
       "prompt": "A developer asks for npm install commands and public documentation for @okikio/backend-utils, then wants imports for defineService, WorkflowClientLayer, and createClickHouseDrizzle. The uploaded code only proves private @utils/* workspace packages and architecture notes. Respond with what is verified, how to locate identity/exports, a conceptual interface if useful, and what blocks implementation.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/backend.md"],
+      "requiredReferences": [
+        "use-okikio/references/backend.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1256,7 +1571,10 @@
           "value": "(manifest|lockfile|export map|mod[.]ts|registry).*(inspect|locate|verify)",
           "flags": "is"
         },
-        { "kind": "not-contains", "value": "npm install @okikio/backend-utils" }
+        {
+          "kind": "not-contains",
+          "value": "npm install @okikio/backend-utils"
+        }
       ],
       "rubric": [
         "Does not invent package identities, exports, or installation commands.",
@@ -1264,17 +1582,19 @@
         "Provides a productive evidence-gathering path and honest blocker."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "user-memory"],
+      "sourceIds": [
+        "new-finance",
+        "user-memory"
+      ],
       "evidenceStatus": "unresolved",
       "tags": [
-        "system-boundaries",
+        "system-handoffs",
         "okikio-backend",
         "heldout",
         "anti-hallucination"
       ],
       "rationale": "Directly tests package/API hallucination resistance."
     },
-
     {
       "id": "system-okikio-workflow-map-train",
       "title": "Map the private finance workflow platform honestly",
@@ -1282,9 +1602,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "Create a capability/status/ownership map for the retained @utils/workflows package covering definitions and policies, PostgreSQL store, control plane, ready queue, workers, waits/signals, schedules, cancellation, replay, memory Effect adapter, SQL Effect adapter, and service endpoints. For every capability distinguish authored, reachable, process-local, restart-safe, incomplete, and unverified, then list production gates.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/workflows.md"],
+      "requiredReferences": [
+        "use-okikio/references/workflows.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1309,9 +1633,16 @@
         "Does not call the package public or the SQL runtime production-ready."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "effect-workflow-official"],
+      "sourceIds": [
+        "new-finance",
+        "effect-workflow-official"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["system-boundaries", "okikio-workflows", "training"],
+      "tags": [
+        "system-handoffs",
+        "okikio-workflows",
+        "training"
+      ],
       "rationale": "Builds an evidence-backed platform map instead of repeating its README ambition."
     },
     {
@@ -1321,9 +1652,13 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A finance import service needs idempotent start, status/timeline, one worker queue, retry, cancel, wait for provider callback, and replay. It does not need event fan-out, cron, batching, debounce, or rate limits. Produce a minimum productionization sequence for the private workflow platform, explicitly disabling unsupported surfaces, repairing atomicity, selecting a real runtime, deploying workers, and proving restart/operator recovery.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/workflows.md"],
+      "requiredReferences": [
+        "use-okikio/references/workflows.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1348,9 +1683,16 @@
         "Includes deployed worker/runtime, authz endpoints, failpoints, and repair tooling."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance", "effect-workflow-official"],
+      "sourceIds": [
+        "new-finance",
+        "effect-workflow-official"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "okikio-workflows", "productionization"],
+      "tags": [
+        "system-handoffs",
+        "okikio-workflows",
+        "productionization"
+      ],
       "rationale": "Tests prioritized operational action from a detailed private platform."
     },
     {
@@ -1360,9 +1702,13 @@
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "In the retained private workflow implementation, a signal row exists, the wait may still be active, no resume queue row exists, and processed_at is null after a crash. Explain which current source writes are separate, how an idempotent reconciler or transaction would repair the state, how to prevent duplicate resumes and stale-worker updates, and how service status/operator tools should present it.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/workflows.md"],
+      "requiredReferences": [
+        "use-okikio/references/workflows.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1387,12 +1733,18 @@
         "Keeps the partial state visible until repair and verifies process restart."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["new-finance"],
+      "sourceIds": [
+        "new-finance"
+      ],
       "evidenceStatus": "counterexample",
-      "tags": ["system-boundaries", "okikio-workflows", "heldout", "recovery"],
+      "tags": [
+        "system-handoffs",
+        "okikio-workflows",
+        "heldout",
+        "recovery"
+      ],
       "rationale": "Forces exact source-grounded recovery of a known multi-write path."
     },
-
     {
       "id": "system-okikio-packages-ecosystem-train",
       "title": "Research an Okikio dependency as an ecosystem",
@@ -1400,9 +1752,13 @@
       "kind": "trajectory",
       "split": "train",
       "prompt": "A repository considers @okikio/observables, @okikio/sparql, and @okikio/undent. Build an evidence-classified ecosystem map for each: exact identity/version/source, root and subpath exports, sibling/adapters/examples/consumers, capability and exclusion matrix, errors/lifetimes, runtime compatibility, integration with existing owners, and import/type/runtime tests. Do not assume Observables is RxJS or that a SPARQL builder is an engine.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/packages.md"],
+      "requiredReferences": [
+        "use-okikio/references/packages.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1427,9 +1783,17 @@
         "Integrates selectively with existing schema/runtime/observability owners."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["observables-official", "sparql-official", "undent"],
+      "sourceIds": [
+        "observables-official",
+        "sparql-official",
+        "undent"
+      ],
       "evidenceStatus": "normative",
-      "tags": ["system-boundaries", "okikio-packages", "training"],
+      "tags": [
+        "system-handoffs",
+        "okikio-packages",
+        "training"
+      ],
       "rationale": "Exercises the user's ecosystem-first requirement with anti-hallucination evidence."
     },
     {
@@ -1439,14 +1803,18 @@
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Prepare @okikio/undent 0.3.3 for a release that preserves root and ./unicode entrypoints, generated Unicode data, Deno behavior, and a generated Node package. Define check/write data sync, clean generation, versions/metadata, package contents, Deno and Node consumer fixtures, permissions, drift detection, and safeguards against unrelated Markdown formatting.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/packages.md"],
+      "requiredReferences": [
+        "use-okikio/references/packages.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
           "kind": "regex",
-          "value": "(root|[.]\/unicode).*(exports|entrypoint).*(Deno|Node|npm)",
+          "value": "(root|[.]/unicode).*(exports|entrypoint).*(Deno|Node|npm)",
           "flags": "is"
         },
         {
@@ -1466,9 +1834,15 @@
         "Explicitly prevents release tooling from reformatting unrelated documentation."
       ],
       "oracleStrength": "trajectory-rubric",
-      "sourceIds": ["undent"],
+      "sourceIds": [
+        "undent"
+      ],
       "evidenceStatus": "observed-source",
-      "tags": ["system-boundaries", "okikio-packages", "release"],
+      "tags": [
+        "system-handoffs",
+        "okikio-packages",
+        "release"
+      ],
       "rationale": "Turns the uploaded package's detailed release tooling into an operational gate."
     },
     {
@@ -1478,9 +1852,13 @@
       "kind": "safety",
       "split": "valid-unseen",
       "prompt": "A request asks to use @okikio/obserables, an Okikio backend helpers package, and a custom public ClickHouse Drizzle adapter. The evidence establishes @okikio/observables, private @utils/* sources, and a custom adapter architecture but no verified public names for the latter two. Produce an identity/status table, discovery steps, safe conceptual interfaces, and explicit implementation blockers without fabricated imports.",
-      "expectedSkills": ["use-okikio"],
+      "expectedSkills": [
+        "use-okikio"
+      ],
       "forbiddenSkills": [],
-      "requiredReferences": ["use-okikio/references/packages.md"],
+      "requiredReferences": [
+        "use-okikio/references/packages.md"
+      ],
       "forbiddenReferences": [],
       "assertions": [
         {
@@ -1513,7 +1891,7 @@
       ],
       "evidenceStatus": "unresolved",
       "tags": [
-        "system-boundaries",
+        "system-handoffs",
         "okikio-packages",
         "heldout",
         "anti-hallucination"

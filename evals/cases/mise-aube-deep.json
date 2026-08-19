@@ -33,7 +33,7 @@
       ],
       "rubric": [
         "Assigns one owner per version and task while preserving useful interoperability.",
-        "Treats trust, plugins, and backends as execution and supply-chain boundaries.",
+        "Treats trust, plugins, and backends as execution and supply-chain trust transitions.",
         "Includes resolved-config and clean-shell evidence."
       ],
       "oracleStrength": "trajectory-rubric",
@@ -46,7 +46,8 @@
         "mise",
         "config"
       ],
-      "rationale": "Tests Mise as a layered toolchain rather than a single version file."
+      "rationale": "Tests Mise as a layered toolchain rather than a single version file.",
+      "forbiddenSkills": []
     },
     {
       "id": "deep-devtools-mise-task-semantics",
@@ -93,7 +94,8 @@
         "mise",
         "tasks"
       ],
-      "rationale": "Exercises operational task properties and their non-obvious failure behavior."
+      "rationale": "Exercises operational task properties and their non-obvious failure behavior.",
+      "forbiddenSkills": []
     },
     {
       "id": "deep-devtools-mise-lock-provenance",
@@ -140,7 +142,8 @@
         "mise",
         "provenance"
       ],
-      "rationale": "Held-out case prevents overclaiming lockfile and backend guarantees."
+      "rationale": "Held-out case prevents overclaiming lockfile and backend guarantees.",
+      "forbiddenSkills": []
     },
     {
       "id": "deep-devtools-aube-existing-lockfile",
@@ -187,7 +190,8 @@
         "aube",
         "migration"
       ],
-      "rationale": "Tests Aube's coexistence capability without silently changing ownership."
+      "rationale": "Tests Aube's coexistence capability without silently changing ownership.",
+      "forbiddenSkills": []
     },
     {
       "id": "deep-devtools-aube-build-jail",
@@ -234,7 +238,8 @@
         "aube",
         "security"
       ],
-      "rationale": "Exercises Aube's distinctive lifecycle security model."
+      "rationale": "Exercises Aube's distinctive lifecycle security model.",
+      "forbiddenSkills": []
     },
     {
       "id": "deep-devtools-aube-workspace-deploy",
@@ -282,7 +287,8 @@
         "workspace",
         "deploy"
       ],
-      "rationale": "Held-out case covers the workspace ecosystem around the installer."
+      "rationale": "Held-out case covers the workspace ecosystem around the installer.",
+      "forbiddenSkills": []
     },
     {
       "id": "deep-devtools-mise-aube-owner-loop",
@@ -331,7 +337,8 @@
         "aube",
         "safety"
       ],
-      "rationale": "Composition case within one ecosystem catches mutually recursive tool ownership."
+      "rationale": "Composition case within one ecosystem catches mutually recursive tool ownership.",
+      "forbiddenSkills": []
     }
   ]
 }

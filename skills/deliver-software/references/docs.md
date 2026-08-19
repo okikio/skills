@@ -1,150 +1,158 @@
+# Documentation writing
 
-# Documentation Writing
+## Start from the reader's job
 
-## Core priority
+Choose the document's primary job before writing: tutorial, how-to, reference, concept, troubleshooting guide, design note, review, handoff, changelog, or operating procedure.
 
-Lead with user or maintainer benefit before internal mechanics.
-When introducing a concept, prefer this narrative order:
-1. what it is
-2. what problem it solves
-3. what the reader gets from it
-4. how it works at a high level
-5. examples, assumptions, edge cases, limitations, and deeper detail
+A document can contain supporting material from another mode, but it should not make the reader guess whether it is teaching, specifying, reviewing, or proposing.
 
-^ Use this as a default shape, not a rigid template. Steps 1 to 3 should
-almost always appear. Steps 4 and 5 may be condensed, merged, or reordered
-when the document type makes them redundant, such as changelogs or commit
-messages.
+## Build the mental model progressively
 
-Before writing, choose the documents job:
+For explanatory documentation, prefer this narrative progression:
 
-- Tutorial
-- How-to
-- Reference
-- Conceptual
-- Troubleshooting
-- Design note
-- Changelog
-- Review
-- Commit message
+1. what the thing is;
+2. the concrete problem it solves;
+3. what the reader gains from it;
+4. the high-level mechanics;
+5. a representative example or end-to-end flow;
+6. important options and alternatives;
+7. failure modes, limits, lifecycle, and deeper implementation detail.
 
-A document should do one primary job. If it needs to teach, specify, and troubleshoot, split it or create clear sections with different reader paths.
+This is a narrative default, not a template. A reference page can move directly to exact contracts after a short orientation. A design note may lead with the decision and evidence.
 
-For commit messages, use imperative mood in the subject line, separate the subject from the body with a blank
-line, and keep the body focused on why the change was made rather than
-repeating the diff.
+Explain concrete behavior before specialized terminology when that helps a new reader. Define one technical noun once and use that noun consistently throughout the document.
 
-## Writing style
+## Plain technical English is the default
 
-- Use plain English.
-- Define technical terms the first time they matter.
-- Ground abstract ideas in something concrete before or while naming them.
-- Tie explanations to a real behavior, cost, failure mode, example, or downstream benefit.
-- Keep a smooth narrative flow.
-- Ensure each paragraph leads into the next with a sentence that either previews the next idea or closes the current one.
-- Avoid switching abruptly between procedural steps and conceptual explanation within the same paragraph.
-- Prefer transition sentences over unnecessary headers.
-- Use active voice.
-- Use present tense where practical.
-- Expand acronyms on first use.
-- Avoid em dashes.
-- Avoid `easy`, `simple`, and `quick` when describing reader actions, as this can create pressure on the reader.
-- Use direct address (`you`, `your`) in Tutorials, How-tos, and
-	Troubleshooting docs. Use neutral, precise language in Reference,
-	Changelog, Commit message, and Design note docs.
-- Avoid burying important information in code example comments.
+Use clear, direct technical English. Formal ASD-STE100 or a repository-specific STE profile applies only when the current task explicitly requests it.
 
-The goal is not just to swap jargon for simpler jargon.
-The goal is to help the reader build a working mental model.
+Even without formal STE, prefer:
 
-## Diagram depth and lifecycle walkthroughs
+- active voice;
+- concrete nouns and verbs;
+- one main idea per sentence where practical;
+- short sentences when a longer one hides causality;
+- explicit units, states, owners, and effects;
+- transitions that connect one idea to the next.
 
-Use diagrams as structured walkthroughs when a system is easier to understand
-by following time, ownership, state, and handoffs. Do not overcompress a
-complex workflow into a tiny pipeline if the omitted detail is what makes the
-system hard to reason about.
+Avoid em dashes, vague adjectives such as `better`, and self-referential filler such as `this section will explain` when the explanation can begin directly.
 
-Choose diagram depth in this order:
+## Distinguish fact from proposal
 
-1. If understanding depends on ordering, ownership, stored state, retries,
-   storage, concurrency, or cleanup, use one walkthrough that preserves that
-   lifecycle.
-2. If different sub-flows have distinct jobs, such as component ownership,
-   data flow, or failure recovery, split them into separate diagrams.
-3. If a diagram would only repeat obvious prose, skip it.
+A document must make the status of a claim clear.
 
-For architecture-heavy docs, use this sequence when it helps the reader:
+Use precise language for:
 
-1. State the goal or contract of the flow.
-2. Survey the major moving parts.
-3. Draw the lifecycle in named chapters.
-4. Define the terms introduced by the diagram.
-5. Use the diagram to identify risks, tradeoffs, and implementation steps.
+- **implemented behavior**: verified in current source or runtime;
+- **documented upstream behavior**: supported by a current primary source;
+- **inference**: a conclusion drawn from evidence but not directly specified;
+- **proposal**: a recommended change that does not exist yet;
+- **future work**: explicitly deferred capability.
 
-A long diagram is acceptable when it is easier to follow because it is
-chaptered. For long lifecycle diagrams, prefer top-to-bottom time flow, named
-chapters, ownership labels at handoff points, compact data shapes where
-contracts matter, visible branches or fallback paths, and a short glossary when
-project vocabulary is introduced. Always explain what the reader is looking at
-and why it matters.
+Do not let a package name or architecture diagram imply that the implementation already provides the complete target capability.
 
-## Grounding abstract concepts
+When documents and code disagree, say which one is current for the question being answered.
 
-Before using a specialized term, or immediately after introducing it, connect it to at least one of these:
-- a concrete input or output
-- a real user or caller problem
-- a visible behavior in the system
-- a cost such as allocation, latency, or complexity
-- a failure mode or edge case
-- a downstream benefit for maintainers or consumers
+## Headings and transitions
 
-If the reader would reasonably ask `So what does that mean here?`, answer that question in the prose.
+Add a heading only when it marks a substantial new topic or materially improves navigation. If the next paragraph continues the same argument, use a transition sentence instead.
 
-## Header rules
+A heading should tell the reader what changed in the subject, not merely label the next paragraph with `Details`, `Impact`, or `Notes`.
 
-Add a header only when it improves navigation more than a transition sentence would.
-A useful header must mark a real subject shift, be specific about what follows, and still make sense in a document outline.
+## Examples
 
-## Examples and visual aids
+Use examples when they reveal behavior a reader cannot safely infer from the signature alone.
 
-Add an example when the concept involves non-obvious behavior, a parameter with surprising defaults, or a failure mode a reader is likely to encounter. Skip examples for straightforward operations that follow predictable common conventions.
-For code blocks, place a prose sentence immediately before the block stating what the code demonstrates and what the reader should notice. Do not use the code block itself or its comments as the primary explanation.
-Choose a diagram format only when it materially clarifies structure, flow,
-hierarchy, state transitions, ownership, or algorithm steps. Apply the diagram
-depth rules from the previous section and the format decision in `diagrams.md`.
-Use a table, ASCII, Mermaid, a custom composed visual, several small views, or no
-diagram according to the relationship and output medium.
-Do not add diagrams just to decorate the prose.
+For reusable APIs, prefer a common-path example first. Add an edge case or configuration example when it teaches a material rule such as cancellation, ownership, precedence, limits, or malformed input behavior.
+
+Introduce each code block with prose that tells the reader what to notice. Do not make code comments carry the only explanation.
+
+## Visual explanations
+
+Choose the visual form from the reader's question.
+
+Examples:
+
+| Reader needs to understand | Prefer |
+| --- | --- |
+| Order between participants | Sequence diagram or ordered ASCII lifecycle |
+| Ownership across stages | Swimlane or owner-labelled lifecycle |
+| Legal state changes | State machine |
+| Exact condition combinations | Decision table |
+| Components and dependencies | Component/dependency map |
+| Data shape changes | Data-flow diagram |
+| Quantitative comparison | Chart suited to the measure, not an architecture box diagram |
+| Exact mappings | Table |
+
+Use the least complicated representation that preserves the truth the reader needs. Do not force every problem into Mermaid or a box-and-arrow diagram.
+
+Always explain what the visual shows, how to read it, and which detail it intentionally omits.
+
+## Architecture and lifecycle documents
+
+For systems with several owners, runtimes, or durable states, show enough of the lifecycle to explain correctness.
+
+A useful sequence is:
+
+1. the user or caller goal;
+2. the major owners;
+3. the complete normal path;
+4. the shapes that move between important owners;
+5. cancellation, failure, retry, stale-work rejection, and cleanup;
+6. resource and throughput limits;
+7. current risks and the proposed change.
+
+Do not compress a complex lifecycle into a five-box pipeline when the missing publication order, lease, generation, retry, or cleanup step is the reason the system works.
+
+## API and package documentation
+
+A package README should orient the consumer around real use cases. An API reference should state exact contracts. Architecture docs should explain why the pieces compose the way they do.
+
+For package docs, cover as applicable:
+
+- purpose and current implementation status;
+- public entry points and normal call sites;
+- schemas/types and behavioral interfaces;
+- ownership and disposal;
+- cancellation and progress;
+- limits and memory behavior;
+- expected failures and unsupported cases;
+- runtime differences;
+- examples that compose into an end-to-end workflow.
+
+Do not duplicate the same prose in README, API reference, and source TSDoc. Give each document a job and link between them when necessary.
 
 ## Preserve authored Markdown
 
-Do not run a Markdown formatter or a repository-wide formatter that includes
-Markdown unless the user explicitly requests formatting. Preserve existing
-wrapping, table spacing, heading placement, code-block layout, and nearby prose.
-Make semantic edits with narrow patches and scope code formatters to code/config
-paths or a configuration that excludes Markdown. Read-only link, syntax, and
-spelling checks remain appropriate.
+Do not run a broad Markdown formatter unless the user explicitly requests formatting.
 
-## Specs and design notes
+Preserve unrelated wrapping, spacing, table layout, headings, and code-block structure. Make narrow semantic patches. A code formatter must not rewrite unrelated Markdown as collateral work.
 
-For specs, proposals, and design notes, prefer RFC-style structure:
-- Problem
-- Goals
-- Non-goals
-- Constraints
-- Proposal
-- Alternatives
-- Risks
-- Rollout
-- Open questions
+Read-only link, syntax, and spelling checks are appropriate.
 
-Keep decisions concrete. Make tradeoffs explicit. State assumptions plainly.
+## Design notes and handoffs
+
+For a design or implementation handoff, make the authority and status explicit. A useful shape is:
+
+- current state;
+- problem and evidence;
+- goals and non-goals;
+- decisions;
+- data/API/lifecycle model;
+- alternatives and tradeoffs;
+- failure and resource analysis;
+- implementation sequence;
+- validation plan;
+- known gaps.
+
+A handoff should be usable by someone who did not participate in the earlier conversation. Define project terms and show the flow instead of relying on chat history.
 
 ## Anti-patterns
 
-- Do not bury the lede under prerequisites or implementation detail.
-- Do not list features before explaining the problem they solve.
-- Do not create many tiny headers that simply label the next paragraph.
-- Do not replace one abstract phrase with another abstract phrase and call it clarity.
-- Do not use diagrams or examples that overstate certainty beyond what the implementation actually guarantees.
-- Do not use generic setup lines that could fit any page.
+- many tiny headings that break one continuous explanation;
+- abstract language with no concrete code path, input, output, or failure;
+- generic feature lists before explaining why the feature exists;
+- documentation that promises target behavior the current code does not implement;
+- diagrams chosen because a tool is convenient rather than because the grammar fits the question;
+- exact limits or guarantees copied from old upstream versions without current verification;
+- broad prose rewrites mixed into a functional code change.

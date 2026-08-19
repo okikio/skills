@@ -1,0 +1,2155 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "completion-cli-core-train",
+      "title": "CLI architecture and configuration authority",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a new multi-command Deno CLI from repository evidence. Define the command grammar, authored/config/runtime data shapes, source precedence, ecosystem package ownership, import-safe architecture, generated help/completion surfaces, and an audit plan that catches drift before handlers run. Do not let parser defaults overwrite file or environment intent.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/architecture.md",
+        "build-clis/references/audit.md",
+        "build-clis/references/commands.md",
+        "build-clis/references/config.md",
+        "build-clis/references/ecosystems.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "optique-official",
+        "c12-official",
+        "defu-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-clis"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-cli-core-seen",
+      "title": "Repair a rushed CLI configuration stack",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review a CLI where handlers read environment variables directly, c12 output is validated too early, arrays concatenate accidentally, help documents defaults that parser output injects, and the root module imports every integration. Produce the corrected ownership map and migration with tests and generated-surface checks.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/architecture.md",
+        "build-clis/references/audit.md",
+        "build-clis/references/commands.md",
+        "build-clis/references/config.md",
+        "build-clis/references/ecosystems.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "kaiju-config-handoff",
+        "optique-official",
+        "c12-official",
+        "defu-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-clis"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-cli-core-heldout",
+      "title": "CLI with conflicting extension owners",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A team proposes a parser registry, a second config loader, and a custom plugin system because the selected CLI packages seem inconvenient. Audit the current packages and repository before deciding. Keep only capabilities with a verified gap, preserve sparse source provenance, and explain what must remain import-safe and generated from one command grammar.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/architecture.md",
+        "build-clis/references/audit.md",
+        "build-clis/references/commands.md",
+        "build-clis/references/config.md",
+        "build-clis/references/ecosystems.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "standards-refresh-20260819",
+        "optique-official",
+        "unjs-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-clis"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-cli-runtime-train",
+      "title": "Installed CLI lifecycle and output contract",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Implement the installed execution contract for a CLI that emits pipe-safe JSON results, interactive diagnostics, a generated artifact, and a long-running command with cancellation. Define stdout/stderr ownership, TTY interaction, cleanup, package/compiled execution, tests, and exact artifact verification.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/distribution.md",
+        "build-clis/references/interaction.md",
+        "build-clis/references/lifecycle.md",
+        "build-clis/references/output.md",
+        "build-clis/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official",
+        "deno-software"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-clis"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-cli-runtime-seen",
+      "title": "CLI passes unit tests but fails when installed",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A CLI passes parser tests but the installed command writes diagnostics into JSON stdout, leaves a remote LogTape sink unflushed, ignores Ctrl-C during a long operation, and omits generated completion from the package. Diagnose and fix the complete distribution/lifecycle/output contract, then verify the exact artifact.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/distribution.md",
+        "build-clis/references/interaction.md",
+        "build-clis/references/lifecycle.md",
+        "build-clis/references/output.md",
+        "build-clis/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-clis"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-cli-runtime-heldout",
+      "title": "Destructive CLI in noninteractive automation",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A destructive command normally prompts, but CI runs without a TTY and expects machine output. Specify explicit confirmation/noninteractive policy, secret-safe diagnostics, cancellation and disposal ordering, exit status, installed artifact behavior, and a test matrix. Do not silently auto-confirm or mix diagnostics into stdout.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/distribution.md",
+        "build-clis/references/interaction.md",
+        "build-clis/references/lifecycle.md",
+        "build-clis/references/output.md",
+        "build-clis/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "cli-guidebook",
+        "logtape-official",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-clis"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-devtools-toolchain-train",
+      "title": "Repository-selected toolchain owners",
+      "skill": "build-devtools",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A Deno TypeScript monorepo already uses mise for tasks, Oxc for lint/format/transform, Unplugin-based icons, Playwright, and Mitata. Add a new transform and CI gate without introducing duplicate owners. Map the exact local and CI entry points, generated output, public types, runtime claims, and clean artifact checks.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-devtools/references/toolchains.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "mise-official",
+        "oxc-official",
+        "unplugin-icons-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-devtools"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-devtools-toolchain-seen",
+      "title": "Remove accidental duplicate compilers",
+      "skill": "build-devtools",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review a patch that added Babel, Prettier, and a custom icon compiler to a repository already using Oxc and Unplugin. Determine whether any real capability gap exists, remove duplicate ownership where it does not, and prove dev/build/SSR/CI/generated-output parity after the cleanup.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-devtools/references/toolchains.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "mise-official",
+        "oxc-official",
+        "unplugin-icons-official",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "build-devtools"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-core-train",
+      "title": "Complete software delivery lifecycle",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Implement a repository-wide replacement of a legacy transport. Start from the latest source authority, lock the deliverable, trace entrypoints and consumers, preserve unrelated dirty work, update code/tests/docs/generated output, remove obsolete compatibility, validate the changed surface, and verify the real user workflow before the final verdict.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/base.md",
+        "deliver-software/references/cases.md",
+        "deliver-software/references/changes.md",
+        "deliver-software/references/delivery.md",
+        "deliver-software/references/implementer.md",
+        "deliver-software/references/planner.md",
+        "deliver-software/references/refactors.md",
+        "deliver-software/references/review.md",
+        "deliver-software/references/validator.md",
+        "deliver-software/references/verifier.md",
+        "deliver-software/references/workflow.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-core-seen",
+      "title": "Complete software delivery lifecycle",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A previous agent changed the central implementation and stopped after unit tests. Review the unfinished replacement, reconstruct the original goal, identify stale exports/config/docs/fixtures and unverified workflows, complete the implementation without unrelated formatting churn, and distinguish validation from end-to-end verification.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/base.md",
+        "deliver-software/references/cases.md",
+        "deliver-software/references/changes.md",
+        "deliver-software/references/delivery.md",
+        "deliver-software/references/implementer.md",
+        "deliver-software/references/planner.md",
+        "deliver-software/references/refactors.md",
+        "deliver-software/references/review.md",
+        "deliver-software/references/validator.md",
+        "deliver-software/references/verifier.md",
+        "deliver-software/references/workflow.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-core-heldout",
+      "title": "Complete software delivery lifecycle",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A request says “review and fix everything” in a dirty repository with overlapping user edits and a deployment path you cannot access. Define what can be safely implemented now, what must remain read-only, how you preserve user work, how blockers affect the verdict, and what exact evidence is required before calling the capability complete.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/base.md",
+        "deliver-software/references/cases.md",
+        "deliver-software/references/changes.md",
+        "deliver-software/references/delivery.md",
+        "deliver-software/references/implementer.md",
+        "deliver-software/references/planner.md",
+        "deliver-software/references/refactors.md",
+        "deliver-software/references/review.md",
+        "deliver-software/references/validator.md",
+        "deliver-software/references/verifier.md",
+        "deliver-software/references/workflow.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-docs-train",
+      "title": "Documentation review and collaboration contracts",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Prepare the documentation and review package for a lifecycle-heavy architecture change. Document important public and internal invariants, choose diagrams from the reader question, keep prose progressive and self-contained, write a focused commit and pull-request narrative, describe release impact, and ensure every claim traces to code/tests rather than generic style advice.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/comments.md",
+        "deliver-software/references/commits.md",
+        "deliver-software/references/diagrams.md",
+        "deliver-software/references/docs.md",
+        "deliver-software/references/general.md",
+        "deliver-software/references/pulls.md",
+        "deliver-software/references/releases.md",
+        "deliver-software/references/standards.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-docs-seen",
+      "title": "Documentation review and collaboration contracts",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A PR is technically correct but its comments restate syntax, the architecture diagram hides failure/cleanup branches, the changelog overclaims runtime support, and the review has vague “clean this up” comments. Rewrite the documentation/review artifacts so they explain contracts, evidence, risk, and exact verification without mixing the different artifact purposes.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/comments.md",
+        "deliver-software/references/commits.md",
+        "deliver-software/references/diagrams.md",
+        "deliver-software/references/docs.md",
+        "deliver-software/references/general.md",
+        "deliver-software/references/pulls.md",
+        "deliver-software/references/releases.md",
+        "deliver-software/references/standards.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-docs-heldout",
+      "title": "Documentation review and collaboration contracts",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A team asks for ASD-STE100 everywhere, snake_case for all project fields, and one minimal Mermaid pipeline because those rules sound consistent. Reconcile the request with current repository standards, preserve external/provider naming where required, choose the right visual forms, and explain which writing/naming rules actually apply to ordinary technical docs and code.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/comments.md",
+        "deliver-software/references/commits.md",
+        "deliver-software/references/diagrams.md",
+        "deliver-software/references/docs.md",
+        "deliver-software/references/general.md",
+        "deliver-software/references/pulls.md",
+        "deliver-software/references/releases.md",
+        "deliver-software/references/standards.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "visual-explanation-guide-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-lang-train",
+      "title": "Language and web implementation contracts",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Implement a typed web library feature shared by Astro, React, and Solid consumers. Keep the reusable TypeScript contract framework-neutral, use schema-derived project data and contextual inference, put renderer-specific behavior behind explicit integrations, preserve SSR/hydration behavior, and validate both public types and real consumer builds.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/astro.md",
+        "deliver-software/references/composition.md",
+        "deliver-software/references/react.md",
+        "deliver-software/references/solid.md",
+        "deliver-software/references/typescript.md",
+        "deliver-software/references/web.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-lang-seen",
+      "title": "Language and web implementation contracts",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A shared TypeScript module has acquired React hooks, Solid owners, Astro globals, handwritten interfaces duplicating Zod schemas, and a Python generation script that emits stale types. Refactor ownership so the core is portable, renderer adapters remain explicit, generated contracts have one authority, and all current consumers/tests/docs move to the replacement.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/astro.md",
+        "deliver-software/references/composition.md",
+        "deliver-software/references/react.md",
+        "deliver-software/references/solid.md",
+        "deliver-software/references/typescript.md",
+        "deliver-software/references/web.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-lang-heldout",
+      "title": "Language and web implementation contracts",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A patch claims “cross-framework support” because TypeScript compiles while only the React demo was run. Audit the Astro/Solid/React/runtime surfaces, public inference, generated artifacts, browser behavior, and import graph. Reject claims that are not proven and do not preserve obsolete compatibility unless the requirement needs it.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/astro.md",
+        "deliver-software/references/composition.md",
+        "deliver-software/references/react.md",
+        "deliver-software/references/solid.md",
+        "deliver-software/references/typescript.md",
+        "deliver-software/references/web.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-quality-train",
+      "title": "Testing benchmarking and artifact verification",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design the test and benchmark plan for a streaming TypeScript parser. Use node:test plus @std/expect for the shared package tests, real Deno/browser runtime checks for claimed environments, chunk-invariance and malformed-input tests, Mitata baselines with consumed results, memory/lifecycle checks, and exact built-artifact verification.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/benchmarks.md",
+        "deliver-software/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-quality-seen",
+      "title": "Testing benchmarking and artifact verification",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A performance patch shows a faster microbenchmark but changes semantics, does not consume the benchmark result, and only type-checks the Deno/browser paths. Repair the benchmark and testing strategy so correctness gates run first, workloads match, lifecycle/memory effects are measured, and runtime/artifact claims are proven independently.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/benchmarks.md",
+        "deliver-software/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-quality-heldout",
+      "title": "Testing benchmarking and artifact verification",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "The source tree passes tests and a benchmark improves by 18%, but the packaged ZIP has not been extracted or run and the browser suite is blocked by the host. Decide the completion verdict, state what the existing evidence proves, verify the exact archive with all available gates, and report the blocked native lane without substituting another check.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/benchmarks.md",
+        "deliver-software/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deliver-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-project-train",
+      "title": "Deno project and configuration ownership",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Inspect a hybrid Deno 2 monorepo before changing dependencies. Classify Deno-native, package.json-first, and hybrid ownership; trace workspace/root configuration, current runtime version, imports and dependency protocols, task authority, current official sources, and the exact commands that will prove the chosen configuration.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/01-foundations.md",
+        "deno-software/references/02-releases.md",
+        "deno-software/references/03-repository-discovery.md",
+        "deno-software/references/04-packages.md",
+        "deno-software/references/05-workspaces.md",
+        "deno-software/references/13-command-reference.md",
+        "deno-software/references/14-sources.md",
+        "deno-software/references/15-decision-cases.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-project-seen",
+      "title": "Deno project and configuration ownership",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A teammate copied workspace:, catalog settings, compiler options, and publish flags into every Deno workspace member because it looked consistent. Review the current repository and official Deno behavior, restore the correct manifest/root ownership, preserve package.json where it is authoritative, and add validation that catches the same drift.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/01-foundations.md",
+        "deno-software/references/02-releases.md",
+        "deno-software/references/03-repository-discovery.md",
+        "deno-software/references/04-packages.md",
+        "deno-software/references/05-workspaces.md",
+        "deno-software/references/13-command-reference.md",
+        "deno-software/references/14-sources.md",
+        "deno-software/references/15-decision-cases.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-project-heldout",
+      "title": "Deno project and configuration ownership",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A blog claims a new Deno feature solves the repository problem, but the repo pins an older runtime and the feature status changed recently. Resolve the decision using repository evidence, current official docs/release notes, explicit version requirements, rejected alternatives, and blocked native checks rather than adopting the feature from memory.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/01-foundations.md",
+        "deno-software/references/02-releases.md",
+        "deno-software/references/03-repository-discovery.md",
+        "deno-software/references/04-packages.md",
+        "deno-software/references/05-workspaces.md",
+        "deno-software/references/13-command-reference.md",
+        "deno-software/references/14-sources.md",
+        "deno-software/references/15-decision-cases.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-workspaces-official",
+        "deno-config-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-runtime-train",
+      "title": "Deno runtime security and quality",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Make a Deno-first CLI run across Deno and Node without source forks. Define least-privilege Deno permissions, node/npm compatibility constraints, shared node:test coverage, Deno-specific runtime gates, CI task authority, and the final verification matrix. Do not replace blocked Deno execution with a Node shim claim.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/06-security.md",
+        "deno-software/references/07-quality.md",
+        "deno-software/references/08-node-compatibility.md",
+        "deno-software/references/12-verification.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-runtime-seen",
+      "title": "Deno runtime security and quality",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A Deno project passes Node tests but its CI uses -A, a native npm addon runs postinstall, browser code imports a server-only module, and no native Deno command has run. Audit compatibility and permissions, isolate runtime-specific code, tighten permissions, and distinguish passed, failed, and blocked verification.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/06-security.md",
+        "deno-software/references/07-quality.md",
+        "deno-software/references/08-node-compatibility.md",
+        "deno-software/references/12-verification.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-runtime-heldout",
+      "title": "Deno runtime security and quality",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "The current agent host has Node but no Deno. The user asks whether a permissions-sensitive Deno feature is done. Use available checks only for what they prove, keep production imports Deno-native, refuse to call the native path passed, and list the exact Deno/runtime/artifact gates required in a capable environment.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/06-security.md",
+        "deno-software/references/07-quality.md",
+        "deno-software/references/08-node-compatibility.md",
+        "deno-software/references/12-verification.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-delivery-train",
+      "title": "Deno libraries artifacts and delivery",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Prepare a Deno TypeScript library for JSR and an npm consumer artifact. Define one source authority, exports, generated package metadata, clean-consumer tests, compiled/bundled artifact checks where applicable, replacement cleanup, and the standalone delivery lifecycle when the general delivery skill is unavailable.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/09-libraries.md",
+        "deno-software/references/10-artifacts.md",
+        "deno-software/references/11-delivery-playbooks.md",
+        "deno-software/references/16-standalone.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-delivery-seen",
+      "title": "Deno libraries artifacts and delivery",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A Deno library source passes tests but the npm tarball contains stale declarations, a compiled CLI omits an asset, and release docs still mention a removed export. Repair the library/artifact/release path, run clean consumers and the exact built command, remove obsolete surfaces, and report any unavailable registry publish gate.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/09-libraries.md",
+        "deno-software/references/10-artifacts.md",
+        "deno-software/references/11-delivery-playbooks.md",
+        "deno-software/references/16-standalone.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-deno-delivery-heldout",
+      "title": "Deno libraries artifacts and delivery",
+      "skill": "deno-software",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A maintainer proposes dual hand-maintained Deno and Node source trees to make publishing easier. Redesign the delivery around one TypeScript source graph and explicit runtime adapters, then specify artifact generation, consumer verification, refactor/review procedure, and standalone completion behavior without assuming a publish command succeeded.",
+      "expectedSkills": [
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deno-software/references/09-libraries.md",
+        "deno-software/references/10-artifacts.md",
+        "deno-software/references/11-delivery-playbooks.md",
+        "deno-software/references/16-standalone.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "inspect|evidence|source|trace",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|validation|artifact|runtime",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "failure|cleanup|remove|blocked|risk",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "deno-software",
+        "deno-2-9-official",
+        "deno-node-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "deno-software"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-opfs-train",
+      "title": "Okikio OPFS architecture train",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a new storage integration for @okikio/opfs. Decide whether the provider needs a client, backend-native driver, filesystem adapter, and reverse bridge; expose capabilities and limits; define borrowed resource ownership, partitioning and cleanup; and plan native-provider versus facade benchmarks and runtime tests.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/opfs.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "client|driver|adapter|bridge",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|conformance|benchmark",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-opfs-seen",
+      "title": "Okikio OPFS architecture seen",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review an OPFS integration where the adapter owns protocol signing, chunking is hidden in a generic helper, the filesystem disposes a caller-owned database, and range support is advertised despite full-file buffering. Reassign responsibilities and define the verification matrix.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/opfs.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "client|driver|adapter|bridge",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "ownership|lifecycle|limit|cleanup|bounded",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-opfs-heldout",
+      "title": "Okikio OPFS architecture held out",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A proposal adds twenty SomethingDriver wrapper classes around existing adapters without adding backend-native behavior. Reject or refine the design using the current client/driver/adapter/filesystem/bridge model, and explain what evidence would make a driver independently useful.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/opfs.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "client|driver|adapter|bridge",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "evidence|source|test|verify|benchmark",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-mediad-train",
+      "title": "Okikio MEDIAD architecture train",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a streaming HLS parser package inside MediaD. Keep generic execution mechanics in utils, M3U syntax separate from HLS semantics, use source spans and chunk-invariant events, preserve unknown tags, define task cancellation/disposal, and specify conformance plus Mitata/browser validation.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/mediad.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "hls|parser|media|stream",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|conformance|benchmark",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-mediad-seen",
+      "title": "Okikio MEDIAD architecture seen",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A MediaD conversion package materializes every input into an ArrayBuffer, treats output chunks as append-only, calls pause() without underlying cooperation, and builds a full HLS tree for a one-pass diagnostic. Refactor it around the media cost ladder, positional writes, real task authority, and the parser event/model layers.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/mediad.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "hls|parser|media|stream",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "ownership|lifecycle|limit|cleanup|bounded",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-mediad-heldout",
+      "title": "Okikio MEDIAD architecture held out",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A developer wants to put HLS, DASH, XML parsing, WebCodecs, MSE, generic streams, and all runtime workers into one shared media utility. Reassign each responsibility to the correct Web API, maintained parser, generic utils layer, or concrete media package and define what must be proven before adding a new abstraction.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/mediad.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "hls|parser|media|stream",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "evidence|source|test|verify|benchmark",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-rdf-train",
+      "title": "Okikio RDF architecture train",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Implement a from-scratch RDF parser and SPARQL client package while using external engines only for adapters, conformance comparison, and benchmarks. Define the byte/token/quad pipeline, blank-node scope, bounded network responses, public schemas/types, and official conformance gates.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/rdf.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "rdf|sparql|conformance|quad",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "test|verify|conformance|benchmark",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-rdf-seen",
+      "title": "Okikio RDF architecture seen",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "An RDF implementation imports jsonld.js in its core, fixes a canonicalization runner by sorting only the expected side, generates blank nodes from a process-local counter, and buffers unlimited SPARQL responses. Identify the architecture/correctness defects and the tests needed before claiming conformance.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/rdf.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "rdf|sparql|conformance|quad",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "ownership|lifecycle|limit|cleanup|bounded",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-okikio-rdf-heldout",
+      "title": "Okikio RDF architecture held out",
+      "skill": "use-okikio",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A benchmark says the new RDF parser is faster than an alternative, but the new parser streams quads while the competitor builds a graph and the official conformance suite still has failures. Explain what can be claimed, redesign the comparison, and keep comparison libraries out of the core runtime.",
+      "expectedSkills": [
+        "use-okikio"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-okikio/references/rdf.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "rdf|sparql|conformance|quad",
+          "flags": "i"
+        },
+        {
+          "kind": "regex",
+          "value": "evidence|source|test|verify|benchmark",
+          "flags": "i"
+        }
+      ],
+      "rubric": [
+        "Uses the routed references as operational contracts rather than name-dropping tools.",
+        "Traces ownership, failure paths, and affected consumers before declaring the work complete.",
+        "Separates checks that actually ran from blocked or proposed verification."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "completion-coverage",
+        "use-okikio"
+      ],
+      "rationale": "Completes train/seen/held-out capability coverage for a previously under-specified skill area with a decision-complete scenario."
+    },
+    {
+      "id": "completion-delivery-python-train",
+      "title": "Python preserves external data and explicit ownership",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Implement a Python ingestion component that receives provider JSON containing createdAt, snake_case, and header-style field names, uses an injected async HTTP client, writes a durable checkpoint, and supports cancellation. Follow the repository's Python toolchain. Keep Python identifiers idiomatic without renaming external data merely for style, keep the injected client borrowed, make retry/concurrency/checkpoint limits explicit, and document the non-obvious lifecycle and replay rules.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/python.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(external|provider|wire|durable).*(field|key|shape).*(preserve|exact|unchanged)",
+          "flags": "is"
+        },
+        {
+          "kind": "regex",
+          "value": "(borrowed|caller.*own).*(client|session|resource)",
+          "flags": "is"
+        },
+        {
+          "kind": "regex",
+          "value": "(cancel|CancelledError|checkpoint|retry|concurrency).*(explicit|limit|lifetime|replay)",
+          "flags": "is"
+        }
+      ],
+      "rubric": [
+        "Separates Python identifier style from external serialization contracts.",
+        "Keeps injected resource ownership and cancellation explicit.",
+        "Names validation and runtime checks from the repository rather than imposing a new Python toolchain."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "python",
+        "serialization",
+        "ownership",
+        "cancellation"
+      ],
+      "rationale": "Exercises the current Python reference directly instead of treating Python as a web-renderer variant."
+    },
+    {
+      "id": "completion-delivery-python-seen",
+      "title": "Python review rejects style-driven contract drift",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review a Python patch that converts every incoming JSON key and every persisted field to snake_case, adds helpers.py for unrelated parsing/network/checkpoint code, catches Exception around asyncio work including cancellation, and always closes a caller-supplied client. Repair the design without changing the external API contract or replacing the repository's selected formatter, type checker, and test runner.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/python.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(do not|don't|must not).*(rename|convert).*(external|JSON|persisted|wire).*(snake|style)",
+          "flags": "is"
+        },
+        {
+          "kind": "regex",
+          "value": "(helper|helpers).*(concrete|capability|split|owner)",
+          "flags": "is"
+        },
+        {
+          "kind": "regex",
+          "value": "(CancelledError|cancellation).*(preserve|propagate|swallow)",
+          "flags": "is"
+        },
+        {
+          "kind": "regex",
+          "value": "(caller|injected).*(own|borrow).*(client|session)",
+          "flags": "is"
+        }
+      ],
+      "rubric": [
+        "Repairs serialization naming at the correct handoff instead of globally restyling durable data.",
+        "Replaces the generic helper module with concrete capability ownership.",
+        "Preserves asyncio cancellation and borrowed-resource lifetime."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "python",
+        "review",
+        "serialization",
+        "lifecycle"
+      ],
+      "rationale": "Targets the stale Python rules that previously contradicted the current engineering standard."
+    },
+    {
+      "id": "completion-delivery-python-heldout",
+      "title": "Python and TypeScript share contracts without sharing syntax rules",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "A monorepo has a Python code generator consumed by a Deno TypeScript package. A reviewer demands one naming rule everywhere: camelCase Python identifiers and snake_case JSON because those are the project standards. Resolve the disagreement. Preserve each language's normal identifier conventions, keep generated/wire field names tied to their actual contract, identify the explicit conversion point when semantics differ, and specify clean generator/output/consumer validation before claiming the integration works.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/python.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Python.*snake_case.*(identifier|function|variable)|snake_case.*Python.*identifier",
+          "flags": "is"
+        },
+        {
+          "kind": "regex",
+          "value": "(JSON|wire|generated|external).*(contract|exact|preserve).*(not|rather than|instead of).*(style|global)",
+          "flags": "is"
+        },
+        {
+          "kind": "regex",
+          "value": "(generator|generated).*(consumer|output).*(test|verify|build|check)",
+          "flags": "is"
+        }
+      ],
+      "rubric": [
+        "Does not confuse Python source style with project-owned TypeScript/JSON naming defaults.",
+        "Uses an explicit conversion only when the internal and external semantics differ.",
+        "Requires verification of generated artifacts and real consumers."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "skills-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "python",
+        "typescript",
+        "generated-artifacts",
+        "naming"
+      ],
+      "rationale": "Held-out test for cross-language naming pressure without inventing one universal syntax convention."
+    }
+  ]
+}

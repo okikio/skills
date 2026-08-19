@@ -22,7 +22,7 @@ Prefer:
 - URL state for shareable navigation state.
 - Clear focus behavior for every interaction that opens, closes, hides, disables, or moves content.
 
-Avoid abstractions that hide structure, state ownership, accessibility semantics, or framework boundaries.
+Avoid abstractions that hide structure, state ownership, accessibility semantics, or framework APIs.
 
 For complex interface workflows, document or model the full user-visible
 lifecycle instead of reducing it to a happy-path component tree. Good UI
@@ -38,7 +38,7 @@ When writing or reviewing an interface, reason in this order:
 3. Keyboard, focus, and interaction behavior.
 4. Composition API and state ownership.
 5. Loading, empty, error, pending, and success states.
-6. Server, client, hydration, and navigation boundaries.
+6. Server, client, hydration, and navigation states.
 7. Layout resilience, styling, theming, and visual states.
 8. Performance, bundle cost, and browser work.
 9. Tests, examples, and maintainability.
@@ -47,7 +47,7 @@ This order matters. A polished component that breaks form submission, focus orde
 
 ## Design composition before props
 
-Design component APIs around semantic regions and state boundaries.
+Design component APIs around semantic regions and state ownership scopes.
 
 Ask these questions before adding props:
 
@@ -267,7 +267,7 @@ Avoid hiding stable UI behind full-page spinners when only one region is loading
 
 Make error messages actionable. Say what failed, what is preserved, and what the user can do next.
 
-## Keep server, client, and hydration boundaries safe
+## Keep server, client, and hydration scopes safe
 
 Do not let browser-only behavior leak into server-rendered output.
 
@@ -483,7 +483,7 @@ Use comments for:
 - Hydration or SSR constraints.
 - Accessibility tradeoffs.
 - Performance-sensitive measurements.
-- Non-obvious framework boundary decisions.
+- Non-obvious framework API decisions.
 
 Avoid comments that repeat the code.
 

@@ -66,7 +66,7 @@ observe signature
 | Stable and beta capabilities both appear | versions merged in notes | claim ledger by version | present a superset API |
 | Types compile, runtime throws | host/global/module/dialect/lifecycle mismatch | exact runtime integration and emitted trace | call structural typing support |
 | Root import works, subpath fails | export omitted/condition mismatch | packed export map and resolver trace | deep-import source path |
-| CJS example fails in ESM package | module-system boundary | package exports/type and target runtime | add `require` shim blindly |
+| CJS example fails in ESM package | module-system contract | package exports/type and target runtime | add `require` shim blindly |
 | Config option ignored | wrong version/source layer/name or loader not active | exact config schema/implementation/effective provenance | assume default applied |
 | Optional peer becomes required at runtime | feature path eagerly imported/build bundled | source graph and absence test | add every optional peer |
 | Private adapter resembles Drizzle/Effect API | local design inferred from public analogue | actual source/export/tests | invent matching methods |
@@ -79,7 +79,7 @@ observe signature
 | Diagnostics appear twice | logger bridge plus inherited parent sink | category/sink ownership and recorder test | filter duplicate strings |
 | JSON stdout has prefixes | diagnostics/result channels collapsed | sink routing/parent inheritance/subprocess bytes | write directly to console |
 | Arrays duplicate after layering | generic default concatenation used for operation semantics | custom merge orientation and fixtures | dedupe after merge |
-| Framework plugin builds but hydration fails | wrong renderer/SSR/client boundary | exact adapter peer matrix and hydration test | blame app code only |
+| Framework plugin builds but hydration fails | wrong renderer/SSR/client handoff | exact adapter peer matrix and hydration test | blame app code only |
 | Generated config loses comments | value serializer used on authored syntax | AST/format-aware transform and unsupported-shape test | overwrite from parsed object |
 | Package works only in workspace | hoist/alias/unpublished file/undeclared dep | packed clean consumer | add root dependency without ownership |
 | Upgrade leaves old behavior | old adapter/config/cache/generated artifact still owns path | complete consumer/provenance/removal map | delete random cache |
@@ -97,7 +97,7 @@ observe signature
 | Shutdown loses logs/jobs | async sinks/workers not disposed or deadline too short | lifecycle trace and pending queue | call process exit |
 | Offline/cache returns wrong template | cache key omits ref/subdir/integrity | provenance manifest and immutable acquisition | trust `--offline` result |
 | Release succeeded in one registry only | per-target state collapsed | target ledger and exact artifact | rerun entire pipeline/rebuild |
-| Benchmark microcase wins, users regress | protected workflow/measurement boundary absent | E2E, memory, error, stress reports | advertise fastest number |
+| Benchmark microcase wins, users regress | protected workflow/measurement contract absent | E2E, memory, error, stress reports | advertise fastest number |
 
 ## Research-process failures
 
@@ -108,7 +108,7 @@ observe signature
 | Code example uses plausible unknown API | source status ignored | exact exports or labelled local interface |
 | Same guide repeated in many skills | progressive disclosure/ownership failure | one canonical reference, targeted routing |
 | Evals accept one keyword | grader shortcut | multi-part decision/behavior assertions |
-| Prompt variants differ only by suffix | duplicate smoke cases | distinct boundary/failure scenarios |
+| Prompt variants differ only by suffix | duplicate smoke cases | distinct interface/failure scenarios |
 | Held-out case was visible to optimizer | data leakage | immutable split/export gate |
 | Agent reads every reference | routing/selectivity failure | decision-specific required references |
 | Blocked command reported passed | evidence status inflation | pass/fail/blocked/not-run report |
@@ -189,7 +189,7 @@ communicate exact affected versions. Do not overwrite immutable history.
 - Validate every selected package and API against exact installed/published
   exports/source.
 - Check every official/sibling/adapter edge against canonical evidence.
-- Search for stable/prerelease/private boundaries in references and examples.
+- Search for stable/prerelease/private release channels in references and examples.
 - Run negative tests: missing optional peer, wrong host, unavailable dependency,
   invalid config, cancellation, disposal, and rollback.
 - Ensure evals require ownership, version/status, failure/exclusion, and

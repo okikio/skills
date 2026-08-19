@@ -42,11 +42,11 @@ A CLI or application often performs:
 parse -> configure -> acquire -> collect -> verify -> detect -> persist
 ```
 
-Those are execution phases. They are not automatically module boundaries. A
+Those are execution phases. They are not automatically module seams. A
 chronology-first extraction tends to preserve shared context, hidden sequencing,
 and temporal coupling.
 
-Prefer boundaries around domain knowledge and change axes:
+Prefer module splits around domain knowledge and change axes:
 
 ```text
 Domain analysis
@@ -68,6 +68,27 @@ Persistence
 A module should hide a design decision or body of knowledge that other modules
 do not need to understand. Processing steps can remain implementation details or
 observable events.
+
+## Place generic mechanics and concrete capabilities deliberately
+
+Use repository context to decide whether reusable code is generic mechanics or a concrete capability. Reusability by itself does not make something a utility.
+
+```text
+utils/
+  generic programming models and mechanics
+
+packages/
+  concrete domain capabilities
+
+clis/ and apps/
+  executable composition and product policy
+```
+
+A generic retry, resource, stream, context, or capacity model can belong in `utils/`. HLS, RDF, version semantics, a technology registry, or a storage provider remains a concrete package even when several applications use it.
+
+Do not repair ownership problems with `shared/`, `common/`, `misc/`, or `helpers/`. Move the contract to the layer that owns the exact concept.
+
+Use surrounding context to keep APIs short. Project-owned Zod schema constants end in `Schema`; project-owned data types normally end in `Type`; behavior interfaces use the concrete noun. Use Standard Schema only when validator interoperability is the actual generic requirement.
 
 ## Separate application and library ownership
 
@@ -197,7 +218,7 @@ Do not create a framework merely to organize code controlled by one repository.
 
 ## Justify architecture decisions
 
-Do not defend a boundary with slogans such as “library first,” “composable,”
+Do not defend an architecture split with slogans such as “library first,” “composable,”
 “tree-shakable,” or “best practice.” Show the path from the situation to the
 decision.
 
@@ -225,7 +246,7 @@ through a separate subpath. Keep the remaining internal modules private because
 package-level separation would not satisfy another consumer or constraint.
 ```
 
-Prefer the least disruptive and most reversible boundary that still satisfies
+Prefer the least disruptive and most reversible dependency split that still satisfies
 the protected objective. Record what evidence would invalidate the choice.
 
 ## Public compatibility discipline

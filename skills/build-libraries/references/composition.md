@@ -113,7 +113,7 @@ c12 may own application configuration discovery, formats, environment branches,
 merge mechanics. Neither should become the domain library's configuration
 language by accident.
 
-Preferred boundary:
+Preferred interface:
 
 ```text
 application composition root
@@ -173,7 +173,7 @@ Hidden callback graphs are harder to reason about than explicit calls.
 ## Optique and application adapters
 
 Optique can express command grammar, source terms, help, completion, manuals,
-and runners as composable values. It belongs at the CLI boundary. A reusable
+and runners as composable values. It belongs at the CLI composition layer. A reusable
 library should receive validated domain requests rather than Optique parser
 values, `DeferredValue`, or process runner state.
 

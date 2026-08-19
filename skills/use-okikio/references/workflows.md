@@ -96,7 +96,7 @@ Observed tables cover workflow executions, timeline, ready queue, events, waits,
 
 Store requirements before production:
 
-- unique idempotency key at the correct service/workflow/scope boundary;
+- unique idempotency key at the correct service/workflow/scope owner;
 - atomic execution + initial timeline + queue acceptance;
 - atomic per-execution timeline sequence allocation;
 - atomic/fenced queue claim and acknowledgement;

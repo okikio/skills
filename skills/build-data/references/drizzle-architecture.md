@@ -10,7 +10,7 @@
 - Query builders and results
 - Migrations and Drizzle Kit
 - Resource lifetime
-- Version boundaries
+- Version lines
 - Conformance checklist
 - Sources and freshness
 
@@ -87,7 +87,7 @@ Dialect compilation tests should assert SQL and ordered parameters. Include alia
 
 ## Session, driver, and prepared queries
 
-The driver boundary should be small enough to fake in unit tests. Define the actual client operations required: query, command, insert, result streaming, close, request settings, cancellation, and query identifiers.
+The driver interface should be small enough to fake in unit tests. Define the actual client operations required: query, command, insert, result streaming, close, request settings, cancellation, and query identifiers.
 
 The session owns:
 
@@ -160,7 +160,7 @@ Return or retain the underlying client/pool handle. Construction and environment
 - configure logging without mutating global state during import;
 - create isolated clients for integration tests.
 
-## Version boundaries
+## Version lines
 
 Pin compatible versions of Drizzle ORM, Kit, native driver, TypeScript, and runtime. For every upgrade:
 

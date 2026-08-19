@@ -10,7 +10,7 @@
 - Organizations and authorization
 - Passkeys, social providers, and magic links
 - OAuth provider and consent
-- Polar/billing boundary
+- Polar/billing server contract
 - Construction and resource lifetime
 - Failure signatures
 - Verification
@@ -114,7 +114,7 @@ Do not construct a second pool inside auth when the host already owns a database
 
 ## Plugin capability map
 
-| Capability | Server owner in uploaded code | Browser counterpart / boundary |
+| Capability | Server owner in uploaded code | Browser counterpart / interface |
 |---|---|---|
 | email/password | core `emailAndPassword` | core client actions |
 | sessions | core | `getSession`/session client |
@@ -186,7 +186,7 @@ Dynamic unauthenticated client registration is a security/product decision, not 
 
 Test metadata documents and a complete authorization-code flow with user-only and organization-bound scopes. Test consent denial, organization switch, invalid audience, revoked membership, redirect mismatch, token refresh, and revocation.
 
-## Polar/billing boundary
+## Polar/billing server contract
 
 The uploaded architecture deliberately limits the Better Auth Polar plugin to webhooks. Its product billing is organization-scoped, while generic Better Auth Polar checkout helpers can be user-scoped. Creating checkout/customer records through both paths could create duplicate customer authority.
 

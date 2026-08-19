@@ -212,7 +212,7 @@ outcome.
 ## Verification
 
 - Run high-concurrency identical starts and claims.
-- Fault-inject every crash-matrix boundary.
+- Fault-inject every crash-matrix transition.
 - Retry ambiguous provider outcomes with fake and real sandbox APIs.
 - Redeliver events before/after acknowledgment and after dedupe retention edges.
 - Run outbox publishers concurrently and kill after publish.

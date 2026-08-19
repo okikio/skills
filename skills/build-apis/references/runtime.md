@@ -5,7 +5,7 @@
 - [Adapter preflight](#adapter-preflight)
 - [Middleware ownership and order](#middleware-ownership-and-order)
 - [Request context](#request-context)
-- [Error boundary](#error-boundary)
+- [Error mapper](#error-mapper)
 - [Resource lifetime](#resource-lifetime)
 - [Timeout and cancellation](#timeout-and-cancellation)
 - [Logging and tracing](#logging-and-tracing)
@@ -36,7 +36,7 @@ Use three levels:
 
 | Level | Examples | Rule |
 |---|---|---|
-| Root | correlation, security headers, tracing, error boundary, access log | Install exactly once |
+| Root | correlation, security headers, tracing, error mapper, access log | Install exactly once |
 | Service/group | service capability context, shared org policy, rate limits | Mount on explicit prefix/group |
 | Route | auth requirement, resource authorization, source validation | Keep visible beside handler |
 
@@ -75,9 +75,9 @@ non-null inside the handler.
 Do not store raw request bodies, auth headers, cookies, passwords, or unredacted
 provider payloads in generic context or log properties.
 
-## Error boundary
+## Error mapper
 
-One root boundary owns unexpected failure completion. Translation sequence:
+One root error mapper owns unexpected failure completion. Translation sequence:
 
 ```text
 expected domain error

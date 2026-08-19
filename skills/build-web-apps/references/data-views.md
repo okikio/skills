@@ -108,7 +108,7 @@ Distinguish:
 - stale revision and refresh;
 - mutation pending/conflict/rollback.
 
-Do not render `query.data!` unless loader/query integration guarantees it on every path and error/pending boundaries cover failures. TanStack router-query SSR integrations differ by framework/version. Current official guidance distinguishes server-executed suspense/loader prefetch from client-only plain queries; verify Solid package behavior.
+Do not render `query.data!` unless loader/query integration guarantees it on every path and error/pending states cover failures. TanStack router-query SSR integrations differ by framework/version. Current official guidance distinguishes server-executed suspense/loader prefetch from client-only plain queries; verify Solid package behavior.
 
 For mutations invalidate the exact affected keys. Adding items to a saved list should not refetch unrelated search results unless server facts changed. Use stable key helpers for targeted invalidation.
 

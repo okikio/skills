@@ -139,7 +139,7 @@ or list exact effectful built files:
 Incorrect `sideEffects` metadata can remove required behavior. Treat it as a
 verified contract, not an optimization incantation.
 
-## Optional dependencies and peer boundaries
+## Optional dependencies and peer dependency ranges
 
 Place optional adapters in separate modules or packages. Avoid top-level imports
 that make optional dependencies mandatory at resolution time.
@@ -164,7 +164,7 @@ change semantics, precision, error types, or resource ownership.
 
 ## Build output
 
-Preserve useful module boundaries. A library distributed only as one bundled
+Preserve useful module APIs. A library distributed only as one bundled
 file can still tree-shake in some toolchains, but separate side-effect-free ESM
 modules and explicit subpaths make ownership and optional dependencies easier to
 verify.

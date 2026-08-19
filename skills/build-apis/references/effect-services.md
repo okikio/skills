@@ -14,7 +14,7 @@
 - [Hono integration](#hono-integration)
 - [Testing](#testing)
 - [Failure signatures](#failure-signatures)
-- [Deliberate exclusions and version boundary](#deliberate-exclusions-and-version-boundary)
+- [Deliberate exclusions and version line](#deliberate-exclusions-and-version-line)
 
 ## When to load this reference
 
@@ -35,7 +35,7 @@ Read `Effect.Effect<Success, Error, Requirements>` as three independent facts:
 
 Defects, invariant violations, and process-fatal conditions are not automatically
 domain errors. Model expected recovery decisions in the error channel; preserve
-unexpected defects as causes and handle them at an owned boundary.
+unexpected defects as causes and handle them at an owned component.
 
 ## Service contracts with Context.Tag
 
@@ -139,7 +139,7 @@ Config
   -> Host runtime
 ```
 
-At every Layer boundary, answer:
+At every Layer construction point, answer:
 
 - Which tags does it provide?
 - Which tags does it require?
@@ -183,7 +183,7 @@ export class PreferencesConflict extends Data.TaggedError("PreferencesConflict")
 }> {}
 ```
 
-Translate errors once at the transport boundary:
+Translate errors once at the transport handoff:
 
 ```ts
 const program = FamilyService.pipe(
@@ -232,7 +232,7 @@ Distinguish:
 
 ## Configuration
 
-Resolve config once at the host boundary. A Layer may consume a validated config
+Resolve config once at the host composition root. A Layer may consume a validated config
 service, but should not independently reload `.env`, c12 files, or process env.
 
 ```ts
@@ -266,7 +266,7 @@ Preserve these fields across HTTP, services, activities, and stores:
 - duration, retry count, outcome, and cancellation status.
 
 Do not log the same failure in every layer. A lower layer should add structured
-context to the error/cause; the owned boundary emits one diagnostic unless an
+context to the error/cause; the owned component emits one diagnostic unless an
 intermediate retry/compensation event is operationally meaningful.
 
 ## Hono integration
@@ -276,7 +276,7 @@ Choose one integration model:
 | Model | Use when | Risk |
 |---|---|---|
 | Host `ManagedRuntime` | Many handlers execute Effects against one graph | Must dispose at shutdown |
-| Explicit capability object in Hono context | Small service or gradual migration | Loses compile-time requirement graph at handler boundary |
+| Explicit capability object in Hono context | Small service or gradual migration | Loses compile-time requirement graph at handler entrypoint |
 | Effect-native HTTP platform | Whole host is designed for it | Larger framework change; do not mix casually with Hono |
 
 For Hono with a host runtime:
@@ -328,14 +328,14 @@ Test:
 |---|---|---|
 | Pool count grows per request | Layer/runtime rebuilt in middleware | Build once at host root |
 | `Effect<_, never, _>` around fallible I/O | Errors converted to defects or swallowed | Model expected failure channel |
-| Every error becomes HTTP 500 | No tagged boundary mapping | Map expected tags to stable problems |
-| Duplicate logs for one exception | Every Layer logs and rethrows | One emission boundary plus structured cause |
+| Every error becomes HTTP 500 | No tagged error mapping | Map expected tags to stable problems |
+| Duplicate logs for one exception | Every Layer logs and rethrows | One diagnostic emission owner plus structured cause |
 | Shutdown hangs | Unscoped fiber or missing finalizer | Supervise and bound drain |
 | Test needs production env | Config/resource acquisition at import | Parameterized Layer/factory |
 | `Layer.provide` maze compiles but creates duplicates | Graph assembled by trial and error | Inventory provides/requires and inspect sharing |
 | Request abort has no effect | AbortSignal not connected to interruption | Add scoped cancellation bridge |
 
-## Deliberate exclusions and version boundary
+## Deliberate exclusions and version line
 
 - Do not present Effect as durable persistence by itself. Ordinary fibers and
   retries disappear with the process.
@@ -357,6 +357,6 @@ are stable architectural guidance; copied API syntax still requires typecheck.
 - Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/workflows/`,
   especially tests using `Layer`, `ManagedRuntime`, and `WorkflowEngine.layerMemory`
   (observed source; not production durability evidence).
-- Version boundary: uploaded manifests pin `effect` `^3.21.3`. `Context.Tag`,
+- Version line: uploaded manifests pin `effect` `^3.21.3`. `Context.Tag`,
   `Layer`, `ManagedRuntime`, Scope, and helper signatures are version-sensitive;
   typecheck every example against the repository lockfile.

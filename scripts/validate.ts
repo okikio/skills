@@ -2,11 +2,11 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   CapabilityRegistrySchema,
-  type EvalCase,
+  type EvalCaseType,
   EvalCaseFileSchema,
-  ModelRegistrySchema,
   SourceRegistrySchema,
-} from "../src/eval_schema.ts";
+} from "../src/corpus.ts";
+import { ModelRegistrySchema } from "../src/model.ts";
 import { walkFiles } from "../src/files.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -14,11 +14,12 @@ const errors: string[] = [];
 const warnings: string[] = [];
 const ids = new Set<string>();
 const skills = new Set<string>();
-const cases: EvalCase[] = [];
-const casesById = new Map<string, EvalCase>();
+const cases: EvalCaseType[] = [];
+const casesById = new Map<string, EvalCaseType>();
 const sourceIds = new Set<string>();
 const sourceClaimPaths = new Map<string, Set<string>>();
 const skillDocuments = new Map<string, string>();
+const skillReferences = new Map<string, Set<string>>();
 
 for await (const path of walkFiles(join(root, "skills"))) {
   if (!path.endsWith("SKILL.md")) continue;
@@ -49,6 +50,25 @@ for await (const path of walkFiles(join(root, "skills"))) {
       errors.push(`${path}: broken reference ${target}`);
     }
   }
+}
+
+for (const skill of skills) {
+  const references = new Set<string>();
+  const referenceRoot = join(root, "skills", skill, "references");
+  try {
+    for await (const path of walkFiles(referenceRoot)) {
+      if (!path.endsWith(".md")) continue;
+      const relative = path.slice(join(root, "skills", skill).length + 1)
+        .replaceAll("\\", "/");
+      references.add(`${skill}/${relative}`);
+      if (!skillDocuments.get(skill)?.includes(relative)) {
+        errors.push(`${skill}/SKILL.md: does not route ${relative}`);
+      }
+    }
+  } catch {
+    errors.push(`${skill}: missing references directory`);
+  }
+  skillReferences.set(skill, references);
 }
 
 for await (const path of walkFiles(join(root, "evals", "cases"))) {
@@ -89,9 +109,6 @@ for await (const path of walkFiles(join(root, "evals", "cases"))) {
       } catch {
         errors.push(`${item.id}: unknown reference ${reference}`);
       }
-    }
-    if (item.activation && item.expectedSkills.length === 0) {
-      warnings.push(`${item.id}: uses legacy two-skill activation telemetry`);
     }
     if (
       item.oracleStrength === "routing-smoke" &&
@@ -246,6 +263,26 @@ if (capabilitiesJson !== undefined) {
         errors.push(`${routedReference}: missing held-out coverage`);
       }
     }
+    const capabilitiesBySkill = new Map<string, number>();
+    for (const capability of capabilities.data.capabilities) {
+      capabilitiesBySkill.set(
+        capability.skill,
+        (capabilitiesBySkill.get(capability.skill) ?? 0) + 1,
+      );
+    }
+    for (const skill of skills) {
+      const references = skillReferences.get(skill) ?? new Set<string>();
+      const skillCapabilities = capabilitiesBySkill.get(skill) ?? 0;
+      if (skillCapabilities === 0) {
+        errors.push(`${skill}: requires at least one capability record`);
+      }
+      for (const reference of references) {
+        if (!capabilityReferences.has(reference)) {
+          errors.push(`${reference}: missing capability mapping`);
+        }
+      }
+    }
+
     mappedEvalCount = mappedEvals.size;
     mappedSourceCount = mappedSources.size;
   }
@@ -291,8 +328,13 @@ if (errors.length > 0) {
   console.error(errors.join("\n"));
   Deno.exit(1);
 }
+const referenceCount = [...skillReferences.values()].reduce(
+  (total, references) => total + references.size,
+  0,
+);
 console.log(
-  `Validated ${skills.size} skills and ${ids.size} evaluation cases ` +
+  `Validated ${skills.size} skills, ${referenceCount} routed references, ` +
+    `and ${ids.size} evaluation cases ` +
     `(${executableCases.length} executable, ${rubricCases.length} rubric-defined, ` +
     `${smokeCases.length} smoke, ${frozenCases.length} frozen), plus ` +
     `${capabilityCount} capabilities mapped to ${mappedEvalCount} evals and ` +

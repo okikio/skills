@@ -1,0 +1,1256 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "current-standard-source-authority",
+      "title": "Prefer the verified current source over historical handoffs",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "I attached a new repository ZIP plus two older handoffs that disagree with it. Update the implementation. Explain which source controls current behavior and how you will use the older material without silently combining incompatible designs.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/delivery.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(new|latest|current).*(ZIP|archive|repository).*(verify|source)"
+        },
+        {
+          "kind": "regex",
+          "value": "historical|older.*(evidence|handoff)"
+        },
+        {
+          "kind": "not-contains",
+          "value": "merge them together by default"
+        }
+      ],
+      "rubric": [
+        "Verifies that the latest attachment is the intended source before editing",
+        "Treats older handoffs as evidence rather than automatic authority",
+        "Distinguishes current implemented behavior from intended replacement behavior"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "authority",
+        "source-of-truth"
+      ],
+      "rationale": "Recent work repeatedly needs newer archives to outrank older handoffs without erasing useful historical design evidence."
+    },
+    {
+      "id": "current-standard-replacement-no-shim",
+      "title": "Finish a replacement without obsolete compatibility",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "Replace an internal public API with the new model. No external compatibility requirement exists. What must be updated before the obsolete export can be removed, and should a compatibility alias remain just in case?",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/delivery.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "consumers|call sites"
+        },
+        {
+          "kind": "regex",
+          "value": "tests.*docs|docs.*tests"
+        },
+        {
+          "kind": "regex",
+          "value": "config|persisted|user flow"
+        },
+        {
+          "kind": "regex",
+          "value": "(remove|do not keep).*(alias|compatib|obsolete)"
+        }
+      ],
+      "rubric": [
+        "Treats replacement as a whole-system migration",
+        "Does not keep speculative compatibility",
+        "Names non-code consumers such as docs, configuration, persisted data, or user flows"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "migration",
+        "compatibility"
+      ],
+      "rationale": "The current standard removes obsolete compatibility after current consumers are migrated unless a real external requirement exists."
+    },
+    {
+      "id": "current-standard-schema-type-protocol",
+      "title": "Separate Zod authoring, Standard Schema, and data types",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "train",
+      "prompt": "Design a reusable TypeScript package that uses Zod for its first-party request schemas but also accepts validators supplied by plugins. Define the schema and type naming rules, when to infer a type, when a behavior interface should omit Type, and when Standard Schema or Standard JSON Schema applies.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/typescript.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Schema.*Type|Type.*Schema"
+        },
+        {
+          "kind": "regex",
+          "value": "infer.*(Zod|schema)"
+        },
+        {
+          "kind": "regex",
+          "value": "behavior.*(noun|interface).*(without|omit).*Type"
+        },
+        {
+          "kind": "regex",
+          "value": "Standard Schema.*(interop|validator)"
+        },
+        {
+          "kind": "regex",
+          "value": "Standard JSON Schema.*(separate|JSON Schema)"
+        }
+      ],
+      "rubric": [
+        "Uses Zod as the first-party executable schema authoring tool without making generic plugins Zod-specific",
+        "Uses Schema and Type suffixes according to role",
+        "Keeps Standard Schema validation distinct from Standard JSON Schema representation"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standard-schema-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "typescript",
+        "schema",
+        "standard-schema"
+      ],
+      "rationale": "Recent Luchalibre and Kaiju work separates first-party schema authoring from portable validator and JSON Schema protocols."
+    },
+    {
+      "id": "current-standard-schema-field-docs",
+      "title": "Keep field documentation on the schema authoring source",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A public defineConfig() API uses a Zod object schema. Important fields need editor documentation for meaning, defaults, examples, and value effects. Where should those comments live? Should you create a mirror TypeScript interface for documentation? How should repository-owned defaults use satisfies, and should ordinary callers have to write satisfies themselves?",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/typescript.md",
+        "deliver-software/references/comments.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(schema (field|property)|field.*schema).*(TSDoc|comment|documentation)"
+        },
+        {
+          "kind": "regex",
+          "value": "(do not|avoid).*(mirror|duplicate).*(interface|type)"
+        },
+        {
+          "kind": "regex",
+          "value": "satisfies\\s+z\\.input"
+        },
+        {
+          "kind": "regex",
+          "value": "defineConfig.*(contextual|type)|caller.*(not|should not).*satisfies"
+        }
+      ],
+      "rubric": [
+        "Keeps executable shape and field documentation on the same Zod authoring source",
+        "Uses satisfies z.input for project-owned defaults or fixtures when useful without creating a second source of truth",
+        "Makes the public authoring helper provide contextual typing so ordinary callers do not need manual satisfies clauses"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "typescript",
+        "schema",
+        "tsdoc",
+        "config"
+      ],
+      "rationale": "Recent Kaiju work repeatedly requires schema-property TSDoc and schema-derived contextual typing instead of mirror interfaces or caller-written satisfies clauses."
+    },
+    {
+      "id": "current-standard-type-inference-fixtures",
+      "title": "Test public type inference with consumer fixtures",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A schema-derived defineConfig() helper and a generic adapter factory type-check internally, but callers rely on contextual inference and rejection of invalid combinations. What additional tests should protect the public type contract?",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/testing.md",
+        "deliver-software/references/typescript.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(compile|type-check).*(fixture|consumer)"
+        },
+        {
+          "kind": "regex",
+          "value": "(must|expected).*(succeed|pass|type-check)"
+        },
+        {
+          "kind": "regex",
+          "value": "(must|expected).*(fail|type error|reject)"
+        },
+        {
+          "kind": "regex",
+          "value": "(inference|contextual typing|call-site)"
+        }
+      ],
+      "rubric": [
+        "Treats inferred caller types as part of the public API rather than an implementation detail",
+        "Uses positive and negative compile fixtures to test the actual consumer surface",
+        "Does not infer caller ergonomics from implementation type checks alone"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "typescript",
+        "testing",
+        "inference"
+      ],
+      "rationale": "Recent Luchalibre and config work treats contextual typing and expected type errors as executable public contracts."
+    },
+    {
+      "id": "current-standard-project-fields-camelcase",
+      "title": "Keep project-owned TypeScript and JSON fields camelCase",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A reviewer says all schema records and persisted-looking TypeScript objects must use snake_case. The provider response uses snake_case, but the project model is ours. Decide what naming each side should use and where conversion happens.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/typescript.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "project-owned.*camelCase|camelCase.*project-owned"
+        },
+        {
+          "kind": "regex",
+          "value": "(provider|external).*(preserve|snake)"
+        },
+        {
+          "kind": "regex",
+          "value": "map|convert|normalize"
+        }
+      ],
+      "rubric": [
+        "Rejects a blanket snake_case rule for project-owned records",
+        "Preserves external naming while data is still provider data",
+        "Uses an explicit conversion into the project model"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "typescript",
+        "naming"
+      ],
+      "rationale": "The older skill pack applied snake_case too broadly; current project models normally use camelCase."
+    },
+    {
+      "id": "current-standard-private-tsdoc",
+      "title": "Document important internal invariants",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "Review a parser module where the exported parse() function has TSDoc, but its private scanner state, byte-range helper, recovery table, and cleanup function have no comments. The names alone do not explain their invariants. What documentation should be added and what should remain uncommented?",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/comments.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(private|internal|non-exported).*(document|TSDoc|comment)"
+        },
+        {
+          "kind": "regex",
+          "value": "invariant|cleanup|ownership|recovery"
+        },
+        {
+          "kind": "regex",
+          "value": "trivial|obvious.*(no|skip)"
+        }
+      ],
+      "rubric": [
+        "Documents semantic depth rather than export visibility",
+        "Explains invariants and lifecycle rules instead of syntax",
+        "Leaves truly trivial glue self-explanatory"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "comments",
+        "tsdoc",
+        "internals"
+      ],
+      "rationale": "The current standard repeatedly requires important non-exported code and fields to teach their invariants and role."
+    },
+    {
+      "id": "current-standard-plain-english-not-ste",
+      "title": "Use plain technical English unless STE is requested",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "Write technical documentation for a normal package. The repository contains an ASD-STE100-inspired handbook, but the task did not request STE. Which writing rules are requirements and which STE ideas can be used only as clarity heuristics?",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/docs.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "plain technical English|plain English"
+        },
+        {
+          "kind": "regex",
+          "value": "ASD-STE100.*(only|when).*(explicit|request|contract)|explicit.*ASD-STE100"
+        },
+        {
+          "kind": "regex",
+          "value": "heuristic|clarity"
+        },
+        {
+          "kind": "not-contains",
+          "value": "all documentation must comply with ASD-STE100"
+        }
+      ],
+      "rubric": [
+        "Does not treat formal STE as the default",
+        "Retains useful clarity principles without imposing the controlled language",
+        "Uses a progressive mental-model narrative"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "documentation",
+        "writing"
+      ],
+      "rationale": "The current user rule explicitly makes plain technical English the default and STE opt-in."
+    },
+    {
+      "id": "current-standard-node-test-deno-first",
+      "title": "Use node:test with @std/expect across portable TypeScript tests",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "train",
+      "prompt": "Set up tests for a Deno-primary TypeScript package that must also work in Node. The same source files should be tested in both runtimes. Which normal test imports should be used, and when are runtime-specific tests appropriate?",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/testing.md"
+      ],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "node:test"
+        },
+        {
+          "kind": "contains",
+          "value": "@std/expect"
+        },
+        {
+          "kind": "regex",
+          "value": "same.*(test|TypeScript).*source|same source"
+        },
+        {
+          "kind": "regex",
+          "value": "runtime-specific.*capabilit"
+        }
+      ],
+      "rubric": [
+        "Uses node:test and @std/expect as the Deno-first package default",
+        "Does not create separate Deno and Node domain test implementations",
+        "Allows runtime-specific tests for genuinely runtime-specific capabilities"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "testing",
+        "deno",
+        "node"
+      ],
+      "rationale": "Recent MediaD and OPFS work consistently uses node:test with @std/expect rather than the older Deno BDD wrapper."
+    },
+    {
+      "id": "current-standard-library-placement",
+      "title": "Separate generic utils from concrete packages",
+      "skill": "build-libraries",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Place these reusable capabilities in a monorepo: a generic retry primitive, a generic resource lifetime model, an HLS parser, version-scheme semantics, a technology registry, and the CLI that composes them. Explain why reuse does not make every item a utility.",
+      "expectedSkills": [
+        "build-libraries"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/architecture.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "utils/.*(generic|mechanic)"
+        },
+        {
+          "kind": "regex",
+          "value": "packages/.*(concrete|domain|HLS|version|registry)"
+        },
+        {
+          "kind": "regex",
+          "value": "clis/|apps/|composition"
+        },
+        {
+          "kind": "regex",
+          "value": "reuse|reusability"
+        }
+      ],
+      "rubric": [
+        "Places generic programming mechanics in utils",
+        "Keeps reusable concrete domain capabilities in packages",
+        "Keeps executable composition out of reusable capability packages"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "library-first-guidebook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-libraries",
+        "architecture",
+        "utils",
+        "packages"
+      ],
+      "rationale": "The generic-mechanics versus concrete-capability distinction is now a recurring architecture rule across Kaiju, MediaD, OPFS, and Luchalibre."
+    },
+    {
+      "id": "current-standard-context-scope",
+      "title": "Keep execution context focused on scoped lifetime",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "transfer",
+      "prompt": "An operation already accepts ctx for cancellation and deadlines. A refactor proposes putting the database, object store, logger, config, and every other service onto ctx too so functions take one argument. Decide what ctx should own and how concrete capabilities should be passed.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/base.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "ctx|context"
+        },
+        {
+          "kind": "regex",
+          "value": "cancel|deadline|clock|lifetime|identity|trace"
+        },
+        {
+          "kind": "regex",
+          "value": "(not|avoid).*(dependency bag|service locator|arbitrary depend)"
+        },
+        {
+          "kind": "regex",
+          "value": "(inject|pass).*(database|store|client|capabilit)"
+        }
+      ],
+      "rubric": [
+        "Keeps context focused on scoped execution lifetime",
+        "Rejects hiding unrelated capabilities in an ambient bag",
+        "Uses explicit parameters or focused capability objects for real dependencies"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819:luchalibre-agent-handoff.zip"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "context",
+        "resources",
+        "architecture"
+      ],
+      "rationale": "Recent Luchalibre and Kaiju programming models use context for cancellation/deadlines/local lifetime while rejecting ambient dependency bags."
+    },
+    {
+      "id": "current-standard-logtape-library-owner",
+      "title": "Keep LogTape configuration at the application root",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A reusable package uses LogTape and also emits domain progress events. Decide what the library may configure, who owns sinks/redaction/formatters/flush, and whether domain events or command results should exist only as log records.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "library.*(must not|does not).*configure|application.*configure"
+        },
+        {
+          "kind": "regex",
+          "value": "sink|formatter|redaction|flush"
+        },
+        {
+          "kind": "regex",
+          "value": "domain event|command result"
+        },
+        {
+          "kind": "regex",
+          "value": "separate|typed authority|not.*only.*log"
+        }
+      ],
+      "rubric": [
+        "Uses LogTape for structured diagnostics without library-owned global configuration",
+        "Keeps stable results and domain events independently typed",
+        "Treats redaction and lifecycle as application policy"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "logtape-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "logtape",
+        "logging",
+        "ownership"
+      ],
+      "rationale": "LogTape is increasingly prominent, but it must not become the authoritative store for unrelated domain state or be configured by libraries."
+    },
+    {
+      "id": "current-standard-optique-project-choice",
+      "title": "Use Optique when the CLI selects it without making it universal",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "One Kaiju CLI already uses Optique, while a new reusable project deliberately owns its native argv parser and wants an optional Optique adapter. Should both projects make Optique their canonical parser? Include the version/freshness check you would perform before using Optique-specific features.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/optique.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Kaiju.*Optique|Optique.*Kaiju"
+        },
+        {
+          "kind": "regex",
+          "value": "native.*parser|optional.*Optique|compatib.*adapter|conformance"
+        },
+        {
+          "kind": "regex",
+          "value": "installed.*version|lockfile|stable"
+        },
+        {
+          "kind": "not-contains",
+          "value": "Optique must be the canonical parser for every project"
+        }
+      ],
+      "rubric": [
+        "Respects the parser owner selected by each project",
+        "Allows Optique to be an optional adapter/reference for native-parser projects",
+        "Verifies the installed stable package line before using version-specific APIs"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "optique-official",
+        "current-guides-20260819",
+        "kaiju-config-resolution-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "optique",
+        "cli",
+        "versioning"
+      ],
+      "rationale": "Recent Luchalibre work explicitly corrected the assumption that Optique should own argv in every project."
+    },
+    {
+      "id": "current-standard-parse-resolve-execute",
+      "title": "Separate parsing, source resolution, and live execution",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A CLI parser currently parses argv, loads environment/config values, prompts for missing values, opens a project resource, and uses placeholder domain values during a preliminary pass. Redesign the ownership. What should parsing, source resolution, and execution each own?",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/SKILL.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "parser.*(one|supplied).*(representation|input)|parser.*interpret"
+        },
+        {
+          "kind": "regex",
+          "value": "resolver.*(sparse|precedence|source)"
+        },
+        {
+          "kind": "regex",
+          "value": "execution.*(resource|effect|cancel|dispose)"
+        },
+        {
+          "kind": "regex",
+          "value": "(do not|never).*(fake|placeholder).*(domain|value)|control state.*outside"
+        }
+      ],
+      "rubric": [
+        "Keeps grammar interpretation independent from source precedence",
+        "Keeps live resource acquisition in execution rather than parser inspection",
+        "Represents missing or deferred control state explicitly instead of faking a domain value"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819:luchalibre-agent-handoff.zip"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "parser",
+        "config",
+        "resources"
+      ],
+      "rationale": "The Luchalibre Optique review identifies parser, resolution, and execution as separate graphs after tracing recurring source-context and deferred-value failures."
+    },
+    {
+      "id": "current-standard-unplugin-selection",
+      "title": "Prefer maintained Unplugin integration when it solves the real build problem",
+      "skill": "build-web",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A React/Astro project already uses the Unplugin ecosystem and needs on-demand icons across Vite and SSR. Compare using Unplugin Icons with writing custom bundler glue. State what must be verified and why another project using Unplugin is not enough reason to add it blindly.",
+      "expectedSkills": [
+        "build-web"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web/references/assets.md"
+      ],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "Unplugin Icons"
+        },
+        {
+          "kind": "regex",
+          "value": "on-demand|virtual import"
+        },
+        {
+          "kind": "regex",
+          "value": "renderer|compiler"
+        },
+        {
+          "kind": "regex",
+          "value": "SSR|SSG"
+        },
+        {
+          "kind": "regex",
+          "value": "bundle|output"
+        }
+      ],
+      "rubric": [
+        "Uses the maintained integration when it removes real bundler-specific work",
+        "Verifies the renderer compiler and generated build graph",
+        "Does not cargo-cult a dependency from another project"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "unplugin-icons-official",
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-web",
+        "unplugin",
+        "icons",
+        "tooling"
+      ],
+      "rationale": "Unplugin integrations have become more prominent, but they remain build-layer choices that need renderer and artifact verification."
+    },
+    {
+      "id": "current-standard-motion-judgment",
+      "title": "Give motion a concrete interaction job",
+      "skill": "build-web",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Review a menu animation that scales from the center, lasts 450ms, cannot be interrupted, and runs on every keyboard open/close. Explain what to change using purpose, physical origin, interaction frequency, interruption, reduced motion, and real-device performance.",
+      "expectedSkills": [
+        "build-web"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-web/references/motion.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "purpose|job|state change|continuity"
+        },
+        {
+          "kind": "regex",
+          "value": "origin|trigger"
+        },
+        {
+          "kind": "regex",
+          "value": "frequen|keyboard"
+        },
+        {
+          "kind": "regex",
+          "value": "interrupt|reverse"
+        },
+        {
+          "kind": "regex",
+          "value": "reduced motion|real device"
+        }
+      ],
+      "rubric": [
+        "Treats motion as product behavior rather than decoration",
+        "Reduces intensity for a high-frequency interaction",
+        "Requires interruption, accessibility, and production performance checks"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "design-motion-skill-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-web",
+        "motion",
+        "design",
+        "accessibility"
+      ],
+      "rationale": "The current design skill emphasizes judgment, frequency, origin, interruption, accessibility, and performance before animation mechanics."
+    },
+    {
+      "id": "current-standard-visual-selection",
+      "title": "Choose visual grammar from the reader's question",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "valid-seen",
+      "prompt": "A design document needs to show legal state transitions, owner responsibility across a workflow, exact condition combinations, and a quantitative throughput comparison. Should all four be Mermaid flowcharts? Select a useful representation for each and state the general selection rule.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/diagrams.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "state machine"
+        },
+        {
+          "kind": "regex",
+          "value": "swimlane"
+        },
+        {
+          "kind": "regex",
+          "value": "decision table"
+        },
+        {
+          "kind": "regex",
+          "value": "chart|quantitative"
+        },
+        {
+          "kind": "regex",
+          "value": "reader.*question|least complicated.*preserve"
+        }
+      ],
+      "rubric": [
+        "Changes visual grammar when the information structure changes",
+        "Rejects one repeated box-and-arrow grammar for all questions",
+        "Uses the least complicated representation that preserves the needed truth"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "visual-explanation-guide-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "diagrams",
+        "visualization",
+        "documentation"
+      ],
+      "rationale": "The current visual guide treats representation choice as a reasoning decision rather than a Mermaid-first formatting choice."
+    },
+    {
+      "id": "current-standard-exact-artifact-validation",
+      "title": "Validate the exact delivered ZIP",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "split": "adversarial",
+      "prompt": "The working tree passes type checks and tests, then a ZIP is created for delivery. Can the work be called done immediately? Give the artifact verification sequence and what to report if Bun or a browser is unavailable on the current host.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/testing.md",
+        "deliver-software/references/delivery.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "extract.*ZIP|ZIP.*extract"
+        },
+        {
+          "kind": "regex",
+          "value": "file (set|list)|compare.*files"
+        },
+        {
+          "kind": "regex",
+          "value": "rerun.*(test|check)|same.*checks"
+        },
+        {
+          "kind": "regex",
+          "value": "SHA-256|hash"
+        },
+        {
+          "kind": "regex",
+          "value": "blocked|unavailable.*(Bun|browser)|Bun|browser"
+        }
+      ],
+      "rubric": [
+        "Does not infer artifact correctness from the source tree",
+        "Rechecks the clean extracted deliverable",
+        "Reports unavailable runtime validation as blocked rather than passed"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "artifact",
+        "zip",
+        "verification"
+      ],
+      "rationale": "Recent MediaD and OPFS work treats extracted deliverable validation as part of completion."
+    },
+    {
+      "id": "current-standard-logtape-route-policy",
+      "title": "Apply LogTape redaction by output route",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "A CLI has human diagnostics, `config show --json`, a support bundle, and a file diagnostic sink. A previous rule wrapped every LogTape sink in the same redaction filter. Redesign the policy. What owns secret exposure for each route, and what evidence must remain testable?",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/logtape.md",
+        "deliver-software/references/standards.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "route|output.*policy|exposure policy"
+        },
+        {
+          "kind": "regex",
+          "value": "stable.*result|config show|support bundle"
+        },
+        {
+          "kind": "regex",
+          "value": "(do not|not).*every.*sink|over-redact|blanket"
+        },
+        {
+          "kind": "regex",
+          "value": "secret.*hidden|redact.*secret"
+        },
+        {
+          "kind": "regex",
+          "value": "diagnostic.*(ID|path|cause|URL)|non-secret.*evidence"
+        }
+      ],
+      "rubric": [
+        "Treats redaction as an output-specific data policy rather than a blanket sink wrapper",
+        "Gives stable results and support artifacts their own schema/exposure policy",
+        "Tests that secrets are hidden without destroying useful non-secret evidence"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "logtape-official",
+        "current-guides-20260819",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "logtape",
+        "redaction",
+        "results"
+      ],
+      "rationale": "The refreshed CLI guidance corrected the stale rule that every sink should inherit the same redaction policy."
+    },
+    {
+      "id": "current-standard-logtape-async-writer",
+      "title": "Keep reusable LogTape writers runtime-neutral",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A reusable CLI result sink currently writes directly to `Deno.stdout` and returns a Promise from a plain LogTape `Sink`. The library also runs under Node. Redesign the writer and LogTape sink using the current contract.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "ByteWriter|writer.*Uint8Array|runtime-neutral"
+        },
+        {
+          "kind": "regex",
+          "value": "AsyncSink"
+        },
+        {
+          "kind": "contains",
+          "value": "fromAsyncSink()"
+        },
+        {
+          "kind": "regex",
+          "value": "(do not|avoid).*Deno\\.stdout|Deno\\.stdout.*adapter"
+        },
+        {
+          "kind": "regex",
+          "value": "dispose|AsyncDisposable|async.*lifecycle"
+        }
+      ],
+      "rubric": [
+        "Injects a runtime-neutral writer rather than hard-coding Deno output",
+        "Uses AsyncSink plus fromAsyncSink for async I/O",
+        "Accounts for the asynchronous disposal lifecycle"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "logtape-official",
+        "current-guides-20260819",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "logtape",
+        "sink",
+        "runtime"
+      ],
+      "rationale": "Current LogTape distinguishes synchronous Sink from AsyncSink, and reusable CLI output must not become Deno-only."
+    },
+    {
+      "id": "current-standard-logtape-evidence",
+      "title": "Preserve structured LogTape evidence deliberately",
+      "skill": "build-clis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A high-volume CLI is noisy, so an implementation proposes dropping all successful diagnostic events and replacing the project formatter with `@logtape/pretty`. Review the proposal. Cover formatter ownership, successful evidence, rate controls/summaries, and structured logger tests.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/references/logtape.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "custom|repository.*formatter"
+        },
+        {
+          "kind": "regex",
+          "value": "@logtape/pretty.*(reference|fallback)|reference.*@logtape/pretty"
+        },
+        {
+          "kind": "regex",
+          "value": "success.*evidence|successful.*record"
+        },
+        {
+          "kind": "regex",
+          "value": "rate|summary"
+        },
+        {
+          "kind": "contains",
+          "value": "@logtape/testing"
+        }
+      ],
+      "rubric": [
+        "Keeps a domain-aware formatter when it remains clearer",
+        "Reduces noisy presentation without automatically discarding successful evidence",
+        "Uses structured recorder-based testing instead of formatted-console snapshots"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "logtape-official",
+        "current-guides-20260819",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "logtape",
+        "formatter",
+        "testing"
+      ],
+      "rationale": "The refresh distinguishes record retention from rendering volume and treats the pretty formatter as an option, not an automatic replacement."
+    },
+    {
+      "id": "current-standard-optique-logtape",
+      "title": "Let selected Optique integrations own their grammar",
+      "skill": "build-clis",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A Kaiju CLI already uses Optique and LogTape. A new patch hand-parses `--log-level`, `-v`, `--log-file`, and output-format flags in a second argument layer. Review the design and state when `@optique/logtape` should be used and when Optique should not become a core dependency.",
+      "expectedSkills": [
+        "build-clis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-clis/SKILL.md",
+        "deliver-software/references/standards.md"
+      ],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "@optique/logtape"
+        },
+        {
+          "kind": "regex",
+          "value": "Optique.*(grammar|aliases|choices|help|completion|manual)"
+        },
+        {
+          "kind": "regex",
+          "value": "(do not|avoid).*duplicate|second.*option"
+        },
+        {
+          "kind": "regex",
+          "value": "project-selected|not.*universal|core.*not.*depend"
+        }
+      ],
+      "rubric": [
+        "Lets Optique own CLI grammar when the repository selected it",
+        "Uses @optique/logtape when its logging grammar fits instead of duplicating flags",
+        "Does not turn Optique into a universal library dependency"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "optique-official",
+        "current-guides-20260819",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "build-clis",
+        "optique",
+        "logtape",
+        "grammar"
+      ],
+      "rationale": "The current rule distinguishes project-selected Optique ownership from universal parser dependency."
+    },
+    {
+      "id": "current-standard-selected-tool-owner",
+      "title": "Reuse the repository-selected build owner",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "valid-unseen",
+      "prompt": "A repository already uses Oxc, Unplugin, and mise. A patch introduces Babel for one transform, a custom icon compiler, and a new root scripts framework without first proving capability gaps. Review the tooling design and the required verification.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/standards.md"
+      ],
+      "assertions": [
+        {
+          "kind": "contains",
+          "value": "Oxc"
+        },
+        {
+          "kind": "contains",
+          "value": "Unplugin"
+        },
+        {
+          "kind": "regex",
+          "value": "mise"
+        },
+        {
+          "kind": "regex",
+          "value": "capability gap|actual gap"
+        },
+        {
+          "kind": "regex",
+          "value": "generated output|build.*output|runtime.*path"
+        }
+      ],
+      "rubric": [
+        "Reuses the owner already selected by the repository when it supports the need",
+        "Requires a concrete capability gap before adding a parallel toolchain",
+        "Validates generated output and the actual build/runtime path"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "oxc-official",
+        "unplugin-icons-official",
+        "mise-official",
+        "current-guides-20260819",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "oxc",
+        "unplugin",
+        "mise",
+        "tooling"
+      ],
+      "rationale": "Recent work uses these tools more often, but the standard is to reuse selected owners rather than cargo-cult dependencies."
+    },
+    {
+      "id": "current-standard-name-read-get-internals",
+      "title": "Use exact verbs and document internal parser state",
+      "skill": "deliver-software",
+      "kind": "knowledge",
+      "split": "adversarial",
+      "prompt": "Review a package with `readConfigById()`, a class named `TaskWorker`, and undocumented internal regex tables, parser cursors, generations, retry state, and benchmark fixture builders. Apply the current naming and documentation rules.",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/standards.md",
+        "deliver-software/references/comments.md"
+      ],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "get.*addressable|read.*(stream|cursor|file|sequential)"
+        },
+        {
+          "kind": "regex",
+          "value": "worker.*(actual|Web Worker|queue worker)|rename.*worker"
+        },
+        {
+          "kind": "regex",
+          "value": "regex|regular expression"
+        },
+        {
+          "kind": "regex",
+          "value": "parser.*cursor|generation|retry"
+        },
+        {
+          "kind": "regex",
+          "value": "benchmark.*fixture"
+        }
+      ],
+      "rubric": [
+        "Uses get for addressable retrieval and reserves read for consumption",
+        "Uses worker only for the actual runtime/queue concept",
+        "Documents important internal state, parser tables/regexes, and benchmark workload builders"
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "current-guides-20260819",
+        "standards-refresh-20260819"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "deliver-software",
+        "naming",
+        "comments",
+        "parser"
+      ],
+      "rationale": "The refresh makes get/read semantics and documentation of internal parser/lifecycle/benchmark machinery explicit."
+    }
+  ]
+}

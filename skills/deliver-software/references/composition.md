@@ -1,7 +1,7 @@
 
 ## Compose Framework Primitives, Not Renderer-shaped APIs
 
-Design the component API around **semantic regions and state boundaries**, then
+Design the component API around **semantic regions and state ownership scopes**, then
 implement those regions with the primitive that belongs to the framework.
 
 A compositional API should answer four questions before choosing syntax:
@@ -29,7 +29,7 @@ Composition examples should be detailed enough to reveal ownership and lifecycle
 Do not compress a complex pattern into a tiny component tree when the important
 part is where state lives, how descendants consume it, how async states recover,
 or how cleanup happens. Prefer chaptered examples or staged diagrams when the
-pattern crosses framework, server/client, or owner boundaries.
+pattern crosses framework, server/client, or ownership scopes.
 
 ## Incorrect: renderer-shaped configuration API
 
@@ -54,7 +54,7 @@ This API mixes layout regions, state mode, HTML element choice, interactivity,
 and renderer callbacks into one component. Every new region becomes another prop
 or render callback. Every boolean multiplies the number of valid states.
 
-## Correct: named regions plus explicit state boundary
+## Correct: named regions plus explicit state ownership scope
 
 Start with a renderer-neutral composition contract:
 
@@ -76,7 +76,7 @@ Then implement that contract differently per framework.
 ## React: compound components, context, and stable identity
 
 Use React compound components when subcomponents need shared state or actions.
-Keep the provider boundary explicit. Components that need the shared state do
+Keep the provider API explicit. Components that need the shared state do
 not need to be visually nested inside the root frame, but they do need to be
 inside the provider.
 
@@ -389,7 +389,7 @@ Usage:
 7. **Use `<Dynamic />` for polymorphic roots and dynamic component selection.**
    Prefer it over ad-hoc conditional branches when the only change is the root
    element or component type.
-8. **Keep owner and lifetime boundaries explicit.** Context lookup and cleanup
+8. **Keep owner and lifetime scopes explicit.** Context lookup and cleanup
    are tied to Solid’s owner tree. Do not retain UI beyond the owner that created
    the signals, context, or resources it depends on.
 9. **Prefer `class` and `classList` for Solid-native class composition.** Use a
@@ -504,7 +504,7 @@ Before adding a prop, render callback, or boolean mode, ask:
 Do not make every primitive a compound component. A simple `Button`, `Input`,
 `Icon`, or `Text` component can use normal props. Use this rule when the
 component has multiple meaningful regions, multiple variants, or shared state
-that crosses visual boundaries.
+that crosses visual regions.
 
 References:
 

@@ -1,9 +1,12 @@
-import assert from "node:assert/strict";
+import { expect } from "@std/expect";
+import { describe, it } from "node:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+/** Repository root used by subprocess-backed SkillOpt fixtures. */
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
+/** Return whether a path exists while preserving non-not-found failures. */
 async function exists(path: string): Promise<boolean> {
   try {
     await Deno.stat(path);
@@ -14,6 +17,7 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
+/** Export one SkillOpt workspace through the repository's real CLI script. */
 async function exportWorkspace(
   mode: string,
   reference?: string,
@@ -42,13 +46,13 @@ async function exportWorkspace(
     stdout: "piped",
     stderr: "piped",
   }).output();
-  assert.equal(
+  expect(
     output.code,
-    0,
     new TextDecoder().decode(output.stderr),
-  );
+  ).toBe(0);
 }
 
+/** Verify one exported workspace through the repository's digest verifier. */
 async function verifyWorkspace(mode: string): Promise<Deno.CommandOutput> {
   return await new Deno.Command(Deno.execPath(), {
     cwd: root,
@@ -65,21 +69,15 @@ async function verifyWorkspace(mode: string): Promise<Deno.CommandOutput> {
   }).output();
 }
 
-Deno.test("SkillOpt exports keep references selective and frozen cases isolated", async () => {
-  const target = join(root, ".skillopt", "build-clis");
-  try {
-    await exportWorkspace("optimize");
-    await exportWorkspace("release");
-    assert.equal(
-      await exists(join(target, "optimize", "context.md")),
-      false,
-    );
-    assert.equal(
-      await exists(join(target, "optimize", "initial.md")),
-      false,
-    );
-    assert.equal(
-      await exists(
+describe("SkillOpt workspace export", () => {
+  it("keeps references selective and frozen cases isolated", async () => {
+    const target = join(root, ".skillopt", "build-clis");
+    try {
+      await exportWorkspace("optimize");
+      await exportWorkspace("release");
+      expect(await exists(join(target, "optimize", "context.md"))).toBe(false);
+      expect(await exists(join(target, "optimize", "initial.md"))).toBe(false);
+      expect(await exists(
         join(
           target,
           "optimize",
@@ -89,11 +87,8 @@ Deno.test("SkillOpt exports keep references selective and frozen cases isolated"
           "references",
           "config.md",
         ),
-      ),
-      true,
-    );
-    assert.equal(
-      await exists(
+      )).toBe(true);
+      expect(await exists(
         join(
           target,
           "optimize",
@@ -103,109 +98,126 @@ Deno.test("SkillOpt exports keep references selective and frozen cases isolated"
           "references",
           "topology.md",
         ),
-      ),
-      true,
-    );
-    const optimize = await Deno.readTextFile(
-      join(target, "optimize", "data", "train.jsonl"),
-    ) + await Deno.readTextFile(
-      join(target, "optimize", "data", "valid-seen.jsonl"),
-    );
-    const release = await Deno.readTextFile(
-      join(target, "release", "data", "test-frozen.jsonl"),
-    );
-    assert.doesNotMatch(optimize, /test-frozen/);
-    assert.match(release, /test-frozen/);
-    const workspace = JSON.parse(
-      await Deno.readTextFile(join(target, "optimize", "workspace.json")),
-    );
-    assert.deepEqual(workspace.mutablePaths, [
-      "candidate/skills/build-clis/SKILL.md",
-    ]);
-    assert.equal(workspace.optimizationUnit, "root-router");
-    assert.equal(
-      workspace.immutablePaths.includes(
-        "candidate/skills/build-clis/references/config.md",
-      ),
-      true,
-    );
-    const releaseWorkspace = JSON.parse(
-      await Deno.readTextFile(join(target, "release", "workspace.json")),
-    );
-    assert.deepEqual(releaseWorkspace.mutablePaths, []);
-    assert.equal(
-      Object.keys(releaseWorkspace.immutableDigests).length > 0,
-      true,
-    );
-    const verified = await verifyWorkspace("optimize");
-    assert.equal(
-      verified.code,
-      0,
-      new TextDecoder().decode(verified.stderr),
-    );
-    const installedTarget = join(
-      target,
-      "optimize",
-      workspace.mutablePaths[0],
-    );
-    const source = await Deno.readTextFile(installedTarget);
-    await Deno.writeTextFile(
-      installedTarget,
-      `${source}\noptimization probe\n`,
-    );
-    assert.match(
-      await Deno.readTextFile(installedTarget),
-      /optimization probe/,
-    );
-    const immutablePath = workspace.immutablePaths.find((path: string) =>
-      path.endsWith("references/config.md")
-    );
-    assert.equal(typeof immutablePath, "string");
-    await Deno.writeTextFile(
-      join(target, "optimize", immutablePath),
-      "tampered immutable reference\n",
-    );
-    const rejected = await verifyWorkspace("optimize");
-    assert.notEqual(rejected.code, 0);
-    assert.match(
-      new TextDecoder().decode(rejected.stderr),
-      /immutable content changed/,
-    );
-  } finally {
-    await Deno.remove(target, { recursive: true }).catch((error) => {
-      if (!(error instanceof Deno.errors.NotFound)) throw error;
-    });
-  }
-});
+      )).toBe(true);
 
-Deno.test("SkillOpt can isolate one mutable reference", async () => {
-  const target = join(root, ".skillopt", "build-clis");
-  try {
-    await exportWorkspace("optimize", "references/optique.md");
-    const workspace = JSON.parse(
-      await Deno.readTextFile(join(target, "optimize", "workspace.json")),
-    );
-    assert.equal(workspace.optimizationUnit, "reference");
-    assert.equal(workspace.targetReference, "references/optique.md");
-    assert.deepEqual(workspace.mutablePaths, [
-      "candidate/skills/build-clis/references/optique.md",
-    ]);
-    assert.equal(workspace.cases.length > 0, true);
-    assert.equal(
-      workspace.immutablePaths.includes(
+      const optimize = await Deno.readTextFile(
+        join(target, "optimize", "data", "train.jsonl"),
+      ) + await Deno.readTextFile(
+        join(target, "optimize", "data", "valid-seen.jsonl"),
+      );
+      const release = await Deno.readTextFile(
+        join(target, "release", "data", "test-frozen.jsonl"),
+      );
+      expect(optimize).not.toMatch(/test-frozen/);
+      expect(release).toMatch(/test-frozen/);
+
+      const workspace = JSON.parse(
+        await Deno.readTextFile(join(target, "optimize", "workspace.json")),
+      );
+      expect(workspace.mutablePaths).toEqual([
         "candidate/skills/build-clis/SKILL.md",
-      ),
-      true,
-    );
-    assert.equal(
-      workspace.immutablePaths.includes(
+      ]);
+      expect(workspace.optimizationUnit).toBe("root-router");
+      expect(workspace.immutablePaths).toContain(
+        "candidate/skills/build-clis/references/config.md",
+      );
+
+      const releaseWorkspace = JSON.parse(
+        await Deno.readTextFile(join(target, "release", "workspace.json")),
+      );
+      expect(releaseWorkspace.mutablePaths).toEqual([]);
+      expect(Object.keys(releaseWorkspace.immutableDigests).length)
+        .toBeGreaterThan(0);
+
+      const verified = await verifyWorkspace("optimize");
+      expect(
+        verified.code,
+        new TextDecoder().decode(verified.stderr),
+      ).toBe(0);
+
+      const installedTarget = join(
+        target,
+        "optimize",
+        workspace.mutablePaths[0],
+      );
+      const source = await Deno.readTextFile(installedTarget);
+      await Deno.writeTextFile(
+        installedTarget,
+        `${source}\noptimization probe\n`,
+      );
+      expect(await Deno.readTextFile(installedTarget)).toMatch(
+        /optimization probe/,
+      );
+
+      const immutablePath = workspace.immutablePaths.find((path: string) =>
+        path.endsWith("references/config.md")
+      );
+      expect(typeof immutablePath).toBe("string");
+      await Deno.writeTextFile(
+        join(target, "optimize", immutablePath),
+        "tampered immutable reference\n",
+      );
+      const rejected = await verifyWorkspace("optimize");
+      expect(rejected.code).not.toBe(0);
+      expect(new TextDecoder().decode(rejected.stderr)).toMatch(
+        /immutable content changed/,
+      );
+    } finally {
+      await Deno.remove(target, { recursive: true }).catch((error) => {
+        if (!(error instanceof Deno.errors.NotFound)) throw error;
+      });
+    }
+  });
+
+  it("isolates one mutable reference", async () => {
+    const target = join(root, ".skillopt", "build-clis");
+    try {
+      await exportWorkspace("optimize", "references/optique.md");
+      const workspace = JSON.parse(
+        await Deno.readTextFile(join(target, "optimize", "workspace.json")),
+      );
+      expect(workspace.optimizationUnit).toBe("reference");
+      expect(workspace.targetReference).toBe("references/optique.md");
+      expect(workspace.mutablePaths).toEqual([
+        "candidate/skills/build-clis/references/optique.md",
+      ]);
+      expect(workspace.cases.length).toBeGreaterThan(0);
+      expect(workspace.immutablePaths).toContain(
+        "candidate/skills/build-clis/SKILL.md",
+      );
+      expect(workspace.immutablePaths).toContain(
         "candidate/skills/build-clis/references/output.md",
-      ),
-      true,
-    );
-  } finally {
-    await Deno.remove(target, { recursive: true }).catch((error) => {
-      if (!(error instanceof Deno.errors.NotFound)) throw error;
-    });
-  }
+      );
+    } finally {
+      await Deno.remove(target, { recursive: true }).catch((error) => {
+        if (!(error instanceof Deno.errors.NotFound)) throw error;
+      });
+    }
+  });
+
+  it("rejects changed exported evaluation data", async () => {
+    const target = join(root, ".skillopt", "build-clis");
+    try {
+      await exportWorkspace("optimize");
+      const train = join(target, "optimize", "data", "train.jsonl");
+      const source = await Deno.readTextFile(train);
+      const lines = source.trimEnd().split("\n");
+      expect(lines.length).toBeGreaterThan(0);
+      const first = JSON.parse(lines[0]);
+      first.prompt = `${first.prompt} tampered`;
+      lines[0] = JSON.stringify(first);
+      await Deno.writeTextFile(train, `${lines.join("\n")}\n`);
+
+      const rejected = await verifyWorkspace("optimize");
+      expect(rejected.code).not.toBe(0);
+      expect(new TextDecoder().decode(rejected.stderr)).toMatch(
+        /exported case digest changed|caseSetDigest/,
+      );
+    } finally {
+      await Deno.remove(target, { recursive: true }).catch((error) => {
+        if (!(error instanceof Deno.errors.NotFound)) throw error;
+      });
+    }
+  });
+
 });

@@ -39,7 +39,7 @@ into a repository with another version.
 
 ## Versioned capability map
 
-| Package | Verified version | Public surface used here | Important version boundary |
+| Package | Verified version | Public surface used here | Important version line |
 |---|---:|---|---|
 | unbuild | 3.6.1 | `defineBuildConfig`, Rollup/mkdist entries, declarations, stubs | README identifies obuild as an experimental successor; do not migrate by name alone |
 | nypm | 0.6.8 | detection, install/add/remove/dedupe/run/dlx, command builders, `dry` | Current manager union includes npm, yarn, pnpm, bun, Deno, Aube, and nub |
@@ -94,7 +94,7 @@ Use builder entries deliberately:
 stubbed `dist`; run a clean non-stub build before packing. Watch mode is marked
 experimental in 3.6.1.
 
-Verification must cross the package boundary:
+Verification must cross the package API:
 
 ```sh
 rm -rf dist
@@ -149,13 +149,13 @@ builders. Important constraints:
 
 - detection checks `packageManager`, `devEngines.packageManager`, then known
   files/lockfiles; it does not decide which manifest should own a dependency;
-- `includeParentDirs` can cross a package boundary, so default it deliberately;
+- `includeParentDirs` can cross a package API, so default it deliberately;
 - `dedupeDependencies({ recreateLockfile: true })` may replace a lockfile;
 - the published README states Bun and Deno dedupe may remove the lockfile and
   reinstall all dependencies;
 - `dlx` downloads and executes code;
 - the public operation options do not expose an `AbortSignal` in 0.6.8. If hard
-  cancellation is required, own the subprocess boundary rather than claiming
+  cancellation is required, own the subprocess handoff rather than claiming
   nypm propagates the root signal.
 
 ## Magicast source-preserving edits
@@ -276,7 +276,7 @@ Review commit classification, breaking changes, scope mapping, excluded authors,
 repository links, prerelease policy, and zero-major semantics. Generated release
 notes are evidence to review, not release truth.
 
-CLI boundaries are materially different:
+CLI concerns are materially different:
 
 - plain `changelogen` can generate/output notes;
 - `--bump` updates version and changelog state;
@@ -380,7 +380,7 @@ TTY, and `MINIMAL`; it is not user consent.
 Most exported flags are snapshots evaluated during module initialization.
 `detectProvider()` and `detectAgent()` rerun those specific detections, but do
 not mutate all exported constants. Never use runtime/provider/agent detection as
-an authorization or security boundary.
+an authorization or security trust transition.
 
 ## Integration sequences
 
@@ -424,7 +424,7 @@ clean source -> unbuild clean build -> pack/install consumer tests
 | package works from source but import fails after publish | unbuild output and export map disagree | inspect tarball and clean consumer resolution |
 | linked development works but package contains jiti stubs | `unbuild --stub` was packed | clean non-stub build before pack |
 | dependency added to wrong workspace | nypm manager detection was mistaken for manifest ownership | resolve workspace owner before apply |
-| cancellation leaves package manager running | nypm API has no signal in the pinned surface | own a cancellable subprocess boundary |
+| cancellation leaves package manager running | nypm API has no signal in the pinned surface | own a cancellable subprocess handoff |
 | config edit drops comments or throws on access | Magicast input is outside supported static-ish shape | preserve original and use manual/specialized AST path |
 | scaffold deletes existing project | `forceClean` used without destination authority | stage in new directory and prohibit implicit deletion |
 | cached template is stale or malicious | offline cache not bound to source digest | pin and verify source/checksum |

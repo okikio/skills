@@ -187,7 +187,7 @@ Hygiene includes connected contracts:
   access;
 - package export/files maps contain required assets and exclude internals;
 - generated files have producers; generators have consumers;
-- duplicate dependency versions are either intentional compatibility boundaries
+- duplicate dependency versions are either intentional compatibility requirements
   or candidates for alignment;
 - dead config is proven unused across local, CI, package, container, deploy,
   docs, and developer environments before removal.

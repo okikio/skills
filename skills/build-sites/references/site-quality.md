@@ -31,7 +31,7 @@ No-JS behavior:
 Failure fallback:
 Performance budget:
 Accessibility risks:
-Privacy/security boundaries:
+Privacy/security trust transitions:
 Deployment adapter and cache:
 ```
 

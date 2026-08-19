@@ -1,6 +1,6 @@
 ---
 name: build-libraries
-description: Design, implement, refactor, review, benchmark, package, or verify reusable software libraries and SDKs. Use for public APIs, library-first or use-case-first architecture, composability, tree-shaking, ESM exports, optional integrations, arrays and iterables, async iterators, streams, batching, data-oriented design, explicit resource management, performance budgets, resumability boundaries, or extracting a reusable core from a CLI or application. Do not use for an incidental helper or an application-only internal module with no reusable consumer contract.
+description: Design, implement, refactor, review, benchmark, package, or verify reusable software libraries and SDKs. Use for public APIs, library-first or use-case-first architecture, composability, tree-shaking, ESM exports, optional integrations, arrays and iterables, async iterators, streams, batching, data-oriented design, explicit resource management, performance budgets, resume checkpoints, or extracting a reusable core from a CLI or application. Do not use for an incidental helper or an application-only internal module with no reusable consumer contract.
 ---
 
 # Build libraries
@@ -23,7 +23,7 @@ and projection contracts.
 
 This skill owns:
 
-- the reusable public programming model and information-hiding boundaries;
+- the reusable public programming model and information-hiding APIs;
 - value, data-flow, capability, policy, ecosystem, lifecycle, package, and
   operational composition;
 - cardinality and flow contracts such as values, arrays, iterables, async
@@ -31,7 +31,7 @@ This skill owns:
 - public versus internal data representations and data-oriented hot paths;
 - library resource acquisition, ownership, borrowing, transfer, cancellation,
   and disposal;
-- ESM entrypoints, public subpaths, side-effect boundaries, optional adapters,
+- ESM entrypoints, public subpaths, side-effect owners, optional adapters,
   and selective-adoption evidence;
 - library workload budgets, benchmark stories, and resource-regression gates;
 - restartable and checkpoint-resumable library contracts, while deferring
@@ -71,48 +71,57 @@ file that looks tree-shakable is not proof that the distributed package shakes.
 
 1. Start from concrete use cases and desired consumer call sites. Do not extract
    the current application's execution sequence as the public architecture.
-2. Organize modules around domain knowledge and design decisions likely to
+2. Put generic programming models and execution mechanics in `utils/`. Put concrete domain capabilities in focused packages. Reusability alone does not make something a utility. Avoid `shared/`, `common/`, `misc/`, and `helpers/` dumping grounds.
+3. Organize modules around domain knowledge and design decisions likely to
    change, not generic `Runtime`, `Context`, `Stage`, or `Handler` machinery.
-3. Provide a deep common-case facade and independently useful lower-level
+4. Provide a deep common-case facade and independently useful lower-level
    capabilities. Do not make consumers reconstruct the library internally.
-4. Compose through explicit values, protocols, focused capabilities, policies,
+5. Compose through explicit values, protocols, focused capabilities, policies,
    lifetimes, and ecosystem contracts. Do not reduce strategic dependencies to
    lowest-common-denominator interfaces.
-5. Choose the narrowest truthful data shape. Arrays are deliberate
-   materialization boundaries; iterables are lazy synchronous sequences; async
+6. Choose the narrowest truthful data shape. Arrays are deliberate
+   materialization points; iterables are lazy synchronous sequences; async
    iterables are incremental asynchronous records; streams own backpressure and
    transport semantics; batches amortize per-record overhead.
-6. Model resource ownership explicitly. Prefer `Disposable`, `AsyncDisposable`,
+7. Model resource ownership explicitly. Prefer `Disposable`, `AsyncDisposable`,
    `using`, `await using`, and disposal stacks where the target runtime supports
    them; otherwise preserve the same ownership contract with `try/finally`.
-7. Bound admission, concurrency, buffering, open resources, batch sizes, retries,
+8. Bound admission, concurrency, buffering, open resources, batch sizes, retries,
    and cleanup. An async iterator with an unbounded producer is not a bounded
    pipeline.
-8. Apply data-oriented design to measured hot paths. Start from transforms,
+9. Apply data-oriented design to measured hot paths. Start from transforms,
    access patterns, volumes, locality, allocation, and lifetime. Do not replace
    readable objects with typed arrays by aesthetic preference.
-9. Keep reusable modules import-safe. Importing a capability must not configure
+10. Keep reusable modules import-safe. Importing a capability must not configure
    logging, load project configuration, launch resources, install signal
    handlers, mutate registries, or import unrelated adapters.
-10. Preserve ESM and explicit public subpaths. Keep integrations physically
+11. Preserve ESM and explicit public subpaths. Keep integrations physically
     separate, declare side effects truthfully, and verify selective adoption
     against built artifacts and clean consumers.
-11. Name recovery guarantees precisely: restartable, checkpoint-resumable, or
+12. Name recovery guarantees precisely: restartable, checkpoint-resumable, or
     durably orchestrated. Commit checkpoints only after required outputs are
     durable and replay-safe.
-12. Treat performance as a workload contract. Record absolute and relative
+13. Treat performance as a workload contract. Record absolute and relative
     results, variability, correctness oracles, peak and retained memory,
     resource counts, startup, tail latency, cleanup, and recovery where relevant.
-13. Treat every public export and observable behavior as compatibility surface.
-    Export only what the project is prepared to version and support.
-14. Add or update evals and executable acceptance checks for every material
+14. Treat every public export and observable behavior as a compatibility surface only to the extent the project is prepared to version and support it. Do not keep obsolete aliases or adapters after a deliberate replacement unless compatibility is an explicit requirement.
+15. For schema-owned project data, use executable schemas as the source of
+    truth, end Zod constants in `Schema`, normally end inferred project data
+    types in `Type`, and keep behavior interfaces/classes as concrete domain
+    nouns. Prefer direct schema/type imports; use namespaces for coherent short
+    operations.
+16. Document important internal invariants as deliberately as public wrappers.
+    Parser state, resource ownership, cache generations, packed representations,
+    queue/lease state, and benchmark workload builders often carry the real
+    correctness contract.
+17. Add or update evals and executable acceptance checks for every material
     library rule, public contract, packaging change, performance claim, or
     recovery claim.
 
 ## Reference routing
 
 - [architecture.md](references/architecture.md): use-case-first design, deep
-  modules, information hiding, public contracts, and application boundaries.
+  modules, information hiding, public contracts, and application ownership splits.
 - [composition.md](references/composition.md): composition at every scale,
   strategic dependencies, LogTape, c12, defu, unstorage, Hookable, Optique, and
   extension ownership.

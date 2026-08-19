@@ -98,7 +98,7 @@ Uploaded manifest version is `0.0.0`; do not represent it as a stable public rel
 
 ## Private workspace integration
 
-Private `@utils/*` packages use workspace/import-map resolution. Preserve their boundary:
+Private `@utils/*` packages use workspace/import-map resolution. Preserve their package API:
 
 - do not publish accidentally because a manifest has a name/version;
 - use declared export subpaths only;

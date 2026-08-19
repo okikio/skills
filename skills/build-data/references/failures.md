@@ -25,7 +25,7 @@ Preserve evidence before retrying or repairing:
 2. Record incident time, affected tenant/range/run/change IDs, deployed versions, resolved config digest, and topology.
 3. Identify the authoritative source for each disputed fact.
 4. Capture manifests, checkpoints, migration history, queue/outbox state, projection receipts, relevant system tables, and redacted diagnostics.
-5. Determine the last proven committed boundary for every required sink.
+5. Determine the last proven committed checkpoint for every required sink.
 6. Classify impact: missing, duplicate, stale, extra, corrupted, unauthorized, unavailable, or slow.
 7. Reproduce on a copy/fixture where possible.
 8. Choose forward repair, replay, rebuild, rollback, or restore based on authority and identity evidence.
@@ -48,7 +48,7 @@ If any answer is unknown, a blind retry can create more damage.
 | Two stores disagree after “successful” request | direct dual write or premature success | authority transaction, outbox/change ID, sink receipts | replay durable change or targeted repair; add handoff |
 | Both stores contain independent edits | dual authority | writers, timestamps/versions, conflict policy | stop one writer; resolve facts under explicit policy |
 | Search grants access after membership revoke | projection used for authorization | current membership, server base filter, indexed tenant data | block through authority; delete/repair projection |
-| Rebuild resurrects deleted data | source snapshot lacks tombstones/deletion boundary | snapshot identity, delete log, artifact retention | rebuild from complete boundary including deletes |
+| Rebuild resurrects deleted data | source snapshot lacks tombstones/deletion record | snapshot identity, delete log, artifact retention | rebuild from a complete source snapshot including deletes |
 | Projection checkpoint is ahead of data | checkpoint committed before sink | receipt/change IDs | rewind to last proven change and replay idempotently |
 | Projection data is ahead of checkpoint | crash after sink write | target version/change IDs | replay and detect already-applied change |
 
@@ -108,7 +108,7 @@ Do not apply PostgreSQL update/uniqueness expectations to ClickHouse. Do not inf
 | Signature | Likely cause | Inspect/correct |
 |---|---|---|
 | Cross-tenant results | missing server base predicate or graph scope escape | generated SQL/SPARQL and adversarial two-tenant fixture |
-| Cursor repeats/skips | unstable order, wrong direction, mutable tiebreaker | compound boundary predicate and concurrent traversal |
+| Cursor repeats/skips | unstable order, wrong direction, mutable tiebreaker | compound cursor predicate and concurrent traversal |
 | Cursor valid on unrelated filter | token lacks resource/filter/version binding | signed context digest and rejection |
 | Exact total differs from rows | count/page predicates or snapshot differ | compile same authority/user filters and name consistency |
 | Slow query after typed refactor | cast/expression prevents index pruning | real plan with representative values/data |
@@ -143,7 +143,7 @@ Choose the smallest repair with complete evidence:
 | Checkpoint ahead of sink | rewind to proven receipt and replay |
 | Authority unclear or independent writes conflict | stop mutation and require ownership decision |
 
-Repair records should include incident, operator, input boundary, tool/version, commands, before/after counts/hashes, rejects, and remaining uncertainty.
+Repair records should include incident, operator, input validation point, tool/version, commands, before/after counts/hashes, rejects, and remaining uncertainty.
 
 ## Failure-injection matrix
 
@@ -173,7 +173,7 @@ Every test needs a post-restart oracle: authoritative identities, sink receipts,
 
 ## Verification and incident evidence
 
-Verification must include the system boundary that failed:
+Verification must include the system handoff that failed:
 
 - migration history plus PostgreSQL introspection and representative queries;
 - artifact parser/full scan, schema, checksum, and manifest;

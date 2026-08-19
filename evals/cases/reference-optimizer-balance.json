@@ -34,7 +34,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -84,7 +84,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -106,7 +106,7 @@
       "skill": "build-apis",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "Split an API into independently deployable service modules. Define the configuration and resource boundary, boot contract, route registration, health versus readiness, graceful drain, connection cleanup, migration ownership, cross-service contract tests, and the evidence that proves a module can run alone.",
+      "prompt": "Split an API into independently deployable service modules. Define the configuration and resource ownership, boot contract, route registration, health versus readiness, graceful drain, connection cleanup, migration ownership, cross-service contract tests, and the evidence that proves a module can run alone.",
       "expectedSkills": [
         "build-apis"
       ],
@@ -133,7 +133,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -155,7 +155,7 @@
       "skill": "build-apis",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "Review an Effect-based HTTP service that constructs a Layer per request, catches every error as unknown, leaks a scoped database pool, and hides required services with global singletons. Produce a corrected Context.Tag, Layer, typed-error, Scope, runtime, test-layer, and Hono boundary design while explaining when Effect should not be introduced.",
+      "prompt": "Review an Effect-based HTTP service that constructs a Layer per request, catches every error as unknown, leaks a scoped database pool, and hides required services with global singletons. Produce a corrected Context.Tag, Layer, typed-error, Scope, runtime, test-layer, and Hono integration design while explaining when Effect should not be introduced.",
       "expectedSkills": [
         "build-apis"
       ],
@@ -182,7 +182,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -231,7 +231,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -280,7 +280,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -330,7 +330,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -379,7 +379,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -401,7 +401,7 @@
       "skill": "build-clis",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Design the full lifecycle for a configuration-heavy CLI using Optique, c12/defu, LogTape, and selected UnJS utilities. Establish operation order from minimal argv parsing through one config load, full typed parse, resource construction, result/diagnostic routing, generated help/completion/man pages, cleanup, and tests. Prevent each library from taking ownership outside its boundary.",
+      "prompt": "Design the full lifecycle for a configuration-heavy CLI using Optique, c12/defu, LogTape, and selected UnJS utilities. Establish operation order from minimal argv parsing through one config load, full typed parse, resource construction, result/diagnostic routing, generated help/completion/man pages, cleanup, and tests. Prevent each library from taking ownership outside its concern.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -428,7 +428,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -481,7 +481,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -504,7 +504,7 @@
       "skill": "build-clis",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Select only the needed UnJS packages for config discovery, runtime TypeScript loading, filesystem traversal, path aliases, process cleanup, and package metadata. For c12, jiti, pathe, pkg-types, confbox, destr, defu, and related candidates, state capability boundaries, runtime and cache implications, Deno/Node portability, deliberate exclusions, and verification.",
+      "prompt": "Select only the needed UnJS packages for config discovery, runtime TypeScript loading, filesystem traversal, path aliases, process cleanup, and package metadata. For c12, jiti, pathe, pkg-types, confbox, destr, defu, and related candidates, state capability ownership, runtime and cache implications, Deno/Node portability, deliberate exclusions, and verification.",
       "expectedSkills": [
         "build-clis"
       ],
@@ -531,7 +531,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -582,7 +582,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -631,7 +631,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -682,7 +682,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -704,7 +704,7 @@
       "skill": "build-data",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Explain Drizzle's internal boundary sequence using a typed joined query: table and column metadata, selection shape, SQL AST, dialect escaping and placeholders, prepared query, session/driver execution, ordered result decoding, nullability collapse, relations, transactions, and Drizzle Kit migrations. Identify which layers a new dialect must implement.",
+      "prompt": "Explain Drizzle's internal execution sequence using a typed joined query: table and column metadata, selection shape, SQL AST, dialect escaping and placeholders, prepared query, session/driver execution, ordered result decoding, nullability collapse, relations, transactions, and Drizzle Kit migrations. Identify which layers a new dialect must implement.",
       "expectedSkills": [
         "build-data"
       ],
@@ -731,7 +731,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -780,7 +780,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -802,7 +802,7 @@
       "skill": "build-data",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "Classify ownership across Postgres, ClickHouse, object storage, cache, and search for an application with transactional writes and analytical reads. Define authoritative versus derived state, consistency windows, identifiers, deletion propagation, retention, failure modes, recovery, and evidence for each boundary.",
+      "prompt": "Classify ownership across Postgres, ClickHouse, object storage, cache, and search for an application with transactional writes and analytical reads. Define authoritative versus derived state, consistency windows, identifiers, deletion propagation, retention, failure modes, recovery, and evidence for each system handoff.",
       "expectedSkills": [
         "build-data"
       ],
@@ -829,7 +829,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -879,7 +879,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -929,7 +929,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -980,7 +980,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1003,7 +1003,7 @@
       "skill": "build-web-apps",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "Refactor a Solid feature that destructures props, creates effects without cleanup, reads browser APIs during SSR, duplicates async state, and imports a primitive by guessed name. Use owner/disposal boundaries, signals/memos/effects/resources, onCleanup, hydration-safe browser access, package/export verification, and focused tests.",
+      "prompt": "Refactor a Solid feature that destructures props, creates effects without cleanup, reads browser APIs during SSR, duplicates async state, and imports a primitive by guessed name. Use ownership/disposal scopes, signals/memos/effects/resources, onCleanup, hydration-safe browser access, package/export verification, and focused tests.",
       "expectedSkills": [
         "build-web-apps"
       ],
@@ -1030,7 +1030,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1080,7 +1080,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1129,7 +1129,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1152,7 +1152,7 @@
       "skill": "build-workflows",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Design atomic admission for a Postgres-backed durable workflow: business row, run record, first ready step, idempotency key, and outbox notification. Explain transaction boundaries, unique constraints, duplicate starts, concurrent claims, fencing, crash points, and how external effects remain outside the database transaction.",
+      "prompt": "Design atomic admission for a Postgres-backed durable workflow: business row, run record, first ready step, idempotency key, and outbox notification. Explain transaction scopes, unique constraints, duplicate starts, concurrent claims, fencing, crash points, and how external effects remain outside the database transaction.",
       "expectedSkills": [
         "build-workflows"
       ],
@@ -1179,7 +1179,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1228,7 +1228,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1277,7 +1277,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1328,7 +1328,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1378,7 +1378,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1428,7 +1428,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1478,7 +1478,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1527,7 +1527,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1576,7 +1576,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1598,7 +1598,7 @@
       "skill": "use-okikio",
       "kind": "trajectory",
       "split": "train",
-      "prompt": "Integrate @okikio/observables 1.4.0 into a streaming boundary. Verify exact exports and design Observable lifecycle, subscribe/unsubscribe teardown, sync versus async delivery, error modes, operator cleanup, EventBus ownership, backpressure policy, AbortSignal interop, async iteration, and tests for cancellation and resource leaks.",
+      "prompt": "Integrate @okikio/observables 1.4.0 into a streaming handoff. Verify exact exports and design Observable lifecycle, subscribe/unsubscribe teardown, sync versus async delivery, error modes, operator cleanup, EventBus ownership, backpressure policy, AbortSignal interop, async iteration, and tests for cancellation and resource leaks.",
       "expectedSkills": [
         "use-okikio"
       ],
@@ -1625,7 +1625,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1647,7 +1647,7 @@
       "skill": "use-okikio",
       "kind": "trajectory",
       "split": "valid-seen",
-      "prompt": "Use @okikio/sparql 0.0.2 without guessing exports. Verify the exact query builder/executor boundary, prefixes, variables and bindings, raw interpolation hazards, transport and authentication ownership, result decoding, cancellation, pagination, errors, compatibility with the endpoint, and executable query tests.",
+      "prompt": "Use @okikio/sparql 0.0.2 without guessing exports. Verify the exact query builder/executor API, prefixes, variables and bindings, raw interpolation hazards, transport and authentication ownership, result decoding, cancellation, pagination, errors, compatibility with the endpoint, and executable query tests.",
       "expectedSkills": [
         "use-okikio"
       ],
@@ -1674,7 +1674,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],
@@ -1723,7 +1723,7 @@
         }
       ],
       "rubric": [
-        "Makes ownership and version boundaries explicit before proposing code.",
+        "Makes ownership and version lines explicit before proposing code.",
         "Separates verified APIs, repository evidence, pseudocode, and unresolved claims.",
         "Includes failure signatures, deliberate exclusions, and executable verification."
       ],

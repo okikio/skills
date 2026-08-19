@@ -23,7 +23,7 @@ accepts all of them with defined semantics. A universal sequence type pushes
 replayability, ownership, cancellation, cardinality, and backpressure questions
 to every caller.
 
-## Arrays are explicit materialization boundaries
+## Arrays are explicit materialization points
 
 Use an array when the operation needs a complete snapshot, repeated traversal,
 random access, sorting, grouping, global aggregation, atomic validation, or a
@@ -110,7 +110,7 @@ export async function* verifyObservations(
 Expose `AsyncIterable<T>` rather than `AsyncGenerator<T>` unless consumers need
 the generator's implementation-specific methods or return type.
 
-An async iterable is pull-shaped at the consumer boundary. It does not guarantee
+An async iterable is pull-shaped at the consumer handoff. It does not guarantee
 that the producer is bounded. Inspect internal queues, promises, worker pools,
 and retained buffers.
 
@@ -162,7 +162,7 @@ for terminology when `AsyncIterable<T>` is simpler and sufficient.
 
 ## Backpressure and bounded buffers
 
-A pipeline is bounded only when every producer/consumer boundary has a limit:
+A pipeline is bounded only when every producer/consumer handoff has a limit:
 
 ```text
 source admission
@@ -238,7 +238,7 @@ export interface ConcurrentMapOptions {
 
 ## Materialization audit
 
-Trace each boundary:
+Trace each interface:
 
 ```text
 source
@@ -258,7 +258,7 @@ For each arrow record:
 - ownership;
 - concurrency and buffer bound;
 - early-termination behavior;
-- checkpoint boundary;
+- checkpoint commit point;
 - reason for any full materialization.
 
 One hidden `await Array.fromAsync(...)`, `Promise.all(...)`, global accumulator,

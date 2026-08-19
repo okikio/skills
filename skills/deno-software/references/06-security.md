@@ -123,7 +123,7 @@ Interpretation:
   for permission categories that do not support it.
 
 Verify exact current precedence and accepted scope syntax using the Deno config
-reference when designing a security boundary.
+reference when designing a security trust transition.
 
 ## Permission sets versus tasks
 

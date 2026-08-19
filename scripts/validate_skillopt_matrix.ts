@@ -1,44 +1,54 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  type CapabilityRecordType,
   CapabilityRegistrySchema,
-  type EvalCase,
+  type EvalCaseType,
   EvalCaseFileSchema,
-} from "../src/eval_schema.ts";
+} from "../src/corpus.ts";
 import { walkFiles } from "../src/files.ts";
+import * as command from "../src/command.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const decoder = new TextDecoder();
 
-async function runScript(
+/** Run one repository script with bounded diagnostics and fail on any invalid exit. */
+async function callScript(
   script: string,
   permissions: string[],
   args: string[],
 ): Promise<void> {
-  const output = await new Deno.Command(Deno.execPath(), {
-    cwd: root,
-    args: [
+  const result = await command.call(
+    Deno.execPath(),
+    [
       "run",
       "--node-modules-dir=manual",
       ...permissions,
       join(root, "scripts", script),
       ...args,
     ],
-    stdout: "piped",
-    stderr: "piped",
-  }).output();
-  if (output.success) return;
-  const stdout = decoder.decode(output.stdout).trim();
-  const stderr = decoder.decode(output.stderr).trim();
+    {
+      cwd: root,
+      timeoutMs: 120_000,
+      outputBytes: 256 * 1024,
+    },
+  );
+  if (result.success && !result.timedOut &&
+    !result.stdoutTruncated && !result.stderrTruncated) return;
+  const reason = result.timedOut
+    ? "timed out"
+    : result.stdoutTruncated || result.stderrTruncated
+    ? "diagnostics exceeded 256 KiB"
+    : `exited ${result.code}`;
   throw new Error(
     [
-      `${script} ${args.join(" ")} exited ${output.code}`,
-      stdout,
-      stderr,
+      `${script} ${args.join(" ")} ${reason}`,
+      result.stdout.trim(),
+      result.stderr.trim(),
     ].filter(Boolean).join("\n"),
   );
 }
 
+/** Export one SkillOpt workspace and immediately verify its immutable contract. */
 async function exportAndVerify(
   skill: string,
   mode: "optimize" | "evaluate" | "release",
@@ -48,12 +58,12 @@ async function exportAndVerify(
   const args = ["--skill", skill, "--mode", mode];
   if (reference) args.push("--reference", reference);
   for (const companion of companions) args.push("--with", companion);
-  await runScript(
+  await callScript(
     "export_skillopt.ts",
     ["--allow-read", "--allow-write"],
     args,
   );
-  await runScript("verify_skillopt_workspace.ts", ["--allow-read"], [
+  await callScript("verify_skillopt_workspace.ts", ["--allow-read"], [
     "--workspace",
     `.skillopt/${skill}/${mode}/workspace.json`,
   ]);
@@ -63,10 +73,12 @@ const capabilities = CapabilityRegistrySchema.parse(
   JSON.parse(await Deno.readTextFile(join(root, "evals", "capabilities.json"))),
 );
 const references = [
-  ...new Set(
-    capabilities.capabilities.map((item) => `${item.skill}\0${item.reference}`),
+  ...new Set<string>(
+    capabilities.capabilities.map((item: CapabilityRecordType) =>
+      `${item.skill}\0${item.reference}`
+    ),
   ),
-].map((item) => item.split("\0") as [string, string]).sort((a, b) =>
+].map((item: string) => item.split("\0") as [string, string]).sort((a, b) =>
   a[0].localeCompare(b[0]) || a[1].localeCompare(b[1])
 );
 const referencesBySkill = Map.groupBy(references, ([skill]) => skill);
@@ -91,7 +103,7 @@ await Promise.all(skills.map(async (skill) => {
   await exportAndVerify(skill, "release");
 }));
 
-const cases: EvalCase[] = [];
+const cases: EvalCaseType[] = [];
 for await (const path of walkFiles(join(root, "evals", "cases"))) {
   if (!path.endsWith(".json")) continue;
   cases.push(

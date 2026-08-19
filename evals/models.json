@@ -4,50 +4,149 @@
     {
       "id": "codex-default",
       "host": "codex",
-      "adapterVersion": "1",
-      "command": ["codex", "exec", "--json", "{prompt}"],
+      "adapterVersion": "2",
+      "command": [
+        "skillopt-codex-adapter",
+        "--request",
+        "{request}",
+        "--response",
+        "{response}"
+      ],
       "enabled": false,
-      "notes": "Enable after authenticating Codex CLI."
+      "env": [
+        "PATH",
+        "HOME",
+        "OPENAI_API_KEY"
+      ],
+      "secretEnv": [
+        "OPENAI_API_KEY"
+      ],
+      "notes": "Enable after installing a version-2 adapter that implements skillopt/adapter-contract.md.",
+      "requests": [
+        "rollout",
+        "judge"
+      ]
     },
     {
       "id": "claude-default",
       "host": "claude",
-      "adapterVersion": "1",
-      "command": ["claude", "-p", "--output-format", "json", "{prompt}"],
+      "adapterVersion": "2",
+      "command": [
+        "skillopt-claude-adapter",
+        "--request",
+        "{request}",
+        "--response",
+        "{response}"
+      ],
       "enabled": false,
-      "notes": "Enable after authenticating Claude Code."
+      "env": [
+        "PATH",
+        "HOME",
+        "ANTHROPIC_API_KEY"
+      ],
+      "secretEnv": [
+        "ANTHROPIC_API_KEY"
+      ],
+      "notes": "Enable after installing a version-2 adapter that implements skillopt/adapter-contract.md.",
+      "requests": [
+        "rollout",
+        "judge"
+      ]
     },
     {
       "id": "cursor-default",
       "host": "cursor",
-      "adapterVersion": "unverified",
-      "command": ["cursor-agent", "--print", "{prompt}"],
+      "adapterVersion": "2",
+      "command": [
+        "skillopt-cursor-adapter",
+        "--request",
+        "{request}",
+        "--response",
+        "{response}"
+      ],
       "enabled": false,
-      "notes": "Verify the installed Cursor agent CLI contract before enabling."
+      "env": [
+        "PATH",
+        "HOME"
+      ],
+      "secretEnv": [],
+      "notes": "Enable only after a provider adapter can report activated skills and references read.",
+      "requests": [
+        "rollout",
+        "judge"
+      ]
     },
     {
       "id": "copilot-default",
       "host": "copilot",
-      "adapterVersion": "unverified",
-      "command": ["copilot", "--prompt", "{prompt}"],
+      "adapterVersion": "2",
+      "command": [
+        "skillopt-copilot-adapter",
+        "--request",
+        "{request}",
+        "--response",
+        "{response}"
+      ],
       "enabled": false,
-      "notes": "Verify the installed GitHub Copilot CLI contract before enabling."
+      "env": [
+        "PATH",
+        "HOME",
+        "GITHUB_TOKEN"
+      ],
+      "secretEnv": [
+        "GITHUB_TOKEN"
+      ],
+      "notes": "Enable only after a provider adapter can report activated skills and references read.",
+      "requests": [
+        "rollout",
+        "judge"
+      ]
     },
     {
       "id": "pi-default",
       "host": "pi",
-      "adapterVersion": "unverified",
-      "command": ["pi", "-p", "{prompt}"],
+      "adapterVersion": "2",
+      "command": [
+        "skillopt-pi-adapter",
+        "--request",
+        "{request}",
+        "--response",
+        "{response}"
+      ],
       "enabled": false,
-      "notes": "Confirm the installed Pi command contract."
+      "env": [
+        "PATH",
+        "HOME"
+      ],
+      "secretEnv": [],
+      "notes": "Enable only after a provider adapter can report activated skills and references read.",
+      "requests": [
+        "rollout",
+        "judge"
+      ]
     },
     {
       "id": "hermes-default",
       "host": "hermes",
-      "adapterVersion": "unverified",
-      "command": ["hermes", "chat", "--prompt", "{prompt}"],
+      "adapterVersion": "2",
+      "command": [
+        "skillopt-hermes-adapter",
+        "--request",
+        "{request}",
+        "--response",
+        "{response}"
+      ],
       "enabled": false,
-      "notes": "Confirm the installed Hermes command contract."
+      "env": [
+        "PATH",
+        "HOME"
+      ],
+      "secretEnv": [],
+      "notes": "Enable only after a provider adapter can report activated skills and references read.",
+      "requests": [
+        "rollout",
+        "judge"
+      ]
     }
   ]
 }

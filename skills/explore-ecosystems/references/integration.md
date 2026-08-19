@@ -65,7 +65,7 @@ manifest + lock + integrity
   -> clean consumer and operational verification
 ```
 
-Write a local boundary when it owns project policy or isolates volatility:
+Write a local adapter when it owns project policy or isolates volatility:
 
 ```ts
 export interface ArtifactStore {
@@ -79,7 +79,7 @@ The interface is not proof of any package API. Implement it from exact source
 and translate upstream errors/status/lifecycle deliberately. Avoid speculative
 methods for private or experimental adapters.
 
-Define boundary ownership:
+Define ownership:
 
 - schema validates external/config/data shapes;
 - adapter translates library/host mechanics;
@@ -97,7 +97,7 @@ peer, optional, development, platform/native, and build-only dependencies. Do no
 add a dependency to the root when only one workspace package imports it. Review
 install scripts and package contents before execution when material.
 
-### 2. Establish imports and local boundary
+### 2. Establish imports and local adapter
 
 Import only public subpaths verified for the selected version. Prefer a narrow
 adapter over upstream types throughout domain code when configuration, error,
@@ -185,14 +185,14 @@ credentials, cookies, tokens, raw personal data, or full config.
 
 ### Data and services
 
-Define system of record, schema/migration owner, transaction boundary, idempotency,
+Define system of record, schema/migration owner, transaction scope, idempotency,
 delivery, ordering, cursor/checkpoint, retention, backup/restore, reconciliation,
 and destructive-operation authorization. An analytics projection is not a
 transactional backup. A workflow service does not make arbitrary side effects
 durable unless activities/idempotency/recovery are designed.
 
 Test fresh schema, upgrade, rollback/forward-fix, concurrent operations, failure
-after each durable boundary, and recovery from persisted state.
+after each durable commit point, and recovery from persisted state.
 
 ### Generated code/config/docs
 
@@ -220,7 +220,7 @@ missing dependencies and files.
 | Consumer | clean pack/install/import/build/execute outside workspace |
 | Operational | unavailable/timeout/cancel/retry/shutdown/recovery/rollback |
 | Compatibility | supported runtime/renderer/driver/platform/version matrix |
-| Security | permissions, trust, redaction, secret and destructive boundaries |
+| Security | permissions, trust, redaction, secret and destructive commit points |
 
 Use representative assertions, not package keywords. Verify output/protocol/data
 semantics. Record commands/results and distinguish passed, failed, blocked, and
@@ -259,11 +259,11 @@ overwriting an immutable version.
 | Tests pass only in monorepo | undeclared dep/file/workspace alias | packed clean consumer |
 | Logs duplicate or JSON corrupts | two transports/sink inheritance | observability/result ownership |
 | Shutdown loses events/work | async dispose/flush not awaited | lifecycle coordinator |
-| Adapter throws untyped library errors | translation boundary missing | upstream failure contract |
+| Adapter throws untyped library errors | translation layer missing | upstream failure contract |
 | Analytics diverges from OLTP | delivery/checkpoint/reconciliation absent | authority and repair workflow |
 | Generated diff rewrites docs | generator/formatter scope too broad | owned markers and check mode |
 | Old dependency remains after cutover | connected surfaces not inventoried | full removal search/lifecycle |
-| Rollback plan cannot restore state | irreversible boundary discovered late | migration backup/forward-fix |
+| Rollback plan cannot restore state | irreversible commit point discovered late | migration backup/forward-fix |
 
 ## Deliberate exclusions
 
@@ -280,7 +280,7 @@ overwriting an immutable version.
 ## Sources and freshness
 
 - Attached production CLI guidebook v1.1 and config-resolution handoff, normative
-  portable boundary, sparse source, provenance, lifecycle, output, package, and
+  portable contract, sparse source, provenance, lifecycle, output, package, and
   verification patterns; verified 2026-07-13.
 - Retained uploaded CLI, finance, site, data, workflow, Better Auth, Undent and
   Wikitext codebases, observed connected integration/failure/generator/release

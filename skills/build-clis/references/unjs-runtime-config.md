@@ -4,13 +4,13 @@
 
 - [When to load this reference](#when-to-load-this-reference)
 - [Outcome](#outcome)
-- [Verified versions and evidence boundary](#verified-versions-and-evidence-boundary)
+- [Verified versions and evidence limit](#verified-versions-and-evidence-limit)
 - [Capability ownership](#capability-ownership)
 - [Recommended integration order](#recommended-integration-order)
 - [jiti runtime module loading](#jiti-runtime-module-loading)
 - [c12 configuration loading](#c12-configuration-loading)
 - [defu merge behavior](#defu-merge-behavior)
-- [destr boundary parsing](#destr-boundary-parsing)
+- [destr input parsing](#destr-input-parsing)
 - [confbox structured formats](#confbox-structured-formats)
 - [pkg-types repository metadata](#pkg-types-repository-metadata)
 - [pathe filesystem paths](#pathe-filesystem-paths)
@@ -37,7 +37,7 @@ packages:
 
 Also load it when a project says only “use the UnJS ecosystem” for config,
 paths, package metadata, or URLs. That phrase is not an implementation plan.
-Select packages by capability, assign one owner to each boundary, and verify the
+Select packages by capability, assign one owner to each concern, and verify the
 installed version before copying an API.
 
 Read [c12-defu.md](c12-defu.md) as well when the application needs a
@@ -61,7 +61,7 @@ Following this reference should produce a configuration subsystem in which:
 - library diagnostics do not silently violate the CLI's output contract;
 - failure cases are exercised through the public application resolver.
 
-## Verified versions and evidence boundary
+## Verified versions and evidence limit
 
 The APIs in this reference were rechecked on 2026-07-17 against the published
 npm artifacts, including each package's export map, README, declarations, and
@@ -117,7 +117,7 @@ runtime behavior interchangeable.
 | pathe | Cross-platform filesystem path string operations with `/` normalization | Filesystem authorization, symlink resolution, or URL operations |
 | ufo | URL/path/query encoding, parsing, joining, and normalization helpers | Origin allowlisting, SSRF prevention, signature identity, or filesystem paths |
 
-Keep these boundaries even though c12 depends on defu, confbox, pathe, and
+Keep these ownership rules even though c12 depends on defu, confbox, pathe, and
 pkg-types. A transitive dependency relationship does not transfer product
 policy to the package.
 
@@ -140,7 +140,7 @@ explicit invocation cwd
   -> application removes loader-only keys
   -> application validates the resolved sparse patch
   -> runtime schema applies defaults and transformations once
-  -> ufo handles URL/query fields at their boundary
+  -> ufo handles URL/query fields at their owning parser
   -> complete runtime config plus provenance reaches commands
 ```
 
@@ -186,7 +186,7 @@ avoid making a loader async.
 
 Other verified entry points are:
 
-| Import | Purpose | Boundary |
+| Import | Purpose | Owner |
 | --- | --- | --- |
 | `jiti/register` | Global Node module hook | Requires Node newer than 20 according to the published docs; affects the process globally |
 | `jiti/native` | The same high-level API backed by native `import()` and `import.meta.resolve()` | Use only when the runtime natively accepts the selected syntax |
@@ -204,7 +204,7 @@ Other verified entry points are:
 | `interopDefault?: boolean` | Defaults to true and proxies module/default exports for mixed ESM/CJS compatibility | Prefer explicit export contracts for config; test namespace and default behavior during upgrades |
 | `extensions?: string[]` | Controls resolvable/transformed extensions | Narrowing is safer than accepting syntax the product never documents |
 | `transform` and `transformOptions` | Replace/configure transformation | This is compiler ownership; use only with executable tests for the selected syntax |
-| `alias?: Record<string, string>` | Rewrites module IDs during resolution | Validate aliases and allowed roots; aliases are not a security boundary |
+| `alias?: Record<string, string>` | Rewrites module IDs during resolution | Validate aliases and allowed roots; aliases are not a security trust transition |
 | `tsconfigPaths?: boolean \| string` | Disabled by default; `true` discovers a tsconfig, string selects one | Prefer an explicit path in monorepos to avoid adopting a neighboring package's aliases |
 | `nativeModules?: string[]` | Adds modules to the native-load set | Do not use it to bypass validation of a loaded config export |
 | `transformModules?: string[]` | Forces named modules through transformation | Pin and test; transforming dependencies can change runtime and cache behavior |
@@ -241,7 +241,7 @@ Apply these rules:
 - run genuinely untrusted plugins in an isolated process or stronger sandbox
   with a narrow protocol rather than in jiti.
 
-For default exports, prefer the explicit shortcut and schema boundary:
+For default exports, prefer the explicit shortcut and schema validation stage:
 
 ```ts
 const imported = await jiti.import<unknown>(absolutePath, { default: true });
@@ -370,7 +370,7 @@ The verified `extend` option is either `false` or an object with
 `extendKey?: string | string[]`. c12 recognizes local files/directories,
 resolvable packages, and remote prefixes supported through giget.
 
-Remote extension is an execution and supply-chain boundary:
+Remote extension is an execution and supply-chain trust transition:
 
 - c12 can download a git/HTTP source through the optional giget peer;
 - a source option can request dependency installation;
@@ -618,7 +618,7 @@ Validate authoring operations before merging, resolve them into ordinary
 values, strip operation objects, validate the sparse result, then apply runtime
 defaults once.
 
-## destr boundary parsing
+## destr input parsing
 
 ### Exact APIs
 
@@ -648,7 +648,7 @@ The verified 2.0.5 behavior includes:
 through. Use `JSON.parse()` or confbox `parseJSON()` when exact JSON syntax is
 the contract.
 
-Use destr for an explicitly ergonomic boundary, followed by a schema:
+Use destr for an explicitly ergonomic input parser, followed by a schema:
 
 ```ts
 import { safeDestr } from "destr";

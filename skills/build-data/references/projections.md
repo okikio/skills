@@ -23,7 +23,7 @@ Use this reference when authoritative data is copied into Typesense or another s
 
 For each projected fact, name:
 
-- the authoritative source and transaction boundary;
+- the authoritative source and transaction scope;
 - the durable change identity or replay source;
 - the projector version and configuration;
 - the target document/subject/row identity;
@@ -150,7 +150,7 @@ Do not promise immediate row uniqueness or synchronous update semantics merely b
 Prefer versioned targets:
 
 ```text
-authority snapshot/outbox boundary: 004182
+authority snapshot/outbox commit point: 004182
 projection schema: search-comic-v7
 target: comics_20260717_142233_v7
 checkpoint: through change 004182
@@ -158,7 +158,7 @@ checkpoint: through change 004182
 
 Build sequence:
 
-1. Freeze or name the input snapshot/change boundary.
+1. Freeze or name the input snapshot/change capture point.
 2. Create a new target/index/collection/dataset with the declared schema.
 3. Stream bounded batches and inspect every batch receipt.
 4. Record rejects without silently omitting them.
@@ -194,14 +194,14 @@ Use several layers of reconciliation:
 | Layer | Example proof |
 |---|---|
 | Transport | Every requested batch item has a success or rejected receipt |
-| Identity | Authoritative active IDs equal projected active IDs for a boundary |
+| Identity | Authoritative active IDs equal projected active IDs for one projection scope |
 | Counts | Per tenant/status/day counts agree within declared semantics |
 | Content | Deterministic hashes of normalized projection records match |
 | Domain | No public document references deleted/private authority rows |
 | Query | Representative search/SPARQL/analytical queries return expected fixtures |
 | Freshness | Checkpoint lag and oldest unapplied change stay within objective |
 
-Support both targeted repair and full rebuild. Targeted repair accepts an authoritative identity/range and is idempotent. Full rebuild uses a versioned target and safe cutover. Record who initiated repair, input boundary, projector version, results, and rejected items.
+Support both targeted repair and full rebuild. Targeted repair accepts an authoritative identity/range and is idempotent. Full rebuild uses a versioned target and safe cutover. Record who initiated repair, input validation point, projector version, results, and rejected items.
 
 ## Integration sequence
 
@@ -244,7 +244,7 @@ Global success is false until every required sink is complete.
 | RDF append contains old and new values | Rebuild/replace graph or issue explicit deletes through supported update path |
 | QLever/graph index build fails halfway | Never route to partial index; rebuild named target from manifest |
 | Projection schema changes while backlog exists | Version event/normalizer and run explicit compatibility or rebuild path |
-| Backfill races live updates | Use a boundary plus catch-up phase; compare versions before application |
+| Backfill races live updates | Use a snapshot plus catch-up phase; compare versions before application |
 | Optional projection fails | Show degraded capability and retry state; do not silently claim fresh |
 
 ## Test matrix
@@ -265,7 +265,7 @@ Test:
 - analytical late arrival, correction, and retention behavior;
 - privacy deletion across every projection;
 - lag objective and alerting;
-- targeted repair and full rebuild from the same authoritative boundary.
+- targeted repair and full rebuild from the same authoritative snapshot.
 
 ## Executable verification
 

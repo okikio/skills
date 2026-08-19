@@ -5,85 +5,196 @@ description: Design, implement, migrate, review, diagnose, or verify durable wor
 
 # Build durable workflows and pipelines
 
-Start from failure and recovery semantics. When active, `build-data` owns
-storage-engine and artifact design, `build-apis` owns HTTP exposure, and
-`build-libraries` owns reusable restart and checkpoint contracts. Otherwise
-preserve those boundary checks locally. This skill owns persisted execution
-authority, durable coordination, worker reachability, and operator recovery.
+Durability is a recovery property, not a naming convention. Start from the state
+that must survive process loss, then design execution, queues, effects, leases,
+checkpoints, timers, signals, and operator recovery around that authority.
+
+`build-data` owns storage engines and artifact formats. `build-apis` owns public
+HTTP exposure. `build-libraries` owns reusable restart/checkpoint contracts that
+do not themselves provide durable orchestration. `deliver-software` owns the
+final completion verdict.
+
+## Outcome
+
+A durable workflow should have a traceable execution model:
+
+```text
+trigger / command
+      |
+      v
+durable run identity
+      |
+      v
+persisted state/history
+      |
+      +--> queue / timer / signal / wait
+      |
+      v
+claimed attempt with lease/fence
+      |
+      v
+activity / external effect
+      |
+      v
+atomic result/checkpoint publication
+      |
+      +--> retry / compensation / reconciliation
+      |
+      v
+terminal state + operator evidence
+```
+
+A table, workflow definition, or queue consumer stub is not proof that the path
+is reachable or survives interruption.
 
 ## Durability evidence ladder
 
-Classify every claimed capability independently:
+Classify each claimed capability independently:
 
-1. workflow authored;
-2. workflow registered;
-3. runtime adapter implemented;
-4. worker booted and reachable;
-5. durable projection persisted;
-6. queue, timer, wait, signal, and cancellation paths implemented;
-7. restart/replay behavior verified;
-8. operator inspection, repair, retry, and reconciliation exist;
-9. public API or CLI reaches the new system.
+1. workflow/definition authored;
+2. registered/discoverable by the runtime;
+3. runtime adapter implemented rather than stubbed;
+4. actual execution process/work unit boots and is reachable;
+5. durable run/history/projection persists;
+6. queue, timer, wait, signal, cancellation, and retry paths exist as required;
+7. restart/replay/resume behavior is tested;
+8. operator inspection, repair, retry, cancel, and reconciliation exist;
+9. API/CLI/application reaches the durable path;
+10. deployment/upgrade behavior is proven for the claimed topology.
 
-A definition, table, adapter, unit test, or “dispatcher” stub does not prove the
-workflow is operational.
+Do not collapse these into one “workflow exists” boolean.
 
-## Required decision model
+## Identity and authority preflight
 
-For every workflow, answer:
+For every workflow, define:
 
-- Which history or record is authoritative?
-- What survives process loss?
-- What identifies a logical run, attempt, and external effect?
-- Which deliveries and effects are at-least-once?
-- Where are uniqueness and idempotency enforced atomically?
-- Which state transitions require one database transaction?
-- Which cross-system gaps require reconciliation?
-- How are leases, poison work, backpressure, and rate limits handled?
-- How do version changes affect replay and in-flight runs?
-- How does an operator inspect, retry, cancel, resume, or repair work?
-- Is the actual worker deployed, healthy, and reachable?
+- logical workflow/run ID;
+- attempt ID and retry semantics;
+- task/job/message/event identity;
+- external-effect idempotency key;
+- authoritative durable state/history;
+- sequence/version/fencing value used to reject stale work;
+- completion criteria and terminal-state owner;
+- checkpoint identity and the outputs it proves durable;
+- trigger dedupe/concurrency/singleton policy;
+- retention and replay window;
+- operator-visible audit information.
+
+Name the actual execution resource. Do not use `worker` as a generic word for a
+process, thread, browser context, async task, queue claim, or lease holder.
 
 ## Procedure
 
-1. Define durable/transient state, identities, triggers, stage contracts, and
-   completion criteria.
-2. Choose the engine from timers, replay, signals, throughput, latency,
-   operational, and deployment requirements. Record maturity/version boundaries.
-3. Make retryable external effects idempotent or atomically deduplicated.
-4. Keep replayed orchestration deterministic; isolate nondeterministic I/O in
-   activities/effects with explicit retry and timeout policy.
-5. Make checkpoints represent committed work and retain enough provenance to
-   validate resume.
-6. Treat cross-system writes as sagas with repair unless one transaction truly
-   covers them.
-7. Define cancellation, lease expiry, poison handling, dead letters, manual
-   override, and audit timelines.
-8. Verify crashes between every important pair of writes, duplicate delivery,
-   concurrent starts, worker loss, replay, resume, and operator recovery.
+1. **Separate transient control from durable authority.** `AbortSignal`, local
+   promises, in-memory observables, and process-local queues coordinate active
+   work but do not survive process loss.
+2. **Choose the runtime from requirements.** Timers, long sleeps, signals,
+   replay, throughput, latency, versioning, operational cost, deployment, and
+   language/runtime constraints decide whether Temporal, Effect Workflow, a
+   database control plane, or another owner fits. Do not select by familiarity.
+3. **Keep replay deterministic.** Orchestration code that may replay cannot read
+   ambient time/random/network/filesystem/process state directly. Isolate
+   nondeterministic I/O in activities/effects or recorded commands according to
+   the engine contract.
+4. **Make retryable effects safe.** External writes are at-least-once unless a
+   stronger guarantee is actually proven. Use provider idempotency, transactional
+   dedupe/inbox/outbox, compare-and-set, unique constraints, or reconciliation.
+5. **Make claims stale-safe.** Leases need expiry plus a fencing/version token so
+   an old execution cannot commit after a new claimant has taken ownership.
+6. **Commit checkpoints after durable outputs.** A checkpoint means the outputs
+   it references are committed and replay-safe. Do not advance progress before
+   a required sink/artifact is durable.
+7. **Treat cross-system writes as sagas unless one transaction covers them.**
+   Define compensation, reconciliation, retry, and operator state for the gap.
+8. **Bound work.** Queue depth, concurrency, batch size, open resources, retry
+   attempts, backoff, timers, buffered events, and cleanup all need limits or
+   admission rules.
+9. **Define cancellation semantics.** Distinguish cancel request, cooperative
+   stop, cleanup/disposal, compensation, terminal canceled state, and late result
+   rejection.
+10. **Design operator recovery.** Inspection, retry, resume, replay, quarantine,
+    dead-letter/poison handling, manual override, and audit must use the same
+    durable authority as automatic execution.
+11. **Document internal workflow invariants.** Sequence numbers, lease/fence
+    rules, checkpoint ordering, cancellation transitions, timer semantics,
+    replay restrictions, and repair algorithms deserve comments/TSDoc even when
+    not exported.
+
+## Pipeline rules
+
+For multi-stage ingestion or ETL:
+
+- preserve source provenance and immutable/raw evidence where required;
+- distinguish stage attempt from logical batch/run;
+- publish artifacts atomically through manifests or equivalent commit records;
+- keep required sinks incomplete until their receipts/reconciliation succeed;
+- bound batching/memory/concurrency;
+- make resume choose committed work, not “last line printed”;
+- classify partial results by sink/stage rather than one global success flag;
+- preserve enough identity to rerun one failed projection without replaying
+  unrelated committed work.
+
+## Failure and recovery drills
+
+Deliberately test:
+
+- process loss before/after each durable write;
+- duplicate trigger or queue delivery;
+- two concurrent claims of the same work;
+- lease expiry while the old claimant later returns;
+- external effect succeeds but local commit fails;
+- local state commits but downstream provider fails;
+- poison input and retry exhaustion;
+- queue backlog/rate-limit pressure;
+- cancellation during an activity and during checkpoint publication;
+- replay after code/version change;
+- worker/runtime restart;
+- partial sink failure and targeted reconciliation;
+- operator retry/resume/repair path.
+
+A happy-path retry unit test does not prove durability.
 
 ## Reference routing
 
-- [durability.md](references/durability.md): engine selection, authority,
-  identities, determinism, and completion.
-- [effect-workflow.md](references/effect-workflow.md): Effect service/Layer
-  composition and the evidence-bounded `@effect/workflow` execution model.
-- [temporal.md](references/temporal.md): Temporal clients, workers, workflows,
-  activities, messages, schedules, timeouts, retries, cancellation, and safe
-  deployment/versioning.
+- [durability.md](references/durability.md): authority, engine selection,
+  identities, determinism, completion, and durability classification.
+- [effect-workflow.md](references/effect-workflow.md): Effect services/Layers and
+  evidence-bounded `@effect/workflow` behavior, including placeholder warnings.
+- [temporal.md](references/temporal.md): Temporal clients, workflow code,
+  activities, execution processes, messages, schedules, retries, cancellation,
+  and deployment/versioning.
 - [control-plane.md](references/control-plane.md): definitions, registration,
-  admission, projections, reachability, and API/CLI integration.
-- [atomicity.md](references/atomicity.md): transactions, idempotency, sequences,
-  cross-system gaps, and reconciliation.
-- [workers.md](references/workers.md): queues, leases, timers, waits, signals,
-  schedules, cancellation, backpressure, and poison work.
+  admission, projections, runtime reachability, and API/CLI integration.
+- [atomicity.md](references/atomicity.md): transactions, outbox/inbox,
+  idempotency, sequences, cross-system gaps, and reconciliation.
+- [workers.md](references/workers.md): queues, claims, leases/fencing, timers,
+  waits, signals, schedules, backpressure, and poison work.
 - [pipelines.md](references/pipelines.md): staged ingestion, provenance,
-  bounded batches, checkpoints, manifests, and projections.
-- [recovery.md](references/recovery.md): leases, checkpoints, resume,
-  reconciliation, replay, repair, and recovery testing.
-- [streams.md](references/streams.md): workflow event streams, SSE delivery,
-  cursor authority, replay, backpressure, cancellation, and retention.
-- [failures.md](references/failures.md): evidence-grounded failure signatures.
+  bounded batches, checkpoints, manifests, sinks, and projections.
+- [recovery.md](references/recovery.md): restart/resume, lease expiry,
+  reconciliation, replay, repair, and failpoint testing.
+- [streams.md](references/streams.md): event streams/SSE, cursor authority,
+  replay, retention, slow consumers, and cancellation.
+- [failures.md](references/failures.md): source-grounded failure signatures and
+  recovery decisions.
 
-Do not claim durability until interruption and restart have been executed against
-the real persistence and worker path.
+## Verification ladder
+
+1. deterministic state-transition/unit tests;
+2. store/queue/timer/lease integration tests;
+3. duplicate/concurrency/idempotency tests;
+4. failpoints around every important commit pair;
+5. actual execution process restart/recovery;
+6. replay/versioning tests when the runtime replays code;
+7. public API/CLI reachability;
+8. operator recovery drill;
+9. deployment/runtime health and shutdown when claimed.
+
+## Completion gate
+
+Do not claim durability until an interruption and restart have executed against
+the real persistence and execution path, stale/duplicate work cannot corrupt the
+result, required cross-system gaps have reconciliation, cancellation and cleanup
+are coherent, and an operator can inspect and repair the run. Clearly separate
+unimplemented adapters, blocked runtime tests, and aspirational design from
+verified behavior.

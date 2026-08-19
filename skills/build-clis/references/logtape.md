@@ -12,7 +12,7 @@
 - [Redaction before rendering](#redaction-before-rendering)
 - [Bootstrap and reconfiguration](#bootstrap-and-reconfiguration)
 - [Lifecycle and disposal](#lifecycle-and-disposal)
-- [Library and application boundaries](#library-and-application-boundaries)
+- [Library and application ownership](#library-and-application-ownership)
 - [Testing](#testing)
 - [Exclusions](#exclusions)
 - [Failure signatures](#failure-signatures)
@@ -28,18 +28,16 @@ Before adopting this design, establish the existing output owner. If the
 repository does not use LogTape and the request does not authorize a migration,
 preserve its verified transport and apply only compatible channel principles.
 
-If LogTape is the owner, route every observable process result and diagnostic
-through it. Do not retain `console.log` for results or add a second reporter for
-friendly progress. Durable application artifacts remain outside the log graph.
+If LogTape is the diagnostic owner, route operational diagnostics through it instead of creating competing logger stacks. Stable command results, workflow state, domain events, durable records, and artifacts keep their own typed authority even when LogTape also observes them. Do not make a log record the only copy of data another subsystem must consume reliably.
 
 ## Package capability map
 
 | Capability | Package | Use |
 |---|---|---|
 | Categories, records, filters, formatters, sinks, context | `@logtape/logtape` | Required transport core |
-| Human terminal diagnostics | `@logtape/pretty` | Pretty formatter after stream/color policy |
+| Human terminal diagnostics | Repository formatter; `@logtape/pretty` as reference/fallback | Keep a custom formatter when it communicates the repository's records, stages, metrics, or topology more clearly |
 | File and rotating diagnostics | `@logtape/file` | Durable support logs and configured files |
-| Structured secret protection | `@logtape/redaction` | Wrap every result and diagnostic route before formatting |
+| Structured secret protection | `@logtape/redaction` or focused project policy | Apply only after tracing which fields are actually secret and which are essential diagnostic evidence |
 | Recorder-backed assertions | `@logtape/testing` | Categories, levels, messages, context, and properties |
 | Parser-owned verbosity and destinations | `@optique/logtape` | CLI terms only; does not configure the graph |
 | Static rules | `@logtape/lint` | Adopt only when runtime/linter integration maturity fits |
@@ -90,8 +88,8 @@ Configure a dedicated raw sink and block inherited diagnostic sinks:
 ```ts
 await configure({
 	sinks: {
-		result: redactByField(createResultSink(), redactionOptions),
-		diagnostic: redactByField(createDiagnosticSink(options), redactionOptions),
+		result: createResultSink(output.result),
+		diagnostic: createDiagnosticSink({ ...options, writer: output.diagnostic }),
 	},
 	loggers: [
 		{
@@ -125,17 +123,29 @@ export function emitResult(text: string): void {
 The raw sink reads only the expected property:
 
 ```ts
-function createResultSink(): Sink {
+import { fromAsyncSink, type AsyncSink, type Sink } from "@logtape/logtape";
+
+export interface ByteWriter {
+	write(bytes: Uint8Array): void | Promise<void>;
+}
+
+function createResultSink(writer: ByteWriter): Sink & AsyncDisposable {
 	const encoder = new TextEncoder();
-	return (record): void => {
+	const sink: AsyncSink = async (record): Promise<void> => {
 		const result = record.properties.result;
 		if (typeof result !== "string") {
 			throw new TypeError("Result records require a string result property.");
 		}
-		Deno.stdout.writeSync(encoder.encode(result));
+		await writer.write(encoder.encode(result));
 	};
+
+	return fromAsyncSink(sink);
 }
 ```
+
+LogTape sinks are synchronous by design. Use `AsyncSink` plus `fromAsyncSink()`
+when the runtime-neutral writer can require asynchronous backpressure or I/O;
+do not return a promise from a plain `Sink`.
 
 Do not let the result sink add timestamps, levels, category names, colors, or a
 second newline. Define exact newline and empty-result policy. For JSONL, emit one
@@ -147,20 +157,28 @@ forbids them.
 Diagnostics describe execution rather than return the requested value. Route
 them to stderr, a selected file, or explicitly configured remote sinks.
 
-Select formatters by mode:
+Select formatters by mode. If the repository owns a compact formatter, keep it
+as the human default and use `@logtape/pretty` as a source of ideas or a
+fallback, not as an automatic replacement:
 
 ```ts
 function diagnosticFormatter(options: LogOptions): TextFormatter {
 	if (options.format === "json") return jsonLinesFormatter;
 	if (options.format === "plain") return defaultTextFormatter;
-	return getPrettyFormatter({
+	return createRepositoryFormatter({
 		timestamp: "time",
 		colors: options.colors,
+		width: options.width,
 		properties: true,
-		wordWrap: options.width,
 	});
 }
 ```
+
+A professional repository formatter should have explicit renderers for the
+structured shapes it already emits, such as stages, result records, metrics,
+process/resource trees, causes, grouped properties, multiline values, and
+terminal-width degradation. Test narrow terminals and non-TTY output. Do not
+flatten structured records merely to make the formatter easier to implement.
 
 Resolve terminal width and color for stderr independently from stdout. Never put
 ANSI styling in machine results. `NO_COLOR`, forced color, explicit flags, CI,
@@ -209,7 +227,7 @@ serialize large graphs, or inspect the filesystem before knowing a sink will
 receive the debug record.
 
 Log a cause as structured, redacted data. Public error rendering remains owned
-by the executable boundary. Do not emit the same failure in a handler and again
+by the executable entry point. Do not emit the same failure in a handler and again
 at the entrypoint.
 
 ## Filters, levels, and output policy
@@ -244,43 +262,50 @@ or live region; a JSON diagnostic sink may retain state changes; normal stderr
 may show only acknowledgement and milestones. Do not add Clack or Consola as an
 untracked second event transport.
 
+Do not make a fingers-crossed or sampling sink the only record of successful
+work. Successful execution remains evidence. A human sink may retain only a
+compact success summary, while a configured durable diagnostic sink keeps the
+full structured records. Rate controls may collapse repetitive records into
+counted summaries, but they must not make completed work disappear without an
+intentional retention policy.
+
 ## Redaction before rendering
 
-Wrap every sink before any formatter serializes the record:
+Redaction is a deliberate data policy, not a blanket formatter wrapper. Trace
+real log call sites and classify each field before choosing patterns. A broad
+name such as `token`, `key`, `path`, `url`, `id`, or `value` can contain either a
+secret or the exact evidence needed to diagnose a failure. Blind field-name
+redaction can make an incident impossible to debug.
+
+For fields that are verified secrets, redact the structured value before a
+formatter serializes it:
 
 ```ts
 const sink = redactByField(createDiagnosticSink(options), {
 	fieldPatterns: [
-		...DEFAULT_REDACT_FIELDS,
 		/^authorization$/iu,
 		/^cookie$/iu,
 		/^set-cookie$/iu,
+		/^password$/iu,
 	],
 	action: () => "[REDACTED]",
 });
 ```
 
-Redaction after `JSON.stringify()` cannot see nested field names. Never convert
-a config, headers object, result, or error cause into one opaque string before
-redaction.
+Do not automatically wrap the stable result route. A command such as
+`config show`, an export, or a support bundle needs its own schema/policy that
+defines what the user is allowed to receive. Diagnostic redaction must not
+silently mutate a user-requested result.
 
-Cover more than field names:
+If redaction applies, keep the record structured until after that policy runs.
+`JSON.stringify()` first makes nested field policy much harder. Test nested
+values, arrays, URLs, connection strings, errors/causes, bootstrap records, and
+support bundles. Prefer exact field/location rules or narrow value policies to
+large generic deny lists.
 
-- passwords, API keys, authorization, cookies, and tokens;
-- secrets embedded in URLs and connection strings;
-- arrays and nested records;
-- errors and causes;
-- argument/config snapshots;
-- result output such as `config show`;
-- bootstrap failures;
-- support bundles and remote routes.
-
-Use value-pattern redaction or keyed pseudonymization when field names are
-insufficient. Pseudonyms must use protected key material and must not make the
-original recoverable.
-
-Redaction is defense in depth. Continue to reject secrets in argv and general
-diagnostic environment dumps.
+Redaction is defense in depth. Continue to reject secrets in argv and broad
+environment/config dumps. Add regression tests that prove both sides: known
+secrets are hidden and known diagnostic identifiers remain visible.
 
 ## Bootstrap and reconfiguration
 
@@ -326,7 +351,7 @@ Exercise success, domain failure, parse failure, config failure, cancellation,
 and second-interrupt paths. A direct `Deno.exit()` or `process.exit()` before
 awaited cleanup can lose file or remote records.
 
-## Library and application boundaries
+## Library and application ownership
 
 Expose a small structural logger contract to reusable packages:
 
@@ -360,9 +385,12 @@ Test:
 - exact result bytes and newline behavior;
 - pretty/plain/JSON diagnostic shape;
 - quiet, silent, repeated verbosity, and subsystem levels;
-- nested redaction in results and every diagnostic sink;
+- route-specific secret policy hides verified secrets without removing required
+  diagnostic identifiers;
 - bootstrap config failure routing;
 - selected file destination and file flush;
+- successful operations retain either their structured records or an explicit
+  counted/summary record according to the configured retention policy;
 - one public failure record, not duplicates;
 - process cancellation and sink cleanup;
 - reset isolation between tests;
@@ -393,7 +421,7 @@ invalid config with --log-format json --log-output errors.jsonl
 - Do not let telemetry failure block the command unless the product explicitly
   requires audit delivery.
 - Do not put `console.*` fallbacks inside handlers. If bootstrap transport can
-  fail, define one minimal emergency boundary at the executable root.
+  fail, define one minimal emergency path at the executable root.
 - Do not treat LogTape as a workflow history, queue, database, or artifact store.
 
 ## Failure signatures
@@ -405,8 +433,8 @@ invalid config with --log-format json --log-output errors.jsonl
 | Secret survives inside a JSON string | Serialization happened before redaction | Keep object structured until sink wrapper |
 | `--silent` removes requested JSON | Result and diagnostics share one filter | Separate result category from level policy |
 | Invalid config ignores `--log-output` | Logger configured only after config resolution | Add logging-only bootstrap pass |
-| Same error appears twice | Handler and boundary both render/log | Give public error output one owner |
-| File log misses final records | Process exits before flush/disposal | Trace awaited lifecycle boundary |
+| Same error appears twice | Handler and executable entry point both render/log | Give public error output one owner |
+| File log misses final records | Process exits before flush/disposal | Trace the awaited lifecycle owner |
 | Test records leak between cases | Process-global LogTape state not reset | Reset in test teardown |
 | Debug logging is expensive when hidden | Properties computed eagerly | Use lazy evaluation and category filters |
 | Pretty output corrupts a pipe | TTY/color resolved globally, not per stream | Inspect stdout/stderr policy separately |
@@ -421,7 +449,7 @@ invalid config with --log-format json --log-output errors.jsonl
 - Official documentation: <https://logtape.org/>, discovery pointer for current categories, sinks, formatters, filters, redaction, and integrations.
 - Official source: <https://github.com/dahlia/logtape>, discovery pointer for package/version history.
 
-Freshness status: the concrete configuration example is grounded in LogTape
-2.2.4 from the attached lockfile. Verify `parentSinks`, sink wrapper signatures,
-formatter APIs, lint maturity, and optional package names against the installed
-version before copying code.
+Freshness status: the attached implementation evidence remains grounded in
+LogTape 2.2.4, while the sink lifecycle and async-sink notes were rechecked
+against the official LogTape 2.3.1 documentation/changelog on 2026-08-19.
+Current LogTape 2.3.1 documentation also keeps a plain `Sink` synchronous; asynchronous output uses `AsyncSink` wrapped by `fromAsyncSink()`, and that wrapper requires asynchronous disposal. Always verify `parentSinks`, sink wrapper signatures, formatter APIs, context helpers, lint maturity, and optional package names against the repository's installed version before copying code.

@@ -41,7 +41,7 @@ Write an ownership table:
 | Shareable step/filter | Validated URL if intentionally navigable |
 | Client feedback | Native constraints plus client schema |
 | Trust and domain invariants | Server schema/service |
-| Session and tenant authority | Server request boundary |
+| Session and tenant authority | Server request authority |
 | Pending request | Mutation/form controller |
 | Committed record | Server/database/provider |
 | Remote cache | Query cache and invalidation policy |
@@ -110,7 +110,7 @@ Use:
 - `FormData` names that match server schema;
 - server fallback when progressive enhancement is claimed.
 
-Client validation improves UX but is not a security boundary. Native constraints and client schemas may be bypassed.
+Client validation improves UX but is not a security trust transition. Native constraints and client schemas may be bypassed.
 
 Do not validate aggressively on each keystroke. Clear stale errors during input; validate once the user leaves a field or submits according to product policy. Do not disable an initially invalid submit button so thoroughly that users cannot trigger discoverable validation.
 
@@ -298,7 +298,7 @@ For long-lived drafts handle server version conflicts. Do not overwrite a change
 | Client bundle requests server secrets | Shared schema/auth imports server module | Import graph |
 | Optimistic success stays after rejection | Rollback/invalidation missing | Mutation callbacks/query key |
 | Back loses multi-step progress | Ownership not durable/shareable | URL/server draft policy |
-| File upload succeeds but private file is public | Storage authorization mismatch | Upload/serve boundary |
+| File upload succeeds but private file is public | Storage authorization mismatch | Upload/serve authorization path |
 
 ## Verification
 
@@ -315,7 +315,7 @@ For long-lived drafts handle server version conflicts. Do not overwrite a change
 
 ## Sources and freshness
 
-- Uploaded `new-finance-app(1).zip` and `old-finance-app(1).zip` auth forms, Astro shells, TanStack Form 1.33 usage, and auth capability boundary, reviewed 2026-07-17.
+- Uploaded `new-finance-app(1).zip` and `old-finance-app(1).zip` auth forms, Astro shells, TanStack Form 1.33 usage, and auth capability interface, reviewed 2026-07-17.
 - TanStack Form validation docs: https://tanstack.com/form/latest/docs/framework/react/guides/validation (reviewed 2026-07-17).
 - Modern Web Guidance forms/accessibility/security guides retrieved 2026-07-17.
 - TanStack Form, Astro navigation, Better Auth, and passkey APIs are version-sensitive. Verify installed package APIs and provider policy.
