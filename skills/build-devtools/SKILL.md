@@ -6,9 +6,10 @@ description: Design, integrate, migrate, review, diagnose, or verify developer t
 # Build developer tools
 
 Map the repository's toolchain before changing it. When active, `deno-software`
-owns Deno configuration and publication and `build-clis` owns CLI product
-behavior. Otherwise preserve those checks locally. This skill owns developer
-workflow, generation, packaging automation, and release evidence.
+owns Deno configuration and publication, `build-clis` owns CLI product behavior,
+and `build-libraries` owns the reusable public API, entrypoint partitioning, and
+selective-adoption contract. Otherwise preserve those checks locally. This skill
+owns developer workflow, generation, packaging automation, and release evidence.
 
 ## Toolchain ownership map
 
@@ -38,6 +39,9 @@ mirrored tasks with different semantics.
 
 - [toolchains.md](references/toolchains.md): Mise, Aube, tasks, manifests,
   lockfiles, CI, editors, and ownership.
+- [mise-aube.md](references/mise-aube.md): load for detailed Mise and Aube
+  configuration, tool/runtime/task ownership, lockfiles, workspaces, security,
+  lifecycle-build jails, CI, migration, and rollback.
 - [generated-artifacts.md](references/generated-artifacts.md): check/write,
   provenance, deterministic generation, drift, and safe formatting.
 - [packaging.md](references/packaging.md): cross-runtime builds, exports,

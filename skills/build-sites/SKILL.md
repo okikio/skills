@@ -37,6 +37,10 @@ discoverability, feeds, and site deployment.
   drafts, media, cache, feeds, and migration.
 - [site-quality.md](references/site-quality.md): SEO, accessibility,
   performance, assets, and verification.
+- [icons.md](references/icons.md): load for Astro Icon, Unplugin Icons,
+  renderer-specific compilers, local SVG collections, accessibility, and bundle control.
+- [fonts.md](references/fonts.md): load for Astro Fonts API, Fontsource,
+  local/variable fonts, privacy, preload, fallback metrics, and layout-shift verification.
 - [casebook.md](references/casebook.md): Kaiju and ThunderStrike patterns and
   counterexamples.
 

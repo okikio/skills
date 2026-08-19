@@ -6,9 +6,10 @@ description: Design, implement, migrate, review, diagnose, or verify durable wor
 # Build durable workflows and pipelines
 
 Start from failure and recovery semantics. When active, `build-data` owns
-storage-engine and artifact design and `build-apis` owns HTTP exposure.
-Otherwise preserve those boundary checks locally. This skill owns durable
-coordination and reachability.
+storage-engine and artifact design, `build-apis` owns HTTP exposure, and
+`build-libraries` owns reusable restart and checkpoint contracts. Otherwise
+preserve those boundary checks locally. This skill owns persisted execution
+authority, durable coordination, worker reachability, and operator recovery.
 
 ## Durability evidence ladder
 
@@ -65,6 +66,11 @@ For every workflow, answer:
 
 - [durability.md](references/durability.md): engine selection, authority,
   identities, determinism, and completion.
+- [effect-workflow.md](references/effect-workflow.md): Effect service/Layer
+  composition and the evidence-bounded `@effect/workflow` execution model.
+- [temporal.md](references/temporal.md): Temporal clients, workers, workflows,
+  activities, messages, schedules, timeouts, retries, cancellation, and safe
+  deployment/versioning.
 - [control-plane.md](references/control-plane.md): definitions, registration,
   admission, projections, reachability, and API/CLI integration.
 - [atomicity.md](references/atomicity.md): transactions, idempotency, sequences,
@@ -73,6 +79,10 @@ For every workflow, answer:
   schedules, cancellation, backpressure, and poison work.
 - [pipelines.md](references/pipelines.md): staged ingestion, provenance,
   bounded batches, checkpoints, manifests, and projections.
+- [recovery.md](references/recovery.md): leases, checkpoints, resume,
+  reconciliation, replay, repair, and recovery testing.
+- [streams.md](references/streams.md): workflow event streams, SSE delivery,
+  cursor authority, replay, backpressure, cancellation, and retention.
 - [failures.md](references/failures.md): evidence-grounded failure signatures.
 
 Do not claim durability until interruption and restart have been executed against

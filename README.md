@@ -13,6 +13,9 @@ agents.
 - `explore-ecosystems` gives every in-scope dependency a cheap ecosystem identity
   check, then verifies monorepos, siblings, adapters, plugins, specifications,
   alternatives, and exclusions deeply for material decisions.
+- `build-libraries` owns reusable programming models, public APIs, selective
+  adoption, data-flow shapes, explicit resource ownership, data-oriented hot
+  paths, library performance, packaging contracts, and restart/resume boundaries.
 - `build-clis` owns command language, configuration, output, interaction,
   cancellation, installed artifacts, and CLI verification.
 - `build-web` classifies hybrid web surfaces and owns shared renderer,

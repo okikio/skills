@@ -1,5 +1,8 @@
 # Configuration resolution
 
+For the complete c12/defu/jiti lifecycle, merge implementation, authored
+operations, and diagnostic playbook, load [c12-defu.md](c12-defu.md).
+
 ## Three different shapes
 
 Keep these contracts distinct:

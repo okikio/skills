@@ -1,6 +1,6 @@
 ---
 name: use-okikio
-description: Research, select, integrate, review, or debug Okikio-maintained libraries and recurring project patterns without inventing private APIs. Use for @okikio/undent, @okikio/wikitext, @okikio/sparql, remembered observables packages, backend endpoint/query/response/database utilities, service modules, workflow control-plane utilities, custom ClickHouse Drizzle work, package generation, and related personal repositories.
+description: Research, select, integrate, review, or debug Okikio-maintained libraries and recurring project patterns without inventing private APIs. Use for @okikio/undent, @okikio/wikitext, @okikio/sparql, @okikio/observables, backend endpoint/query/response/database utilities, service modules, workflow control-plane utilities, custom ClickHouse Drizzle work, package generation, and related personal repositories.
 ---
 
 # Use Okikio libraries and patterns
@@ -39,8 +39,10 @@ Do not claim availability above the strongest evidence.
    experimental code, unexported helpers, and executable behavior.
 4. Match the local repository's schema, logging, configuration, resource, and
    composition contracts. Reuse a pattern only when those contracts align.
-5. Preserve Zod v4 schema-first boundaries, LogTape process output, explicit
-   resource lifetime, and source-grounded verification.
+5. Preserve the consuming repository's validated schema, logging, configuration,
+   and resource-lifetime owners. Reuse Zod v4 or LogTape when the repository has
+   selected them; do not introduce either merely because an Okikio example uses
+   it.
 6. If source is unavailable, state the exact inspection needed and offer an
    interface or discovery plan, not invented imports.
 
@@ -50,6 +52,8 @@ Do not claim availability above the strongest evidence.
   alignment, newline, and Unicode display-width choices.
 - [wikitext.md](references/wikitext.md): token/event/tree cost ladder,
   diagnostics, sessions, maturity, and missing exports.
+- [observables.md](references/observables.md): exact published 1.4.0 Observable,
+  operator, error-mode, EventBus, backpressure, teardown, and interop contracts.
 - [backend.md](references/backend.md): service modules, endpoint, validation,
   query, response, server, database, and auth patterns.
 - [workflows.md](references/workflows.md): control-plane and durable-workflow

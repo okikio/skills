@@ -47,8 +47,13 @@ ORM-shaped API or a repository README that contradicts the deployed query path.
   decision model.
 - [postgres-drizzle.md](references/postgres-drizzle.md): transactional schemas,
   Drizzle, migrations, drivers, and resource lifetime.
+- [drizzle-architecture.md](references/drizzle-architecture.md): load when reviewing
+  Drizzle internals, dialects, drivers, sessions, prepared queries, result mapping,
+  ORM/Kit boundaries, or designing a new dialect.
 - [clickhouse.md](references/clickhouse.md): analytics, MergeTree design,
   ingestion, deduplication, mutation, and custom adapters.
+- [clickhouse-adapter.md](references/clickhouse-adapter.md): load when implementing,
+  auditing, publishing, or extending the Kaiju custom Drizzle-like ClickHouse adapter.
 - [projections.md](references/projections.md): Typesense, QLever/Blazegraph,
   synchronization, rebuild, and reconciliation.
 - [artifacts.md](references/artifacts.md): JSONL, Parquet, raw evidence,

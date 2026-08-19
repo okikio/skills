@@ -27,8 +27,10 @@ package currently implements it.
    and request test.
 2. Define runtime schemas and infer application types. Use Standard Schema only
    where validator-neutral interoperability is an actual boundary.
-3. Construct the root app once per deployment boundary. Keep root, service, and
-   route middleware responsibilities explicit and ordered.
+3. Separate endpoint contracts, service-domain capabilities, and resource
+   implementations. If the repository selects Effect, construct its runtime once
+   per deployment boundary. In every stack, do not rebuild long-lived pools,
+   auth clients, log sinks, or equivalent resources per request.
 4. Register matching validator middleware before reading `c.req.valid(...)`.
 5. Describe full success and error response contracts, not payload-only shapes.
 6. Authenticate identity, then authorize organization/tenant/resource access
@@ -45,15 +47,23 @@ package currently implements it.
 ## Reference routing
 
 - [service-modules.md](references/service-modules.md): definitions, handlers,
-  aggregation, registration, middleware, and reachability.
+  aggregation, service registries, composition, reachability, and independent
+  deployment boundaries.
 - [contracts.md](references/contracts.md): Standard Schema, Zod, validation,
   responses, problems, and OpenAPI.
+- [effect-services.md](references/effect-services.md): Effect services,
+  `Context.Tag`, Layers, typed errors, Scope, configuration, observability, and
+  request-runtime integration.
 - [auth.md](references/auth.md): Better Auth, sessions, plugins, organization
   policy, routes, and import-safe construction.
 - [queries.md](references/queries.md): filters, sorts, fields, pagination,
   count strategies, and server-owned constraints.
 - [runtime.md](references/runtime.md): Hono adapters, middleware order,
   resources, LogTape, errors, and cleanup.
+- [streaming.md](references/streaming.md): SSE framing, cursors, replay,
+  backpressure, cancellation, authorization, and durable stream sources.
+- [deployment.md](references/deployment.md): independent deployability,
+  resource/config boundaries, health, readiness, shutdown, and contract tests.
 - [failures.md](references/failures.md): source-grounded failure signatures and
   correction paths.
 

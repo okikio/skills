@@ -48,6 +48,8 @@ policy over an Astro docs app, runtime CMS, and TanStack product app together.
 - [surfaces.md](references/surfaces.md): classification and ownership.
 - [renderers.md](references/renderers.md): Astro, Solid, React, native HTML,
   islands, SSR, and hydration boundaries.
+- [assets.md](references/assets.md): renderer-owned icon/font boundaries,
+  component-registry adaptation, accessibility, privacy, and verification.
 - [components.md](references/components.md): Zaidan, shadcn, Kobalte, Corvu,
   styles, tokens, icons, and fonts.
 - [motion.md](references/motion.md): Solid lifetimes, presence, Motion, SSR,

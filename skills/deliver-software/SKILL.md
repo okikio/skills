@@ -37,16 +37,19 @@ from imports, configuration, and surrounding code, then load only that
 framework's reference.
 
 When a focused workflow skill is active, let it own its domain references. In
-particular, `build-web`, `build-sites`, and `build-web-apps` replace the bundled
-general web/framework references for their in-scope decisions. Do not load both
-sets by habit. Use this skill for authority, lifecycle, cleanup, and the final
-verdict, then use the focused skill for changing contracts and verification.
+particular, `build-libraries` owns reusable programming models and package
+contracts, while `build-web`, `build-sites`, and `build-web-apps` replace the
+bundled general web/framework references for their in-scope decisions. Do not
+load both sets by habit. Use this skill for authority, lifecycle, cleanup, and
+the final verdict, then use the focused skill for changing contracts and
+verification.
 
 ## Route the task
 
 | Work | Read |
 | --- | --- |
 | Code, architecture, API design, refactor, or migration | [general.md](references/general.md) |
+| Reusable library, SDK, public package API, tree-shaking, streaming contract, resource-owning API, or application-to-library extraction | Use `build-libraries` when installed; otherwise apply [general.md](references/general.md), [typescript.md](references/typescript.md), [testing.md](references/testing.md), and [benchmarks.md](references/benchmarks.md) as applicable |
 | Material dependency selection, integration, replacement, or upgrade | Use `explore-ecosystems` when installed; otherwise apply the ecosystem preflight below |
 | Substantial plan, implementation, refactor, migration, completion audit, or multi-surface change | [workflow.md](references/workflow.md) and [delivery.md](references/delivery.md) |
 | Refactor, migration, cutover, compatibility window, or legacy removal | [refactors.md](references/refactors.md) |

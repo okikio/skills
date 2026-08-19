@@ -3,6 +3,11 @@
 Use `explore-ecosystems` to verify versions and relationships. This map assigns
 capabilities; it is not an instruction to install every package.
 
+Load [optique.md](optique.md), [logtape.md](logtape.md),
+[c12-defu.md](c12-defu.md), or [unjs.md](unjs.md) when one of those ecosystems
+materially owns the task. Load [integration.md](integration.md) when several
+owners must be composed without duplicating responsibility.
+
 ## Command language
 
 Optique can own typed grammar, source binding, help, discovery, completion, and

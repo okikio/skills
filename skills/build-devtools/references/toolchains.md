@@ -13,8 +13,11 @@ licensed, verified binary.
 
 ## Aube and unfamiliar tools
 
-Resolve canonical repository, package identity, version, config schema, generated
-files, and task behavior first. If source cannot be found, record the name as an
+Aube is a verified Node.js package manager in the jdx ecosystem. Load
+[mise-aube.md](mise-aube.md) for current lockfile, workspace, lifecycle-build,
+security, and Mise-integration behavior. Other unfamiliar tools still require
+canonical repository, package identity, version, config schema, generated files,
+and task behavior before use. If source cannot be found, record the name as an
 unverified discovery hint and do not invent configuration keys.
 
 ## Task parity

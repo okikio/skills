@@ -1,5 +1,8 @@
 # Results, diagnostics, and durable artifacts
 
+For complete LogTape category, sink, filter, formatter, context, redaction,
+testing, bootstrap, and disposal patterns, load [logtape.md](logtape.md).
+
 ## Three channels
 
 1. Stable command results are user-requested output. They go to stdout or an

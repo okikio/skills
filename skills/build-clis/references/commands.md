@@ -1,5 +1,8 @@
 # Command language and Optique
 
+For package-level Optique APIs, ecosystem selection, version boundaries, and
+worked parser/source examples, load [optique.md](optique.md).
+
 ## Design the language first
 
 Define nouns, verbs, nesting, defaults, aliases, destructive operations, output
