@@ -23,6 +23,29 @@ Prefer fewer, higher-signal comments over noisy review spam.
 
 ## Review order
 
+### Preflight: source ownership and the smallest sufficient design
+
+For material or stacked PRs, identify the current base, head, and incremental
+diff before reviewing a large cumulative file list. Use a TypeScript/Oxc AST
+trace where useful to follow imports, exports, call sites, runtime entrypoints,
+schema definitions, handlers, package consumers, task commands, and resource
+lifetime. Then inspect the relevant code manually. A syntax match is a review
+candidate, not a demonstrated defect.
+
+Ask what each new module, public interface, validation pass, test harness,
+registry, and task contributes that an existing owner does not. Check whether
+it duplicates a schema or route, reverses a service/package dependency, hides
+side effects, or creates an independent state owner without an actual caller.
+Prefer the smallest design that preserves the required normal and failure
+paths. Preserve framework-required classes, real lazy imports, runtime-specific
+tests, and other justified exceptions.
+
+For material findings, record `path:symbol`, the caller and intended owner,
+the observed failure or maintenance cost, the controlling rule, a proposed
+replacement, and the proof required. Resolve assertion aliases and helper
+calls before flagging tests with no oracle. Do not recommend a new mandatory
+CI scanner for a judgment that requires following runtime behavior.
+
 ### 1. Correctness and contracts
 
 Check:

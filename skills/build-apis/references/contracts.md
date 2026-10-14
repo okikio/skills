@@ -31,19 +31,26 @@ The schema nearest the wire owns wire syntax. A domain schema owns domain
 meaning. They can share fragments, but do not pretend a query-string boolean and
 a JSON boolean have the same input representation.
 
+Author wire schemas and endpoint definitions in their owning service or
+capability, and re-export those import-safe definitions from published contract
+packages. Do not independently define route identity, auth requirements, or
+response schemas in an SDK package and then import that catalog back into its
+own service. Derive OpenAPI from the mounted definition rather than duplicating
+it in a hand-authored document.
+
 ## Zod and Standard Schema ownership
 
 Use Zod v4 schemas as the source of truth where the repository has selected Zod,
 then infer types with `z.input`, `z.output`, or the repository's helpers:
 
 ```ts
-export const CreateImportJson = z.object({
+export const CreateImportJsonSchema = z.object({
   upload_id: z.uuid(),
   mapping: z.record(z.string(), z.string()),
 })
 
-export type CreateImportJsonInput = z.input<typeof CreateImportJson>
-export type CreateImportJson = z.output<typeof CreateImportJson>
+export type CreateImportJsonInputType = z.input<typeof CreateImportJsonSchema>
+export type CreateImportJsonType = z.output<typeof CreateImportJsonSchema>
 ```
 
 Input and output types differ when a schema coerces, defaults, transforms, or
@@ -95,6 +102,12 @@ const body = c.req.valid("json")
 
 An endpoint definition alone does not populate `c.req.valid(...)`.
 
+Validate each untrusted request source at its owning transport seam, then pass
+the parsed output to the domain capability. Do not reparse the same schema in
+admission, routing, and every handler merely to create typed values again.
+Revalidate at a different trust or semantic seam, such as stored legacy data or
+an external provider response, when that seam has an independent contract.
+
 ## Normalization and coercion
 
 Normalize only after source-aware validation. Make absence, empty string, false,
@@ -102,7 +115,7 @@ zero, repeated values, and invalid values observably different where the API
 contract needs them.
 
 ```ts
-export const ListQuery = z.object({
+export const ListQuerySchema = z.object({
   limit: z.string().regex(/^\d+$/).transform(Number).pipe(z.int().min(1).max(200)).default("50"),
   cursor: z.string().min(1).optional(),
   include_archived: z.enum(["true", "false"]).transform((value) => value === "true").default("false"),
@@ -123,11 +136,17 @@ them.
 
 Model complete response variants, not the payload alone:
 
+Enforce declared status, body, and headers at the serving seam when the API
+promises runtime response validation. Otherwise prove equivalent guarantees
+with typed handlers and focused real-response schema tests. Do not bypass a
+declared response schema with unexamined direct JSON serialization on selected
+branches. Match all documented problem variants as well as successful ones.
+
 ```ts
 const Responses = {
   202: {
     contentType: "application/json",
-    schema: AcceptedImport,
+    schema: AcceptedImportSchema,
     headers: z.object({ location: z.string().url() }),
   },
   401: problem("unauthorized"),

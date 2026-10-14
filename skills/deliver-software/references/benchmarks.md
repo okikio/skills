@@ -118,6 +118,13 @@ Use hard thresholds only when the environment is stable enough to support them. 
 
 Do not create a flaky gate with a threshold tighter than the host's normal variance.
 
+Benchmarks are optional evidence for a named performance decision, not routine
+correctness gates. Require them in PR CI only when an affected operation has a
+representative workload, reproducible baseline, stable threshold, and an owner
+who will investigate regressions. Otherwise, keep a discoverable, separately
+invoked benchmark task and preserve raw measurement context. Prefer a stable
+physical counter over noisy wall-clock timing when it tests the same risk.
+
 ## Reporting
 
 A benchmark result should state:

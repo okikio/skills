@@ -54,10 +54,14 @@ Do not default to terminal-driven exploration when workspace tools can do the jo
 
 ## Script policy
 
-For repetitive bulk edits or other writing-oriented automation, prefer a
-reviewable script in the repository's established automation location. Use Deno
-and TypeScript when they fit the repository; do not introduce Deno into an
-unrelated project solely for a temporary edit.
+For a one-time bulk edit, prefer a reviewable temporary script outside the
+production source tree and provide its patch or output when useful. Commit a
+script only if the repository has a recurring operation and a clear owner.
+Where Mise already owns repository tasks, keep `.mise/tasks/` as small shell
+entry points. Put substantial reusable logic in the appropriate package or a
+focused typed CLI, not a second `scripts/` or `.mise/lib/` task framework.
+Use Deno and TypeScript when they fit the repository; do not introduce Deno
+into an unrelated project solely for a temporary edit.
 
 Feel free to use `jsr:` and `npm:` packages when they improve clarity, safety, or reviewability.
 

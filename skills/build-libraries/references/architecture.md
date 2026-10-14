@@ -106,14 +106,16 @@ It may accept resolved values and focused capabilities produced by those owners.
 It may emit structured domain events and library diagnostics. The application
 composition root chooses concrete adapters and owns process lifecycle.
 
-## Design four stable contracts first
+## Design only the contracts the consumer needs
 
-For a named use case, define:
+Start with the request and result the caller actually uses. Add typed failures
+when callers need to distinguish failures. Add domain events only when there is
+a real observation consumer or durable progress contract. A pure function that
+returns a value does not need a public event stream, session, registry, or
+lifecycle framework merely to satisfy a four-part template.
 
-1. request;
-2. result;
-3. structured failures;
-4. observable domain events.
+For an analysis operation that really supports all four concerns, the contracts
+might be:
 
 ```ts
 export interface AnalyzeDomainsRequest {
@@ -139,8 +141,12 @@ export type AnalysisEvent =
   | AnalysisCompleted;
 ```
 
-Do not expose internal stage objects, queue types, mutable contexts, or adapter
-options merely because the first implementation uses them.
+The interfaces above illustrate a conceptual typed-only operation, not a
+requirement to define four new records. Simple function parameters and return
+types may suffice. For serialized or persisted requests and results, author
+project-selected runtime schemas and infer the data types instead of maintaining
+parallel interfaces. Do not expose internal stage objects, queues, mutable
+contexts, or adapter options merely because the first implementation uses them.
 
 ## Deep modules and layered surfaces
 

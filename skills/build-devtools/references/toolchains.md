@@ -128,6 +128,20 @@ A local task and CI task with similar names are not proof of parity. Compare:
 - browser/runtime matrix;
 - package/build artifact inspection.
 
+A required CI job must protect an identified failure domain. Examples:
+
+- source or schema change: focused lint, typecheck, and directly affected tests;
+- service/wire change: real request validation, auth, and published API contract;
+- package export change: clean packed consumer and emitted declarations;
+- stateful resource change: migration/transaction or bounded lifecycle proof;
+- release/deployment change: immutable artifact and authorized read-only plan,
+  followed by separately approved deployment verification.
+
+Do not run every browser, database, benchmark, package, or deployment test for
+an unrelated edit. Benchmarks without stable regression thresholds are optional
+evidence, not routine correctness gates. Separate job permissions and approvals
+when they protect real deployment risk, not to create more qualification tiers.
+
 Avoid a local `npm test` path and a CI `deno task test` path when they exercise materially different source or configuration unless that difference is intentional and separately verified.
 
 ## Failure signatures

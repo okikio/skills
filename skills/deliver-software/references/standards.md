@@ -275,6 +275,42 @@ for compatibility. A replacement is complete only after current consumers,
 tests, exports, docs, configuration, persisted data, generated artifacts, and
 user flows use the new path and the obsolete path is removed.
 
+## Functional design and contract authority
+
+Prefer pure functions and complete immutable records for domain decisions,
+validation plans, and derived data. Keep environment reads, process signals,
+network I/O, storage, service startup, and resource registration in explicit
+adapters or composition roots. Avoid post-declaration mutation of shared
+registry records when a complete definition is simpler to inspect. Classes and
+mutable state are appropriate when a framework contract or real resource
+lifetime requires them; the syntax alone is not a standards violation.
+
+For a service-owned API, author import-safe endpoint definitions, request and
+response schemas, known problems, and documentation in the service or owning
+capability. A published `packages/contracts/` entry point re-exports those
+*same* pure definitions and may expose generated OpenAPI or clients. It must
+not author a second set of endpoints that the service imports back from the
+published package. Keep handlers, connections, credentials, and resource
+construction out of contract-module imports. Trace the import graph and the
+packed consumer to prove this dependency direction without cycles.
+
+Validate untrusted input once at its owning entry point, then pass the parsed
+value to typed domain functions. Validate again only for a different semantic
+contract, another untrusted source, or a documented runtime guarantee. Every
+advertised response variant must match its declared status, body, headers, and
+problem schema. Generate API documentation from the registered definitions;
+do not maintain a separate handwritten copy of the route and security policy.
+
+Prefer static ESM imports for unconditional dependencies. Use `import()` for
+actual lazy loading, optional capabilities, deliberate runtime selection, or
+tests of module loading. Prefer `.ts` for project-owned executable logic when
+the selected runtime supports TypeScript; keep JS/MJS where the host
+contract requires them. Do not convert syntax solely to satisfy a scanner.
+
+Before adding a class, helper, adapter, registry, script, or validation layer,
+name its independent caller, failure mode, or lifecycle responsibility. If an
+existing supported operation already provides the contract, reuse it instead.
+
 ## Runtime ownership and cancellation
 
 Name ownership directly.
@@ -338,9 +374,16 @@ Treat Unplugin, Oxc, and similar tool families as ecosystems to inspect before b
 
 ### mise
 
-When a repository uses mise as its task/CI authority, run and update the mise
-workflows rather than inventing parallel ad-hoc commands. Keep the underlying
-commands individually understandable so failures can still be diagnosed.
+When a repository uses Mise as its task/CI authority, prefer small shell
+file tasks that directly invoke the selected tool or a real project-owned CLI.
+Use Mise dependencies for composition, not a second Python/JavaScript task
+planner. Keep substantive reusable logic in its owning TypeScript package or
+focused CLI instead of growing `.mise/lib/` or a parallel `scripts/` tree.
+
+Each required GitHub Actions check must name the concrete change-induced failure
+it prevents. Keep ordinary type, focused behavior, and relevant artifact gates
+separate from optional performance experiments and production apply/approval.
+A green source-preview task does not prove a published package or deployment.
 
 ## Tests, benchmarks, and completion
 

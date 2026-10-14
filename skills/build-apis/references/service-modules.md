@@ -4,6 +4,7 @@
 
 - [Outcome](#outcome)
 - [Terms and ownership](#terms-and-ownership)
+- [Published contract packages](#published-contract-packages)
 - [Target module shape](#target-module-shape)
 - [Definition and handler contract](#definition-and-handler-contract)
 - [Group and service registries](#group-and-service-registries)
@@ -41,30 +42,39 @@ Use “service module” consistently. A service is a top-level executable unit;
 `accounts/preferences` can be a module within the `accounts` service. Do not
 split a module into a network service solely because it has a folder.
 
+## Published contract packages
+
+The service or domain capability authors the **pure** endpoint definitions,
+request/response schemas, problem variants, and OpenAPI metadata. The runtime
+composes handlers, policy, and resources from those definitions. A published
+`packages/contracts/` package re-exports the service-authored pure modules
+and, when needed, generated OpenAPI or typed clients. The public package must
+not define a second catalog that the service imports to learn its own routes.
+
+Keep definitions import-safe: loading a published contract must not acquire a
+connection, load deployment secrets, register process signals, or start a
+server. When packaging source from another folder, ensure the build includes
+only the pure contract dependency graph and resolves it without a cycle. Prove
+this with a clean packed-package consumer as well as an actual mounted route.
+
 ## Target module shape
 
-Start with the smallest shape that owns the current behavior:
+Start with the smallest shape that owns the current behavior. For two
+independently meaningful endpoints, that can be:
 
 ```text
 services/accounts/
-├── endpoints/
-│   └── preferences/
-│       ├── get/
-│       │   ├── definition.ts
-│       │   └── handler.ts
-│       ├── update/
-│       │   ├── definition.ts
-│       │   └── handler.ts
-│       ├── mod.ts
-│       └── index.ts
-├── domain/
-│   ├── preferences.ts
-│   └── errors.ts
-├── data/
-│   └── preferences.ts
-├── mod.ts
-└── index.ts
+├── preferences/
+│   ├── definition.ts  # Import-safe schemas and endpoint definitions
+│   └── handler.ts     # Runtime capability calls
+├── mod.ts             # Pure definition exports
+└── index.ts           # Runtime composition and host
 ```
+
+Add `domain/` and `data/` only when their separate decisions or adapters
+need distinct modules. Split individual operations into more files only when
+it clarifies ownership or keeps resource-backed code out of pure contract
+imports. Do not add `get/`, `update/`, or registries to mirror a sample tree.
 
 Add durable-work folders only when the service owns durable behavior:
 
@@ -107,17 +117,17 @@ Prefer a definition helper that retains literal route and method types:
 ```ts
 import { z } from "zod"
 
-export const Params = z.object({ family_id: z.uuid() })
-export const Json = z.object({ currency: z.string().length(3) })
-export const Result = z.object({ family_id: z.uuid(), currency: z.string() })
+export const ParamsSchema = z.object({ family_id: z.uuid() })
+export const JsonSchema = z.object({ currency: z.string().length(3) })
+export const ResultSchema = z.object({ family_id: z.uuid(), currency: z.string() })
 
 export const Definition = defineEndpoint({
   name: "update-family-preferences",
   method: "PATCH",
   route: "/families/:family_id/preferences",
-  schemas: { Param: Params, Json },
+  schemas: { Param: ParamsSchema, Json: JsonSchema },
   responses: {
-    200: jsonResponse(Result, "Preferences updated"),
+    200: jsonResponse(ResultSchema, "Preferences updated"),
     401: problemResponse("unauthorized"),
     403: problemResponse("forbidden"),
     404: problemResponse("family-not-found"),
@@ -160,26 +170,35 @@ Do not read raw request input after a validated source exists.
 
 ## Group and service registries
 
-Use explicit registries so definitions and handlers can be compared at startup:
+Author a pure definition catalog only when a consumer needs one. Bind each
+handler directly to the corresponding definition in the runtime host. Do not
+create two independent registries that duplicate route identities simply to
+validate each other:
+
+In the import-safe `preferences/definition.ts` module:
 
 ```ts
 export const PreferenceDefinitions = [
   GetPreferenceDefinition,
   UpdatePreferenceDefinition,
 ] as const
-
-export const PreferenceHandlers = {
-  "get-family-preferences": GetPreferenceHandler,
-  "update-family-preferences": UpdatePreferenceHandler,
-} satisfies HandlerRegistry<typeof PreferenceDefinitions>
 ```
 
-The group `index.ts` registers each definition with its handler and middleware on
-an app supplied by the service. The service `mod.ts` exports its definition
-catalog without constructing resources. The service `index.ts` builds or mounts
-the app exactly once.
+In the runtime host, bind those same service-authored definitions to handlers:
 
-Startup validation must reject:
+```ts
+register(app, GetPreferenceDefinition, GetPreferenceHandler)
+register(app, UpdatePreferenceDefinition, UpdatePreferenceHandler)
+```
+
+Public contract packages import only the pure `PreferenceDefinitions` and the
+underlying definitions, never the runtime registration or handlers. The host
+owns middleware and binds resources. Direct typed registration is often
+clearer than another registry or adapter layer.
+
+For *dynamic* registration, validate at startup that no registration is
+missing, duplicated, or unsupported. For *static* registration, prefer
+compile-time relationships and focused request tests. Relevant checks include:
 
 - a duplicate definition name or method/path pair;
 - a definition without a handler;
@@ -200,7 +219,7 @@ The host entrypoint owns this sequence:
 4. create one Hono root for this deployment unit;
 5. install root middleware once;
 6. register service groups and endpoint middleware;
-7. validate the registry/OpenAPI/reachability contract;
+7. check dynamic registrations where present and test route reachability;
 8. start listening and publish readiness;
 9. on shutdown, stop admission, drain, close resources, and flush sinks.
 
@@ -212,7 +231,6 @@ export async function startAccountsHost(input: AccountsHostInput) {
   const app = createServer({ logger: resources.logger })
 
   registerAccountsEndpoints(app, { runtime })
-  assertEndpointRegistry(app, AccountsDefinitions)
 
   return serve({
     app,
@@ -359,7 +377,8 @@ without importing a monolithic hidden composition root.
 
 ## Tests and verification
 
-Required test layers:
+Choose the relevant test layers from the changed failure risk; do not run
+all of them for every small endpoint change:
 
 1. definition schema tests for valid and invalid sources;
 2. domain capability tests without HTTP;
@@ -372,9 +391,12 @@ Required test layers:
 9. standalone service artifact boot test;
 10. durable-start reachability test when workflows are present.
 
-Verification commands are repository-specific, but the evidence must include a
-typecheck, focused tests, generated-contract validation, a standalone boot, and
-at least one executable request for every operation changed.
+For a changed public route, verify its relevant schema and a real composed
+request, plus the generated contract if it is published. For a newly deployed
+host or changed resource lifecycle, verify standalone boot and shutdown.
+Test independent service deployment only when the deliverable claims it. Report
+unavailable runtime or deployment proof explicitly instead of creating a
+second, simulated qualification system.
 
 ## Evidence limit
 

@@ -126,9 +126,28 @@ test upgrades rather than claiming a pin.
 ## Mise tasks and freshness
 
 Tasks can live in `mise.toml` or executable files under configured task
-directories. File tasks retain language-aware editor support and can work for
-non-Mise users. Their `#MISE` or `# [MISE]` directives are syntax: a formatter
-that changes them may silently remove task metadata.
+directories. For repository commands, prefer **small executable shell file
+tasks** when no explicit multi-command dependency graph is needed. A file task
+under `.mise/tasks/` can use an extensionless filename and Bash shebang (but should generally prefer `.sh` extensions for clarity):
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+exec deno test services/accounts
+```
+
+The repository's selected command is illustrative. A task normally picks one
+real tool or focused project CLI; it does not implement the operation, parse a
+new command language, or dispatch another bespoke task graph. When order or
+parallel dependencies matter, declare them through Mise's own task model.
+Keep substantial reusable TypeScript logic in the owning package or a
+project-owned CLI. Do not grow `.mise/lib/` or a parallel `scripts/` tree into
+another application/runtime merely because Mise calls it. Keep a TS/MJS (prefer TS files over MJS, but generally stick to `.sh` files)
+file only when its selected host requires it.
+
+File tasks retain language-aware editor support and can work for non-Mise
+users. Their `#MISE` or `# [MISE]` directives are syntax: a formatter that
+changes them may silently remove task metadata.
 
 ```toml
 [tasks.check]
@@ -140,8 +159,8 @@ run = [
 ]
 
 [tasks."generate:check"]
-run = "deno task generate --check"
-sources = ["schemas/**/*.ts", "scripts/generate.ts"]
+run = "deno run --allow-read tools/generate.ts --check"
+sources = ["schemas/**/*.ts", "tools/generate.ts"]
 outputs = ["generated/manifest.json"]
 tools.deno = "2.9"
 ```
@@ -171,6 +190,12 @@ declared artifact exists or is valid.
 terminal ownership. Raw output can break parallel presentation and bypass
 redaction. Stable machine-readable output should normally come from the called
 tool, not Mise's progress UI.
+
+Before adding a permanent script or test launcher, trace `mise -> leaf command`
+and the same command in CI. Name the actual user-facing operation and specific
+failure it protects. The presence of a `scripts/` directory, package script,
+Python driver, or imported `.mise/lib/` module is not proof that a second owner
+is required. Remove redundant layers after all consumers move.
 
 ## Mise environments and secrets
 

@@ -26,6 +26,19 @@ Runtime-specific tests are appropriate when they prove a capability that cannot 
 
 A test should state which contract or regression it protects.
 
+Before adding or moving a test, identify the failure it would catch, the
+selected runner, the real fixture it needs, and why an existing test cannot
+already cover it. Choose the smallest set of tests that exercises the changed
+risk. The lifecycle list below is a set of scenarios to *consider*, not a
+requirement to run every scenario on every PR.
+
+Prefer tests near their owning package or capability. Do not create mirrored
+`tests/unit/src/` trees, duplicate cross-runtime suites, or custom service
+supervisors merely to match a reference layout. Use separate browser or
+integration tests when the runtime or resource is itself part of the contract.
+An assertion can be imported under an alias or executed by a helper; trace the
+call before reporting a missing assertion from source text alone.
+
 Prefer public behavior over private implementation state. Internal unit tests are appropriate for a complex parser, planner, state machine, or algorithm when that internal operation is itself a stable reasoning unit, but do not mirror private lines merely to increase coverage.
 
 Tests are executable documentation. Keep the setup visible when it explains the scenario.
