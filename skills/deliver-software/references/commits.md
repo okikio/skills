@@ -16,6 +16,199 @@ A good commit message should let someone scan `git log` and understand the work 
 
 Keep messages changelog-friendly, but preserve enough context that the commit history still tells the story of the work.
 
+
+## Start with the commit, not the wording
+
+A strong message cannot rescue a badly composed commit.
+
+Before writing the subject or body, derive the commit from the actual source change. Read the relevant diff, surrounding implementation, tests, public API, and documentation. Do not write from an earlier summary when the source is available.
+
+The commit should contain one coherent behavior, contract, implementation step, or maintenance outcome. File boundaries are not commit boundaries. A single file may contain changes for several commits, and one commit may need small hunks from several files.
+
+Use partial staging when it makes the history more accurate:
+
+```text
+one file
+  ├─ hunk A -> commit about parser behavior
+  ├─ hunk B -> later API migration commit
+  └─ hunk C -> formatting-only change, restore or separate
+```
+
+Interactive `git add -p` is useful for manual work. Deterministic patch series may use an exact index-only patch such as `git apply --cached` when reproducibility matters.
+
+Do not create a commit merely because a changed file needs somewhere to go. If a change is accidental, contradicted by tests, obsolete, formatting-only, or unsupported by the current implementation, restore it or isolate it instead of inventing a rationale.
+
+A good message describes a coherent commit. It does not manufacture coherence after staging.
+
+## Derive every claim from the source
+
+Commit prose is historical evidence. Treat factual accuracy as more important than elegance.
+
+Before stating that a package now owns something, a value is authoritative, a file is obsolete, a workflow is durable, or a behavior is newly introduced, verify that the changed code actually establishes that claim.
+
+Distinguish:
+
+- behavior introduced by this commit
+- behavior that already existed and is only renamed, documented, or wired differently
+- behavior implemented in another commit in the same series
+- design intent that is not yet implemented
+
+Do not pull later behavior backward into an earlier commit message.
+
+Bad:
+
+```text
+refactor(registry): make extractors define collection requirements
+```
+
+when extractor collection planning already existed and the actual change only renames an identifier.
+
+Better:
+
+```text
+refactor(browser)!: record content probes by extractor ID
+```
+
+when Browser changes `technologyId`/`technology_id` to `extractorId`/`extractor_id` through the stored observation path.
+
+If the tests or callers contradict a proposed explanation, fix the grouping or downgrade the claim before polishing the prose.
+
+## Use concrete actors instead of invented architecture shorthand
+
+Name the package, function, command, record, table, route, field, process, or user-visible state that actually participates in the change.
+
+A reader who knows the repository names should not need to memorize an architecture vocabulary to decode the message.
+
+Avoid compressed phrases such as:
+
+```text
+semantic owner
+executable owner
+publication authority
+runtime composition owner
+projection authority
+lifecycle owner
+```
+
+unless those are established project terms and the sentence immediately makes the concrete behavior clear.
+
+Prefer:
+
+```text
+Registry describes technologies and their evidence rules.
+Browser stores the extractor ID attached to each compiled content probe.
+The report builder reads one published semantic commit from ClickHouse.
+The Account service resolves membership before loading the workspace.
+```
+
+The concrete noun usually makes the architecture clearer than the category invented to summarize it.
+
+## Explain the causal change in plain English
+
+The strongest bodies usually follow a natural causal sequence:
+
+```text
+what the code did before
+        ↓
+what these hunks change
+        ↓
+what is now true
+        ↓
+why that matters in a real call, failure, retry, migration, or user flow
+```
+
+Write this as smooth prose. Do not force headings such as `Previous behavior:`, `New behavior:`, or `Why it matters:` unless the commit is unusually complex and the labels genuinely improve scanning.
+
+A useful body often needs only two paragraphs:
+
+```text
+The importer previously treated every normalized CSV header as if the generic
+CSV package understood company fields. Import now assigns company, domain,
+email, website, and unknown roles after structural CSV parsing.
+
+That keeps CRM vocabulary in the import feature. A caller can reuse @utils/csv
+without inheriting Kaiju account-column semantics.
+```
+
+The body should answer the natural follow-up questions created by the subject. Do not repeat the subject with more words.
+
+## Use examples as evidence, not decoration
+
+A concrete example is valuable when it proves the changed behavior.
+
+Good examples name an actual:
+
+- field
+- route
+- command
+- state transition
+- error
+- retry
+- record
+- table
+- fixture
+- caller
+- migration step
+
+Do not invent a hypothetical example that the diff does not support.
+
+Prefer:
+
+```text
+A repeated ResultReady delivery with the same signed bytes reuses the existing
+inbox record, while conflicting bytes for that durable identity are rejected.
+```
+
+over:
+
+```text
+This makes callbacks more robust.
+```
+
+Examples should reduce ambiguity, not lengthen the message for its own sake.
+
+## Keep the series readable as one story
+
+For multi-commit work, review the whole `git log` sequence after drafting individual messages.
+
+Order commits so a reader can follow the implementation dependency:
+
+```text
+data contract
+  -> generic mechanism
+  -> persistence
+  -> package behavior
+  -> service composition
+  -> executable host
+  -> product UI
+  -> integration coverage
+  -> documentation
+```
+
+The exact order depends on the work, but each subject should explain one step and prepare the reader for the next.
+
+Avoid two failure modes:
+
+1. chronological activity logs such as `update schema`, `update service`, `update UI`
+2. subjects that all restate the final architecture instead of describing the specific step
+
+Adjacent bodies should not claim the same behavior was introduced several times. Name the exact responsibility added at each step.
+
+## Prefer narrow commits over broad messages
+
+When a proposed subject needs `and`, check whether the commit contains two independently reviewable outcomes.
+
+Not every `and` is wrong. A fix may need two inseparable sides of one contract. But large subjects are often a signal that the staging should be split.
+
+Generated artifacts follow the same rule:
+
+- stage a generated migration with the schema change that requires it when they are one reviewable contract
+- stage a lockfile with the dependency changes that produced it when practical
+- use a focused lockfile refresh commit when many earlier dependency changes converge and splitting generated hunks would be misleading
+- do not hide unrelated source changes inside `build(deps)` or another generated-file commit
+
+Formatting, import sorting, line-ending changes, permission changes, and other mechanical churn should not be used to fill out a functional commit.
+
 ## Core shape
 
 Use Conventional Commits:
@@ -225,7 +418,19 @@ Prefer short bullets or short paragraphs. Avoid filler such as `add tests`, `cle
 
 When the change needs context, use a smooth before-and-after narrative.
 
-A useful shape is:
+Default to one or two short paragraphs rather than hard sections. Start from the concrete limitation, describe the changed behavior, then explain the consequence that matters.
+
+Good:
+
+```text
+The queue previously removed a claim before every waiter had observed its
+terminal result. Drain now keeps the claim alive until those waiters settle.
+
+A second consumer therefore cannot receive the same item while the first
+claim's completion is still being observed.
+```
+
+Avoid template-shaped prose unless the structure genuinely helps a very complex migration:
 
 ```text
 Previous behavior:
@@ -233,7 +438,7 @@ New behavior:
 Why it matters:
 ```
 
-Use the labels when they improve scanning. Otherwise, write the same story as one or two concise paragraphs.
+Do not use labels merely because they are available. Smooth prose usually makes causality easier to read and avoids repeating the same facts under several headings.
 
 ## Scope governance
 
@@ -316,11 +521,34 @@ BREAKING CHANGE: Callers that relied on implicit trimming must call trimEnd() ex
 
 Make the impact easy to spot. State what changed, who is affected, and what they now need to do.
 
+## Source and series review
+
+Before accepting a message, compare it with the staged diff rather than only with the work plan.
+
+Check:
+
+- every behavioral claim is visible in the staged source or its tests
+- the message does not describe behavior that belongs to a later commit
+- no important staged hunk is missing from the explanation
+- no unrelated hunk is being justified only because it shares a file
+- concrete package, API, field, route, state, or process names replace unnecessary architecture shorthand
+- a maintainer unfamiliar with the design discussion can understand the body from repository terminology alone
+- examples are supported by real code paths or tests
+- generated files and lock changes are attached to the behavior that produced them, or have a clearly explained focused refresh commit
+- mechanical churn is excluded or intentionally isolated
+- adjacent commits form a dependency story without claiming the same change twice
+
+If the staged diff and the prose disagree, change the commit or change the message. Do not rationalize the mismatch.
+
 ## Final check
 
 Before finalizing a commit message, check:
 
+- was the message derived from the staged source rather than an earlier summary?
+- is the commit itself one coherent unit, including partial-file staging where needed?
 - can someone tell what changed from the subject alone?
+- does the body name concrete actors instead of requiring invented architecture vocabulary?
+- does it clearly separate what already existed from what this commit actually introduces?
 - does the subject name the affected surface area precisely enough for `git log` scanning?
 - does the subject include the concrete behavior, guarantee, workflow, or example that makes the change understandable?
 - for `docs` commits, does the subject read like a mini-summary of the documentation rather than a note that docs changed?
