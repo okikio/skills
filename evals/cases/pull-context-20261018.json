@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "pull-context-journey-train",
+      "title": "Pull context journey train",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/pulls.md",
+        "deliver-software/guides/writing-technical-docs-in-plain-english-handbook.md",
+        "deliver-software/references/diagrams.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "pr-writing-guidance-20261018"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "pull-request",
+        "first-reader-context",
+        "visual-explanation"
+      ],
+      "rationale": "Judge the actual description for reader comprehension, scope fidelity, review usefulness, and proportionate structure; nonempty output is only an integrity assertion.",
+      "split": "train",
+      "prompt": "Draft a PR description for a reviewer with no project background. Verified context: customers create a workspace, enter a website, confirm an offering and target criteria, request proposed rules, review and activate them, then evaluate accepted evidence. Console owns confirmation and budget; Research owns source evidence; Rule Service owns authoring and evaluation. The PR only constrains model-facing display fields to the evaluator vocabulary. Missing evidence still produces unknown. rules/schema.ts and rules/projection.test.ts changed; source tests passed; no live provider or deployment test ran.",
+      "rubric": [
+        "Opens with a concise, self-contained account of what changes, why it matters, and how it works before onboarding, architecture background, diagrams, or nuanced implementation details. Material required actions and release limits are visible early. An experienced reviewer need not read background to learn the point; a new reviewer can continue for context.",
+        "Explains the customer goal and prerequisite confirmation before introducing internal vocabulary, with a concrete usage example.",
+        "Explains the necessary journey and ownership context, using a compact visual where it helps; marks authoring as changed and surrounding steps as context.",
+        "Distinguishes proposed rules, customer activation, accepted evidence, and unknown evaluation results.",
+        "Connects customer and developer/operator impact to actual effects; ranks schema/evaluator consistency for review with paths and test scope.",
+        "Does not claim deployment, a paid call, or new acquisition/activation behavior.",
+        "Uses a proportionate connected explanation: product goal and concrete failure example, customer/operator usage and reasons for action, then system ownership and mechanism. Keeps short review priorities and proof limits. Does not replace causal explanation with dense feature labels or file paths to minimize word count.",
+        "For each affected stakeholder, explains their task, the problem, the changed behavior, and its consequence or reason for action. Avoids vague effect/attention fragments and long causal explanations forced into wide tables.",
+        "Uses diagrams selectively to clarify a necessary relationship; ASCII and Mermaid are both permitted. Avoids unnecessary tall chart stacks or wide ASCII art and does not treat either format, diagram count, or shortest word count as success."
+      ]
+    },
+    {
+      "id": "pull-context-ownership-seen",
+      "title": "Pull context ownership seen",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/pulls.md",
+        "deliver-software/guides/writing-technical-docs-in-plain-english-handbook.md",
+        "deliver-software/references/diagrams.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "pr-writing-guidance-20261018"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "pull-request",
+        "first-reader-context",
+        "visual-explanation"
+      ],
+      "rationale": "Judge the actual description for reader comprehension, scope fidelity, review usefulness, and proportionate structure; nonempty output is only an integrity assertion.",
+      "split": "valid-seen",
+      "prompt": "Write a PR description from these verified facts: a merchant connects a shop and confirms catalog settings in Console; Importer supplies accepted inventory records; Scheduler requests draft stock alerts from Rules; customers approve them before evaluation. This PR changes authoring/diagnostic.ts and gateway/config.ts: a required host-verified artifact digest binds private offline requalification to the original software; missing measurements stay absent; replay makes zero model calls. Unit and package consumer checks passed. Real provider, durable storage, and deployment were not verified. Explain this to a new reviewer.",
+      "rubric": [
+        "Opens with a concise, self-contained account of what changes, why it matters, and how it works before onboarding, architecture background, diagrams, or nuanced implementation details. Material required actions and release limits are visible early. An experienced reviewer need not read background to learn the point; a new reviewer can continue for context.",
+        "Gives enough merchant journey and ownership context to explain why a draft and later evaluation are separate.",
+        "Locates the changed authoring path and host-owned artifact boundary with a compact flow and concise prose; does not require multiple visual views.",
+        "Makes host configuration, private diagnostic responsibility, missing measurement semantics, and zero-call reproduction understandable.",
+        "Prioritizes artifact identity and configuration refusal, then diagnostics, and links decisions to code and evidence.",
+        "Separates source and package tests from unverified storage, provider, and live behavior.",
+        "Uses a proportionate connected explanation: product goal and concrete failure example, customer/operator usage and reasons for action, then system ownership and mechanism. Keeps short review priorities and proof limits. Does not replace causal explanation with dense feature labels or file paths to minimize word count.",
+        "For each affected stakeholder, explains their task, the problem, the changed behavior, and its consequence or reason for action. Avoids vague effect/attention fragments and long causal explanations forced into wide tables.",
+        "Uses diagrams selectively to clarify a necessary relationship; ASCII and Mermaid are both permitted. Avoids unnecessary tall chart stacks or wide ASCII art and does not treat either format, diagram count, or shortest word count as success."
+      ]
+    },
+    {
+      "id": "pull-context-transfer",
+      "title": "Pull context transfer",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/pulls.md",
+        "deliver-software/guides/writing-technical-docs-in-plain-english-handbook.md",
+        "deliver-software/references/diagrams.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "pr-writing-guidance-20261018"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "pull-request",
+        "first-reader-context",
+        "visual-explanation"
+      ],
+      "rationale": "Judge the actual description for reader comprehension, scope fidelity, review usefulness, and proportionate structure; nonempty output is only an integrity assertion.",
+      "split": "transfer",
+      "prompt": "Explain a cross-system PR for first-time reviewers using only these facts. A clinic administrator invites a practitioner, verifies credentials, and approves access. Directory publishes accepted credential records. Access Service evaluates those records; incomplete records yield pending, not approval. This PR changes access/evaluate.ts and audit/receipt.ts to preserve pending on unavailable records and bind the decision receipt to the input record digest. Admin Portal, Directory, and invitations are unchanged. Contract tests passed; the deployment is not verified. Do not invent healthcare or legal guarantees.",
+      "rubric": [
+        "Opens with a concise, self-contained account of what changes, why it matters, and how it works before onboarding, architecture background, diagrams, or nuanced implementation details. Material required actions and release limits are visible early. An experienced reviewer need not read background to learn the point; a new reviewer can continue for context.",
+        "Grounds the PR in invitation, verification, approval, and access usage without assuming private background.",
+        "Shows the surrounding user flow and real system/data handoffs, then focuses on evaluation and receipt changes.",
+        "Makes pending/refusal and administrator/operator effects concrete without inventing regulatory compliance or deployment proof.",
+        "Orders review around unauthorized approval risk and input identity with file pointers and actual evidence.",
+        "Does not mechanically copy retail terminology, authoring details, or irrelevant onboarding stages from examples.",
+        "Uses a proportionate connected explanation: product goal and concrete failure example, customer/operator usage and reasons for action, then system ownership and mechanism. Keeps short review priorities and proof limits. Does not replace causal explanation with dense feature labels or file paths to minimize word count.",
+        "For each affected stakeholder, explains their task, the problem, the changed behavior, and its consequence or reason for action. Avoids vague effect/attention fragments and long causal explanations forced into wide tables.",
+        "Uses diagrams selectively to clarify a necessary relationship; ASCII and Mermaid are both permitted. Avoids unnecessary tall chart stacks or wide ASCII art and does not treat either format, diagram count, or shortest word count as success."
+      ]
+    },
+    {
+      "id": "pull-context-small-fix",
+      "title": "Pull context small fix",
+      "skill": "deliver-software",
+      "kind": "trajectory",
+      "expectedSkills": [
+        "deliver-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "deliver-software/references/pulls.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "pr-writing-guidance-20261018"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "pull-request",
+        "first-reader-context",
+        "visual-explanation"
+      ],
+      "rationale": "Judge the actual description for reader comprehension, scope fidelity, review usefulness, and proportionate structure; nonempty output is only an integrity assertion.",
+      "split": "adversarial",
+      "prompt": "Draft a short PR description. Only change: docs/setup.md corrects the displayed command from pnpm instal to pnpm install. It changes no runtime behavior or workflow. The command spelling was checked against package.json scripts; no test suite ran. Keep the description proportionate.",
+      "rubric": [
+        "States the setup-reader problem, exact before/after command, and actual spelling verification in a few sentences or short bullets.",
+        "Does not impose a stakeholder matrix, onboarding story, system diagram, six-section template, invented runtime impact, or test claims."
+      ]
+    }
+  ]
+}

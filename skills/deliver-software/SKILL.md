@@ -65,7 +65,7 @@ verification.
 | Code review or diff findings | [review.md](references/review.md) |
 | Markdown, design notes, architecture docs, guides, or long-form technical prose | [docs.md](references/docs.md) |
 | Commit messages or commit plans | [commits.md](references/commits.md) |
-| Pull request titles, descriptions, or merge summaries | [pulls.md](references/pulls.md) |
+| Pull request titles, descriptions, or merge summaries | [pulls.md](references/pulls.md); add [docs.md](references/docs.md) and [diagrams.md](references/diagrams.md) for substantial context and system-flow views |
 | Changelogs or release notes | [changes.md](references/changes.md) |
 | Package or product release execution | [releases.md](references/releases.md) |
 | Diagrams in docs, comments, or explanations | [diagrams.md](references/diagrams.md) |
@@ -260,3 +260,9 @@ structure in `delivery.md`: deliverable, acceptance criteria, plan coverage,
 task state, findings, verification, plan review, and one final verdict. Do not
 claim checks that were not run. Keep small tasks concise while preserving the
 same completion standard internally.
+
+## PR writing background
+
+For substantial first-reader product and system context, read the
+[plain-English writing handbook](guides/writing-technical-docs-in-plain-english-handbook.md).
+Use controlled STE only when explicitly selected.

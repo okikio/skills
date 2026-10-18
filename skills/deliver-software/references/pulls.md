@@ -1,134 +1,158 @@
-
 # Pull Requests
 
-Apply these rules only when drafting or revising:
-- PR titles
-- PR descriptions
-- merge summaries
-- reviewer-facing change explanations
-
-Do not apply these rules to normal code comments, TSDoc, design docs, or commit
-messages unless the task is specifically about a pull request.
+Apply this reference to PR titles, descriptions, merge summaries, and
+reviewer-facing change explanations. Keep commit, TSDoc, and API reference
+writing under their own rules.
 
 ## Title
 
-Use a concise, outcome-focused title.
+Use a concise, outcome-focused Conventional Commit title:
+`type(scope): observable change`. Name the affected capability. Avoid vague
+subjects such as `improve quality` or `update parser`.
 
-Conventional Commit style is preferred:
+## Lead with what changes, why, and how
 
-```text
-type(scope optional): outcome
-```
+Write for a reviewer who knows software but does not know this feature or its
+history. Inspect the affected code, callers, contracts, and relevant product or
+architecture docs before explaining the change. Distinguish implemented behavior,
+planned composition, and deployed proof. Do not invent background to connect a
+story, or copy a plan as evidence that a system already runs.
 
-The title must describe an observable outcome, not a vague intention.
+Open with a short, self-contained summary answering **what changes, why it
+matters, and how the change achieves that result**. A few bullets or sentences
+usually suffice. Name the actual behavior and consequence; "makes authoring more
+reliable" alone is not enough. Include any material required action or release
+limit early. Define only the terms needed to understand this summary.
 
-Good:
+Do not make an experienced reviewer read onboarding, architecture, history, or a
+large diagram before learning the point of the PR. Do not replace the summary
+with links to background. A reader should be able to stop after the opening and
+understand the change; a new reader can then continue for the context behind it.
+A PR is a guided review, not a file list or an implementation transcript.
 
-* `fix: prevent double-stripping on nested undent calls`
+Use connected explanations rather than compressing the PR into feature labels
+and file paths. If the user provides an explanation that already works, preserve
+its causal story and structure as the baseline. Add the missing context; do not
+replace it with a checklist merely to reduce the word count. Brevity means
+removing repetition and irrelevant detail, not removing the reason a fact matters.
 
-Weak:
+For a substantial behavioral change, this progression often works:
 
-* `chore: improve quality`
-* `fix: update parser`
+1. **Opening:** state the purpose, concrete change and high-level mechanism in a
+   short paragraph or bullets. Surface material required actions and release gaps.
+2. **Product level:** use a real example to explain the user's goal, old failure,
+   consequence and resulting behavior. Add enough onboarding or neighboring
+   product context to show why this step exists, after the opening.
+3. **Usage level:** explain the user's actual steps, which stay the same, and
+   which change. Connect operator or developer tasks to why new observations,
+   configuration or actions matter. Keep stakeholder reasoning with the relevant
+   behavior rather than forcing another matrix or repeated section.
+4. **System level:** explain the owning systems and handoffs, then the changed
+   contracts, failure behavior and limits. A small diagram can supply an ownership
+   or sequence relationship that is harder to infer from prose.
+5. **Review priorities and evidence:** give a short ordered route to the risky
+   decisions and code, checks actually run, their scope, and remaining release work.
 
-## Description
+This is a useful reading pattern, not a fixed template. Keep the description
+proportionate to the change, and link deep architecture or operational procedure.
+Do not duplicate a full explanation in the opening, a diagram, a stakeholder
+section and a mechanism section. Do not optimize for the fewest words or the most
+visuals at the expense of comprehension.
 
-Use this structure when relevant:
+These are reading needs, not mandatory headings. Combine them when that makes
+reading easier. A small local fix can satisfy them in a short paragraph, a
+before/after example, and test evidence. Do not force an onboarding diagram into
+a spelling fix. In the background section for a change deep in a product flow,
+start far enough upstream that a first-time reviewer can understand why the
+changed step exists. When onboarding establishes inputs or authorization, show
+that connection there. Preserve the summary-first order.
 
-* Summary
-* Problem or motivation
-* Solution
-* Behavior changes
-* Verification
-* Risk and rollout
+## Make the context visible
 
-Not every PR needs every section. Prefer relevance over template ritual.
+Add a diagram only when it makes an important relationship easier to understand
+than prose alone. It should support the explanation, not replace the product,
+usage or system reasoning. A compact flow or ownership map is often sufficient;
+additional views need an independent purpose.
 
-### Writing rules
+Choose ASCII for a small flow that remains readable in raw Markdown and on a
+narrow screen. Choose Mermaid or another rendered chart when its layout explains
+branching, sequence or ownership more clearly. Neither format is mandatory or
+forbidden. Avoid both wide ASCII canvases and stacks of tall rendered charts.
+Evaluate explanatory value, total scrolling and narrow-screen readability rather
+than treating diagram count or format as a quality score. Link full architecture
+or lifecycle documentation when it would overwhelm the PR. Respect the user's
+current preference without turning a situational correction into a blanket ban.
 
-- Write for reviewers and future archaeology.
-- Lead with what changed and why it matters.
-- Explain the problem before deep implementation detail.
-- Call out observable behavior changes plainly.
-- List real verification steps only.
-- State risks or follow-up work when they matter.
+Mark the changed step with words. Keep journey chronology separate from system
+handoffs: neighboring steps must not imply an invented call or data transfer.
+Distinguish draft, approval, and evidence. Preserve relevant refusal, unknown,
+retry, or cost conditions in the diagram or nearby prose.
 
-## Summary
+Follow [diagrams.md](diagrams.md) for representation and fidelity. Check every
+node and arrow against source or clearly label it as a proposal. Never imply a
+new integration, deployed path, durable store, or successful live call merely
+because a diagram makes the story simpler.
 
-Use 1 to 3 bullets that state what changed and where.
+## Choose the format by the reader's question
 
-Avoid generic claims such as `improve quality` unless tied to a concrete behavior change.
+- Use short bullets for fast facts, actions, and parallel outcomes.
+- Use tables for compact comparisons and exact mappings. Each cell must answer
+  its column's question without relying on private background. Do not force
+  causal explanations or long file paths into a wide table.
+- For stakeholder impact, prefer short role-based paragraphs when explaining
+  why takes more than a concise cell. A useful chain is: their task -> problem
+  -> changed behavior -> consequence or required action. Keep that chain explicit
+  in the prose; do not use bare labels such as "effect" or "attention" as a
+  substitute for it. Separate a new requirement from an existing responsibility.
+- Use connected prose for the background and causal explanation.
+- Use a diagram for movement, sequence, ownership, and branching.
+- Put long command output and secondary implementation detail behind a disclosure
+  or link. Keep configuration breaks, spend risks, and verification gaps visible.
 
-## Problem or motivation
+Do not substitute a long checklist, an unexplained noun list, or an exhaustive
+file inventory for an explanation. Explain the effect first; use paths and
+symbols to help reviewers find its implementation afterward.
 
-Anchor the real issue in user-visible or caller-visible terms.
+## Help the reviewer choose where to spend time
 
-Prefer:
+Use an ordered list for review decisions with substantial explanation or long
+paths. A compact table can work when the entries stay short:
 
-* before this change, X happened
-* callers could not do Y
-* output was wrong when Z
+| Priority | Decision or risk | Code to inspect | Evidence and limits |
+| --- | --- | --- | --- |
+| 1 | Highest-impact contract or failure condition | Exact path or symbol | Relevant test, result, and unverified boundary |
+| 2 | Next independent behavior | Exact path or symbol | Relevant proof |
 
-## Solution
+Fill this with the actual PR's decisions. Separate review decisions from routine
+mechanics. Mention affected consumers, configuration, persisted data, recovery,
+privacy, and operating cost when they are real consequences. Link relevant
+background or dependent PRs, but retain enough context to read this PR alone.
+For a stack, explain what the parent provides and what this slice changes.
 
-Explain the high-level change and where it lives.
+Report real checks and their scope. A passing unit test does not prove deployment,
+provider behavior, storage durability, or customer acceptance. State remaining
+release work and meaningful rollout conditions without turning hypothetical risks
+into a generic warning checklist. Do not invent alternatives, issue numbers,
+links, or verification results.
 
-Do not bury the reviewer in implementation trivia before they understand the intent.
+## Check the description as a first-time reviewer
 
-## Behavior changes
+Before publishing, answer these questions from the description alone:
 
-Call out any observable change plainly:
+- Can I learn what changes, why it matters, and how it works from the opening
+  alone, before reading background or diagrams?
+- What problem does this solve, for whom, and at what point in their work?
+- What inputs and approvals lead here, and what result comes next?
+- Which systems own the surrounding steps, and which parts does this PR change?
+- What example makes the new behavior concrete, including relevant failure cases?
+- For each affected person, why does this change affect their work, and why is
+  any requested action necessary?
+- Can I scan the review without excessive scrolling or repeated explanations?
+  Have I preserved the example and causal explanations that make the change
+  understandable, while removing repetition?
+- Does the chosen view remain readable on a narrow screen?
+- Where should I review first, why, and what evidence supports that decision?
 
-* output shape
-* recovery behavior
-* API behavior
-* edge case handling
-* performance characteristics
-* allocation behavior
-
-## Verification
-
-List real verification steps.
-
-Examples:
-
-* `deno task test`
-* `deno task bench`
-* `deno doc --lint mod.ts`
-* manual scenarios that were checked
-
-Do not claim you ran checks you did not run.
-
-## Risk and rollout
-
-When relevant, state:
-
-* what could break
-* which edge cases deserve attention
-* what mitigates the risk
-* whether follow-up work is expected
-
-## Design notes and specs
-
-When a PR introduces a non-trivial behavioral change or a new public API, include a design note with this shape:
-
-1. Problem
-2. Goals
-3. Non-goals
-4. Constraints
-5. Proposal
-6. Alternatives considered
-7. Edge cases and failure modes
-8. Open questions
-
-Prefer concrete examples over abstract claims.
-
-## Anti-patterns
-
-* Use short bullets and concrete nouns.
-* Avoid memo-speak and filler business language such as `improve quality`.
-* Implementation trivia before the reader understands the problem
-* Long PR prose with no clear behavior change
-* Generic summaries that force reviewers to infer the point
-* Do not invent issue numbers, links, or verification results.
-* Make decision points obvious so reviewers can challenge them.
+If a new reader needs private conversation history to answer these, add the
+missing context or simplify the view. Do not add more headings merely to make
+an explanation look complete.

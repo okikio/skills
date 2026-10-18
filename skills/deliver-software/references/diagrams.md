@@ -1,5 +1,5 @@
 
-# Diagram selection and ASCII diagrams
+# Diagram selection and readable flows
 
 Choose the representation from the reader's question, the information structure, and the output medium. Do not choose it because a diagram tool is already open. Use the least complicated representation that preserves the truth the reader needs.
 
@@ -13,16 +13,27 @@ fixed print page, or layout coercion. Also reject it for dense many-to-many maps
 polished audience-facing visuals, or an important relationship with no equivalent
 text.
 
-Use tables for exact mappings and decision logic. Use ASCII for terminal-oriented
-flows and artifacts whose plain-text reviewability matters. Use multiple small
-views or a custom composed visual for dense architecture and exact geometry.
+Use tables for compact exact mappings and decision logic. In a PR description,
+a diagram supports the product, usage and system explanation. Use ASCII when a
+small flow is clear in raw Markdown; use Mermaid or another rendered chart when
+layout clarifies branching, sequence or ownership. Neither is a default ban on
+the other. Keep both width and height reasonable. Crossing system owners does not
+by itself require a rendered chart, and reducing word count does not justify
+removing essential causal explanation.
+
+Evaluate each view by what it helps the reader understand, not by diagram count
+or format. Avoid wide ASCII canvases and stacks of tall rendered charts. Link a
+full architecture or lifecycle view when it would dominate the PR. Choose a custom
+composed visual when exact geometry is necessary. Apply the user's current
+preference to the current review surface; do not generalize a situational
+correction into a permanent format rule.
 Always include a textual equivalent for important relationships. Never add
 invisible nodes, fake edges, or other semantics solely to coerce auto-layout.
 
-Use ASCII diagrams when prose alone would make structure, flow, hierarchy,
-ownership, state, or time harder to understand.
+Use diagrams when prose alone would make structure, flow, hierarchy, ownership,
+state, or time harder to understand. Choose the medium separately from the job.
+The following jobs may need rendered charts rather than ASCII as they grow:
 
-Good uses:
 - parser pipelines
 - tree and hierarchy layouts
 - state transitions
@@ -38,9 +49,9 @@ Do not add diagrams for simple one-step logic or tiny APIs.
 
 Do not overcompress a diagram when the missing detail is what makes the system
 hard to understand. A compact diagram is useful only when it preserves the real
-sequence, ownership, state changes, and important branches. Prefer a larger,
-chaptered diagram over a tiny pipeline when the tiny pipeline hides why the
-system behaves the way it does.
+sequence, ownership, state changes, and important branches. Prefer focused
+rendered charts for successive stages when a tiny pipeline hides why the system
+behaves the way it does.
 
 Always pair a diagram with prose that explains:
 - what the reader is looking at
@@ -148,117 +159,50 @@ the flow.
 
 ### Detailed lifecycle example
 
-This example is intentionally more detailed than a minimal pipeline. The extra
-structure is useful because ownership, stored revisions, partial updates, and
-cleanup affect correctness.
+A long lifecycle needs more than a compact ASCII pipeline. This fictional example
+uses separate top-to-bottom Mermaid charts for admission, execution, and client
+updates. Each view explains one stage without a wide fixed-width canvas.
 
-```text
-USER SUBMITS WORK
-===============================================================================
+**Admission:** validate the request before creating a durable job.
 
-Browser UI
-  |
-  | submit form with user input
-  v
-Server handler
-  |
-  | validate request, assign request id, choose workflow type
-  v
-JobRequest
-  id
-  requested_by
-  workflow_type
-  created_at
-  payload_summary
-  |
-  +-- invalid input --------------------------------------+
-  |                                                       |
-  |                                                       v
-  |                                             ValidationError response
-  |
-  +-- valid input ----------------------------------------+
-                                                          |
-                                                          v
-QUEUE DISPATCH
-===============================================================================
-
-Server handler
-  |
-  | enqueue job and persist initial status
-  v
-Queue
-  |
-  | delivers job at least once
-  v
-Worker
-
-StoredJobStatus revision 1
-  state: queued
-  request_id
-  job_id
-  updated_at
-
-WORKER EXECUTION
-===============================================================================
-
-Worker
-  |
-  | load job input
-  | run step 1
-  | write partial progress
-  v
-StoredJobStatus revision 2
-  state: running
-  completed_steps: 1
-  latest_message: "Loaded input"
-  |
-  | run step 2
-  | external service call
-  |
-  +-- transient failure ----------------------------------+
-  |                                                       |
-  |                                                       v
-  |                                             RetryPolicy schedules retry
-  |
-  +-- success --------------------------------------------+
-                                                          |
-                                                          v
-ResultRecord
-  job_id
-  result_kind
-  output_summary
-  completed_at
-
-CLIENT UPDATE
-===============================================================================
-
-Storage or subscription layer
-  |
-  | emits status revision
-  v
-Browser UI
-  |
-  | apply only if incoming revision is newer
-  v
-Rendered state
-  queued -> running -> partial result -> complete
-
-CLEANUP
-===============================================================================
-
-Worker
-  |
-  | final status saved, temporary resources released
-  v
-StoredJobStatus revision 3
-  state: complete
-  result_id
-  cleaned_up_at
+```mermaid
+flowchart TD
+  Browser["Browser submits input"] --> Validate{"Server validates input"}
+  Validate -->|Invalid| Refuse["Return validation error"]
+  Validate -->|Valid| Persist["Persist job with request ID and payload"]
+  Persist --> Queue["Queue job for delivery"]
 ```
 
-The diagram keeps the lifecycle readable by separating chapters, labeling the
-owner of each stage, showing the shapes that cross important handoffs, and
-including failure and cleanup paths where they affect the result.
+**Execution:** the queue delivers at least once. Retry policy and stored progress
+must account for repeat delivery; an arrow is not an exactly-once guarantee.
+
+```mermaid
+flowchart TD
+  Queue["Queue delivers job"] --> Worker["Worker loads input"]
+  Worker --> Progress["Save running state and progress revision"]
+  Progress --> Call["Call external service"]
+  Call -->|Transient failure| Retry["Schedule bounded retry"]
+  Retry --> Queue
+  Call -->|Success| Result["Store result linked to job ID"]
+```
+
+**Client update and cleanup:** the client applies newer stored revisions. The
+worker saves final state and releases temporary resources.
+
+```mermaid
+flowchart TD
+  Progress["Stored progress revision"] --> Notify["Notify browser"]
+  Notify --> Compare{"Revision newer than displayed?"}
+  Compare -->|Yes| Render["Update displayed state"]
+  Compare -->|No| Ignore["Ignore stale update"]
+  Result["Stored result"] --> Final["Worker saves final state"]
+  Final --> Notify
+  Final --> Cleanup["Release temporary resources"]
+```
+
+The prose preserves the delivery and revision semantics that the simple shapes
+cannot prove. A production diagram must verify the actual persistence/queue
+handoff and recovery behavior against its source.
 
 ## Common diagram shapes
 
@@ -325,15 +269,18 @@ Client component
 
 ## Readability rules
 
-Prefer diagrams that stay readable in plain text editors and code review diffs.
-Use Unicode box drawing only when the target project and review surface render it
-clearly. Plain `|`, `+`, `-`, and `->` are safer when portability matters.
+Keep small ASCII diagrams readable in plain text editors and code review diffs.
+Use Unicode box drawing only when the target surface renders it clearly.
 
-For large diagrams:
-- keep one dominant reading direction
-- use chapter dividers for major lifecycle changes
-- keep labels short but specific
-- align branches so the merge point is visible
-- show representative shapes only at important handoffs
-- explain omitted detail in prose instead of squeezing everything into the diagram
-- split into multiple diagrams only when each diagram has a distinct job
+For larger rendered diagrams:
+- prefer top-to-bottom reading on narrow screens
+- split major lifecycle stages into focused charts
+- keep labels short but specific; explain terminology in nearby prose
+- show shapes only at meaningful decisions and handoffs
+- explain omitted detail rather than squeezing it into the diagram
+- keep branch and merge meanings explicit
+- check the target renderer and a narrow viewport when available; record when
+  that visual check was not performed
+
+A rendered chart can still be too wide or dense. Do not claim mobile readability
+from valid syntax alone. Important meaning must also be available in prose.

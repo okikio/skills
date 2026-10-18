@@ -799,6 +799,15 @@
       "role": "Current Deno Node and npm compatibility behavior and migration constraints",
       "verifiedDate": "2026-08-19",
       "claimPaths": []
+    },
+    {
+      "id": "pr-writing-guidance-20261018",
+      "artifact": "skills/deliver-software/references/pulls.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "PR-writing policy: connected product, usage and system explanations, selective diagrams, review priorities, and evidence limits.",
+      "verifiedDate": "2026-10-18",
+      "sha256": "1f344430d86a907826e2383cb15907f36c9b6ca714d79b77b764041a3d2adee5"
     }
   ]
 }

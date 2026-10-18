@@ -3586,15 +3586,20 @@
       "sourceIds": [
         "current-guides-20260819",
         "standards-refresh-20260819",
-        "visual-explanation-guide-20260819"
+        "visual-explanation-guide-20260819",
+        "pr-writing-guidance-20261018"
       ],
       "evalIds": [
         "completion-delivery-docs-train",
         "current-standard-visual-selection",
-        "completion-delivery-docs-heldout"
+        "completion-delivery-docs-heldout",
+        "pull-context-journey-train",
+        "pull-context-ownership-seen",
+        "pull-context-transfer"
       ],
       "decisionQuestions": [
-        "When Diagram selection and ASCII diagrams applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+        "When Diagram selection and ASCII diagrams applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?",
+        "Does each chosen diagram clarify an important relationship while preserving causal prose and reasonable scrolling, without a blanket ASCII or Mermaid preference?"
       ],
       "failureSignatures": [
         "The implementation cites Diagram selection and ASCII diagrams but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
@@ -3738,18 +3743,26 @@
       "sourceIds": [
         "current-guides-20260819",
         "standards-refresh-20260819",
-        "visual-explanation-guide-20260819"
+        "visual-explanation-guide-20260819",
+        "pr-writing-guidance-20261018"
       ],
       "evalIds": [
         "completion-delivery-docs-train",
         "completion-delivery-docs-seen",
-        "completion-delivery-docs-heldout"
+        "completion-delivery-docs-heldout",
+        "pull-context-journey-train",
+        "pull-context-ownership-seen",
+        "pull-context-transfer",
+        "pull-context-small-fix"
       ],
       "decisionQuestions": [
-        "When Pull Requests applies to the current task, which exact owner, data contract, lifecycle, limits, failure paths, and repository evidence determine the implementation decision?"
+        "Can a first-time reviewer connect the product goal, stakeholder impact, usage journey, system owners, changed scope, and review priorities without conversation history?",
+        "Which visual or comparison removes the need to reconstruct the flow, and which evidence limits prevent overstating deployed behavior?"
       ],
       "failureSignatures": [
-        "The implementation cites Pull Requests but skips one of the ownership, failure, compatibility, or verification rules that the routed reference requires."
+        "The description starts with internal modules, omits prerequisite context or stakeholder impact, or leaves a cross-system flow to prose alone.",
+        "Diagrams invent owners or deployment proof, repeat the same view, hide changed scope, or omit relevant approval and unknown outcomes.",
+        "A rigid template overwhelms a small fix, or review priorities list files without decisions and evidence."
       ],
       "exclusions": [
         "Do not treat Pull Requests as a generic tool checklist, use it outside the concern owned by deliver-software, or let an older example override newer repository and upstream evidence."
@@ -5032,6 +5045,34 @@
       ],
       "verification": [
         "Exercise Okikio finance workflow platform: capabilities and limits through its mapped train, seen, and held-out cases, then run the native/runtime/artifact checks named by the reference before accepting the behavior."
+      ]
+    },
+    {
+      "id": "cap-guide-deliver-software-writing-technical-docs-in-plain-english-handbook",
+      "skill": "deliver-software",
+      "reference": "guides/writing-technical-docs-in-plain-english-handbook.md",
+      "capability": "Purpose-sensitive application of writing-technical-docs-in-plain-english-handbook.md",
+      "ownership": "The selected skill owns this decision; the canonical guide owns shared prose and the delivery skill owns one integrated verdict.",
+      "status": "normative",
+      "sourceIds": [
+        "pr-writing-guidance-20261018"
+      ],
+      "evalIds": [
+        "pull-context-journey-train",
+        "pull-context-ownership-seen",
+        "pull-context-transfer"
+      ],
+      "decisionQuestions": [
+        "For substantial document structure, first-reader product and system context in PRs, or the controlled STE mode only when explicitly selected."
+      ],
+      "failureSignatures": [
+        "Missing companion guidance or mechanical copying changes test/API roles, expands scope, or loads unrelated detail."
+      ],
+      "exclusions": [
+        "Do not load unrelated references, expand authorization, or infer runtime/publication proof from source inspection."
+      ],
+      "verification": [
+        "Judge the actual trajectory and artifact against the scenario; validate routes, source identity, split coverage, and exported immutable copies separately."
       ]
     }
   ]

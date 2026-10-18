@@ -64,6 +64,120 @@ Use this order of authority:
 A lower rule must not remove information that a higher rule requires.
 
 
+Explain a change in its product and system context
+---------------------------------------------------
+
+Start a substantial PR or change explanation with a short summary: **what
+changes, why it matters, and how it works**. Use concrete behavior, not a vague
+claim of reliability. Surface a material required action or release limit early.
+An experienced reader should understand the change without reading the background.
+A new reader should then find the background needed to understand it in depth.
+The delivery skill's pull-request reference owns the PR workflow; this section
+explains the reading order and how to make the background visible.
+
+For example, a fictional alert PR could open with:
+
+- **What:** draft alerts can use only display fields supported by the evaluator.
+- **Why:** an invented field makes a draft unusable and wastes the drafting attempt.
+- **How:** the model schema and evaluator derive field names from one shared table.
+
+Then build understanding through product, usage and system levels. At product
+level, use a concrete example to connect the goal, old failure and practical
+consequence. At usage level, explain the customer steps and why operators or
+developers need any new action. At system level, explain the owners, changed
+contracts and failure paths. Finish with short review priorities and real evidence.
+These levels are a useful progression, not mandatory headings for every edit.
+
+If a user supplies an explanation that works, preserve its causal story as the
+baseline and add only the missing context. Do not reduce it to terse feature
+labels and code pointers merely to hit a word count. Do not require an onboarding
+story, architecture tour, or large diagram before the opening. Links can provide
+depth, but cannot replace the explanation needed to understand the change.
+
+Within the background, move from a concrete user journey to the systems involved,
+then to the changed part. Start at the earliest action that supplies important
+inputs or permission. If onboarding establishes those inputs, include it there.
+Do not attach an unrelated onboarding story to a local fix.
+
+Keep a PR description short enough to scan. Use only the background needed for
+this change; link to the deeper system explanation. Avoid repeating the same
+facts under summary, mechanism, stakeholder, and diagram headings. Keep material
+configuration changes and verification gaps visible.
+
+The following are alternative views for this fictional alert product. Choose the
+one that answers the reviewer's question; do not include all of them by default:
+
+```text
+Customer journey
+Connect shop -> Confirm catalog -> Request draft [changed here]
+             -> Review and activate -> Receive stock alert
+```
+
+The draft is a suggestion. Customer approval activates it. Accepted inventory
+data later determines whether the alert condition is true.
+
+```text
+System ownership
+Console -- confirmed settings --> Rule Service [authoring changed here]
+Importer -- accepted inventory --> Rule Service [existing evaluation]
+Rule Service -- drafts or evaluation results --> Console
+```
+
+These are illustrative names, not an assertion about a deployed integration.
+A real description must check each owner and handoff against the affected source.
+
+| Focus inside the changed step | Before | After |
+| --- | --- | --- |
+| Draft display fields | A model could name an unsupported field | The schema permits supported fields only |
+| Missing inventory during later evaluation | Unknown | Still unknown; this PR changes authoring |
+
+Each view answers a different question: where the user is, which systems do the
+work, or what the PR changes. A compact PR usually needs only one, with other
+necessary context in nearby prose or linked documentation.
+Mark changed and existing parts with words, not color alone. Label important
+arrows with the data they carry. Show approvals, failures, unknown results, or
+cost boundaries when they change how a reader should interpret the result.
+State whether the view describes implemented source, a plan, or verified live
+behavior. A source diagram does not prove deployment.
+
+Use short bullets for quick facts and actions. Use tables for stakeholder effects,
+before/after behavior, and review priorities. Use prose for background and reasons.
+Use diagrams where they make a relationship easier to understand than prose.
+ASCII suits a small flow that is clear in raw Markdown; Mermaid suits a flow or
+sequence whose layout adds clarity. Neither is mandatory or forbidden. Avoid wide
+ASCII drawings and stacks of tall charts. Keep the causal explanation in nearby
+prose and link to deeper architecture when needed. Check both scrolling burden
+and narrow-screen readability when available. Judge readability and understanding,
+not just word count or visual density.
+
+Explain stakeholder impact explicitly. Customers, operators, developers, and
+neighboring system owners can have different concerns. For each, connect their
+task to the problem, the changed behavior, and why it matters to their work.
+Explain the reason for a configuration action or review responsibility rather
+than placing it beside an unexplained "effect" label. Separate new requirements
+from existing duties. Use short role-based paragraphs when a table would hide
+these causal links or require long cells on mobile.
+
+For example: "Support staff investigate failed draft requests. A failure record
+now distinguishes a refusal before dispatch from a provider failure. This tells
+them which stage to investigate. Missing usage does not establish zero cost."
+That explains the role, change, consequence, and limit together. "Operator: better
+diagnostics; attention: billing" does not.
+
+A concrete example must distinguish a suggestion from an approved action and
+from evidence of a real-world fact.
+
+End the explanation with a review route: the most important decision first, the
+path or symbol that implements it, and the evidence that supports it. Keep test
+scope and unverified release work visible. A short fix can cover this in a few
+sentences; a cross-system change can use one compact flow plus an ownership
+sentence and a link to deeper documentation.
+
+A first-time reader should be able to explain the goal, prerequisites, surrounding
+owners, changed behavior, and first review priority from the description alone.
+If they cannot, add the missing background rather than more unexplained terms.
+
+
 This is not full ASD-STE100 compliance
 --------------------------------------
 
@@ -2778,7 +2892,7 @@ file.
 
 
 Sources
-=======
+========
 
 This handbook includes a paraphrased map of all 53 writing rules in
 ASD-STE100 Issue 9.  It also adapts the eight Issue 9 general recommendations

@@ -58,7 +58,9 @@ export const SourceRegistrySchema = z.strictObject({
 export const CapabilityRecordSchema = z.strictObject({
   id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
   skill: SkillIdSchema,
-  reference: z.string().regex(/^references\/[a-z0-9][a-z0-9._/-]*\.md$/),
+  reference: z.string().regex(
+    /^(?:references|guides)\/[a-z0-9][a-z0-9._/-]*\.md$/,
+  ),
   capability: z.string().min(8),
   ownership: z.string().min(8),
   status: EvidenceStatusSchema,
