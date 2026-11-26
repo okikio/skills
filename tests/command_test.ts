@@ -37,12 +37,14 @@ describe("bounded child commands", () => {
     expect(result.success).toBe(true);
     expect(result.stdoutTruncated).toBe(true);
     expect(result.stderrTruncated).toBe(true);
-    expect(new TextEncoder().encode(result.stdout).byteLength).toBeLessThanOrEqual(
-      128,
-    );
-    expect(new TextEncoder().encode(result.stderr).byteLength).toBeLessThanOrEqual(
-      128,
-    );
+    expect(new TextEncoder().encode(result.stdout).byteLength)
+      .toBeLessThanOrEqual(
+        128,
+      );
+    expect(new TextEncoder().encode(result.stderr).byteLength)
+      .toBeLessThanOrEqual(
+        128,
+      );
   });
 
   it("force-kills a child that ignores graceful timeout termination", async () => {

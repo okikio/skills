@@ -85,7 +85,6 @@ function result(
   });
 }
 
-
 /** Create one compact immutable workspace used by report-topology tests. */
 function workspace(overrides: Record<string, unknown> = {}) {
   return SkillOptWorkspaceSchema.parse({
@@ -189,24 +188,26 @@ describe("SkillOpt aggregate report", () => {
       caseItem("case-valid", "valid-unseen"),
       caseItem("case-adversarial", "adversarial"),
     );
-    expect(() => report.create({
-      phase: "evaluate",
-      reportId: "report-a",
-      createdAt: "2026-08-19T12:00:00.000Z",
-      gitRevision: "git-a",
-      benchmarkId: "benchmark-a",
-      optimizationUnit: "root-router",
-      variantRole: "candidate",
-      targetSkill: "build-clis",
-      targetSkillBytes: 4096,
-      caseSetDigest: "d".repeat(64),
-      cases: sourceCases,
-      results: [
-        result("case-valid", 1, 0),
-        result("case-valid", 2, 1),
-        result("case-adversarial", 1, 0),
-      ],
-    })).toThrow(/run matrix differs/);
+    expect(() =>
+      report.create({
+        phase: "evaluate",
+        reportId: "report-a",
+        createdAt: "2026-08-19T12:00:00.000Z",
+        gitRevision: "git-a",
+        benchmarkId: "benchmark-a",
+        optimizationUnit: "root-router",
+        variantRole: "candidate",
+        targetSkill: "build-clis",
+        targetSkillBytes: 4096,
+        caseSetDigest: "d".repeat(64),
+        cases: sourceCases,
+        results: [
+          result("case-valid", 1, 0),
+          result("case-valid", 2, 1),
+          result("case-adversarial", 1, 0),
+        ],
+      })
+    ).toThrow(/run matrix differs/);
   });
 
   it("rejects release workspaces with different optimization targets", () => {
@@ -223,19 +224,21 @@ describe("SkillOpt aggregate report", () => {
 
   it("requires held-out and frozen evidence in a release report", () => {
     const sourceCases = cases(caseItem("case-frozen", "test-frozen"));
-    expect(() => report.create({
-      phase: "release",
-      reportId: "release-a",
-      createdAt: "2026-08-19T12:00:00.000Z",
-      gitRevision: "git-a",
-      benchmarkId: "benchmark-a",
-      optimizationUnit: "root-router",
-      variantRole: "candidate",
-      targetSkill: "build-clis",
-      targetSkillBytes: 4096,
-      caseSetDigest: "d".repeat(64),
-      cases: sourceCases,
-      results: [result("case-frozen", 1, 0)],
-    })).toThrow(/valid-unseen/);
+    expect(() =>
+      report.create({
+        phase: "release",
+        reportId: "release-a",
+        createdAt: "2026-08-19T12:00:00.000Z",
+        gitRevision: "git-a",
+        benchmarkId: "benchmark-a",
+        optimizationUnit: "root-router",
+        variantRole: "candidate",
+        targetSkill: "build-clis",
+        targetSkillBytes: 4096,
+        caseSetDigest: "d".repeat(64),
+        cases: sourceCases,
+        results: [result("case-frozen", 1, 0)],
+      })
+    ).toThrow(/valid-unseen/);
   });
 });

@@ -6,7 +6,8 @@
   },
   "fmt": {
     "exclude": [
-      "**/*.md"
+      "**/*.md",
+      "evals/fixtures/**"
     ],
     "lineWidth": 80,
     "semiColons": true,
@@ -17,7 +18,10 @@
       "tags": [
         "recommended"
       ]
-    }
+    },
+    "exclude": [
+      "evals/fixtures/**"
+    ]
   },
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check scripts/*.ts src/*.ts tests/*.ts",

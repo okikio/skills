@@ -23,7 +23,10 @@ describe("fixture isolation", () => {
     const first = await prepareFixture("workspace");
     const second = await prepareFixture("workspace");
     try {
-      await Deno.writeTextFile(new URL("marker", `file://${first}/`), "changed");
+      await Deno.writeTextFile(
+        new URL("marker", `file://${first}/`),
+        "changed",
+      );
       await expectRejects(
         () => Deno.stat(new URL("marker", `file://${second}/`)),
         Deno.errors.NotFound,

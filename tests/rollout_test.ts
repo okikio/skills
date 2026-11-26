@@ -153,12 +153,13 @@ describe("SkillOpt provider protocol", () => {
       const info = await Deno.stat(`${prepared}/skills`);
       expect(info.isDirectory).toBe(true);
       const entries = [];
-      for await (const entry of Deno.readDir(`${prepared}/skills`)) entries.push(entry);
+      for await (const entry of Deno.readDir(`${prepared}/skills`)) {
+        entries.push(entry);
+      }
       expect(entries).toHaveLength(0);
     } finally {
       if (prepared) await Deno.remove(prepared, { recursive: true });
       await Deno.remove(workspace, { recursive: true });
     }
   });
-
 });

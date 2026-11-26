@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { SkillIdSchema } from "./corpus.ts";
-import {
-  AssertionResultSchema,
-  RubricResultSchema,
-} from "./evaluation.ts";
+import { AssertionResultSchema, RubricResultSchema } from "./evaluation.ts";
 
 /** One installed skill exposed to a target provider adapter. */
 export const RolloutSkillSchema = z.strictObject({

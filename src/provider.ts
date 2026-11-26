@@ -202,11 +202,16 @@ export async function call(
   if (response?.error) error = addError(error, response.error);
 
   try {
-    if (await hash.text(await Deno.readTextFile(requestPath)) !== requestDigest) {
+    if (
+      await hash.text(await Deno.readTextFile(requestPath)) !== requestDigest
+    ) {
       error = addError(error, "Adapter modified its immutable request");
     }
   } catch (cause) {
-    error = addError(error, `Cannot verify immutable adapter request: ${cause}`);
+    error = addError(
+      error,
+      `Cannot verify immutable adapter request: ${cause}`,
+    );
   }
 
   return {

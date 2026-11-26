@@ -147,7 +147,9 @@ function prohibitedOutcome(
     violations += item.forbiddenSkills.filter((skill) => activated.has(skill))
       .length;
     observations += item.forbiddenReferences.length;
-    violations += item.forbiddenReferences.filter((path) => references.has(path))
+    violations += item.forbiddenReferences.filter((path) =>
+      references.has(path)
+    )
       .length;
 
     if (result.assertionResults.length !== item.assertions.length) {
@@ -181,7 +183,9 @@ export function getMetrics(
     cases,
     (item) => item.split === "valid-unseen",
   );
-  if (!validUnseen) throw new Error("Report requires at least one valid-unseen case");
+  if (!validUnseen) {
+    throw new Error("Report requires at least one valid-unseen case");
+  }
 
   return {
     taskSuccess,
@@ -228,24 +232,34 @@ export function getCost(
 ): ReportCostType {
   return {
     targetDurationMs: mean(results.map((result) => result.durationMs))!,
-    judgeDurationMs: mean(results.flatMap((result) =>
-      result.judgeDurationMs === undefined ? [] : [result.judgeDurationMs]
-    )),
+    judgeDurationMs: mean(
+      results.flatMap((result) =>
+        result.judgeDurationMs === undefined ? [] : [result.judgeDurationMs]
+      ),
+    ),
     toolCalls: mean(results.map((result) => result.toolCalls))!,
     commands: mean(results.map((result) => result.commands))!,
     outputCharacters: mean(results.map((result) => result.outputCharacters))!,
-    inputTokens: mean(results.flatMap((result) =>
-      result.inputTokens === undefined ? [] : [result.inputTokens]
-    )),
-    outputTokens: mean(results.flatMap((result) =>
-      result.outputTokens === undefined ? [] : [result.outputTokens]
-    )),
-    judgeInputTokens: mean(results.flatMap((result) =>
-      result.judgeInputTokens === undefined ? [] : [result.judgeInputTokens]
-    )),
-    judgeOutputTokens: mean(results.flatMap((result) =>
-      result.judgeOutputTokens === undefined ? [] : [result.judgeOutputTokens]
-    )),
+    inputTokens: mean(
+      results.flatMap((result) =>
+        result.inputTokens === undefined ? [] : [result.inputTokens]
+      ),
+    ),
+    outputTokens: mean(
+      results.flatMap((result) =>
+        result.outputTokens === undefined ? [] : [result.outputTokens]
+      ),
+    ),
+    judgeInputTokens: mean(
+      results.flatMap((result) =>
+        result.judgeInputTokens === undefined ? [] : [result.judgeInputTokens]
+      ),
+    ),
+    judgeOutputTokens: mean(
+      results.flatMap((result) =>
+        result.judgeOutputTokens === undefined ? [] : [result.judgeOutputTokens]
+      ),
+    ),
     changedFiles: mean(results.map((result) => result.changedFiles.length))!,
     addedLines: mean(results.map((result) => result.addedLines))!,
     deletedLines: mean(results.map((result) => result.deletedLines))!,

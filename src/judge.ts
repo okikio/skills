@@ -6,10 +6,7 @@ import {
   type RolloutResponseType,
 } from "./protocol.ts";
 import { redactValue } from "./redact.ts";
-import type {
-  AssertionResultType,
-  RubricResultType,
-} from "./evaluation.ts";
+import type { AssertionResultType, RubricResultType } from "./evaluation.ts";
 
 /** Inputs required to run or deliberately skip one qualitative judge. */
 export interface EvaluateOptionsType {
@@ -66,7 +63,9 @@ function complete(
     expected.every((index, position) => actual[position] === index)
   ) return undefined;
 
-  return `Judge returned rubric indexes [${actual.join(", ")}] but expected [${expected.join(", ")}]`;
+  return `Judge returned rubric indexes [${actual.join(", ")}] but expected [${
+    expected.join(", ")
+  }]`;
 }
 
 /**
@@ -126,7 +125,10 @@ export async function evaluate(
     };
   }
 
-  const completenessError = complete(call.response.results, options.rubric.length);
+  const completenessError = complete(
+    call.response.results,
+    options.rubric.length,
+  );
   if (completenessError) {
     return {
       results: fail(options.rubric, completenessError),
