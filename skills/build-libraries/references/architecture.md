@@ -15,7 +15,7 @@ smaller than the knowledge and implementation it hides.
 Write concrete call sites before designing generic machinery:
 
 ```ts
-import { analyzeDomains } from "@kaiju/analysis";
+import { analyzeDomains } from "@example/analysis";
 
 const result = await analyzeDomains(
   { domains: ["example.com"] },

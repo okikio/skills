@@ -47,7 +47,7 @@ Treat the version in the repository manifest and lockfile as authoritative for
 that repository. The attached evidence contains several distinct states:
 
 - the attached CLI lock resolves `ohash@2.0.11`;
-- the attached finance, Better Auth, Kaiju website, and motion locks resolve
+- the attached application, Better Auth, Kaiju website, and motion locks resolve
   stable `ofetch@1.5.1`, `unstorage@1.17.5`, and `ohash@2.0.11` transitively;
 - attached projects resolve both `hookable@5.5.3` and `hookable@6.1.1`;
 - the attached Kaiju site scope also resolves `ofetch@2.0.0-alpha.3` and
@@ -1023,8 +1023,8 @@ Verified 2026-07-17 from primary package artifacts and official documentation:
 - Official Hookable v6.1.1 source:
   <https://github.com/unjs/hookable/tree/v6.1.1>.
 - Attached version evidence: `live-browser-cli(41).zip/deno.lock`,
-  `new-finance-app(1).zip/aube-lock.yaml`,
-  `old-finance-app(1).zip/aube-lock.yaml`,
+  `a product application's aube-lock.yaml`,
+  `its earlier aube-lock.yaml`,
   `better-auth.zip/aube-lock.yaml`,
   `kaiju-website(6).zip/pnpm-lock.yaml`,
   `kaiju-site-scope(17).zip/pnpm-lock.yaml`,

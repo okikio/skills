@@ -204,7 +204,8 @@ Official examples are topology evidence, not universal compatibility proof.
 
 ## Private, personal, and generated ecosystems
 
-For `@okikio/*`, custom adapters, or unpublished packages:
+For packages from `okikio/utils` (see `use-utils`), standalone Okikio libraries
+(see `use-okikio`), custom adapters or unpublished packages:
 
 - search consuming workspaces, lockfiles, local registries, import maps, source
   directories, docs, tests, and package metadata;

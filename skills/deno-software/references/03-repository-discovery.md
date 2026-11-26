@@ -87,6 +87,16 @@ check import-time effects and optional-runtime reachability.
 - package-manager lockfiles Deno is expected to consume;
 - generated build/npm/JSR artifacts.
 
+## Type evidence and runtime evidence have separate owners
+
+Expand the actual task body and follow delegated tasks/scripts before naming a
+check. Read compiler pins and lock resolution separately from the command that
+executes tests. A Deno task can launch a pinned TypeScript compiler; Deno as task
+runner does not imply `deno check` owns type evidence. Record the concrete
+compiler/version source and runtime test task found in the consumer, then keep
+built declarations, packed consumers and bundles as separate proof. A missing
+script limits implementation verification; it does not erase manifest evidence.
+
 ## Tests and runtimes
 
 Record the claimed matrix separately from what the current host can execute:

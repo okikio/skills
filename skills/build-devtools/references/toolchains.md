@@ -14,7 +14,7 @@ Before changing tooling, map the current owners:
 | Lint and format | repository tasks/config | Oxc, Deno, Biome, ESLint/Prettier |
 | Transform and bundle | build config, package exports | Oxc, Unplugin, Vite, Rollup, tsdown |
 | Browser tests | test config | Playwright |
-| Package tests | imports and tasks | `node:test` + `@std/expect` in current Okikio/Kaiju repos |
+| Package tests | imports and tasks | `node:test` + `@std/expect` for Deno-first portable packages, unless the project selects another runner |
 | Benchmarks | benchmark files/tasks | Mitata when selected |
 | Release | CI, release config, registry metadata | repository-selected release tooling |
 

@@ -1,6 +1,11 @@
 import { z } from "zod";
+import {
+  DocumentPathSchema,
+  InstalledReferenceSchema,
+  SkillIdSchema,
+} from "./paths.ts";
 
-export const SkillIdSchema = z.string().regex(/^[a-z0-9][a-z0-9-]*$/);
+export { SkillIdSchema } from "./paths.ts";
 export const EvalTargetSchema = z.union([
   SkillIdSchema,
   z.literal("composition"),
@@ -58,9 +63,7 @@ export const SourceRegistrySchema = z.strictObject({
 export const CapabilityRecordSchema = z.strictObject({
   id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/),
   skill: SkillIdSchema,
-  reference: z.string().regex(
-    /^(?:references|guides)\/[a-z0-9][a-z0-9._/-]*\.md$/,
-  ),
+  reference: DocumentPathSchema,
   capability: z.string().min(8),
   ownership: z.string().min(8),
   status: EvidenceStatusSchema,
@@ -121,6 +124,23 @@ const executableAssertionKinds = new Set([
   "command",
 ]);
 
+/**
+ * Explicit ownership migration for a preserved case, independent of its ID.
+ * Version 1 changes an owner name only; it cannot override prompts or criteria.
+ */
+export const CaseInterpretationSchema = z.strictObject({
+  schemaVersion: z.literal(1),
+  kind: z.literal("skill-owner-migration"),
+  legacyOwner: SkillIdSchema,
+  currentOwner: SkillIdSchema,
+}).refine((value) => value.legacyOwner !== value.currentOwner, {
+  message: "An owner migration must name different legacy and current owners",
+  path: ["currentOwner"],
+});
+
+/** Versioned ownership context retained with the original case evidence. */
+export type CaseInterpretationType = z.infer<typeof CaseInterpretationSchema>;
+
 export const EvalCaseSchema = z.strictObject({
   id: z.string().regex(/^[a-z0-9][a-z0-9-]+$/),
   title: z.string().min(3),
@@ -128,11 +148,12 @@ export const EvalCaseSchema = z.strictObject({
   kind: EvalKindSchema,
   split: EvalSplitSchema,
   prompt: z.string().min(8),
+  interpretation: CaseInterpretationSchema.optional(),
   fixture: z.string().optional(),
   expectedSkills: z.array(SkillIdSchema).default([]),
   forbiddenSkills: z.array(SkillIdSchema).default([]),
-  requiredReferences: z.array(z.string()).default([]),
-  forbiddenReferences: z.array(z.string()).default([]),
+  requiredReferences: z.array(InstalledReferenceSchema).default([]),
+  forbiddenReferences: z.array(InstalledReferenceSchema).default([]),
   assertions: z.array(AssertionSchema).min(1),
   rubric: z.array(z.string()).default([]),
   oracleStrength: OracleStrengthSchema.default("routing-smoke"),
@@ -142,6 +163,31 @@ export const EvalCaseSchema = z.strictObject({
   rationale: z.string().min(8),
 }).superRefine((value, context) => {
   const expected = new Set(value.expectedSkills);
+  if (value.interpretation) {
+    const { legacyOwner, currentOwner } = value.interpretation;
+    if (!expected.has(currentOwner)) {
+      context.addIssue({
+        code: "custom",
+        message: "The current interpretation owner must be positively expected",
+        path: ["interpretation", "currentOwner"],
+      });
+    }
+    const routedOwners = new Set([
+      ...(value.skill === "composition" ? [] : [value.skill]),
+      ...value.expectedSkills,
+      ...value.forbiddenSkills,
+      ...value.requiredReferences.map((reference) => reference.split("/")[0]),
+      ...value.forbiddenReferences.map((reference) => reference.split("/")[0]),
+    ]);
+    if (routedOwners.has(legacyOwner)) {
+      context.addIssue({
+        code: "custom",
+        message:
+          "The legacy interpretation owner must not remain in routing expectations",
+        path: ["interpretation", "legacyOwner"],
+      });
+    }
+  }
   for (const skill of value.forbiddenSkills) {
     if (expected.has(skill)) {
       context.addIssue({

@@ -184,7 +184,7 @@
         "build-clis/references/interaction.md",
         "build-clis/references/lifecycle.md",
         "build-clis/references/output.md",
-        "build-clis/references/testing.md"
+        "build-clis/references/cli-testing.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -238,7 +238,7 @@
         "build-clis/references/interaction.md",
         "build-clis/references/lifecycle.md",
         "build-clis/references/output.md",
-        "build-clis/references/testing.md"
+        "build-clis/references/cli-testing.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -292,7 +292,7 @@
         "build-clis/references/interaction.md",
         "build-clis/references/lifecycle.md",
         "build-clis/references/output.md",
-        "build-clis/references/testing.md"
+        "build-clis/references/cli-testing.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -435,26 +435,29 @@
     {
       "id": "completion-delivery-core-train",
       "title": "Complete software delivery lifecycle",
-      "skill": "deliver-software",
+      "skill": "refactor-code",
       "kind": "trajectory",
       "split": "train",
       "prompt": "Implement a repository-wide replacement of a legacy transport. Start from the latest source authority, lock the deliverable, trace entrypoints and consumers, preserve unrelated dirty work, update code/tests/docs/generated output, remove obsolete compatibility, validate the changed surface, and verify the real user workflow before the final verdict.",
       "expectedSkills": [
-        "deliver-software"
+        "refactor-code",
+        "release-software",
+        "plan-changes",
+        "verify-behavior"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/base.md",
-        "deliver-software/references/cases.md",
-        "deliver-software/references/changes.md",
-        "deliver-software/references/delivery.md",
-        "deliver-software/references/implementer.md",
-        "deliver-software/references/planner.md",
-        "deliver-software/references/refactors.md",
-        "deliver-software/references/review.md",
-        "deliver-software/references/validator.md",
-        "deliver-software/references/verifier.md",
-        "deliver-software/references/workflow.md"
+        "refactor-code/references/shared/references/base.md",
+        "refactor-code/references/shared/references/cases.md",
+        "release-software/references/changes.md",
+        "refactor-code/references/shared/references/delivery.md",
+        "refactor-code/references/implementer.md",
+        "plan-changes/references/planner.md",
+        "refactor-code/references/refactors.md",
+        "refactor-code/references/shared/references/review.md",
+        "refactor-code/references/shared/references/validator.md",
+        "verify-behavior/references/verifier.md",
+        "plan-changes/references/workflow.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -495,26 +498,29 @@
     {
       "id": "completion-delivery-core-seen",
       "title": "Complete software delivery lifecycle",
-      "skill": "deliver-software",
+      "skill": "refactor-code",
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A previous agent changed the central implementation and stopped after unit tests. Review the unfinished replacement, reconstruct the original goal, identify stale exports/config/docs/fixtures and unverified workflows, complete the implementation without unrelated formatting churn, and distinguish validation from end-to-end verification.",
       "expectedSkills": [
-        "deliver-software"
+        "refactor-code",
+        "release-software",
+        "plan-changes",
+        "verify-behavior"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/base.md",
-        "deliver-software/references/cases.md",
-        "deliver-software/references/changes.md",
-        "deliver-software/references/delivery.md",
-        "deliver-software/references/implementer.md",
-        "deliver-software/references/planner.md",
-        "deliver-software/references/refactors.md",
-        "deliver-software/references/review.md",
-        "deliver-software/references/validator.md",
-        "deliver-software/references/verifier.md",
-        "deliver-software/references/workflow.md"
+        "refactor-code/references/shared/references/base.md",
+        "refactor-code/references/shared/references/cases.md",
+        "release-software/references/changes.md",
+        "refactor-code/references/shared/references/delivery.md",
+        "refactor-code/references/implementer.md",
+        "plan-changes/references/planner.md",
+        "refactor-code/references/refactors.md",
+        "refactor-code/references/shared/references/review.md",
+        "refactor-code/references/shared/references/validator.md",
+        "verify-behavior/references/verifier.md",
+        "plan-changes/references/workflow.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -555,26 +561,29 @@
     {
       "id": "completion-delivery-core-heldout",
       "title": "Complete software delivery lifecycle",
-      "skill": "deliver-software",
+      "skill": "refactor-code",
       "kind": "trajectory",
       "split": "adversarial",
       "prompt": "A request says “review and fix everything” in a dirty repository with overlapping user edits and a deployment path you cannot access. Define what can be safely implemented now, what must remain read-only, how you preserve user work, how blockers affect the verdict, and what exact evidence is required before calling the capability complete.",
       "expectedSkills": [
-        "deliver-software"
+        "refactor-code",
+        "release-software",
+        "plan-changes",
+        "verify-behavior"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/base.md",
-        "deliver-software/references/cases.md",
-        "deliver-software/references/changes.md",
-        "deliver-software/references/delivery.md",
-        "deliver-software/references/implementer.md",
-        "deliver-software/references/planner.md",
-        "deliver-software/references/refactors.md",
-        "deliver-software/references/review.md",
-        "deliver-software/references/validator.md",
-        "deliver-software/references/verifier.md",
-        "deliver-software/references/workflow.md"
+        "refactor-code/references/shared/references/base.md",
+        "refactor-code/references/shared/references/cases.md",
+        "release-software/references/changes.md",
+        "refactor-code/references/shared/references/delivery.md",
+        "refactor-code/references/implementer.md",
+        "plan-changes/references/planner.md",
+        "refactor-code/references/refactors.md",
+        "refactor-code/references/shared/references/review.md",
+        "refactor-code/references/shared/references/validator.md",
+        "verify-behavior/references/verifier.md",
+        "plan-changes/references/workflow.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -615,23 +624,26 @@
     {
       "id": "completion-delivery-docs-train",
       "title": "Documentation review and collaboration contracts",
-      "skill": "deliver-software",
+      "skill": "write-docs",
       "kind": "trajectory",
       "split": "train",
       "prompt": "Prepare the documentation and review package for a lifecycle-heavy architecture change. Document important public and internal invariants, choose diagrams from the reader question, keep prose progressive and self-contained, write a focused commit and pull-request narrative, describe release impact, and ensure every claim traces to code/tests rather than generic style advice.",
       "expectedSkills": [
-        "deliver-software"
+        "write-docs",
+        "commit-changes",
+        "prepare-pull-requests",
+        "release-software"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/comments.md",
-        "deliver-software/references/commits.md",
-        "deliver-software/references/diagrams.md",
-        "deliver-software/references/docs.md",
-        "deliver-software/references/general.md",
-        "deliver-software/references/pulls.md",
-        "deliver-software/references/releases.md",
-        "deliver-software/references/standards.md"
+        "write-docs/references/shared/references/comments.md",
+        "commit-changes/references/commits.md",
+        "write-docs/references/shared/references/diagrams.md",
+        "write-docs/references/shared/references/docs.md",
+        "write-docs/references/shared/references/general.md",
+        "prepare-pull-requests/references/pulls.md",
+        "release-software/references/releases.md",
+        "write-docs/references/shared/references/standards.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -672,23 +684,26 @@
     {
       "id": "completion-delivery-docs-seen",
       "title": "Documentation review and collaboration contracts",
-      "skill": "deliver-software",
+      "skill": "write-docs",
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A PR is technically correct but its comments restate syntax, the architecture diagram hides failure/cleanup branches, the changelog overclaims runtime support, and the review has vague “clean this up” comments. Rewrite the documentation/review artifacts so they explain contracts, evidence, risk, and exact verification without mixing the different artifact purposes.",
       "expectedSkills": [
-        "deliver-software"
+        "write-docs",
+        "commit-changes",
+        "prepare-pull-requests",
+        "release-software"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/comments.md",
-        "deliver-software/references/commits.md",
-        "deliver-software/references/diagrams.md",
-        "deliver-software/references/docs.md",
-        "deliver-software/references/general.md",
-        "deliver-software/references/pulls.md",
-        "deliver-software/references/releases.md",
-        "deliver-software/references/standards.md"
+        "write-docs/references/shared/references/comments.md",
+        "commit-changes/references/commits.md",
+        "write-docs/references/shared/references/diagrams.md",
+        "write-docs/references/shared/references/docs.md",
+        "write-docs/references/shared/references/general.md",
+        "prepare-pull-requests/references/pulls.md",
+        "release-software/references/releases.md",
+        "write-docs/references/shared/references/standards.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -729,23 +744,26 @@
     {
       "id": "completion-delivery-docs-heldout",
       "title": "Documentation review and collaboration contracts",
-      "skill": "deliver-software",
+      "skill": "write-docs",
       "kind": "trajectory",
       "split": "valid-unseen",
       "prompt": "A team asks for ASD-STE100 everywhere, snake_case for all project fields, and one minimal Mermaid pipeline because those rules sound consistent. Reconcile the request with current repository standards, preserve external/provider naming where required, choose the right visual forms, and explain which writing/naming rules actually apply to ordinary technical docs and code.",
       "expectedSkills": [
-        "deliver-software"
+        "write-docs",
+        "commit-changes",
+        "prepare-pull-requests",
+        "release-software"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/comments.md",
-        "deliver-software/references/commits.md",
-        "deliver-software/references/diagrams.md",
-        "deliver-software/references/docs.md",
-        "deliver-software/references/general.md",
-        "deliver-software/references/pulls.md",
-        "deliver-software/references/releases.md",
-        "deliver-software/references/standards.md"
+        "write-docs/references/shared/references/comments.md",
+        "commit-changes/references/commits.md",
+        "write-docs/references/shared/references/diagrams.md",
+        "write-docs/references/shared/references/docs.md",
+        "write-docs/references/shared/references/general.md",
+        "prepare-pull-requests/references/pulls.md",
+        "release-software/references/releases.md",
+        "write-docs/references/shared/references/standards.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -786,21 +804,21 @@
     {
       "id": "completion-delivery-lang-train",
       "title": "Language and web implementation contracts",
-      "skill": "deliver-software",
+      "skill": "build-web",
       "kind": "trajectory",
       "split": "train",
       "prompt": "Implement a typed web library feature shared by Astro, React, and Solid consumers. Keep the reusable TypeScript contract framework-neutral, use schema-derived project data and contextual inference, put renderer-specific behavior behind explicit integrations, preserve SSR/hydration behavior, and validate both public types and real consumer builds.",
       "expectedSkills": [
-        "deliver-software"
+        "build-web"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/astro.md",
-        "deliver-software/references/composition.md",
-        "deliver-software/references/react.md",
-        "deliver-software/references/solid.md",
-        "deliver-software/references/typescript.md",
-        "deliver-software/references/web.md"
+        "build-web/references/prior-delivery/astro.md",
+        "build-web/references/prior-delivery/composition.md",
+        "build-web/references/prior-delivery/react.md",
+        "build-web/references/prior-delivery/solid.md",
+        "build-web/references/shared/references/typescript.md",
+        "build-web/references/prior-delivery/web.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -841,21 +859,21 @@
     {
       "id": "completion-delivery-lang-seen",
       "title": "Language and web implementation contracts",
-      "skill": "deliver-software",
+      "skill": "build-web",
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A shared TypeScript module has acquired React hooks, Solid owners, Astro globals, handwritten interfaces duplicating Zod schemas, and a Python generation script that emits stale types. Refactor ownership so the core is portable, renderer adapters remain explicit, generated contracts have one authority, and all current consumers/tests/docs move to the replacement.",
       "expectedSkills": [
-        "deliver-software"
+        "build-web"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/astro.md",
-        "deliver-software/references/composition.md",
-        "deliver-software/references/react.md",
-        "deliver-software/references/solid.md",
-        "deliver-software/references/typescript.md",
-        "deliver-software/references/web.md"
+        "build-web/references/prior-delivery/astro.md",
+        "build-web/references/prior-delivery/composition.md",
+        "build-web/references/prior-delivery/react.md",
+        "build-web/references/prior-delivery/solid.md",
+        "build-web/references/shared/references/typescript.md",
+        "build-web/references/prior-delivery/web.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -896,21 +914,21 @@
     {
       "id": "completion-delivery-lang-heldout",
       "title": "Language and web implementation contracts",
-      "skill": "deliver-software",
+      "skill": "build-web",
       "kind": "trajectory",
       "split": "adversarial",
       "prompt": "A patch claims “cross-framework support” because TypeScript compiles while only the React demo was run. Audit the Astro/Solid/React/runtime surfaces, public inference, generated artifacts, browser behavior, and import graph. Reject claims that are not proven and do not preserve obsolete compatibility unless the requirement needs it.",
       "expectedSkills": [
-        "deliver-software"
+        "build-web"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/astro.md",
-        "deliver-software/references/composition.md",
-        "deliver-software/references/react.md",
-        "deliver-software/references/solid.md",
-        "deliver-software/references/typescript.md",
-        "deliver-software/references/web.md"
+        "build-web/references/prior-delivery/astro.md",
+        "build-web/references/prior-delivery/composition.md",
+        "build-web/references/prior-delivery/react.md",
+        "build-web/references/prior-delivery/solid.md",
+        "build-web/references/shared/references/typescript.md",
+        "build-web/references/prior-delivery/web.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -951,17 +969,17 @@
     {
       "id": "completion-delivery-quality-train",
       "title": "Testing benchmarking and artifact verification",
-      "skill": "deliver-software",
+      "skill": "benchmark-code",
       "kind": "trajectory",
       "split": "train",
       "prompt": "Design the test and benchmark plan for a streaming TypeScript parser. Use node:test plus @std/expect for the shared package tests, real Deno/browser runtime checks for claimed environments, chunk-invariance and malformed-input tests, Mitata baselines with consumed results, memory/lifecycle checks, and exact built-artifact verification.",
       "expectedSkills": [
-        "deliver-software"
+        "benchmark-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/benchmarks.md",
-        "deliver-software/references/testing.md"
+        "benchmark-code/references/shared/references/benchmarks.md",
+        "benchmark-code/references/shared/references/testing.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -1002,17 +1020,17 @@
     {
       "id": "completion-delivery-quality-seen",
       "title": "Testing benchmarking and artifact verification",
-      "skill": "deliver-software",
+      "skill": "benchmark-code",
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "A performance patch shows a faster microbenchmark but changes semantics, does not consume the benchmark result, and only type-checks the Deno/browser paths. Repair the benchmark and testing strategy so correctness gates run first, workloads match, lifecycle/memory effects are measured, and runtime/artifact claims are proven independently.",
       "expectedSkills": [
-        "deliver-software"
+        "benchmark-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/benchmarks.md",
-        "deliver-software/references/testing.md"
+        "benchmark-code/references/shared/references/benchmarks.md",
+        "benchmark-code/references/shared/references/testing.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -1053,17 +1071,17 @@
     {
       "id": "completion-delivery-quality-heldout",
       "title": "Testing benchmarking and artifact verification",
-      "skill": "deliver-software",
+      "skill": "benchmark-code",
       "kind": "trajectory",
       "split": "test-frozen",
       "prompt": "The source tree passes tests and a benchmark improves by 18%, but the packaged ZIP has not been extracted or run and the browser suite is blocked by the host. Decide the completion verdict, state what the existing evidence proves, verify the exact archive with all available gates, and report the blocked native lane without substituting another check.",
       "expectedSkills": [
-        "deliver-software"
+        "benchmark-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/benchmarks.md",
-        "deliver-software/references/testing.md"
+        "benchmark-code/references/shared/references/benchmarks.md",
+        "benchmark-code/references/shared/references/testing.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -1995,16 +2013,16 @@
     {
       "id": "completion-delivery-python-train",
       "title": "Python preserves external data and explicit ownership",
-      "skill": "deliver-software",
+      "skill": "python-software",
       "kind": "trajectory",
       "split": "train",
       "prompt": "Implement a Python ingestion component that receives provider JSON containing createdAt, snake_case, and header-style field names, uses an injected async HTTP client, writes a durable checkpoint, and supports cancellation. Follow the repository's Python toolchain. Keep Python identifiers idiomatic without renaming external data merely for style, keep the injected client borrowed, make retry/concurrency/checkpoint limits explicit, and document the non-obvious lifecycle and replay rules.",
       "expectedSkills": [
-        "deliver-software"
+        "python-software"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/python.md"
+        "python-software/references/python.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -2047,16 +2065,16 @@
     {
       "id": "completion-delivery-python-seen",
       "title": "Python review rejects style-driven contract drift",
-      "skill": "deliver-software",
+      "skill": "python-software",
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Review a Python patch that converts every incoming JSON key and every persisted field to snake_case, adds helpers.py for unrelated parsing/network/checkpoint code, catches Exception around asyncio work including cancellation, and always closes a caller-supplied client. Repair the design without changing the external API contract or replacing the repository's selected formatter, type checker, and test runner.",
       "expectedSkills": [
-        "deliver-software"
+        "python-software"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/python.md"
+        "python-software/references/python.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -2103,16 +2121,16 @@
     {
       "id": "completion-delivery-python-heldout",
       "title": "Python and TypeScript share contracts without sharing syntax rules",
-      "skill": "deliver-software",
+      "skill": "python-software",
       "kind": "trajectory",
       "split": "adversarial",
       "prompt": "A monorepo has a Python code generator consumed by a Deno TypeScript package. A reviewer demands one naming rule everywhere: camelCase Python identifiers and snake_case JSON because those are the project standards. Resolve the disagreement. Preserve each language's normal identifier conventions, keep generated/wire field names tied to their actual contract, identify the explicit conversion point when semantics differ, and specify clean generator/output/consumer validation before claiming the integration works.",
       "expectedSkills": [
-        "deliver-software"
+        "python-software"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/python.md"
+        "python-software/references/python.md"
       ],
       "forbiddenReferences": [],
       "assertions": [

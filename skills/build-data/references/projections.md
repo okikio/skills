@@ -34,7 +34,7 @@ For each projected fact, name:
 
 Do not call a search or graph store authoritative merely because it serves reads. Serving authority and data authority are different. A store can own query availability while remaining rebuildable from PostgreSQL, immutable artifacts, or another source.
 
-The retained PopModern repository illustrates why deployment evidence matters. Its README and data guide describe RDF N-Triples served through QLever, Typesense search, PostgreSQL/Supabase, and prototype ClickHouse infrastructure. Older migrations and comments mention other graph/export approaches. Inspect the active `Qleverfile`, container scripts, query endpoints, Typesense schemas/seeders, and ingestion recipes; do not select Blazegraph, QLever, or another engine from a stale label.
+Inspect active startup configuration, container scripts, query endpoints, schemas, seeders and ingestion jobs. Older migrations and comments may describe replaced engines. Choose query and rebuild semantics from the engine that actually receives writes and serves reads.
 
 ## Change identity and projector contract
 
@@ -97,7 +97,7 @@ Decide and test:
 
 Bulk APIs can return a successful HTTP response while individual documents fail. Parse every item result, quarantine rejected documents with safe reasons, and reconcile requested IDs against accepted IDs.
 
-The PopModern general-purpose `TypesenseSink` is explicitly a placeholder that logs what it would do; it does not convert RDF to documents or write them. Do not count its registration as a live projection. The separate MediaWiki sink calls Typesense bulk import, but does not inspect per-item results in the retained code. Treat that as an incomplete error contract.
+A registered sink that only logs an intended write is a placeholder. Trace the network/storage operation and inspect its result contract before calling the projection implemented. For a bulk import, reconcile each requested document with its item result.
 
 ## RDF and SPARQL projections
 
@@ -117,7 +117,7 @@ An RDF projection needs explicit term and ontology ownership:
 
 N-Triples append is easy to implement and hard to correct. Appending a changed record can leave the old triple present. Define whether the build is a full immutable dataset, per-source graph replacement, or an update-capable store. If full rebuild is the contract, publish a complete versioned dataset and atomically switch the serving index.
 
-The PopModern importer maps records into an in-memory RDFLib graph, flushes batches, and appends N-Triples. This bounds graph memory, but it does not provide record-level checkpoints, atomic multi-file publication, delete semantics, or a manifest. The QLever index must therefore be treated as a build from a named complete input set, not as proof that every recipe committed successfully.
+Flushing an in-memory RDF graph by batch can bound graph memory. It does not establish record checkpoints, atomic publication across files, deletion behavior or a manifest. Build a serving index from a named complete input set and record which input set was successfully published.
 
 For SPARQL queries, test the active engine rather than assuming common semantics cover:
 
@@ -281,7 +281,7 @@ Run a reconciliation program that exits non-zero for missing, extra, stale-versi
 ## Deliberate exclusions
 
 - Do not mandate Typesense, QLever, Blazegraph, ClickHouse, or any named engine without repository/deployment evidence.
-- Do not treat the PopModern placeholder Typesense sink as implemented.
+- Do not treat a registered placeholder sink as an implemented projection.
 - Do not assume search bulk HTTP success means every document succeeded.
 - Do not use the projection as authority unless the architecture explicitly assigns it authority and recovery.
 - Do not dual-write required state without a durable gap-repair mechanism.
@@ -291,4 +291,4 @@ Run a reconciliation program that exits non-zero for missing, extra, stale-versi
 
 ## Sources and freshness
 
-Grounded in the retained PopModern `DATA_PIPELINE.md`, importer recipes and sinks, MediaWiki ETL, QLever configuration/start scripts, Typesense seed/sink code, SPARQL endpoints, and legacy/current deployment artifacts, reviewed 2026-07-17. PopModern is source evidence with active, legacy, and placeholder paths; the actual deployed engine and capability set must be re-established from the consuming repository. Engine alias, bulk-result, update, and query behavior is version-sensitive and must be verified against installed official documentation and executable endpoints.
+Primary references: [Typesense document import](https://typesense.org/docs/latest/api/documents.html#import-documents), [QLever source and configuration](https://github.com/ad-freiburg/qlever) and [SPARQL 1.1](https://www.w3.org/TR/sparql11-overview/). These identify the relevant public systems; they do not prove a consumer has deployed them. Verify the active engine, item-result contract, update behavior, rebuild path and installed version before implementation claims.

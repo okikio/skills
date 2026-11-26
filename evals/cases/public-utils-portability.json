@@ -1,0 +1,904 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "public-utils-adoption-train",
+      "title": "Separate release preparation from installation evidence",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A public utility source manifest says 1.0.0 at a pinned commit. npm reports only 0.0.0 without the expected exports, while JSR metadata is inaccessible. A teammate proposes installing 1.0.0 and copying old private registry credentials into the project. Give the correct adoption decision and the evidence needed before writing an import.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/adoption.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "source|manifest"
+        },
+        {
+          "kind": "regex",
+          "value": "registry|published|publication"
+        },
+        {
+          "kind": "regex",
+          "value": "unverified|unconfirmed|cannot (verify|confirm)"
+        }
+      ],
+      "rubric": [
+        "Separates the source version from a confirmed registry release and does not invent an install command for 1.0.0.",
+        "Treats inaccessible JSR metadata as unverified publication, not proof of absence.",
+        "Rejects inherited private registry credentials; checks the consumer resolver and exact artifact or an explicitly selected source integration."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "adoption",
+        "train"
+      ],
+      "rationale": "Source and release evidence control utility adoption must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-adoption-valid-seen",
+      "title": "Check a resolved artifact before copying source examples",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "An application resolves an older @okikio/env artifact. The current public source demonstrates env.define with native schema builders. The lockfile and installed declaration do not contain the new symbol. Explain how to use the guidance without fabricating compatibility or silently replacing the application validator.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/adoption.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(lockfile|artifact|declaration|export)"
+        },
+        {
+          "kind": "regex",
+          "value": "(version|upgrade|source)"
+        }
+      ],
+      "rubric": [
+        "Identifies that current source examples do not establish the installed artifact API.",
+        "Inspects available exports and compatibility before proposing an explicit version or source migration.",
+        "Preserves the selected validator and configuration owner unless the task requires replacement; does not invent a compatibility alias."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "adoption",
+        "valid-seen"
+      ],
+      "rationale": "Source and release evidence control utility adoption must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-adoption-transfer",
+      "title": "Preserve a working consumer while evaluating optional utilities",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "A Node application already has validated configuration, supervised jobs and a tested resource disposer. The task is to add a bounded CSV export. A new public utility repository offers all four mechanisms. Decide what to inspect and adopt, and state which evidence supports package, runtime and release claims.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/adoption.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(CSV|csv)"
+        },
+        {
+          "kind": "regex",
+          "value": "(existing|selected|preserv)"
+        },
+        {
+          "kind": "regex",
+          "value": "(artifact|export|registry|release)"
+        }
+      ],
+      "rubric": [
+        "Focuses adoption on the CSV requirement and preserves unrelated working owners.",
+        "Checks the format subpath and source/release resolution rather than assuming every workspace package is installable.",
+        "Plans bounded output and Node cleanup checks without claiming that a source map proves execution."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "adoption",
+        "transfer"
+      ],
+      "rationale": "Source and release evidence control utility adoption must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-packages-train",
+      "title": "Map capabilities without a namespace substitution",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Migrate an older utility recipe that needs a local state cell, scoped resource acquisition, an HTTP service client and a PostgreSQL query executor. Use the current public okikio/utils source. Name the verified owners, identify the compiler versus executor distinction, and explain which legacy names cannot simply be renamed.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/packages.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "context/state"
+        },
+        {
+          "kind": "regex",
+          "value": "capability/resource"
+        },
+        {
+          "kind": "regex",
+          "value": "server/client"
+        },
+        {
+          "kind": "regex",
+          "value": "compil"
+        }
+      ],
+      "rubric": [
+        "Maps local state to context/state and resources to capability/resource.",
+        "Uses server/client and explicitly rejects an invented http/client export.",
+        "Explains that query/postgres compiles SQL and parameters while a selected driver or application adapter executes them.",
+        "Does not invent generic db, auth or application-domain package replacements."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "packages",
+        "train"
+      ],
+      "rationale": "Utility migration follows capability and exact export ownership must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-packages-valid-seen",
+      "title": "Reconcile consolidated capabilities and separate Observables",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A review proposes @okikio/state, @okikio/resource, @okikio/entitlement, @okikio/meter and @okikio/codec. The application also imports @okikio/observables/events. Correct the source ownership and explain which library keeps its independent identity.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/packages.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "context/state"
+        },
+        {
+          "kind": "regex",
+          "value": "authz/entitlement"
+        },
+        {
+          "kind": "regex",
+          "value": "capability/effect/meter"
+        },
+        {
+          "kind": "regex",
+          "value": "schema/codec"
+        },
+        {
+          "kind": "regex",
+          "value": "observables"
+        }
+      ],
+      "rubric": [
+        "Maps resource to capability/resource and state to context/state rather than inventing standalone packages.",
+        "Maps entitlement, meter and codec to their actual consolidated source subpaths.",
+        "Preserves the separate @okikio/observables library and verifies its own release/export map."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "packages",
+        "valid-seen"
+      ],
+      "rationale": "Utility migration follows capability and exact export ownership must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-packages-transfer",
+      "title": "Reject invented umbrella and domain exports",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "A portable plugin wants to replace its application-specific entity registry and SQL/Drizzle wrapper with @okikio/utils/entities and @okikio/utils/sql. It also assumes @okikio/utils/observables exists because the standalone Observables package does. Review the proposal and choose a migration path supported by evidence.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/packages.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(export|manifest)"
+        },
+        {
+          "kind": "regex",
+          "value": "(missing|absent|no |not |does not)"
+        },
+        {
+          "kind": "regex",
+          "value": "(application|consumer|domain)"
+        }
+      ],
+      "rubric": [
+        "Rejects implied entity/SQL/Observables umbrella exports and checks the actual export map.",
+        "Keeps application-specific registry and database policy with the consumer or a separately verified package.",
+        "Uses any matching focused utility contract only after comparing semantics; does not equate collection/catalog or query/postgres with the missing domain implementation."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "packages",
+        "transfer"
+      ],
+      "rationale": "Utility migration follows capability and exact export ownership must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-services-train",
+      "title": "Distinguish definition inspection from executable compilation",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Using the public server/service source, explain a service from endpoint declaration through implementation, compilation and Fetch hosting. A reviewer says compileDefinition was removed and that compile never needs handler bindings. Correct those claims and show what can be inspected without acquiring resources.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/services.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "compileDefinition"
+        },
+        {
+          "kind": "regex",
+          "value": "compile"
+        },
+        {
+          "kind": "regex",
+          "value": "(handler|implement)"
+        },
+        {
+          "kind": "regex",
+          "value": "(resource|environment)"
+        }
+      ],
+      "rubric": [
+        "States that compileDefinition and compile both exist and distinguishes their inputs and outputs.",
+        "Uses compileDefinition for a handler-free static graph without environment/resource acquisition.",
+        "Requires actual implementation bindings and runtime request verification before claiming a working service."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "services",
+        "train"
+      ],
+      "rationale": "Service definitions, executable bindings and resource ownership stay distinct must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-services-valid-seen",
+      "title": "Keep validated query input separate from database execution",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A handler receives checked input and calls @okikio/query/postgres.compile. It then returns the compiler output as if the query had run. Explain the missing contracts and how the service should use its resource without adding a second validation middleware owner.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/services.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "compil"
+        },
+        {
+          "kind": "regex",
+          "value": "(SQL|sql)"
+        },
+        {
+          "kind": "regex",
+          "value": "(execut|driver|database)"
+        },
+        {
+          "kind": "regex",
+          "value": "(tenant|authoriz|policy)"
+        }
+      ],
+      "rubric": [
+        "Identifies compiler output as SQL and parameters, not rows or an executed query.",
+        "Keeps driver execution, tenant constraints, transaction/count behavior, cancellation and error mapping explicit.",
+        "Preserves the compiled service input owner and acquires the driver through the consumer-selected resource contract."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "services",
+        "valid-seen"
+      ],
+      "rationale": "Service definitions, executable bindings and resource ownership stay distinct must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-services-transfer",
+      "title": "Check every borrower of a cached resource",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "Two requests borrow one collection-owned resource. The second has a different direct requirement and the first cancels. The resource is already cached. Specify admission, cancellation, cleanup and definition identity behavior for the public capability/resource API.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/services.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(borrow|borrower)"
+        },
+        {
+          "kind": "regex",
+          "value": "(requirement|admission)"
+        },
+        {
+          "kind": "regex",
+          "value": "(cancel|abort)"
+        },
+        {
+          "kind": "regex",
+          "value": "(identity|definition)"
+        }
+      ],
+      "rubric": [
+        "Rechecks each borrower's direct requirements even on a cache hit.",
+        "Distinguishes cancellation of a borrower's observation from cancellation/disposal of the shared acquisition.",
+        "Keeps collection-owned versus borrowed ownership explicit and does not reconstruct a definition from serialized data."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "services",
+        "transfer"
+      ],
+      "rationale": "Service definitions, executable bindings and resource ownership stay distinct must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-lifetimes-train",
+      "title": "Choose a disposer that all callers can join",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Three callers may close the same async resource concurrently and must observe the same cleanup success or failure. Compare public dispose/once with repeated AsyncDisposableStack.disposeAsync calls, including lazy start, reentrant access and a cleanup failure.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/workflows.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "once"
+        },
+        {
+          "kind": "regex",
+          "value": "(promise|receipt|completion)"
+        },
+        {
+          "kind": "regex",
+          "value": "(microtask|lazy)"
+        },
+        {
+          "kind": "regex",
+          "value": "(fail|reject|error)"
+        }
+      ],
+      "rubric": [
+        "Chooses once for a stable shared completion receipt, including the same failure.",
+        "Explains that cleanup starts in a microtask after the receipt is published and must not await its own receipt.",
+        "Does not claim repeated standard-stack disposeAsync joins an already running disposal."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "lifetimes",
+        "train"
+      ],
+      "rationale": "Cleanup, observation, local control and durable work use distinct contracts must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-lifetimes-valid-seen",
+      "title": "Explain local state and stored acknowledgement precisely",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A progress cell exposes its Reader to a UI and a derived percentage projection. The author calls batch a transaction, mutates a borrowed object in place and assumes a Web Storage adapter gives cross-tab atomic writes. Review these assumptions and describe disposal and publication ownership.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/workflows.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(batch|notification)"
+        },
+        {
+          "kind": "regex",
+          "value": "(borrow|Object\\.is|identity)"
+        },
+        {
+          "kind": "regex",
+          "value": "(projection|dispose)"
+        },
+        {
+          "kind": "regex",
+          "value": "(ack|conflict|single.writer|cross.tab)"
+        }
+      ],
+      "rubric": [
+        "Separates notification batching from rollback and explains borrowed values and equality-sensitive updates.",
+        "Keeps mutation/disposal with owners and disposes the derived projection separately from the source cell.",
+        "Distinguishes local synchronous publication from stored writes published after acknowledgement; does not promise cross-tab atomicity from Web Storage."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "lifetimes",
+        "valid-seen"
+      ],
+      "rationale": "Cleanup, observation, local control and durable work use distinct contracts must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-lifetimes-transfer",
+      "title": "Use local control for an interactive export",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "A browser export needs pause, resume, progress observation, cancellation and deterministic cleanup. It may be discarded when the page closes; restart recovery is not required. Choose between a local Task and a durable workflow, and define what done, Context cleanup and closed mean.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/workflows.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "Task|task"
+        },
+        {
+          "kind": "regex",
+          "value": "(pause|resume)"
+        },
+        {
+          "kind": "regex",
+          "value": "(cleanup|closed)"
+        },
+        {
+          "kind": "regex",
+          "value": "(durab|recover|persist)"
+        }
+      ],
+      "rubric": [
+        "Chooses local Task control for the stated lifetime without imposing durable history.",
+        "Waits for Task completion after cleanup and keeps injected resources borrowed unless ownership is explicitly transferred.",
+        "Distinguishes a failing cleanup promise from Context closed, which resolves after cleanup attempts."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "lifetimes",
+        "transfer"
+      ],
+      "rationale": "Cleanup, observation, local control and durable work use distinct contracts must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-durable-work-train",
+      "title": "Scope a recorded workflow guarantee",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "Design a public utility workflow that records steps and resumes after a worker crash. It sends a payment-provider request as one activity. Explain history, dispatch, storage, activity identity and external-effect idempotency, and state why a passing memory-engine test is insufficient.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/utility-workflows.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(history|record)"
+        },
+        {
+          "kind": "regex",
+          "value": "(storage|persist|durab)"
+        },
+        {
+          "kind": "regex",
+          "value": "(idempot|dedup)"
+        },
+        {
+          "kind": "regex",
+          "value": "(restart|crash)"
+        }
+      ],
+      "rubric": [
+        "Selects and verifies actual workflow/history/dispatch and persistent storage contracts.",
+        "Uses a stable external-effect identity and a provider or application deduplication mechanism.",
+        "Rejects an exactly-once arbitrary effect claim based only on recorded completion or memory tests; requires restart evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "durable-work",
+        "train"
+      ],
+      "rationale": "Utility workflow recovery claims depend on persisted history and real transaction participants must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-durable-work-valid-seen",
+      "title": "Test the crash between a write and acknowledgement",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A durable job writes domain data, appends workflow progress and acknowledges queue work in separate calls. The system restarts after the domain write but before the acknowledgement. Explain the duplicate or loss windows, the transaction/outbox requirements and a meaningful recovery test.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/utility-workflows.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(transaction|atomic|outbox)"
+        },
+        {
+          "kind": "regex",
+          "value": "(idempot|dedup|duplicate)"
+        },
+        {
+          "kind": "regex",
+          "value": "(restart|crash|failpoint)"
+        }
+      ],
+      "rubric": [
+        "Identifies actual transaction participants instead of assuming similarly named adapters share a transaction.",
+        "Commits required state together or specifies durable reconciliation and idempotent retry.",
+        "Tests a new process after each relevant failure point and checks domain state, history and queue acknowledgement rather than only a returned value."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "durable-work",
+        "valid-seen"
+      ],
+      "rationale": "Utility workflow recovery claims depend on persisted history and real transaction participants must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-durable-work-transfer",
+      "title": "Migrate workflow code without inventing entry points",
+      "skill": "build-workflows",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "A worker moving to a different host copies import paths by turning exported workflow root symbols such as client and serve into /client and /serve subpaths. It also changes a persisted workflow to a local Task because both can cancel. Review the migration and define evidence for host compatibility and retained recovery semantics.",
+      "expectedSkills": [
+        "build-workflows"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-workflows/references/utility-workflows.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(export|manifest|subpath)"
+        },
+        {
+          "kind": "regex",
+          "value": "(Task|task)"
+        },
+        {
+          "kind": "regex",
+          "value": "(persist|recover|history)"
+        },
+        {
+          "kind": "regex",
+          "value": "(runtime|host|adapter)"
+        }
+      ],
+      "rubric": [
+        "Checks each manifest entry and refuses to infer a package subpath from a root export name.",
+        "Preserves persisted recovery semantics and distinguishes them from local Task control.",
+        "Verifies the selected host adapter, required resources and restart behavior without claiming universal runtime support."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "durable-work",
+        "transfer"
+      ],
+      "rationale": "Utility workflow recovery claims depend on persisted history and real transaction participants must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-gateway-artifacts-train",
+      "title": "Admit a remote service artifact explicitly",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A remote service publishes a serialized manifest and OpenAPI document. A gateway must mount two approved route IDs at a host-selected origin without importing live definitions. Describe the public mountArtifact path, snapshot validation, route admission and authentication/security mapping. Does the artifact become a live definition identity?",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/gateways.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "mountArtifact"
+        },
+        {
+          "kind": "regex",
+          "value": "(origin|host)"
+        },
+        {
+          "kind": "regex",
+          "value": "(route|admi)"
+        },
+        {
+          "kind": "regex",
+          "value": "(security|auth)"
+        }
+      ],
+      "rubric": [
+        "Uses the supported artifact mount path and validates the manifest/document snapshots.",
+        "Keeps origin and exact route admission with the gateway host; maps foreign authentication and caller security deliberately.",
+        "Rejects casting serialized data to a live Definition while recognizing that admitted artifact metadata can define forwarding routes."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "gateway-artifacts",
+        "train"
+      ],
+      "rationale": "Gateway artifacts require explicit host admission and independent security mapping must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-gateway-artifacts-valid-seen",
+      "title": "Correct a blanket ban on artifact routing",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A review says manifests can never supply gateway routes and deletes mountArtifact in favor of importing a remote service implementation. The host already pins its origin, admits exact route IDs and validates manifest/document snapshots. Explain the mistake, the distinction from live definition mounts and the required runtime checks.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/gateways.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "mountArtifact"
+        },
+        {
+          "kind": "regex",
+          "value": "(live|definition)"
+        },
+        {
+          "kind": "regex",
+          "value": "(admi|allowlist|allow.list|route)"
+        },
+        {
+          "kind": "regex",
+          "value": "(validat|check|test)"
+        }
+      ],
+      "rubric": [
+        "Recognizes the supported explicit artifact-routing authority instead of applying a blanket prohibition.",
+        "Distinguishes host-admitted artifact routes from in-process definition identity and from executable service imports.",
+        "Requires collision/prefix, route selection, validation and security behavior checks before claiming correct deployment."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "gateway-artifacts",
+        "valid-seen"
+      ],
+      "rationale": "Gateway artifacts require explicit host admission and independent security mapping must hold when the consumer, runtime or evidence changes."
+    },
+    {
+      "id": "public-utils-gateway-artifacts-transfer",
+      "title": "Prevent credential forwarding from becoming ambient authority",
+      "skill": "build-apis",
+      "kind": "trajectory",
+      "split": "transfer",
+      "prompt": "An artifact-mounted public route proxies to an internal service. The inbound request contains cookies and Authorization, and the upstream response sets cookies. The team wants transparent forwarding because the OpenAPI document lists authentication. Explain defaults, host policy and the tests that would establish intended credential handling.",
+      "expectedSkills": [
+        "build-apis"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-apis/references/gateways.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "(cookie|Cookie)"
+        },
+        {
+          "kind": "regex",
+          "value": "(Authorization|authorization)"
+        },
+        {
+          "kind": "regex",
+          "value": "(strip|remove|omit)"
+        },
+        {
+          "kind": "regex",
+          "value": "(host|policy|mapping)"
+        }
+      ],
+      "rubric": [
+        "Identifies the source defaults that strip request cookies, request Authorization and response cookies.",
+        "Requires deliberate host credential/authentication mappings and never derives credential authority solely from OpenAPI.",
+        "Tests forwarding and redaction at the mounted route with allowed and rejected caller identities; does not claim security from metadata alone."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "public-utils-source-20261126",
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "public-utils",
+        "gateway-artifacts",
+        "transfer"
+      ],
+      "rationale": "Gateway artifacts require explicit host admission and independent security mapping must hold when the consumer, runtime or evidence changes."
+    }
+  ]
+}

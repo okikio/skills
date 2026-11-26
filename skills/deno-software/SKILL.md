@@ -1,12 +1,10 @@
 ---
 name: deno-software
-description: Deliver complete Deno 2 software. Use for Deno repositories, deno.json or deno.jsonc, Deno workspaces, JSR packages, Node projects adopting Deno, CLIs, servers, libraries, scripts, compiled binaries, desktop apps, migrations, refactors, reviews, debugging, testing, benchmarking, publishing, CI, security, permissions, dependency management, and architecture decisions. Inspects the repository first, chooses the correct Deno/package mode, implements the whole change, removes obsolete paths, and validates behavior with current Deno tooling.
+description: Apply Deno 2 runtime, toolchain, test, package, and permission contracts alongside the affected domain skill, including ordinary code changes run or tested with Deno without manifest edits. Use for Deno repositories, deno.json or deno.jsonc, Deno workspaces, JSR packages, Node projects adopting Deno, CLIs, servers, libraries, scripts, compiled binaries, desktop apps, migrations, refactors, reviews, debugging, testing, benchmarking, publishing, CI, security, permissions, dependency management, and architecture decisions. Inspects the repository first, chooses the correct Deno/package mode, implements the whole change, removes obsolete paths, and validates behavior with current Deno tooling.
 license: MIT
 metadata:
   author: Okiki Ojo
-  based_on:
-    - denoland/skills
-    - deliver-software
+  based_on: "denoland/skills; original okikio/skills delivery guidance"
   knowledge_baseline: Deno 2.0 through 2.9
   version: "2.2.0"
   last_reviewed: "2026-08-19"
@@ -14,13 +12,45 @@ metadata:
 
 # Deno Software
 
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
 ## Relationship to general delivery skills
 
-This skill owns Deno-specific contracts. When deliver-software is also
-available, let it own the general delivery lifecycle. Apply this skill as the
-Deno specialization and do not repeat discovery, planning, cleanup, validation,
-verification, or reporting stages. When used alone, retain the complete
-workflow by loading
+This skill owns Deno-specific contracts; the shared quality contract applies
+directly. Compose with the requested capability and real domain owner without
+repeating discovery, planning, cleanup, validation, verification or reporting.
+For a standalone implementation task, retain the complete workflow by loading
 [the standalone fallback](references/16-standalone.md).
 
 Deliver working software, not Deno-flavoured snippets.
@@ -42,7 +72,7 @@ for substantive repository work. Read release history only when version
 availability, stability, migration timing, or a recently changed contract could
 affect the decision.
 
-When `deliver-software` owns the lifecycle, use repository discovery as the Deno
+When the shared quality contract owns the lifecycle, use repository discovery as the Deno
 evidence checklist inside the shared discovery pass. Do not perform or report a
 second discovery, plan, or completion workflow.
 
@@ -60,7 +90,7 @@ second discovery, plan, or completion workflow.
 | Refactors, reviews, debugging           | `11-delivery-playbooks.md`                                          |
 | Final verification                      | `12-verification.md`                                                |
 | Ambiguous classification or edge case   | `15-decision-cases.md`                                              |
-| Lifecycle when deliver-software is unavailable | `16-standalone.md`                                           |
+| Standalone implementation lifecycle | `16-standalone.md`                                           |
 
 Use `references/13-command-reference.md` to confirm command intent. Use current
 official documentation when a command, option, API, stability status, or
@@ -103,10 +133,14 @@ configuration ownership, then verification to prove the resulting workspace.
 
 ## Activation
 
+Select by the consumer's execution/test contract, including read-only reviews.
+Do not skip this skill because no manifest will change or no command will run.
+An incidental rejected Deno example does not establish a Deno consumer.
+
 Use this skill when at least one condition is true:
 
 - the repository contains `deno.json`, `deno.jsonc`, or a Deno lockfile;
-- the user mentions Deno, JSR, Fresh, Deno Deploy, `Deno.*`, `deno task`,
+- the task requires Deno, JSR, Fresh, Deno Deploy, `Deno.*`, `deno task`,
   `deno compile`, `deno bundle`, `deno desktop`, or Deno permissions;
 - a package.json project is being run, tested, migrated, or managed with Deno;
 - the work creates, changes, reviews, debugs, tests, benchmarks, publishes,
@@ -171,7 +205,7 @@ change.
     `Schema`; project-owned schema-derived data types normally end in `Type`;
     behavior interfaces/classes keep their concrete domain noun.
 12. **Run the repository's real task authority.** When mise owns tasks/CI, use
-    the mise tasks. For current Okikio/Kaiju projects, preserve `node:test` plus
+    the mise tasks. For Deno-first projects that select these tools, preserve `node:test` plus
     `@std/expect` where selected and still run Deno-specific runtime, permission,
     package, build, and clean-consumer checks that the changed surface requires.
 
@@ -190,3 +224,12 @@ A successful response or implementation makes clear:
 
 A response that only recommends `deno fmt`, `deno lint`, and `deno test` is not
 sufficient.
+
+## Project procedures
+
+When the project adopts this playbook, use its procedure and evidence gates: [Engineering and CI](../../handbook/engineering/README.md), [Task prompts](../../handbook/tasks/README.md).
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

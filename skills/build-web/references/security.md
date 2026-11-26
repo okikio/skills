@@ -1,5 +1,11 @@
 # Web security and connected-system trust handoffs
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference for pages, forms, server functions, Astro endpoints, webhooks, auth routes, embeds, CMS rendering, file/media flows, and client-side navigation. A UI that renders correctly can still leak tenant data, secrets, or executable content.
 
 ## Contents
@@ -42,7 +48,7 @@ Trace authority from the server-observed identity into the database/provider que
 
 Server secrets and authority must not enter client bundles or serialized props. Inspect import reachability, not only variable prefixes.
 
-The finance code demonstrates a useful pattern: server code resolves enabled auth capabilities, then passes a small client-safe list of provider ids to a React island. The browser does not import environment-backed server configuration to decide what auth methods exist.
+A useful pattern: server code resolves enabled auth capabilities, then passes a small client-safe list of provider ids to a React island. The browser does not import environment-backed server configuration to decide what auth methods exist.
 
 ```ts
 type PublicAuthCapabilities = {
@@ -137,7 +143,7 @@ Set policy at the deployment/server response stage and verify the final response
 
 `X-XSS-Protection` is obsolete and is not a substitute for CSP/encoding. Do not present its presence as a modern XSS control.
 
-Personalized/auth routes should normally use `private, no-store` or another explicitly justified private policy. The finance middleware classifies app/auth routes then sets cache behavior. Verify that route intent cannot misclassify a personalized route as public. Public static assets and documents can use cache validators or immutable fingerprinted caching.
+Personalized/auth routes should normally use `private, no-store` or another explicitly justified private policy. Middleware that classifies app and auth routes can then set cache behavior. Verify that route intent cannot misclassify a personalized route as public. Public static assets and documents can use cache validators or immutable fingerprinted caching.
 
 Never cache one tenant's HTML under a key that omits identity/tenant. `Vary` must match any request header that changes a shared-cache response.
 
@@ -213,7 +219,7 @@ Distinguish 401 (authentication required/invalid), 403 (authenticated but forbid
 
 ## Sources and freshness
 
-- Uploaded evidence reviewed 2026-07-17: `new-finance-app(1).zip`, `kaiju-site-scope(17).zip`, `better-auth.zip`, `thunderstrike-blog(4).zip`.
+- Uploaded evidence reviewed 2026-07-17: a product application archive, `kaiju-site-scope(17).zip`, `better-auth.zip`, `thunderstrike-blog(4).zip`.
 - Modern Web Guidance security and forms guides retrieved 2026-07-17.
 - Better Auth details belong to `build-web-apps/references/auth.md`; verify current official documentation before using plugin-specific options.
 - Browser header support, cookie rules, auth provider behavior, and framework raw-HTML APIs change. Verify target runtime and installed versions. This reference does not replace a project-specific threat model.

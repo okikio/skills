@@ -1,5 +1,11 @@
 # Astro Fonts API and Fontsource
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 ## Contents
 
 - Ownership decision
@@ -255,6 +261,6 @@ Avoid loading a large family solely for one word if a vector/asset or existing f
 ## Sources and freshness
 
 - Primary: [Astro Fonts guide](https://docs.astro.build/en/guides/fonts/) and [Fontsource documentation](https://fontsource.org/docs/), verified 2026-07-17.
-- Attachments: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `thunderstrike-blog(4).zip`, and `new-finance-app(1).zip`, inspected 2026-07-17 for real Astro/provider/CSS usage.
+- Attachments: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `thunderstrike-blog(4).zip`, and a product application archive, inspected 2026-07-17 for real Astro/provider/CSS usage.
 
 Astro Fonts is a stable top-level configuration surface in current Astro and was added in Astro 6. Older Astro 5 material used an experimental flag and is not a current configuration example. Provider metadata still changes independently, so recheck the installed Astro and Fontsource versions, font licenses, generated CSS, and network behavior.

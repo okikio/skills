@@ -51,7 +51,8 @@
         "training"
       ],
       "rationale": "A package list does not define precedence, trust, semantic validation, or versioned API ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-runtime-config-version-guard",
@@ -103,7 +104,8 @@
         "valid-seen"
       ],
       "rationale": "Seen validation must punish plausible APIs and semantics that the packages do not guarantee.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-runtime-config-path-url",
@@ -153,7 +155,8 @@
         "held-out"
       ],
       "rationale": "Correct helper calls can still create a security defect when normalization is mistaken for authority.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-runtime-config-hostile-module",
@@ -197,7 +200,8 @@
         "adversarial"
       ],
       "rationale": "jiti is a loader and transformer, not a security trust transition.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-fetch-state-contracts",
@@ -246,7 +250,8 @@
         "training"
       ],
       "rationale": "The packages are useful only when their narrower mechanics sit under explicit product semantics.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-fetch-retry-interceptors",
@@ -294,7 +299,8 @@
         "valid-seen"
       ],
       "rationale": "A convenient fetch wrapper can still repeat unsafe effects or hide cancellation and parsing contracts.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-storage-hash-hooks",
@@ -344,7 +350,8 @@
         "held-out"
       ],
       "rationale": "Familiar utility names do not provide transaction, durability, or extension-policy guarantees.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-storage-exactly-once-refusal",
@@ -387,7 +394,8 @@
         "adversarial"
       ],
       "rationale": "This is a high-frequency false durability inference.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-build-release-pipeline",
@@ -439,7 +447,8 @@
         "training"
       ],
       "rationale": "Build success, package success, version intent, and publication are separate proof and authority handoffs.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-source-content-preservation",
@@ -489,7 +498,8 @@
         "valid-seen"
       ],
       "rationale": "Source-preserving tools still need explicit ownership and unsupported-input behavior.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-scaffold-manager-authority",
@@ -543,7 +553,8 @@
         "held-out"
       ],
       "rationale": "Convenient scaffold and environment helpers must not erase destination, interaction, or trust transitions.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-cli-unjs-release-side-effect-refusal",
@@ -590,7 +601,8 @@
         "adversarial"
       ],
       "rationale": "Bundling high-impact helpers behind one command is a predictable authority escalation.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     }
   ]
 }

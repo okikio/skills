@@ -4,16 +4,16 @@
     {
       "id": "pull-context-journey-train",
       "title": "Pull context journey train",
-      "skill": "deliver-software",
+      "skill": "prepare-pull-requests",
       "kind": "trajectory",
       "expectedSkills": [
-        "deliver-software"
+        "prepare-pull-requests"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/pulls.md",
-        "deliver-software/guides/writing-technical-docs-in-plain-english-handbook.md",
-        "deliver-software/references/diagrams.md"
+        "prepare-pull-requests/references/pulls.md",
+        "prepare-pull-requests/references/shared/guides/writing-technical-docs-in-plain-english-handbook.md",
+        "prepare-pull-requests/references/shared/references/diagrams.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -50,16 +50,16 @@
     {
       "id": "pull-context-ownership-seen",
       "title": "Pull context ownership seen",
-      "skill": "deliver-software",
+      "skill": "prepare-pull-requests",
       "kind": "trajectory",
       "expectedSkills": [
-        "deliver-software"
+        "prepare-pull-requests"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/pulls.md",
-        "deliver-software/guides/writing-technical-docs-in-plain-english-handbook.md",
-        "deliver-software/references/diagrams.md"
+        "prepare-pull-requests/references/pulls.md",
+        "prepare-pull-requests/references/shared/guides/writing-technical-docs-in-plain-english-handbook.md",
+        "prepare-pull-requests/references/shared/references/diagrams.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -96,16 +96,16 @@
     {
       "id": "pull-context-transfer",
       "title": "Pull context transfer",
-      "skill": "deliver-software",
+      "skill": "prepare-pull-requests",
       "kind": "trajectory",
       "expectedSkills": [
-        "deliver-software"
+        "prepare-pull-requests"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/pulls.md",
-        "deliver-software/guides/writing-technical-docs-in-plain-english-handbook.md",
-        "deliver-software/references/diagrams.md"
+        "prepare-pull-requests/references/pulls.md",
+        "prepare-pull-requests/references/shared/guides/writing-technical-docs-in-plain-english-handbook.md",
+        "prepare-pull-requests/references/shared/references/diagrams.md"
       ],
       "forbiddenReferences": [],
       "assertions": [
@@ -142,14 +142,14 @@
     {
       "id": "pull-context-small-fix",
       "title": "Pull context small fix",
-      "skill": "deliver-software",
+      "skill": "prepare-pull-requests",
       "kind": "trajectory",
       "expectedSkills": [
-        "deliver-software"
+        "prepare-pull-requests"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/pulls.md"
+        "prepare-pull-requests/references/pulls.md"
       ],
       "forbiddenReferences": [],
       "assertions": [

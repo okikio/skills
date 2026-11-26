@@ -1,5 +1,11 @@
 # Renderers, islands, SSR, and hydration
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference when a route mixes Astro, Solid, React, plain scripts, custom elements, server islands, or client-side navigation. The goal is one DOM owner per subtree and deterministic server/client output.
 
 ## Contents
@@ -220,5 +226,5 @@ Prefer event delegation to adding listeners to every link on every page load. Do
 - Astro view transitions: https://docs.astro.build/en/guides/view-transitions/ (reviewed 2026-07-17).
 - Solid props: https://docs.solidjs.com/concepts/components/props (reviewed 2026-07-17).
 - Solid `onMount` and `onCleanup`: https://docs.solidjs.com/reference/lifecycle/on-mount and https://docs.solidjs.com/reference/lifecycle/on-cleanup (reviewed 2026-07-17).
-- Uploaded evidence: `kaiju-website(6).zip`, `solid-motion-experiments.zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`.
+- Uploaded evidence: `kaiju-website(6).zip`, `solid-motion-experiments.zip`, `kaiju-site-scope(17).zip`, a product application archive.
 - Client directives, transition persistence, Solid runtime details, and experimental renderer adapters are version-sensitive. Verify installed versions before using an option not shown in repository source.

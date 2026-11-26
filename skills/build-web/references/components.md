@@ -1,5 +1,11 @@
 # Component systems, primitives, styles, and assets
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference when selecting, generating, copying, repairing, or verifying UI components. A component file is the visible tip of a renderer, primitive, style, token, icon, font, and accessibility contract.
 
 ## Contents
@@ -7,6 +13,7 @@ Use this reference when selecting, generating, copying, repairing, or verifying 
 - Component evidence inventory
 - Generated component contract
 - Primitive selection
+- When the component already uses Sonner
 - Component API design
 - Styling and token ownership
 - Accessibility and interaction
@@ -31,7 +38,13 @@ For every component family inspect:
 - accessible semantics, keyboard map, focus ownership, portal/layer behavior, and form integration;
 - which files are generated and which are application-owned.
 
-The Kaiju website's `components.json` identifies a Kobalte style, Solid-oriented aliases, Lucide icons, and a custom Zaidan registry. The finance app uses React and Base UI. Similar names such as `dialog.tsx` or `button.tsx` do not make their implementations interchangeable.
+Trace the route's imports into the application's feature compositions and
+reusable primitives. A registry file such as `components.json` owns registry
+aliases, and the application's `package.json` declares the renderer and
+component dependencies.
+Verify the local primitive and its callers before importing a recipe from
+another renderer. For example, the Kaiju website uses Solid and Kobalte;
+similarly named dialogs and buttons are not interchangeable.
 
 ## Generated component contract
 
@@ -73,6 +86,11 @@ For Solid Primitives, treat the repository as an ecosystem of granular packages 
 - transitions/presence: `presence`, `transition-group`, `spring`;
 - network/persistence: `fetch`, `broadcast-channel`, `cookies`, `db-store`.
 
+For frontend library discovery, Emil's [curated UI library list](https://github.com/emilkowalski/skills/blob/5206a950b715e0cabe7043ea0b2304332b91494e/skills/pick-ui-library/SKILL.md)
+is a starting point. Check native behavior and local primitives first, then
+verify candidate renderer support, installed exports, accessibility, SSR,
+and maintenance before recommending a change.
+
 Package existence does not prove production maturity or suitability. Determine:
 
 - `make*` low-level/non-reactive primitive versus `create*` reactive owner;
@@ -84,6 +102,21 @@ Package existence does not prove production maturity or suitability. Determine:
 - whether another sibling package must be installed.
 
 Do not install the whole ecosystem. Select the narrow capability and verify its actual exported API in the installed version.
+
+## When the component already uses Sonner
+
+For missing, duplicated, misplaced, or wrongly styled toasts, trace the
+call through the installed Sonner API to the app's Toaster owner and theme.
+Check that the calling surface and Toaster mount together; before adding a
+second Toaster or raising z-index, inspect host lifetime and stacking. For
+async actions, keep a single notification identity through pending and
+terminal states, and report success only after the operation accepts it.
+Errors that need action should also be reachable in the owning UI. Verify
+toast visibility, screen reader announcement, and keyboard access in the
+actual modal or page that triggers it.
+
+Use Emil's [Sonner recipes](https://github.com/emilkowalski/skills/blob/5206a950b715e0cabe7043ea0b2304332b91494e/skills/ask-sonner/SKILL.md)
+for the symptom at hand and verify API details against the installed version.
 
 ## Component API design
 
@@ -233,7 +266,7 @@ Never claim parity with a shadcn or upstream component by matching its public pr
 
 ## Sources and freshness
 
-- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, `new-finance-app(1).zip`, `kaiju-site-scope(17).zip`, `solid-primitives(2).zip`.
+- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, a product application archive, `kaiju-site-scope(17).zip`, `solid-primitives(2).zip`.
 - Solid Primitives official catalog: https://primitives.solidjs.community/ (reviewed 2026-07-17).
 - Solid props and `splitProps`: https://docs.solidjs.com/concepts/components/props (reviewed 2026-07-17).
 - Astro Icon and Unplugin Icons are detailed in `build-sites/references/icons.md`.

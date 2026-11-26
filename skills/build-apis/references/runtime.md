@@ -1,5 +1,14 @@
 # HTTP runtime, middleware, errors, and resources
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution and read the
+service reference for definitions, compilation, and Fetch runtime ownership.
+The rules below apply to the selected implementation, not a required app layout.
+Hono validation examples apply only to a Hono-owned validation path; compiled
+services supply validated `input` and their own rejection contract. Verify each example against the resolved artifact before implementation.
+
+
 ## Contents
 
 - [Adapter preflight](#adapter-preflight)
@@ -40,7 +49,7 @@ Use three levels:
 | Service/group | service capability context, shared org policy, rate limits | Mount on explicit prefix/group |
 | Route | auth requirement, resource authorization, source validation | Keep visible beside handler |
 
-A typical order is:
+For a directly authored Hono stack, a typical order is:
 
 1. request ID/correlation and safe request context;
 2. trusted proxy/origin/security policy;
@@ -91,8 +100,12 @@ response already committed
 ```
 
 Handlers can map expected domain errors close to the route, but they should not
-emit the same final error log and rethrow into the root logger. Validation errors
-normally produce 422 without running the handler. Authentication uses 401;
+emit the same final error log and rethrow into the root logger. Use the selected
+runtime's declared validation rejection, never a universal 422. The current
+compiled utility service uses `ServerProblems.InvalidRequest` (400) for invalid
+input and authenticates before normal body parsing/validation. Its declared
+middleware lanes determine order; a Hono example does not reorder that runtime.
+Authentication uses 401;
 known authenticated-but-disallowed policy uses 403; hide resource existence with
 404 only when that is the explicit security contract.
 
@@ -193,5 +206,4 @@ Define:
   interruption/runtime APIs require installed-version verification).
 - LogTape official documentation: https://logtape.org/ (primary source; use only
   when the repository selects LogTape as transport).
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/server/` and
-  `utils/middleware/` (observed source and request tests).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/server/service/mod.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

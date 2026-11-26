@@ -127,5 +127,5 @@ Use this reference during diagnosis and review. A signature narrows the next evi
 
 ## Sources and freshness
 
-- Failure patterns synthesized from uploaded `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, `thunderstrike-blog(4).zip`, `solid-motion-experiments.zip`, and `solid-primitives(2).zip`, reviewed 2026-07-17.
+- Failure patterns synthesized from uploaded `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, a product application archive, `thunderstrike-blog(4).zip`, `solid-motion-experiments.zip`, and `solid-primitives(2).zip`, reviewed 2026-07-17.
 - Current framework-specific error messages can change. Match behavior and ownership before relying on a literal message.

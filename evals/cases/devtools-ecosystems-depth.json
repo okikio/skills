@@ -47,7 +47,8 @@
         "remote-source"
       ],
       "rationale": "Requires the complete generator compiler and integrity contract rather than a regenerate command.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-generated-mixed-ownership",
@@ -96,7 +97,8 @@
         "mixed-ownership"
       ],
       "rationale": "Distinguishes source-preserving bounded edits from serialization and formatting churn.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-generated-multifile-recovery",
@@ -145,7 +147,8 @@
         "recovery"
       ],
       "rationale": "Exercises the generator failure path most summaries omit.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-packaging-deno-node-authority",
@@ -193,7 +196,8 @@
         "dnt"
       ],
       "rationale": "Requires the full source-to-artifact-to-consumer graph.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-packaging-export-conditions",
@@ -243,7 +247,8 @@
         "exports"
       ],
       "rationale": "Prevents a plausible export map from hiding mismatched emitted files and host behavior.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-packaging-workspace-leak",
@@ -292,7 +297,8 @@
         "workspace"
       ],
       "rationale": "Tests common workspace resolution false positives and package repair.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-release-partial-registries",
@@ -340,7 +346,8 @@
         "partial-failure"
       ],
       "rationale": "Requires stateful idempotent release recovery rather than rerun advice.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-release-semver-impact",
@@ -389,7 +396,8 @@
         "semver"
       ],
       "rationale": "Prevents commit-message automation from hiding multiple breaking contracts.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-release-provenance-compromise",
@@ -439,7 +447,8 @@
         "frozen"
       ],
       "rationale": "Separates supply-chain provenance from artifact correctness and incident recovery.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-performance-protocol-design",
@@ -487,7 +496,8 @@
         "protocol"
       ],
       "rationale": "Encodes the Wikitext study's experimental discipline before results can bias design.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-performance-statistical-gate",
@@ -535,7 +545,8 @@
         "statistics"
       ],
       "rationale": "Tests an actual mixed-result decision instead of benchmark vocabulary.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-performance-stress-evidence",
@@ -583,7 +594,8 @@
         "stress"
       ],
       "rationale": "Prevents a benchmark plan or runner from being cited as an executed result.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-hygiene-binary-classification",
@@ -632,7 +644,8 @@
         "binary"
       ],
       "rationale": "Requires ownership classification and archive proof instead of pattern deletion.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-hygiene-dirty-markdown",
@@ -681,7 +694,8 @@
         "dirty-worktree"
       ],
       "rationale": "Protects the user's explicit reviewability constraint under real tooling work.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-hygiene-secret-archive",
@@ -730,7 +744,8 @@
         "security"
       ],
       "rationale": "Combines secret incident response with artifact hygiene and authorization.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-method-logtape-family",
@@ -780,7 +795,8 @@
         "logtape"
       ],
       "rationale": "Tests a concrete package-family investigation rather than generic research steps.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-method-private-library",
@@ -832,7 +848,8 @@
         "private"
       ],
       "rationale": "Directly tests anti-hallucination behavior for the user's personal ecosystem.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-method-standalone-stop",
@@ -880,7 +897,8 @@
         "standalone"
       ],
       "rationale": "Prevents the ecosystem rule from causing its own hallucinated topology.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-topology-unjs-capabilities",
@@ -931,7 +949,8 @@
         "unjs"
       ],
       "rationale": "Requires a semantic ecosystem graph rather than an organization package list.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-topology-monorepo-packages",
@@ -980,7 +999,8 @@
         "monorepo"
       ],
       "rationale": "Tests package discovery beyond README and directory-name inference.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-topology-spec-renderer-trap",
@@ -1031,7 +1051,8 @@
         "renderer"
       ],
       "rationale": "Targets two common topology generalizations that create invented capabilities.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-evidence-stable-beta-handoff",
@@ -1081,7 +1102,8 @@
         "version-handoff"
       ],
       "rationale": "Directly tests version collapse, a major source of detailed hallucinated APIs.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-evidence-doc-export-conflict",
@@ -1129,7 +1151,8 @@
         "negative-evidence"
       ],
       "rationale": "Exercises a retained real contradiction rather than abstract provenance advice.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-evidence-duplicate-archives",
@@ -1179,7 +1202,8 @@
         "frozen"
       ],
       "rationale": "Prevents file naming and archive metadata from generating an invented history.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-selection-cli-owners",
@@ -1230,7 +1254,8 @@
         "cli"
       ],
       "rationale": "Requires a coherent owner graph across the user's preferred CLI ecosystem.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-selection-durable-engine",
@@ -1281,7 +1306,8 @@
         "durability"
       ],
       "rationale": "Targets a high-impact ownership distinction the user explicitly requires.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-selection-oltp-olap-adapter",
@@ -1332,7 +1358,8 @@
         "data"
       ],
       "rationale": "Prevents API resemblance from becoming false database compatibility.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-integration-config-vertical",
@@ -1384,7 +1411,8 @@
         "config"
       ],
       "rationale": "Requires the complete connected integration path rather than package imports.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-integration-framework-host",
@@ -1436,7 +1464,8 @@
         "web-assets"
       ],
       "rationale": "Tests framework, renderer, asset, and deployment seams together.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-integration-private-adapter-refusal",
@@ -1486,7 +1515,8 @@
         "private-adapter"
       ],
       "rationale": "Directly prevents detailed invented adapter APIs during implementation.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-failures-core-too-small",
@@ -1535,7 +1565,8 @@
         "package-family"
       ],
       "rationale": "Turns the user's main shallow-skill failure into a concrete recovery trajectory.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-failures-written-against-missing-export",
@@ -1583,7 +1614,8 @@
         "missing-export"
       ],
       "rationale": "Exercises repair after hallucination has already entered code.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "depth-failures-cross-system-triage",
@@ -1637,7 +1669,8 @@
         "frozen"
       ],
       "rationale": "Tests anti-hallucination triage across three high-risk ecosystems, not isolated keywords.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     }
   ]
 }

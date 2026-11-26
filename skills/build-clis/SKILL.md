@@ -5,7 +5,40 @@ description: Design, implement, refactor, review, diagnose, test, package, or re
 
 # Build command-line applications
 
-`deliver-software` owns request authority and repository completion.
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
+The shared quality contract owns request authority and repository completion.
 `deno-software` owns Deno manifests, tasks, permissions, compilation, and
 publication. `explore-ecosystems` owns dependency topology. `build-libraries`
 owns reusable programming models extracted from or consumed by the CLI. This
@@ -170,7 +203,7 @@ resource. Do not let handlers call the full resolver again.
   streams, secrets, TTYs, paging, progress, risk, and recovery.
 - [lifecycle.md](references/lifecycle.md): cancellation, resources,
   checkpoints, reconciliation, exit status, and error ownership.
-- [testing.md](references/testing.md): layered, subprocess, generated-surface,
+- [cli-testing.md](references/cli-testing.md): layered, subprocess, generated-surface,
   cancellation, packaging, and clean-machine verification.
 - [benchmarking.md](references/benchmarking.md): correctness-gated mitata and
   installed-artifact benchmarks for parsing, config loading, merging, Zod,
@@ -207,3 +240,13 @@ Report blocked checks separately from failed checks. If the change makes a
 performance claim, run a named representative benchmark against a recorded
 baseline and report absolute change, relative change, variability, and semantic
 oracles.
+
+## Detailed guides
+
+- [cli-guidelines-audit-and-expansion.md](../../guides/cli-guidelines-audit-and-expansion.md): For a CLI product audit spanning language, human/automation behavior, and installed artifacts.
+- [engineering-standards.md](../../guides/engineering-standards.md): For detailed engineering conventions when more depth is needed.
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

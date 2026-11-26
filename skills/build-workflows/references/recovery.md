@@ -1,5 +1,15 @@
 # Recovery, checkpoints, leases, replay, and repair
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 ## Contents
 
 - [Recovery model](#recovery-model)
@@ -173,12 +183,10 @@ consequence, visible audit evidence, and a finite terminal/manual state.
 
 ## Sources and freshness
 
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/workflows/`,
-  especially store, worker loops, timelines, and tests (observed and
-  counterexample evidence).
 - Temporal TypeScript testing and replay guidance:
   https://docs.temporal.io/develop/typescript/testing-suite and
   https://docs.temporal.io/develop/typescript/debugging (primary sources;
   verify current SDK tooling).
 - PostgreSQL locking documentation: https://www.postgresql.org/docs/current/explicit-locking.html
   (primary source; fencing and checkpoint schemas are application design).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/workflow/mod.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

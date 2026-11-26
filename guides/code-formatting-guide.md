@@ -1,11 +1,19 @@
-# Kaiju Code Formatting Guide
+# Code Formatting Guide
 
-> **Current cross-project rule:** read `engineering-standards.md` first. This guide remains the detailed formatting reference. The current standard also requires functional and mechanical-only changes to stay separate.
+> **Current cross-project rule:** read the applicable [engineering-standards](engineering-standards.md) sections first; inspect headings to select them rather than reading unrelated chapters. This guide remains the detailed formatting reference. The current standard also requires functional and mechanical-only changes to stay separate.
 
+
+## Applying the examples
+
+Judge a convention by the reader contract it protects. Namespace-oriented
+runtime operations do not require namespace imports for test runners, assertions,
+schemas, or types. Keep protocol-required spellings exact. Preserve local
+formatting and visible test scenarios; do not create public API documentation or
+schemas for trivial private fixtures just to reproduce an example's shape.
 
 ## Purpose
 
-This guide defines how Kaiju code should be formatted so it remains compact, readable, easy to scan, and consistent across `utils/`, `packages/`, and `clis/`.
+This guide defines how code should be formatted so it remains compact, readable, easy to scan, and consistent across `utils/`, `packages/`, and `clis/`.
 
 The objective is not to minimize the number of lines at any cost. The objective is to avoid unnecessary vertical expansion while preserving structure, clarity, and maintainability.
 

@@ -1,5 +1,11 @@
 # Content collections, CMS adapters, rich text, and publishing
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference for local Astro content, live/runtime CMS data, migrations, previews, taxonomies, media, rich text, feeds, and SEO. The project should have one explicit runtime source of truth per route and a stable view-model interface.
 
 ## Contents

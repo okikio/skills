@@ -808,6 +808,45 @@
       "role": "PR-writing policy: connected product, usage and system explanations, selective diagrams, review priorities, and evidence limits.",
       "verifiedDate": "2026-10-18",
       "sha256": "1f344430d86a907826e2383cb15907f36c9b6ca714d79b77b764041a3d2adee5"
+    },
+    {
+      "id": "portable-guidance-method",
+      "artifact": "GUIDANCE.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Authored portable guidance roles, single source ownership, project scope and installed bundle contract",
+      "verifiedDate": "2026-11-26",
+      "sha256": "bbf9a46fba969e15f2d818e59ddcf8e6cc35e79570609b4780de78692b0d6a4b",
+      "claimPaths": [
+        "GUIDANCE.md"
+      ],
+      "notes": "Normative authored guidance. Registration and coverage do not establish completed model evaluation or project adoption."
+    },
+    {
+      "id": "portable-handbook-method",
+      "artifact": "handbook/README.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Reusable project procedures, adoption profiles, task records and evidence contracts",
+      "verifiedDate": "2026-11-26",
+      "sha256": "59997362500d2ddd9a5084e31e41b326b2c1d4989a6fa99a1235a1a51f7a9bef",
+      "claimPaths": [
+        "handbook/README.md"
+      ],
+      "notes": "Normative authored guidance. Registration and coverage do not establish completed model evaluation or project adoption."
+    },
+    {
+      "id": "public-utils-source-20261126",
+      "artifact": "https://github.com/okikio/utils/tree/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "Public utility export maps and implementation at the inspected source commit",
+      "verifiedDate": "2026-11-26",
+      "claimPaths": [
+        "packages/",
+        "deno.jsonc"
+      ],
+      "notes": "Source inspection establishes source contracts, not usable registry release availability. Consumer resolver, exact artifact and supported-host checks remain required."
     }
   ]
 }

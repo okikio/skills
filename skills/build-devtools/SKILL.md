@@ -5,12 +5,45 @@ description: Design, implement, migrate, review, diagnose, benchmark, package, o
 
 # Build developer tools
 
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
 Developer tooling is production infrastructure for the repository. A tool is not
 complete because it runs once on one workstation. It must have an owner,
 reproducible inputs, deterministic or intentionally variable outputs, failure
 behavior, CI parity, and a removal/upgrade path.
 
-`deliver-software` owns overall completion. `deno-software` owns Deno-specific
+the shared quality contract owns overall completion. `deno-software` owns Deno-specific
 manifests/runtime contracts. `build-libraries` owns reusable programming models.
 `build-clis` owns public command-language behavior. This skill owns toolchain,
 generation, packaging, release, and development-workflow mechanics.
@@ -134,3 +167,12 @@ clean state using declared tools, CI exercises the same contract, generated and
 packaged output has been inspected, changed workflows fail clearly, and any
 release or performance claim has the corresponding executable evidence. Report
 unavailable native tools/runtimes as blocked, not passed.
+
+## Project procedures
+
+When the project adopts this playbook, use its procedure and evidence gates: [Procedures](../../handbook/procedures/README.md), [Engineering and CI](../../handbook/engineering/README.md), [Task prompts](../../handbook/tasks/README.md).
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

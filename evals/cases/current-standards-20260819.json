@@ -4,16 +4,16 @@
     {
       "id": "current-standard-source-authority",
       "title": "Prefer the verified current source over historical handoffs",
-      "skill": "deliver-software",
+      "skill": "refactor-code",
       "kind": "trajectory",
       "split": "train",
       "prompt": "I attached a new repository ZIP plus two older handoffs that disagree with it. Update the implementation. Explain which source controls current behavior and how you will use the older material without silently combining incompatible designs.",
       "expectedSkills": [
-        "deliver-software"
+        "refactor-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/delivery.md"
+        "refactor-code/references/shared/references/delivery.md"
       ],
       "assertions": [
         {
@@ -44,21 +44,22 @@
         "authority",
         "source-of-truth"
       ],
-      "rationale": "Recent work repeatedly needs newer archives to outrank older handoffs without erasing useful historical design evidence."
+      "rationale": "Recent work repeatedly needs newer archives to outrank older handoffs without erasing useful historical design evidence.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-replacement-no-shim",
       "title": "Finish a replacement without obsolete compatibility",
-      "skill": "deliver-software",
+      "skill": "refactor-code",
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "Replace an internal public API with the new model. No external compatibility requirement exists. What must be updated before the obsolete export can be removed, and should a compatibility alias remain just in case?",
       "expectedSkills": [
-        "deliver-software"
+        "refactor-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/delivery.md"
+        "refactor-code/references/shared/references/delivery.md"
       ],
       "assertions": [
         {
@@ -93,21 +94,22 @@
         "migration",
         "compatibility"
       ],
-      "rationale": "The current standard removes obsolete compatibility after current consumers are migrated unless a real external requirement exists."
+      "rationale": "The current standard removes obsolete compatibility after current consumers are migrated unless a real external requirement exists.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-schema-type-protocol",
       "title": "Separate Zod authoring, Standard Schema, and data types",
-      "skill": "deliver-software",
+      "skill": "build-libraries",
       "kind": "knowledge",
       "split": "train",
       "prompt": "Design a reusable TypeScript package that uses Zod for its first-party request schemas but also accepts validators supplied by plugins. Define the schema and type naming rules, when to infer a type, when a behavior interface should omit Type, and when Standard Schema or Standard JSON Schema applies.",
       "expectedSkills": [
-        "deliver-software"
+        "build-libraries"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/typescript.md"
+        "build-libraries/references/shared/references/typescript.md"
       ],
       "assertions": [
         {
@@ -148,22 +150,23 @@
         "schema",
         "standard-schema"
       ],
-      "rationale": "Recent Luchalibre and Kaiju work separates first-party schema authoring from portable validator and JSON Schema protocols."
+      "rationale": "Recent Luchalibre and Kaiju work separates first-party schema authoring from portable validator and JSON Schema protocols.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-schema-field-docs",
       "title": "Keep field documentation on the schema authoring source",
-      "skill": "deliver-software",
+      "skill": "write-docs",
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "A public defineConfig() API uses a Zod object schema. Important fields need editor documentation for meaning, defaults, examples, and value effects. Where should those comments live? Should you create a mirror TypeScript interface for documentation? How should repository-owned defaults use satisfies, and should ordinary callers have to write satisfies themselves?",
       "expectedSkills": [
-        "deliver-software"
+        "write-docs"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/typescript.md",
-        "deliver-software/references/comments.md"
+        "write-docs/references/shared/references/typescript.md",
+        "write-docs/references/shared/references/comments.md"
       ],
       "assertions": [
         {
@@ -200,22 +203,23 @@
         "tsdoc",
         "config"
       ],
-      "rationale": "Recent Kaiju work repeatedly requires schema-property TSDoc and schema-derived contextual typing instead of mirror interfaces or caller-written satisfies clauses."
+      "rationale": "Recent Kaiju work repeatedly requires schema-property TSDoc and schema-derived contextual typing instead of mirror interfaces or caller-written satisfies clauses.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-type-inference-fixtures",
       "title": "Test public type inference with consumer fixtures",
-      "skill": "deliver-software",
+      "skill": "test-code",
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A schema-derived defineConfig() helper and a generic adapter factory type-check internally, but callers rely on contextual inference and rejection of invalid combinations. What additional tests should protect the public type contract?",
       "expectedSkills": [
-        "deliver-software"
+        "test-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/testing.md",
-        "deliver-software/references/typescript.md"
+        "test-code/references/shared/references/testing.md",
+        "test-code/references/shared/references/typescript.md"
       ],
       "assertions": [
         {
@@ -251,21 +255,22 @@
         "testing",
         "inference"
       ],
-      "rationale": "Recent Luchalibre and config work treats contextual typing and expected type errors as executable public contracts."
+      "rationale": "Recent Luchalibre and config work treats contextual typing and expected type errors as executable public contracts.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-project-fields-camelcase",
       "title": "Keep project-owned TypeScript and JSON fields camelCase",
-      "skill": "deliver-software",
+      "skill": "build-libraries",
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "A reviewer says all schema records and persisted-looking TypeScript objects must use snake_case. The provider response uses snake_case, but the project model is ours. Decide what naming each side should use and where conversion happens.",
       "expectedSkills": [
-        "deliver-software"
+        "build-libraries"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/typescript.md"
+        "build-libraries/references/shared/references/typescript.md"
       ],
       "assertions": [
         {
@@ -296,21 +301,22 @@
         "typescript",
         "naming"
       ],
-      "rationale": "The older skill pack applied snake_case too broadly; current project models normally use camelCase."
+      "rationale": "The older skill pack applied snake_case too broadly; current project models normally use camelCase.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-private-tsdoc",
       "title": "Document important internal invariants",
-      "skill": "deliver-software",
+      "skill": "review-code",
       "kind": "trajectory",
       "split": "valid-seen",
       "prompt": "Review a parser module where the exported parse() function has TSDoc, but its private scanner state, byte-range helper, recovery table, and cleanup function have no comments. The names alone do not explain their invariants. What documentation should be added and what should remain uncommented?",
       "expectedSkills": [
-        "deliver-software"
+        "review-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/comments.md"
+        "review-code/references/shared/references/comments.md"
       ],
       "assertions": [
         {
@@ -342,21 +348,22 @@
         "tsdoc",
         "internals"
       ],
-      "rationale": "The current standard repeatedly requires important non-exported code and fields to teach their invariants and role."
+      "rationale": "The current standard repeatedly requires important non-exported code and fields to teach their invariants and role.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-plain-english-not-ste",
       "title": "Use plain technical English unless STE is requested",
-      "skill": "deliver-software",
+      "skill": "write-docs",
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "Write technical documentation for a normal package. The repository contains an ASD-STE100-inspired handbook, but the task did not request STE. Which writing rules are requirements and which STE ideas can be used only as clarity heuristics?",
       "expectedSkills": [
-        "deliver-software"
+        "write-docs"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/docs.md"
+        "write-docs/references/shared/references/docs.md"
       ],
       "assertions": [
         {
@@ -391,21 +398,22 @@
         "documentation",
         "writing"
       ],
-      "rationale": "The current user rule explicitly makes plain technical English the default and STE opt-in."
+      "rationale": "The current user rule explicitly makes plain technical English the default and STE opt-in.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-node-test-deno-first",
       "title": "Use node:test with @std/expect across portable TypeScript tests",
-      "skill": "deliver-software",
+      "skill": "test-code",
       "kind": "knowledge",
       "split": "train",
       "prompt": "Set up tests for a Deno-primary TypeScript package that must also work in Node. The same source files should be tested in both runtimes. Which normal test imports should be used, and when are runtime-specific tests appropriate?",
       "expectedSkills": [
-        "deliver-software"
+        "test-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/testing.md"
+        "test-code/references/shared/references/testing.md"
       ],
       "assertions": [
         {
@@ -441,7 +449,8 @@
         "deno",
         "node"
       ],
-      "rationale": "Recent MediaD and OPFS work consistently uses node:test with @std/expect rather than the older Deno BDD wrapper."
+      "rationale": "Recent MediaD and OPFS work consistently uses node:test with @std/expect rather than the older Deno BDD wrapper.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-library-placement",
@@ -492,21 +501,22 @@
         "utils",
         "packages"
       ],
-      "rationale": "The generic-mechanics versus concrete-capability distinction is now a recurring architecture rule across Kaiju, MediaD, OPFS, and Luchalibre."
+      "rationale": "The generic-mechanics versus concrete-capability distinction is now a recurring architecture rule across Kaiju, MediaD, OPFS, and Luchalibre.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-context-scope",
       "title": "Keep execution context focused on scoped lifetime",
-      "skill": "deliver-software",
+      "skill": "refactor-code",
       "kind": "knowledge",
       "split": "transfer",
       "prompt": "An operation already accepts ctx for cancellation and deadlines. A refactor proposes putting the database, object store, logger, config, and every other service onto ctx too so functions take one argument. Decide what ctx should own and how concrete capabilities should be passed.",
       "expectedSkills": [
-        "deliver-software"
+        "refactor-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/base.md"
+        "refactor-code/references/shared/references/base.md"
       ],
       "assertions": [
         {
@@ -542,7 +552,8 @@
         "resources",
         "architecture"
       ],
-      "rationale": "Recent Luchalibre and Kaiju programming models use context for cancellation/deadlines/local lifetime while rejecting ambient dependency bags."
+      "rationale": "Recent Luchalibre and Kaiju programming models use context for cancellation/deadlines/local lifetime while rejecting ambient dependency bags.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-logtape-library-owner",
@@ -593,7 +604,8 @@
         "logging",
         "ownership"
       ],
-      "rationale": "LogTape is increasingly prominent, but it must not become the authoritative store for unrelated domain state or be configured by libraries."
+      "rationale": "LogTape is increasingly prominent, but it must not become the authoritative store for unrelated domain state or be configured by libraries.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-optique-project-choice",
@@ -645,7 +657,8 @@
         "cli",
         "versioning"
       ],
-      "rationale": "Recent Luchalibre work explicitly corrected the assumption that Optique should own argv in every project."
+      "rationale": "Recent Luchalibre work explicitly corrected the assumption that Optique should own argv in every project.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-parse-resolve-execute",
@@ -658,9 +671,7 @@
         "build-clis"
       ],
       "forbiddenSkills": [],
-      "requiredReferences": [
-        "build-clis/SKILL.md"
-      ],
+      "requiredReferences": [],
       "assertions": [
         {
           "kind": "regex",
@@ -695,7 +706,8 @@
         "config",
         "resources"
       ],
-      "rationale": "The Luchalibre Optique review identifies parser, resolution, and execution as separate graphs after tracing recurring source-context and deferred-value failures."
+      "rationale": "The Luchalibre Optique review identifies parser, resolution, and execution as separate graphs after tracing recurring source-context and deferred-value failures.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-unplugin-selection",
@@ -750,7 +762,8 @@
         "icons",
         "tooling"
       ],
-      "rationale": "Unplugin integrations have become more prominent, but they remain build-layer choices that need renderer and artifact verification."
+      "rationale": "Unplugin integrations have become more prominent, but they remain build-layer choices that need renderer and artifact verification.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-motion-judgment",
@@ -804,21 +817,22 @@
         "design",
         "accessibility"
       ],
-      "rationale": "The current design skill emphasizes judgment, frequency, origin, interruption, accessibility, and performance before animation mechanics."
+      "rationale": "The current design skill emphasizes judgment, frequency, origin, interruption, accessibility, and performance before animation mechanics.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-visual-selection",
       "title": "Choose visual grammar from the reader's question",
-      "skill": "deliver-software",
+      "skill": "write-docs",
       "kind": "knowledge",
       "split": "valid-seen",
       "prompt": "A design document needs to show legal state transitions, owner responsibility across a workflow, exact condition combinations, and a quantitative throughput comparison. Should all four be Mermaid flowcharts? Select a useful representation for each and state the general selection rule.",
       "expectedSkills": [
-        "deliver-software"
+        "write-docs"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/diagrams.md"
+        "write-docs/references/shared/references/diagrams.md"
       ],
       "assertions": [
         {
@@ -858,22 +872,23 @@
         "visualization",
         "documentation"
       ],
-      "rationale": "The current visual guide treats representation choice as a reasoning decision rather than a Mermaid-first formatting choice."
+      "rationale": "The current visual guide treats representation choice as a reasoning decision rather than a Mermaid-first formatting choice.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-exact-artifact-validation",
       "title": "Validate the exact delivered ZIP",
-      "skill": "deliver-software",
+      "skill": "verify-behavior",
       "kind": "trajectory",
       "split": "adversarial",
       "prompt": "The working tree passes type checks and tests, then a ZIP is created for delivery. Can the work be called done immediately? Give the artifact verification sequence and what to report if Bun or a browser is unavailable on the current host.",
       "expectedSkills": [
-        "deliver-software"
+        "verify-behavior"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/testing.md",
-        "deliver-software/references/delivery.md"
+        "verify-behavior/references/shared/references/testing.md",
+        "verify-behavior/references/shared/references/delivery.md"
       ],
       "assertions": [
         {
@@ -913,7 +928,8 @@
         "zip",
         "verification"
       ],
-      "rationale": "Recent MediaD and OPFS work treats extracted deliverable validation as part of completion."
+      "rationale": "Recent MediaD and OPFS work treats extracted deliverable validation as part of completion.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-logtape-route-policy",
@@ -928,7 +944,7 @@
       "forbiddenSkills": [],
       "requiredReferences": [
         "build-clis/references/logtape.md",
-        "deliver-software/references/standards.md"
+        "build-clis/references/shared/references/standards.md"
       ],
       "assertions": [
         {
@@ -970,7 +986,8 @@
         "redaction",
         "results"
       ],
-      "rationale": "The refreshed CLI guidance corrected the stale rule that every sink should inherit the same redaction policy."
+      "rationale": "The refreshed CLI guidance corrected the stale rule that every sink should inherit the same redaction policy.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-logtape-async-writer",
@@ -1026,7 +1043,8 @@
         "sink",
         "runtime"
       ],
-      "rationale": "Current LogTape distinguishes synchronous Sink from AsyncSink, and reusable CLI output must not become Deno-only."
+      "rationale": "Current LogTape distinguishes synchronous Sink from AsyncSink, and reusable CLI output must not become Deno-only.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-logtape-evidence",
@@ -1082,7 +1100,8 @@
         "formatter",
         "testing"
       ],
-      "rationale": "The refresh distinguishes record retention from rendering volume and treats the pretty formatter as an option, not an automatic replacement."
+      "rationale": "The refresh distinguishes record retention from rendering volume and treats the pretty formatter as an option, not an automatic replacement.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-optique-logtape",
@@ -1096,8 +1115,7 @@
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "build-clis/SKILL.md",
-        "deliver-software/references/standards.md"
+        "build-clis/references/shared/references/standards.md"
       ],
       "assertions": [
         {
@@ -1135,21 +1153,22 @@
         "logtape",
         "grammar"
       ],
-      "rationale": "The current rule distinguishes project-selected Optique ownership from universal parser dependency."
+      "rationale": "The current rule distinguishes project-selected Optique ownership from universal parser dependency.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-selected-tool-owner",
       "title": "Reuse the repository-selected build owner",
-      "skill": "deliver-software",
+      "skill": "build-devtools",
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "A repository already uses Oxc, Unplugin, and mise. A patch introduces Babel for one transform, a custom icon compiler, and a new root scripts framework without first proving capability gaps. Review the tooling design and the required verification.",
       "expectedSkills": [
-        "deliver-software"
+        "build-devtools"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/standards.md"
+        "build-devtools/references/shared/references/standards.md"
       ],
       "assertions": [
         {
@@ -1194,22 +1213,23 @@
         "mise",
         "tooling"
       ],
-      "rationale": "Recent work uses these tools more often, but the standard is to reuse selected owners rather than cargo-cult dependencies."
+      "rationale": "Recent work uses these tools more often, but the standard is to reuse selected owners rather than cargo-cult dependencies.",
+      "forbiddenReferences": []
     },
     {
       "id": "current-standard-name-read-get-internals",
       "title": "Use exact verbs and document internal parser state",
-      "skill": "deliver-software",
+      "skill": "review-code",
       "kind": "knowledge",
       "split": "adversarial",
       "prompt": "Review a package with `readConfigById()`, a class named `TaskWorker`, and undocumented internal regex tables, parser cursors, generations, retry state, and benchmark fixture builders. Apply the current naming and documentation rules.",
       "expectedSkills": [
-        "deliver-software"
+        "review-code"
       ],
       "forbiddenSkills": [],
       "requiredReferences": [
-        "deliver-software/references/standards.md",
-        "deliver-software/references/comments.md"
+        "review-code/references/shared/references/standards.md",
+        "review-code/references/shared/references/comments.md"
       ],
       "assertions": [
         {
@@ -1250,7 +1270,8 @@
         "comments",
         "parser"
       ],
-      "rationale": "The refresh makes get/read semantics and documentation of internal parser/lifecycle/benchmark machinery explicit."
+      "rationale": "The refresh makes get/read semantics and documentation of internal parser/lifecycle/benchmark machinery explicit.",
+      "forbiddenReferences": []
     }
   ]
 }

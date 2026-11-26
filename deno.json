@@ -2,7 +2,11 @@
   "lock": true,
   "imports": {
     "zod": "npm:zod@^4.1.12",
-    "@std/expect": "jsr:@std/expect@^1.0.20"
+    "@std/expect": "jsr:@std/expect@^1.0.20",
+    "mdast-util-from-markdown": "npm:mdast-util-from-markdown@2.1.0",
+    "mdast-util-to-markdown": "npm:mdast-util-to-markdown@2.2.4",
+    "mdast": "npm:@types/mdast@4.0.4",
+    "yaml": "npm:yaml@2.9.1"
   },
   "fmt": {
     "exclude": [
@@ -25,14 +29,15 @@
   },
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check scripts/*.ts src/*.ts tests/*.ts",
-    "test": "deno test --allow-read --allow-write --allow-run --allow-env=PATH,HOME,TMPDIR,TEMP,TMP,SYSTEMROOT,WINDIR,COMSPEC,DENO_DIR tests/",
-    "validate": "deno run --allow-read scripts/validate.ts",
+    "test": "deno test --allow-read --allow-write --allow-run --allow-env=PATH,HOME,TMPDIR,TEMP,TMP,SYSTEMROOT,WINDIR,COMSPEC,DENO_DIR,SKILLOPT_TEST_SECRET,LOG_TOKENS,LOG_STREAM tests/",
+    "validate": "deno run --allow-env=LOG_TOKENS,LOG_STREAM --allow-read scripts/validate.ts",
     "sources:verify": "deno run --allow-read --allow-run=unzip scripts/verify_sources.ts",
-    "skillopt:export": "deno run --allow-read --allow-write scripts/export_skillopt.ts",
+    "skillopt:export": "deno run --allow-env=LOG_TOKENS,LOG_STREAM --allow-read --allow-write scripts/export_skillopt.ts",
     "skillopt:verify": "deno run --allow-read scripts/verify_skillopt_workspace.ts",
     "skillopt:matrix": "deno run --allow-read --allow-write --allow-run scripts/validate_skillopt_matrix.ts",
     "skillopt:report": "deno run --allow-read --allow-write scripts/report_skillopt.ts",
     "skillopt:gate": "deno run --allow-read scripts/gate_skillopt.ts",
-    "skillopt:rollout": "deno run --allow-read --allow-write --allow-run --allow-env scripts/rollout_skillopt.ts"
+    "skillopt:rollout": "deno run --allow-read --allow-write --allow-run --allow-env scripts/rollout_skillopt.ts",
+    "bundle": "deno run --allow-env=LOG_TOKENS,LOG_STREAM --allow-read --allow-write scripts/bundle_skills.ts"
   }
 }

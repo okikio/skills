@@ -6,7 +6,23 @@ date: "July 2026"
 lang: en-CA
 ---
 
-> **Current standards note (2026-08-19):** Use [Okikio Engineering Standards](./engineering-standards.md) for current cross-project naming, schema/type, comments/TSDoc, formatting, testing, logging, dependency, compatibility, validation, and delivery rules. This document remains authoritative for its domain-specific design and dated implementation evidence where it is more specific.
+> **Current standards note (2026-08-19):** Use [Okikio Engineering Standards](engineering-standards.md) for current cross-project naming, schema/type, comments/TSDoc, formatting, testing, logging, dependency, compatibility, validation, and delivery rules. This document remains authoritative for its domain-specific design and dated implementation evidence where it is more specific.
+
+## Apply the audit to the selected CLI
+
+This is a dated audit and expansion plan, not proof that the current consumer
+implements its guidebook. Verify the selected parser, logger, config sources,
+exports, and tests before using a package API. Optique, LogTape, and UnJS are
+focused choices; preserve a deliberately selected native parser or another
+verified stack. A small command does not need every adapter in this catalog.
+
+Stable machine stdout can be written directly under its result contract;
+LogTape owns diagnostics when selected and is not mandatory result transport.
+Apply diagnostic redaction to diagnostics. User-requested exports, config
+display, and support bundles need their own exposure policy, preserving safe
+structured values. An old example's single redaction pipeline does not decide
+those products. Select the tests that prove the affected channel, interaction,
+lifetime, or installed-artifact claim.
 
 # Executive conclusion
 

@@ -1,5 +1,11 @@
 # Data views, URL state, tables, virtualization, and selection
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference for search, filters, sorting, faceting, pagination, tables, cards, charts, infinite lists, virtualized views, bulk selection, and mutations. Separate domain/query semantics from presentation state.
 
 ## Contents
@@ -179,7 +185,7 @@ Infinite loading adds concurrency and completion:
 - announce load result without noisy per-scroll updates;
 - provide a reachable non-infinite/paginated alternative where required.
 
-TanStack Table does not include virtualization itself; pair it with TanStack Virtual or another virtualizer. The finance upload's table:
+TanStack Table does not include virtualization itself; pair it with TanStack Virtual or another virtualizer. One reviewed application's table:
 
 - separates top-pinned, center, and bottom-pinned rows;
 - virtualizes center rows;
@@ -253,7 +259,7 @@ Loading skeletons should preserve expected geometry and not claim data. Empty st
 ## Sources and freshness
 
 - Uploaded `kaiju-site-scope(17).zip` TanStack Solid Router/Query search route and UI, reviewed 2026-07-17.
-- Uploaded `new-finance-app(1).zip` React table/virtualizer and finance view code, reviewed 2026-07-17.
+- Uploaded a product application archive React table/virtualizer and view code, reviewed 2026-07-17.
 - TanStack Router search params: https://tanstack.com/router/latest/docs/guide/search-params (reviewed 2026-07-17).
 - TanStack Router Query integration: https://tanstack.com/router/latest/docs/integrations/query (reviewed 2026-07-17).
 - TanStack Table virtualization: https://tanstack.com/table/latest/docs/guide/virtualization (reviewed 2026-07-17).

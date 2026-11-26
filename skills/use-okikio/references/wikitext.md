@@ -402,7 +402,4 @@ should not promise MediaWiki equivalence or round-trip serialization.
 
 ## Sources and freshness
 
-- Attachment: `wikitext.zip/mod.ts`, `parse.ts`, `session.ts`, parser/tree/filter sources, README, architecture docs, and tests from `wikitext.zip`, inspected 2026-07-17.
-- Registry identity: [`@okikio/wikitext` on JSR](https://jsr.io/@okikio/wikitext); the detailed API is grounded in the attached experimental `0.0.0` repository.
-
-This package is experimental and version-sensitive. `stringify()`, `parseChunked()`, lazy tree building, edit-stable sessions, and any API absent from `mod.ts` are unimplemented or unverified at the reviewed revision.
+Reference scope: experimental 0.0.0 source, with public identity at [JSR `@okikio/wikitext`](https://jsr.io/@okikio/wikitext). This dated reference does not establish current publication or implementation status. At that reference scope, `stringify()`, `parseChunked()`, lazy tree building and edit-stable sessions were unimplemented or unverified. Inspect current exports and tests before relying on those capabilities.

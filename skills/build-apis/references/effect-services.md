@@ -1,5 +1,14 @@
 # Effect services and Layers
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution and read the
+service reference for definitions, compilation, and Fetch runtime ownership.
+The rules below apply to the selected implementation, not a required app layout.
+Hono validation examples apply only to a Hono-owned validation path; compiled
+services supply validated `input` and their own rejection contract. Verify each example against the resolved artifact before implementation.
+
+
 ## Contents
 
 - [When to load this reference](#when-to-load-this-reference)
@@ -344,19 +353,17 @@ Test:
 - Do not wrap an already managed pool with a finalizer that closes it per call.
 - Do not mix multiple logging transports without an explicit routing owner.
 
-The uploaded code pins `effect` 3.21.x and `@effect/workflow` 0.18.x while its
-Deno imports use major ranges. Current official Effect material describes
-Workflows as alpha. Confirm exact APIs against the installed versions and pin a
-tested compatibility set before production use. The patterns in this reference
-are stable architectural guidance; copied API syntax still requires typecheck.
+The code examples follow the Effect 3 API family. Resolve the exact installed
+Effect and integration package versions before copying signatures. Pin a tested
+compatibility set for production use; a major-range import is not an exact pin.
+The architecture applies across implementations, but the API syntax needs the
+consumer's typecheck and lifecycle tests.
 
 ## Sources and freshness
 
-- Effect official documentation: https://effect.website/docs/ and monorepo
-  https://github.com/Effect-TS/effect (primary sources, checked 2026-07-17).
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/workflows/`,
-  especially tests using `Layer`, `ManagedRuntime`, and `WorkflowEngine.layerMemory`
-  (observed source; not production durability evidence).
-- Version line: uploaded manifests pin `effect` `^3.21.3`. `Context.Tag`,
-  `Layer`, `ManagedRuntime`, Scope, and helper signatures are version-sensitive;
-  typecheck every example against the repository lockfile.
+- [Effect documentation](https://effect.website/docs/) and [Effect source](https://github.com/Effect-TS/effect) are the primary API references.
+- [`@effect/workflow` 0.18.2 metadata](https://registry.npmjs.org/@effect/workflow/0.18.2) was rechecked 2026-11-26 for the versioned workflow example. Its Effect peer range is `^3.21.2`; it also declares RPC, Platform and Experimental peer dependencies.
+
+This reference does not assert the latest release or a durable adapter. `Context.Tag`,
+`Layer`, `ManagedRuntime`, Scope and workflow integration signatures are
+version-sensitive. Verify the actual lockfile and public artifact.

@@ -169,7 +169,7 @@ Test two concurrent mutations and response reordering. A last-write UI assumptio
 
 TanStack Form can own field state, touched/dirty/pending/error state, and client validators. Keep a server schema and server authorization authoritative.
 
-Renderer mismatch is a real failure mode: the uploaded finance/Better Auth surface imports `@tanstack/react-form`. Do not copy that into the Solid TanStack Start app; use the installed Solid package and Solid examples.
+Renderer mismatch is a real failure mode: a reviewed React and Better Auth surface imports `@tanstack/react-form`. Do not copy that into the Solid TanStack Start app; use the installed Solid package and Solid examples.
 
 Define whether validation occurs on change, blur, submit, and asynchronously. Cancel stale async validators. Map stable server field errors back to fields while retaining a form-level unexpected failure.
 

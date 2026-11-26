@@ -2,12 +2,21 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   CapabilityRegistrySchema,
-  type EvalCaseType,
   EvalCaseFileSchema,
+  type EvalCaseType,
   SourceRegistrySchema,
 } from "../src/corpus.ts";
 import { ModelRegistrySchema } from "../src/model.ts";
 import { walkFiles } from "../src/files.ts";
+import { skillNames } from "../src/bundle.ts";
+import {
+  type GuidanceGraph,
+  guidanceGraph,
+  operationalSources,
+  resolveReference,
+  unroutedDocuments,
+} from "../src/guidance.ts";
+import { isOperationalDocument, referenceSource } from "../src/paths.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const errors: string[] = [];
@@ -18,57 +27,41 @@ const cases: EvalCaseType[] = [];
 const casesById = new Map<string, EvalCaseType>();
 const sourceIds = new Set<string>();
 const sourceClaimPaths = new Map<string, Set<string>>();
-const skillDocuments = new Map<string, string>();
-const skillReferences = new Map<string, Set<string>>();
+const graphs = new Map<string, GuidanceGraph>();
 
-for await (const path of walkFiles(join(root, "skills"))) {
-  if (!path.endsWith("SKILL.md")) continue;
-  const source = await Deno.readTextFile(path);
-  const directory = path.split("/").at(-2);
-  if (!directory) continue;
-  skills.add(directory);
-  skillDocuments.set(directory, source);
-  const name = source.match(/^name:\s*(.+)$/m)?.[1]?.trim();
-  const description = source.match(/^description:\s*(.+)$/m)?.[1]?.trim();
-  if (name !== directory) {
-    errors.push(`${path}: name must match directory`);
-  }
-  if (!description || description.length > 1024) {
-    errors.push(`${path}: invalid description`);
-  }
+for (const skill of await skillNames(root)) skills.add(skill);
+for (const skill of skills) {
   try {
-    await Deno.stat(join(dirname(path), "agents", "openai.yaml"));
-  } catch {
-    errors.push(`${path}: missing agents/openai.yaml`);
-  }
-  for (const match of source.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
-    const target = match[1];
-    if (/^(?:https?:|#)/.test(target)) continue;
-    try {
-      await Deno.stat(join(dirname(path), target));
-    } catch {
-      errors.push(`${path}: broken reference ${target}`);
+    const graph = await guidanceGraph(root, skill);
+    graphs.set(skill, graph);
+    for (const source of unroutedDocuments(graph)) {
+      errors.push(`${source}: not reachable from ${skill}/SKILL.md`);
     }
+  } catch (error) {
+    errors.push(`${skill}: ${error}`);
   }
 }
+const operational = await operationalSources(root);
 
-for (const skill of skills) {
-  const references = new Set<string>();
-  const referenceRoot = join(root, "skills", skill, "references");
-  try {
-    for await (const path of walkFiles(referenceRoot)) {
-      if (!path.endsWith(".md")) continue;
-      const relative = path.slice(join(root, "skills", skill).length + 1)
-        .replaceAll("\\", "/");
-      references.add(`${skill}/${relative}`);
-      if (!skillDocuments.get(skill)?.includes(relative)) {
-        errors.push(`${skill}/SKILL.md: does not route ${relative}`);
-      }
-    }
-  } catch {
-    errors.push(`${skill}: missing references directory`);
+/** Validate a routed installed identity against its canonical source owner. */
+async function checkReference(reference: string, label: string): Promise<void> {
+  const skill = reference.split("/")[0];
+  if (!skills.has(skill)) {
+    errors.push(`${label}: unknown reference skill ${skill}`);
+    return;
   }
-  skillReferences.set(skill, references);
+  try {
+    const source = referenceSource(reference);
+    await resolveReference(root, reference);
+    const graph = graphs.get(skill);
+    if (graph && !graph.reachable.has(source)) {
+      errors.push(
+        `${label}: ${reference} is not reachable from ${skill}/SKILL.md`,
+      );
+    }
+  } catch (error) {
+    errors.push(`${label}: invalid reference ${reference}: ${error}`);
+  }
 }
 
 for await (const path of walkFiles(join(root, "evals", "cases"))) {
@@ -102,13 +95,7 @@ for await (const path of walkFiles(join(root, "evals", "cases"))) {
         ...item.forbiddenReferences,
       ]
     ) {
-      const [skill, ...parts] = reference.split("/");
-      if (!skills.has(skill) || parts.length === 0) continue;
-      try {
-        await Deno.stat(join(root, "skills", skill, ...parts));
-      } catch {
-        errors.push(`${item.id}: unknown reference ${reference}`);
-      }
+      await checkReference(reference, item.id);
     }
     if (
       item.oracleStrength === "routing-smoke" &&
@@ -185,7 +172,8 @@ if (capabilitiesJson !== undefined) {
     errors.push(`evals/capabilities.json: ${capabilities.error.message}`);
   } else {
     const capabilityIds = new Set<string>();
-    const capabilityReferences = new Set<string>();
+    const capabilitySources = new Set<string>();
+    const sourceOwners = new Map<string, string>();
     const mappedEvals = new Set<string>();
     const mappedSources = new Set<string>();
     for (const capability of capabilities.data.capabilities) {
@@ -197,28 +185,37 @@ if (capabilitiesJson !== undefined) {
       if (!skills.has(capability.skill)) {
         errors.push(`${capability.id}: unknown skill ${capability.skill}`);
       }
-      const reference = join(
-        root,
-        "skills",
-        capability.skill,
-        capability.reference,
-      );
       const routedReference = `${capability.skill}/${capability.reference}`;
-      capabilityReferences.add(routedReference);
-      try {
-        await Deno.stat(reference);
-      } catch {
+      const source = referenceSource(routedReference);
+      capabilitySources.add(source);
+      if (!isOperationalDocument(source)) {
         errors.push(
-          `${capability.id}: unknown reference ${capability.reference}`,
+          `${capability.id}: ${source} is supporting material, not an operational capability`,
         );
       }
-      if (
-        !skillDocuments.get(capability.skill)?.includes(capability.reference)
-      ) {
+      const owner = sourceOwners.get(source);
+      if (owner && owner !== capability.skill) {
         errors.push(
-          `${capability.id}: ${capability.reference} is not routed from ` +
-            `${capability.skill}/SKILL.md`,
+          `${source}: capability owners disagree: ${owner}, ${capability.skill}`,
         );
+      }
+      sourceOwners.set(source, capability.skill);
+      await checkReference(routedReference, capability.id);
+      const evidence = capability.evalIds.map((id) => casesById.get(id));
+      for (const split of ["train", "valid-seen"] as const) {
+        if (!evidence.some((item) => item?.split === split)) {
+          errors.push(`${capability.id}: missing ${split} evidence in evalIds`);
+        }
+      }
+      if (
+        !evidence.some((item) =>
+          item &&
+          ["valid-unseen", "transfer", "adversarial", "test-frozen"].includes(
+            item.split,
+          )
+        )
+      ) {
+        errors.push(`${capability.id}: missing held-out evidence in evalIds`);
       }
       for (const evalId of capability.evalIds) {
         mappedEvals.add(evalId);
@@ -244,25 +241,6 @@ if (capabilitiesJson !== undefined) {
         }
       }
     }
-    for (const routedReference of capabilityReferences) {
-      const referenceCases = cases.filter((item) =>
-        item.requiredReferences.includes(routedReference)
-      );
-      for (const requiredSplit of ["train", "valid-seen"] as const) {
-        if (!referenceCases.some((item) => item.split === requiredSplit)) {
-          errors.push(`${routedReference}: missing ${requiredSplit} coverage`);
-        }
-      }
-      if (
-        !referenceCases.some((item) =>
-          ["valid-unseen", "transfer", "adversarial", "test-frozen"].includes(
-            item.split,
-          )
-        )
-      ) {
-        errors.push(`${routedReference}: missing held-out coverage`);
-      }
-    }
     const capabilitiesBySkill = new Map<string, number>();
     for (const capability of capabilities.data.capabilities) {
       capabilitiesBySkill.set(
@@ -271,15 +249,14 @@ if (capabilitiesJson !== undefined) {
       );
     }
     for (const skill of skills) {
-      const references = skillReferences.get(skill) ?? new Set<string>();
       const skillCapabilities = capabilitiesBySkill.get(skill) ?? 0;
       if (skillCapabilities === 0) {
         errors.push(`${skill}: requires at least one capability record`);
       }
-      for (const reference of references) {
-        if (!capabilityReferences.has(reference)) {
-          errors.push(`${reference}: missing capability mapping`);
-        }
+    }
+    for (const source of operational) {
+      if (!capabilitySources.has(source)) {
+        errors.push(`${source}: missing capability mapping`);
       }
     }
 
@@ -328,12 +305,8 @@ if (errors.length > 0) {
   console.error(errors.join("\n"));
   Deno.exit(1);
 }
-const referenceCount = [...skillReferences.values()].reduce(
-  (total, references) => total + references.size,
-  0,
-);
 console.log(
-  `Validated ${skills.size} skills, ${referenceCount} routed references, ` +
+  `Validated ${skills.size} skills, ${operational.length} operational sources, ` +
     `and ${ids.size} evaluation cases ` +
     `(${executableCases.length} executable, ${rubricCases.length} rubric-defined, ` +
     `${smokeCases.length} smoke, ${frozenCases.length} frozen), plus ` +

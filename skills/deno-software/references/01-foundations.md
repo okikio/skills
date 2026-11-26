@@ -66,8 +66,12 @@ migration failure.
 ## Runtime API selection
 
 Prefer stable Web APIs when they express the contract and improve runtime
-portability. Use `Deno.*` when Deno owns a capability or provides stronger
-semantics the repository wants.
+portability. In shared code, direct Node/Deno globals and static builtin imports
+are portability smells even when Deno accepts them. Inspect existing local
+`utils/` or focused env/file/process utilities before duplicating host access.
+Use `Deno.*` at a deliberate Deno adapter/root when it owns a capability or
+provides stronger semantics the repository wants. Test-runner imports remain
+tooling, not a reason to put Node runtime imports into portable production code.
 
 Examples:
 

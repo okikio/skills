@@ -1,5 +1,11 @@
 # Site quality gates
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference to define acceptance criteria for public sites and documentation. Quality is a set of observable route contracts, not a Lighthouse score or attractive screenshot.
 
 ## Contents
@@ -179,7 +185,7 @@ Report passed, failed, blocked, and not-run separately. Never translate a local 
 
 ## Sources and freshness
 
-- Uploaded `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, and `thunderstrike-blog(4).zip`, reviewed 2026-07-17.
+- Uploaded `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, a product application archive, and `thunderstrike-blog(4).zip`, reviewed 2026-07-17.
 - Modern Web Guidance accessibility, forms, security, and deferred-rendering guides retrieved 2026-07-17.
 - Astro view-transition accessibility: https://docs.astro.build/en/guides/view-transitions/ (reviewed 2026-07-17).
 - Performance thresholds, browser support, and deployment behavior are environment-sensitive. Use the project's declared targets and measured baselines.

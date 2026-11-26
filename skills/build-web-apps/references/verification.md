@@ -1,5 +1,11 @@
 # Web application verification manual
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference for stateful SSR applications, route loaders, server functions, forms, auth, tables, virtualization, query caches, mutations, and long-lived browser resources.
 
 ## Contents
@@ -202,7 +208,7 @@ Do not claim cross-browser, deployed, accessibility, security, or performance su
 
 ## Sources and freshness
 
-- Uploaded `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, `old-finance-app(1).zip`, `solid-motion-experiments.zip`, and `solid-primitives(2).zip`, reviewed 2026-07-17.
+- Uploaded `kaiju-site-scope(17).zip`, two archives of one product application, `solid-motion-experiments.zip`, and `solid-primitives(2).zip`, reviewed 2026-07-17.
 - TanStack Router Query integration: https://tanstack.com/router/latest/docs/integrations/query (reviewed 2026-07-17).
 - TanStack Router search params: https://tanstack.com/router/latest/docs/guide/search-params (reviewed 2026-07-17).
 - Modern Web Guidance accessibility/forms/security/deferred-rendering guides retrieved 2026-07-17.

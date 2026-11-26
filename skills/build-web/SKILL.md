@@ -1,18 +1,56 @@
 ---
 name: build-web
-description: Classify, design, implement, review, diagnose, or verify web work that spans content sites, stateful applications, server rendering, interactive islands, design systems, accessibility, motion, browser lifecycles, and shared frontend infrastructure. Use for hybrid or cross-surface web architecture and for shared renderer, component, asset, security, design, and browser-verification decisions. Prefer build-sites for a clearly content-first site and build-web-apps for a clearly stateful product application.
+description: Classify, design, implement, review, diagnose, or verify web work that spans content sites, stateful applications, server rendering, interactive islands, design systems, accessibility, motion, touch interactions, browser lifecycles, and shared frontend infrastructure. Use for hybrid or cross-surface web architecture and for shared renderer, component, asset, security, design, and browser-verification decisions. Compose with build-sites for content publishing or build-web-apps for application state; retain this skill for renderer semantics, accessibility, and browser verification even within one application. Compose with design-interfaces when visual hierarchy, layout, or polish changes.
 ---
 
 # Build web systems
 
-Use this skill when the important decision crosses a single site or application
-surface. It is the shared web owner for renderer choice, browser behavior,
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
+Use this skill for renderer or browser contracts within one surface as well as
+across surfaces. It is the shared web owner for renderer choice, browser behavior,
 component-system integration, design and motion quality, asset delivery,
 security, accessibility, and cross-surface verification.
 
 `build-sites` owns content-first publishing. `build-web-apps` owns stateful
-product applications. `deliver-software` owns repository completion.
+product applications. the shared quality contract owns repository completion.
 `explore-ecosystems` owns dependency topology. Do not duplicate their work.
+
+For visual creation, redesign, or polish, select `design-interfaces` when
+installed. It owns visual judgment; this skill retains its implementation
+contracts. A frontend logic change that leaves the design unchanged does not
+need that companion.
 
 ## Outcome
 
@@ -162,6 +200,11 @@ or accessibility.
   shadcn-style generation, Kobalte/Corvu, tokens, accessibility, and ownership.
 - [motion.md](references/motion.md): motion purpose, presence, interruption,
   reduced motion, Solid lifetimes, Motion, Web Animations, WebGL, and cleanup.
+  For a motion audit, begin at [audit from the visible symptom](references/motion.md#audit-motion-from-the-visible-symptom).
+  For opportunities to add motion, use [where motion would help](references/motion.md#find-where-motion-would-help).
+- [Touch interactions](references/touch-interactions.md): when a drag, swipe,
+  hold, mobile scroll container, browser chrome, or keyboard changes how a
+  control responds or whether it stays reachable.
 - [security.md](references/security.md): forms, HTML, webhooks, auth, cookies,
   CORS/CSP, secrets, cross-origin behavior, and PII.
 - [verification.md](references/verification.md): build, browser, accessibility,
@@ -180,3 +223,16 @@ reachable, rendering mode matches the data/session contract, browser behavior is
 verified, important accessibility paths work, resource cleanup is proven,
 security-sensitive paths are tested, and the built/deployed output was inspected
 for the claims being made. Report unrun browser or deployment gates explicitly.
+
+## Renderer and platform detail
+
+Read [React patterns](references/react-patterns.md) for component API or measured
+render/bundle decisions, then only the relevant rule file. Read
+[platform research](references/platform-research.md) when browser capability or
+support is uncertain. Select build-sites for Astro route/island ownership,
+build-web-apps for product state, and design-interfaces for visual/motion purpose.
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

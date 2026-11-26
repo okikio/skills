@@ -1,5 +1,15 @@
 # Temporal TypeScript architecture and operations
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 ## Contents
 
 - [When to choose Temporal](#when-to-choose-temporal)
@@ -432,6 +442,3 @@ find it.
   and https://docs.temporal.io/develop/safe-deployments
 - TypeScript SDK API: https://typescript.temporal.io/ (package/API signatures are
   version-sensitive; typecheck examples against the installed SDK).
-- Attachment, verified 2026-07-17: `evidence/app/new-finance/.agents/research/inngest_effect_architecture_handoff.md`
-  (comparative design evidence only; the supplied repositories do not implement
-  a Temporal runtime).

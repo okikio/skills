@@ -61,7 +61,7 @@ export async function snapshot(root: string): Promise<SnapshotType> {
       }
     }
 
-    files.set(relative(root, path), {
+    files.set(relative(root, path).replaceAll("\\", "/"), {
       digest: await hash.file(path),
       text,
     });

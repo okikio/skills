@@ -1,5 +1,15 @@
 # Data-system failure diagnosis and recovery
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 Use this reference when a data system is wrong, stale, incomplete, slow, leaking scope, or unrecoverable. Diagnose the violated owner/commit contract before adding retries or another abstraction. A green typecheck or completed process is not evidence that data committed correctly.
 
 ## Contents
@@ -68,7 +78,7 @@ Do not “pick the newest timestamp” unless clock ownership, ordering, and con
 | Resume skips records | checkpoint represents attempted input | rewind to committed output identity |
 | Resume duplicates side effects | sink lacks idempotency/version | repair duplicates and add deterministic change identity |
 
-The retained PopModern MediaWiki pipeline catches and ignores failures in raw capture, cleaning, staging, profiling, Parquet, run state, PostgreSQL load, and metrics, yet prints completion. Its `records_for_profiling` also retains all staged records before profiling/Parquet. Use these as concrete failure signatures, not an endorsed resilience policy.
+A completion message is false if a required capture, transformation, staging or publication stage failed and its exception was ignored. Also inspect profiling and output writers for collections that retain every input record. An iterative outer loop does not make those stages bounded.
 
 ## PostgreSQL and Drizzle failures
 
@@ -200,4 +210,4 @@ Keep failed/blocked/passed distinct. If a registry, engine, credential, or reali
 
 ## Sources and freshness
 
-Grounded in the retained finance PostgreSQL/Drizzle schema, migration guide, query utilities, workflow store/worker implementation, and PopModern importer, MediaWiki ETL, artifact utilities, Typesense, QLever, SPARQL, and ClickHouse infrastructure, reviewed 2026-07-17. Several signatures come from explicit prototypes or incomplete code paths, including swallowed ETL failures, materialized profiling/Parquet, placeholder search sink, non-atomic workflow transitions, and hidden pool lifetime. Revalidate behavior in the consumer's installed versions and deployed topology.
+Use the selected engine's official documentation and executable consumer paths to verify a diagnosis. Public utility contracts include [`query/postgres`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/query/postgres.ts), [`storage`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/storage/mod.ts) and [`workflow`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/workflow/mod.ts). Compilation, persistence and workflow execution have separate owners. The failure signatures are review criteria, not claims that these sources contain a defect.

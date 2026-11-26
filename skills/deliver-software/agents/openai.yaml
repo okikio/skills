@@ -1,4 +1,0 @@
-interface:
-  display_name: "Deliver Software"
-  short_description: "Plan, implement, and verify software completely"
-  default_prompt: "Use $deliver-software to complete and verify this software task."

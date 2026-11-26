@@ -48,7 +48,8 @@
         "architecture",
         "training"
       ],
-      "rationale": "The optimizer needs the central use-case-first correction."
+      "rationale": "The optimizer needs the central use-case-first correction.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-architecture-deep-module",
@@ -98,7 +99,8 @@
         "architecture",
         "valid-seen"
       ],
-      "rationale": "Library quality depends on depth and ownership, not class count."
+      "rationale": "Library quality depends on depth and ownership, not class count.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-architecture-framework-exception",
@@ -143,7 +145,8 @@
         "architecture",
         "adversarial"
       ],
-      "rationale": "The skill must preserve valid framework use cases."
+      "rationale": "The skill must preserve valid framework use cases.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-composition-multiscale",
@@ -200,7 +203,8 @@
         "composition",
         "training"
       ],
-      "rationale": "Local function composition alone misses ecosystem and operational contracts."
+      "rationale": "Local function composition alone misses ecosystem and operational contracts.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-composition-strategic-dependency",
@@ -251,7 +255,8 @@
         "logtape",
         "valid-seen"
       ],
-      "rationale": "Swappability must not erase strategic ecosystem value."
+      "rationale": "Swappability must not erase strategic ecosystem value.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-composition-no-ecosystem-hoarding",
@@ -303,7 +308,8 @@
         "ecosystems",
         "valid-unseen"
       ],
-      "rationale": "Composability is not ecosystem accumulation."
+      "rationale": "Composability is not ecosystem accumulation.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-data-flow-shape-selection",
@@ -353,7 +359,8 @@
         "data-flow",
         "training"
       ],
-      "rationale": "The data shape is part of the public contract."
+      "rationale": "The data shape is part of the public contract.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-data-flow-batching",
@@ -404,7 +411,8 @@
         "batching",
         "valid-seen"
       ],
-      "rationale": "Per-record elegance can hide serious CPU, I/O, and memory overhead."
+      "rationale": "Per-record elegance can hide serious CPU, I/O, and memory overhead.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-data-flow-streaming-cleanup-fixture",
@@ -449,7 +457,8 @@
         "frozen"
       ],
       "rationale": "Executable proof protects incrementality and cleanup semantics.",
-      "fixture": "library-streaming-cleanup"
+      "fixture": "library-streaming-cleanup",
+      "forbiddenReferences": []
     },
     {
       "id": "library-dod-transform-graph",
@@ -500,7 +509,8 @@
         "data-oriented-design",
         "training"
       ],
-      "rationale": "Data-oriented design begins with data and transforms."
+      "rationale": "Data-oriented design begins with data and transforms.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-dod-hot-cold-index",
@@ -551,7 +561,8 @@
         "data-oriented-design",
         "valid-seen"
       ],
-      "rationale": "Hot and cold separation is useful only with explicit conversion and lifetime costs."
+      "rationale": "Hot and cold separation is useful only with explicit conversion and lifetime costs.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-dod-typed-array-cargo-cult",
@@ -601,7 +612,8 @@
         "data-oriented-design",
         "adversarial"
       ],
-      "rationale": "The skill must prevent representation cargo culting."
+      "rationale": "The skill must prevent representation cargo culting.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-resources-ownership",
@@ -651,7 +663,8 @@
         "resources",
         "training"
       ],
-      "rationale": "Resource lifetime is a public API concern."
+      "rationale": "Resource lifetime is a public API concern.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-performance-budget",
@@ -705,7 +718,8 @@
         "performance",
         "valid-seen"
       ],
-      "rationale": "Performance is workload-specific and multidimensional."
+      "rationale": "Performance is workload-specific and multidimensional.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-resource-early-return",
@@ -757,7 +771,8 @@
         "cancellation",
         "valid-unseen"
       ],
-      "rationale": "Abort propagation alone is not resource safety."
+      "rationale": "Abort propagation alone is not resource safety.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-packaging-subpaths",
@@ -811,7 +826,8 @@
         "packaging",
         "training"
       ],
-      "rationale": "Selective adoption depends on physical package APIs."
+      "rationale": "Selective adoption depends on physical package APIs.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-packaging-side-effects",
@@ -863,7 +879,8 @@
         "tree-shaking",
         "valid-seen"
       ],
-      "rationale": "Metadata cannot compensate for an eagerly connected module graph."
+      "rationale": "Metadata cannot compensate for an eagerly connected module graph.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-packaging-selective-fixture",
@@ -908,7 +925,8 @@
         "frozen"
       ],
       "rationale": "Executable consumer behavior is stronger than source inspection.",
-      "fixture": "library-selective-adoption"
+      "fixture": "library-selective-adoption",
+      "forbiddenReferences": []
     },
     {
       "id": "library-recovery-ladder",
@@ -958,7 +976,8 @@
         "recovery",
         "training"
       ],
-      "rationale": "Recovery claims must not collapse into one vague resumability label."
+      "rationale": "Recovery claims must not collapse into one vague resumability label.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-recovery-commit-order",
@@ -1009,7 +1028,8 @@
         "recovery",
         "valid-seen"
       ],
-      "rationale": "Checkpoint position without durable output identity is fake resumability."
+      "rationale": "Checkpoint position without durable output identity is fake resumability.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-refactor-cli-first",
@@ -1064,7 +1084,8 @@
         "cli",
         "adversarial"
       ],
-      "rationale": "Compatibility wrappers can preserve the architecture being removed."
+      "rationale": "Compatibility wrappers can preserve the architecture being removed.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-verification-claim-evidence",
@@ -1113,7 +1134,8 @@
         "verification",
         "training"
       ],
-      "rationale": "The skill must demand evidence proportional to the claim."
+      "rationale": "The skill must demand evidence proportional to the claim.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-verification-benchmark-gate",
@@ -1164,7 +1186,8 @@
         "performance",
         "valid-seen"
       ],
-      "rationale": "Fast wrong or locally optimized code is not a successful library change."
+      "rationale": "Fast wrong or locally optimized code is not a successful library change.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-verification-cross-skill",
@@ -1220,7 +1243,8 @@
         "composition",
         "transfer"
       ],
-      "rationale": "Library completion often spans several existing domain skills."
+      "rationale": "Library completion often spans several existing domain skills.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-data-flow-cancellation-handoff",
@@ -1275,7 +1299,8 @@
         "data-flow",
         "valid-unseen"
       ],
-      "rationale": "A library can expose both protocols only if the adapter preserves cancellation, pressure, and lifetime semantics."
+      "rationale": "A library can expose both protocols only if the adapter preserves cancellation, pressure, and lifetime semantics.",
+      "forbiddenReferences": []
     },
     {
       "id": "library-packaging-runtime-registry-trap",
@@ -1330,7 +1355,8 @@
         "packaging",
         "adversarial"
       ],
-      "rationale": "Runtime registries are a common way to turn conceptual optionality into physical dependency retention."
+      "rationale": "Runtime registries are a common way to turn conceptual optionality into physical dependency retention.",
+      "forbiddenReferences": []
     },
     {
       "id": "route-build-libraries-public-api",
@@ -1448,7 +1474,7 @@
       "split": "valid-unseen",
       "prompt": "Implement a refactor that keeps an Optique CLI runnable while extracting a reusable analysis library, preserving c12 precedence and LogTape routing, adding package subpaths and clean-consumer tests, and removing the old runtime API after parity.",
       "expectedSkills": [
-        "deliver-software",
+        "refactor-code",
         "build-clis",
         "build-libraries",
         "build-devtools"
@@ -1617,7 +1643,7 @@
       "split": "test-frozen",
       "prompt": "Plan and implement a Deno-first strict TypeScript library extracted from a CLI. Preserve a thin Optique/c12/LogTape CLI adapter, expose side-effect-free ESM core and browser subpaths, use bounded async batches with deterministic cleanup, define checkpoint-resume but route durable execution separately, build and pack the artifact, verify clean consumers and tree-shaking, and remove the old public runtime/stage API.",
       "expectedSkills": [
-        "deliver-software",
+        "refactor-code",
         "deno-software",
         "build-clis",
         "build-libraries",
@@ -1741,7 +1767,8 @@
         "decision-quality",
         "valid-unseen"
       ],
-      "rationale": "Library-first language must not become an unexamined package-splitting slogan."
+      "rationale": "Library-first language must not become an unexamined package-splitting slogan.",
+      "forbiddenReferences": []
     }
   ]
 }

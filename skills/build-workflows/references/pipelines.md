@@ -1,5 +1,15 @@
 # Resumable, bounded, multi-sink data pipelines
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 Use this reference when work discovers, fetches, parses, normalizes, enriches, loads, aggregates, indexes, or projects data over time. A durable pipeline is not a `for` loop with retries. It has stage contracts, stable identities, committed checkpoints, bounded resources, explicit required/optional sinks, and recovery from every crash window.
 
 ## Contents
@@ -114,9 +124,9 @@ source iterator
   -> source checkpoint
 ```
 
-Backpressure means the source pauses when downstream capacity is full. “Streaming” code that appends every record to `records_for_profiling` is still unbounded. The retained PopModern MediaWiki ETL does this before profiling and Parquet writing; its Parquet helper also materializes the iterable. Replace global materialization with bounded sketches/samples and chunked writer batches.
+Backpressure means the source pauses when downstream capacity is full. A streaming loop that appends every record to a profiling array is still unbounded. Inspect profiling and output stages as well as the source. Use bounded sketches, samples and writer batches when the full input need not remain in memory.
 
-For RDF, the retained importer flushes an RDFLib graph every configured batch, which bounds that graph. However, it writes each sink serially and has no per-record manifest/checkpoint. Keep the bounded idea, add durable receipts and recovery.
+For RDF, flushing a graph at a configured batch limit bounds that graph. The sink still needs durable receipts and a recovery contract when committed output must survive interruption. Batching and durable publication solve different problems.
 
 ## Checkpoints and resume
 
@@ -244,7 +254,7 @@ Workers need:
 
 If integrated with a workflow runtime, store stage/checkpoint facts in the chosen durable owner and use activities for side effects. Do not assume the runtime automatically makes an external bulk API, file append, or database write idempotent.
 
-The retained finance workflow platform has a useful queue/lease/control-plane model but contains incomplete atomicity and a placeholder SQL-backed Effect adapter. Do not present it as a ready production pipeline runtime without repairing and proving those paths.
+Choose the current activity/workflow package and selected history/dispatch owners for the recovery claim. In-memory replay can demonstrate instruction reuse; production persistence, atomic transitions, and cross-process recovery require their own implementations and executable evidence.
 
 ## Operational state and controls
 
@@ -341,4 +351,4 @@ Run native queries against PostgreSQL/ClickHouse/Typesense/QLever and validate J
 
 ## Sources and freshness
 
-Grounded in the retained PopModern `DATA_PIPELINE.md`, recipe-driven importer, MediaWiki ETL, raw/JSONL/Parquet/profile/PostgreSQL utilities, RDF/Typesense/QLever sinks, and the retained finance workflow definitions, PostgreSQL store, queue workers, waits/signals, and runtime adapters, reviewed 2026-07-17. PopModern and finance include both useful patterns and explicit prototypes/incomplete durability paths; examples are classified accordingly. Verify selected engine/runtime capabilities and deployed versions before implementation claims.
+Public utility source: [`workflow`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/workflow/mod.ts), [`streams`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/streams/mod.ts) and [`storage`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/storage/mod.ts). These provide focused contracts, not a universal pipeline commit protocol. Treat the stage, receipt and recovery examples as application design requirements. Test bounded memory and crash windows in the selected engine and runtime.

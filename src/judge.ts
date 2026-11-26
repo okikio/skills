@@ -1,4 +1,6 @@
 import type { ModelAdapterType } from "./model.ts";
+import type { EvalCaseType } from "./corpus.ts";
+import { effectivePrompt } from "./interpretation.ts";
 import * as provider from "./provider.ts";
 import {
   JudgeRequestSchema,
@@ -15,10 +17,8 @@ export interface EvaluateOptionsType {
   /** Target rollout identity shared with the qualitative result. */
   readonly runId: string;
   readonly caseId: string;
-  /** Original task prompt evaluated against the source rubric. */
-  readonly prompt: string;
-  /** Source rubric criteria, in stable source order. */
-  readonly rubric: readonly string[];
+  /** Complete case retains original criteria and any explicit interpretation. */
+  readonly evaluation: EvalCaseType;
   /** Normalized target evidence after provider response validation. */
   readonly response: RolloutResponseType;
   /** Deterministic fixture-relative paths changed by the target. */
@@ -83,7 +83,7 @@ export async function evaluate(
     const detail =
       `Judge skipped because the target rollout is invalid: ${options.targetError}`;
     return {
-      results: fail(options.rubric, detail),
+      results: fail(options.evaluation.rubric, detail),
       secrets: {},
     };
   }
@@ -93,8 +93,11 @@ export async function evaluate(
     kind: "judge",
     runId: options.runId,
     caseId: options.caseId,
-    prompt: options.prompt,
-    criteria: options.rubric.map((criterion, index) => ({ index, criterion })),
+    prompt: effectivePrompt(options.evaluation),
+    criteria: options.evaluation.rubric.map((criterion, index) => ({
+      index,
+      criterion,
+    })),
     evidence: redactValue({
       output: options.response.output,
       activatedSkills: options.response.activatedSkills,
@@ -118,7 +121,7 @@ export async function evaluate(
   if (call.error || !call.response) {
     const detail = call.error ?? "Judge returned no normalized response";
     return {
-      results: fail(options.rubric, `Judge failed: ${detail}`),
+      results: fail(options.evaluation.rubric, `Judge failed: ${detail}`),
       call,
       secrets: call.secrets,
       error: `Judge failed: ${detail}`,
@@ -127,11 +130,11 @@ export async function evaluate(
 
   const completenessError = complete(
     call.response.results,
-    options.rubric.length,
+    options.evaluation.rubric.length,
   );
   if (completenessError) {
     return {
-      results: fail(options.rubric, completenessError),
+      results: fail(options.evaluation.rubric, completenessError),
       call,
       secrets: call.secrets,
       error: completenessError,

@@ -5,13 +5,46 @@ description: Design, implement, migrate, review, diagnose, benchmark, or verify 
 
 # Build data systems
 
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
 This skill owns data authority, storage roles, schema/migration contracts, query
 semantics, durable artifacts, and rebuildable projections. Do not choose an
 engine or ORM abstraction before classifying the workload and the data that is
 authoritative.
 
 `build-workflows` owns durable coordination around multi-stage work.
-`build-apis` owns public request contracts. `deliver-software` owns the final
+`build-apis` owns public request contracts. the shared quality contract owns the final
 completion verdict.
 
 ## Outcome
@@ -157,9 +190,9 @@ succeed. Do not print an error and then report the run as complete.
   new-dialect design.
 - [clickhouse.md](references/clickhouse.md): MergeTree choices, analytics,
   ingestion, deduplication, mutations, views, backfills, and operations.
-- [clickhouse-adapter.md](references/clickhouse-adapter.md): local Kaiju
-  Drizzle-like ClickHouse adapter implementation, gaps, verification, and
-  publication commit points.
+- [clickhouse-adapter.md](references/clickhouse-adapter.md): custom
+  ClickHouse adapter design, native client ownership, capability evidence and
+  publication checks.
 - [projections.md](references/projections.md): Typesense, QLever/Blazegraph,
   search/graph versioning, synchronization, rebuild, and reconciliation.
 - [artifacts.md](references/artifacts.md): raw evidence, JSONL, Parquet,
@@ -176,3 +209,12 @@ schema/migration state is known, required projections/artifacts can be validated
 and reconciled, crash or partial-failure behavior is understood, resource
 lifetime is proven, and performance claims use representative volume. A green
 typecheck, migration generation, or process exit is not enough.
+
+## Project procedures
+
+When the project adopts this playbook, use its procedure and evidence gates: [Procedures](../../handbook/procedures/README.md), [Service readiness](../../handbook/services/README.md).
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

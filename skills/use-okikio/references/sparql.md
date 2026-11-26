@@ -24,7 +24,7 @@ The public documentation describes three layers:
 2. composable graph patterns;
 3. complete fluent query/update builders and execution.
 
-The uploaded Kaiju/finance utilities additionally import executor symbols from `@okikio/sparql/executor`, establishing that subpath for 0.0.2 consumers:
+Reviewed consumer utilities additionally import executor symbols from `@okikio/sparql/executor`, establishing that subpath for 0.0.2 consumers:
 
 ```ts
 import { raw, select, triple, v } from "@okikio/sparql";
@@ -61,7 +61,7 @@ const finalPrice = ifElse(
 
 Core conversion escapes string literals and formats numbers/dates according to the package. Verify exact RDF datatype/language behavior for application values; JavaScript string conversion does not prove the desired RDF term.
 
-Treat `raw(...)` as unsafe trusted SPARQL. The uploaded `QuerySpec` adapter builds `IN`, `NOT IN`, `BETWEEN`, and cursor predicates by concatenating `.value` fragments into `raw(...)`. This is a counterexample requiring review: prefer package-native composition/term serialization and allowlisted fields. Never put untrusted values into raw query text.
+Treat `raw(...)` as trusted SPARQL text. Building `IN`, `NOT IN`, range or cursor predicates by concatenating term `.value` strings can bypass escaping and datatype serialization. Use verified term/expression helpers and allowlisted fields. Never put untrusted values into raw query text.
 
 ## Graph patterns
 
@@ -147,7 +147,7 @@ Updates require separate authorization, endpoint capability, graph ownership, id
 
 ## Executor interface
 
-The uploaded consumer uses:
+The dated reference identifies these executor names. Verify each against the resolved package artifact before using it; consumer code alone does not establish a public export:
 
 - `BindingMap` and `QueryResult<T>` types;
 - `executeSparql(...)`;
@@ -167,7 +167,7 @@ domain QuerySpec
   -> domain result
 ```
 
-Map errors by stable kind/status. The uploaded tests map timeout to gateway timeout, upstream authorization to bad gateway/configuration, and rate limiting to a retryable response. Do not expose the full query when it can contain sensitive literals; keep a redacted, length-bounded preview.
+Map errors by stable kind/status. Define separate policy for a timeout, rejected upstream credentials and rate limiting; the HTTP response depends on which system owns the failure. Do not expose the full query when it can contain sensitive literals; keep a redacted, length-bounded preview.
 
 Verify whether `.execute(...)` and standalone `executeSparql(...)` share configuration and result behavior. Pick one owner per application layer.
 
@@ -187,7 +187,7 @@ For API filters/sorts:
 
 Never accept a predicate, service endpoint, graph IRI, variable name, raw filter, or update fragment directly from an untrusted request.
 
-The uploaded cursor builder converts dates to a manually typed `xsd:date` string and interpolates fragments. Replace this with verified typed-literal/package helpers when available; otherwise isolate and rigorously escape/test the serializer.
+Preserve the cursor value's RDF datatype and precision. For example, a timestamp cannot be reduced to `xsd:date` without changing comparisons. Use verified typed-literal helpers; otherwise isolate the serializer and test escaping, timezones and comparison behavior against the target engine.
 
 ## Federation and engine differences
 
@@ -226,7 +226,4 @@ Define namespace/prefix ownership and collision behavior. Preserve RDF term iden
 
 ## Sources and freshness
 
-- Primary: [JSR `@okikio/sparql@0.0.2`](https://jsr.io/@okikio/sparql/0.0.2), inspected 2026-07-17 for documented value, expression, pattern, query, update, and executor surfaces.
-- Attachments: `new-finance-app(1).zip` and `kaiju-site-scope(17).zip`, inspected 2026-07-17 for concrete consumer imports, query mapping, executor use, and raw-interpolation counterexamples.
-
-Version 0.0.2 is experimental and version-sensitive. Symbols not present in the verified docs or consumers remain unverified; endpoint-specific SPARQL support must be tested against the actual engine.
+Reference scope: [JSR `@okikio/sparql@0.0.2`](https://jsr.io/@okikio/sparql/0.0.2), a dated experimental API reference. This refresh does not establish a newer release or verify all executor names against a current artifact. Confirm the exact export map, declarations and implementation before copying code. Test endpoint-specific SPARQL behavior against the actual engine; query construction does not establish authorization or transport behavior.

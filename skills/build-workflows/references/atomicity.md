@@ -1,5 +1,15 @@
 # Atomicity, idempotency, outbox, and reconciliation
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 ## Contents
 
 - [Write the invariant first](#write-the-invariant-first)
@@ -225,7 +235,6 @@ outcome.
 - PostgreSQL transaction documentation: https://www.postgresql.org/docs/current/tutorial-transactions.html
   and locking clauses: https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE
   (primary sources, checked 2026-07-17).
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/workflows/postgres_store.ts`,
-  `control_plane.ts`, and `worker/loops.ts` (observed and counterexample evidence).
 - Temporal Activity guidance: https://docs.temporal.io/develop/typescript/activities
   (primary source; external-effect idempotency remains application-owned).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/storage/outbox/postgres.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

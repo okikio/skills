@@ -1,5 +1,14 @@
 # API deployment and resource ownership handoffs
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution and read the
+service reference for definitions, compilation, and Fetch runtime ownership.
+The rules below apply to the selected implementation, not a required app layout.
+Hono validation examples apply only to a Hono-owned validation path; compiled
+services supply validated `input` and their own rejection contract. Verify each example against the resolved artifact before implementation.
+
+
 ## Contents
 
 - [Deployment contract](#deployment-contract)
@@ -132,10 +141,8 @@ a SIGKILL; leases, idempotency, and reconciliation must.
 
 ## Sources and freshness
 
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/docs/intent-doc.md`,
-  `utils/server/`, and `utils/workflows/` (normative contract plus observed and
-  incomplete runtime evidence).
 - Hono official documentation: https://hono.dev/docs/getting-started/basic
   (primary source; deployment adapters differ).
 - Deno deployment/runtime documentation: https://docs.deno.com/runtime/
   (primary source; verify selected host and current Deno release).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/server/service/mod.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

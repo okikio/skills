@@ -1,10 +1,20 @@
 # Motion, presence, canvas, and continuous work
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference when implementing or reviewing animation, transitions, presence, gesture states, layout motion, canvas/WebGL, or scroll/pointer effects. Motion is a lifecycle and state-ownership problem before it is a visual problem.
 
 ## Contents
 
 - Judgment before mechanism
+- Remove motion without removing behavior
+- Coordinate a group, not separate waits
+- Find where motion would help
+- Audit motion from the visible symptom
 - Evidence and capability inventory
 - Selection ladder
 - State and priority model
@@ -27,6 +37,91 @@ Use interaction frequency to control intensity. A one-time onboarding transition
 Production motion should normally be interruptible. Reversing an action should reverse from the current visual state rather than wait for the previous animation to finish. Test reduced motion, keyboard use, touch behavior, offscreen suspension, cleanup, and real-device performance with production-like data.
 
 For spatial UI, choose the origin from the real relationship. A popover opened from a top-right trigger should not scale from the center unless that is the intended product behavior.
+
+## Remove motion without removing behavior
+
+When subtracting motion, trace hidden initial styles, animation-completion callbacks, exit retention and delayed focus first. Removing a driver can leave content invisible, skip required cleanup or leave focus on a removed node. Move necessary state changes to the actual operation's lifecycle, and test immediate completion and cancellation. An animation may also mask a layout jump; disclose that consequence rather than silently expanding into layout redesign.
+
+## Coordinate a group, not separate waits
+
+For several moving parts, name the lead, the supporting parts, and the stable
+anchor the eye can return to. Mark the trigger, start or overlap for each
+part, the point when the new state is usable, and what happens on exit.
+Start together unless order tells the user something; use overlap when the
+parts need to read as a group and wait only for a real dependency. Nested
+stagger and parent entrances can make the last item take much longer than any
+one duration suggests.
+
+For a sheet, the frame can lead and the backdrop can follow the same progress.
+Keep the trigger or surrounding content stable, and bring the content in
+without a second wait before it can be used. On a rapid reopen, cancel the
+old sequence and continue from the current visual state. In reduced motion,
+show the same final state without making controls wait for decorative timing.
+Check open, close, and open-close-open as one flow. Use a short timeline when
+coordination matters; an isolated easing curve does not describe the sequence.
+For a multi-step view, derive direction from the current navigation event so
+the outgoing view cannot reuse an old direction. See Emil's
+[choreography recipes](https://github.com/emilkowalski/skills/blob/5206a950b715e0cabe7043ea0b2304332b91494e/skills/choreograph/RECIPES.md)
+for staged, overlapping, and direction-aware examples; verify their APIs in
+the actual renderer.
+
+Sources: Emil [remove-animations](https://github.com/emilkowalski/skills/blob/c8a79627b59d72d764d6ab6f2c87c09a48169833/skills/remove-animations/SKILL.md) and [choreograph](https://github.com/emilkowalski/skills/blob/c8a79627b59d72d764d6ab6f2c87c09a48169833/skills/choreograph/SKILL.md), MIT, copyright Emil Kowalski 2026. The [retained Emil MIT notice](../../design-interfaces/references/sources/emil-design-eng/LICENSE) applies to adapted guidance.
+
+
+## Find where motion would help
+
+Start with a user flow and identify a moment where the current change is hard
+to follow: an item moves to a new position, a control opens a related surface,
+or an asynchronous action needs visible feedback. Check how often it happens,
+what movement would explain, whether the effect can stay cheap and immediate
+to operate, and whether it leaves reading, focus, and input uninterrupted.
+Compare against an instant change or static cue before proposing movement.
+
+For example, a row that changes position after a date edit may benefit from
+continuity if both positions are visible. A keyboard filter can update the
+same list many times in seconds; keep those results immediate and reject a
+replayed entrance. For each proposed addition, name the trigger, what moves
+or stays still, the state or location it explains, a reduced-motion outcome,
+and a replay that would show whether it helps. Report rejected candidates
+with their reasons when the choice is consequential. Opportunity discovery
+does not authorize implementing the effect.
+
+## Audit motion from the visible symptom
+
+Start at the changed interaction or the reported symptom. Record its trigger,
+frequency, and user cost. For optional motion, compare it with an immediate
+state change. Keep or add motion when it communicates a specific relationship,
+such as where an item moved. A repeated filter action that becomes usable
+earlier without an entrance is a removal candidate.
+
+| What the user sees | What to inspect before recommending a fix |
+| --- | --- |
+| A control jumps when reversed | Scrub a recording to find the first discontinuity; trace the state and completion callbacks on rapid reversal. |
+| Drag is smooth on a short list and stutters on a full one | Record both workloads. Check pointer handlers, renderer commits, and style recalculation on descendants before blaming the easing or driver. |
+| Entry only stutters while the page is busy | Record the transition with and without that work. Check script, layout, paint, and compositor activity before proposing a cheaper property or driver. |
+
+Separate observed behavior, a source finding, and an untested hypothesis.
+Prioritize by impact on the task, frequency, confidence, and cost to correct.
+For a broader audit, inventory relevant CSS, animation drivers, and component
+state transitions by user flow. Confirm each finding at the trigger and its
+source; a search hit for an easing curve is not a finding.
+
+Make each actionable handoff readable on its own: include the reproduction,
+observed effect or source evidence, file and symbol (when known), current and
+proposed behavior, existing token or owner to reuse, scope limits, and the
+replay or measurement that would establish acceptance. Include timing values
+only when justified. Keep optional motion ideas separate from fixes. Profile
+comparable before and after runs before claiming fewer dropped frames. For gesture ownership and phone checks, see
+[touch interactions](touch-interactions.md).
+
+Sources: Emil Kowalski's
+[improve-animations](https://github.com/emilkowalski/skills/blob/5206a950b715e0cabe7043ea0b2304332b91494e/skills/improve-animations/SKILL.md),
+[find-animation-opportunities](https://github.com/emilkowalski/skills/blob/5206a950b715e0cabe7043ea0b2304332b91494e/skills/find-animation-opportunities/SKILL.md),
+[review-animations](https://github.com/emilkowalski/skills/blob/5206a950b715e0cabe7043ea0b2304332b91494e/skills/review-animations/SKILL.md),
+and [animation-performance](https://github.com/emilkowalski/skills/blob/5206a950b715e0cabe7043ea0b2304332b91494e/skills/animation-performance/SKILL.md)
+([MIT notice](../../design-interfaces/references/sources/emil-design-eng/LICENSE)).
+See [Chrome's performance trace guide](https://developer.chrome.com/docs/devtools/performance/reference)
+for interpreting recordings.
 
 ## Evidence and capability inventory
 

@@ -1,5 +1,11 @@
 # Optique, c12, defu, LogTape, and Zod stack
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 ## Use this reference
 
 Load this reference whenever a CLI uses two or more of these at the same
@@ -805,13 +811,13 @@ When reporting verification, separate:
 ## Sources and freshness
 
 - Normative source: `productionized-cli-pattern-guidebook-v1.2.md`, reviewed 2026-07-22.
-- Observed implementation: current Kaiju CLI Optique 1.2.0, c12 two-merger, LogTape resource-threading, and Zod default audit.
+- Observed implementation: historical Kaiju CLI Optique 1.2.0, c12 two-merger, LogTape resource-threading, and Zod default audit.
 - Official Optique 1.2 API docs: <https://jsr.io/@optique/core@1.2.0> and <https://jsr.io/@optique/discover@1.2.0>.
 - Official Zod v4 docs: <https://zod.dev/>.
 - Official c12 source: <https://github.com/unjs/c12>.
 - Official defu source: <https://github.com/unjs/defu>.
 - Official LogTape docs: <https://logtape.org/>.
 
-Freshness status: verified against current Kaiju work and Optique 1.2 API docs
+Historical source scope: Kaiju work and Optique 1.2 API docs were inspected
 on 2026-07-22. Re-check exact package exports and installed lockfile versions
 before copying code into a different repository.

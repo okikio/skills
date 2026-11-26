@@ -1,45 +1,67 @@
 # Repository instructions
 
-Treat `skills/*/SKILL.md` and their references as production agent behavior.
-Do not optimize wording without measuring behavior.
+Treat skills, shared guides, references, handbook procedures and generated
+installation bundles as production agent behavior. Start with [START.md](START.md)
+and [software quality](guides/software-quality.md). Read decision-specific
+originals before editing. Explicit user requirements and repository facts
+control the task; archived examples do not create authority.
 
-- Preserve the portable Agent Skills contract.
-- Never run a broad formatter over Markdown. Preserve existing prose wrapping,
-  spacing, and code-block layout. Make Markdown changes with narrow patches that
-  keep unrelated lines byte-stable.
-  Formatting tables is fine.
-- Use Zod v4 for first-party executable data contracts and infer project-owned
-  data types from schemas. Use Standard Schema when a reusable integration needs
-  validator interoperability. Standard JSON Schema is a separate JSON Schema
-  representation contract.
-- Keep general delivery policy in `deliver-software`; keep Deno-specific
-  contracts in `deno-software`.
-- Treat `skills/deliver-software/references/base.md` as the current cross-project
-  engineering baseline. Newer repository-specific instructions may narrow it;
-  historical handoffs do not silently override it.
-- Prefer `node:test` with `@std/expect` for Deno-first TypeScript package tests
-  unless the target repository deliberately uses another runner.
-- Do not preserve obsolete compatibility by default. A replacement must update
-  current consumers, tests, exports, docs, config, persisted data, and user flows
-  before the obsolete path is removed.
-- Avoid generic architecture nouns in project-owned guidance. Name the specific
-  concept, such as an API entrypoint, validation stage, transaction commit,
-  ownership handoff, version line, or materialization point.
-- Add or update eval cases for every behavioral rule or material reference
-  change. Every shipped `references/*.md` file must be routed from its `SKILL.md`,
-  mapped in `evals/capabilities.json`, grounded in registered sources, and have
-  train, valid-seen, and held-out evaluation coverage.
-- Use strict Zod objects for repository-owned serialized contracts unless a
-  documented external compatibility requirement must preserve unknown keys.
-- Treat SkillOpt as one explicit pipeline: export immutable workspaces, run target
-  and optional judge adapters, build complete aggregate reports, then gate paired
-  baseline/candidate reports. A report must cover the exact exported case/run
-  matrix and preserve model, judge, skill-revision, optimization-unit, and target
-  reference identity.
-- A no-skill SkillOpt baseline omits only the target skill. It must not fabricate a
-  target revision or target size, and target-size comparisons are not applicable
-  against that baseline.
-- Never train on frozen test cases.
-- Never promote SkillOpt output automatically.
-- Separate reference-only freshness updates from behavioral changes.
-- Record checks actually run; never imply unavailable model runs passed.
+## Ownership and portability
+
+- Skills own capability execution. Shared guides own reusable methods and
+  obligations. References supply technical detail. The handbook explains
+  adoption; its playbook sequences procedures and evidence gates.
+- Keep one authored owner for each rule. `guides/software-quality.md` is the
+  common contract, with detail in `references/` and focused guides. Do not
+  restore the retired delivery umbrella or maintain generated copies by hand.
+- Preserve the portable Agent Skills metadata contract and valid relative links.
+  Validate installed regular-file bundles, not only the source checkout.
+  Declare local resource dependencies with Markdown links, images or reference
+  definitions. Raw HTML attributes and paths inside code examples are not
+  dependency declarations.
+- Keep generic behavior as the default. Existing projects choose their runtime,
+  schema library, tools, providers, layout and supported hosts. Optional ecosystem
+  guidance cannot impose a private registry or deployment stack.
+- Verify exact package names, exports and behavior against current public source
+  and the resolved consumer artifact. Source versions do not prove publication.
+- Preserve third-party attribution and licenses. Do not import private research,
+  credentials, personal storage links, incident records or restricted catalogues.
+
+## Engineering and writing
+
+- Keep this tooling in strict Deno TypeScript and ESM. Preserve existing
+  dependencies and tests unless a demonstrated contract requires migration.
+- Use strict Zod objects for this repository's serialized executable contracts
+  and infer project types from schemas. This local choice does not mandate Zod
+  in unrelated consumers. Standard Schema and JSON Schema have distinct roles.
+- Trace callers, imports, exports, generated files, fixtures and documentation
+  before replacing code or a guidance owner. Complete the cutover without
+  obsolete aliases unless compatibility is explicitly required.
+- Explain ownership, invariants, defaults, failures and cleanup in useful TSDoc
+  and internal comments. Keep prose concrete and source-grounded.
+- Never run a broad formatter over Markdown. Make focused semantic patches and
+  preserve unrelated wrapping, spacing and code blocks. Format changed code
+  with the repository's tools and inspect the diff.
+- Group commits by capability or behavior. Keep mechanical formatting separate
+  from functional changes. Record the actual source and checks in review prose.
+
+## Evaluation and delivery
+
+- Add or update task cases for material behavior and reference changes. Each
+  canonical operational document needs an owner in `evals/capabilities.json`,
+  registered source evidence, and train, valid-seen and held-out coverage.
+  Shared documents have one canonical owner; generated bundle copies inherit it.
+- Resource indexes route reading. Licenses, templates and attributed source
+  examples support an operational owner; they do not independently authorize work.
+  Required resources must remain reachable and present in installed bundles.
+- Keep SkillOpt's complete pipeline: immutable export, target and optional judge
+  execution, complete aggregate reports and paired gates. Preserve case/run
+  matrix, model, judge, revision, optimization-unit and reference identity.
+- A no-target baseline omits only the target skill and does not invent its
+  revision or size. Dependency changes must affect installed artifact identity.
+- Never train on frozen cases or promote generated candidates automatically.
+  Migrate retired path/skill bindings without treating held-out results as
+  training evidence. Preserve fixture and evaluator integrity.
+- Run relevant checks, inspect built artifacts and exercise representative
+  installed skills. Report what each check establishes and what did not run.
+  A structural pass, case count or push does not prove model behavior or CI.

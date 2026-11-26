@@ -2,6 +2,7 @@ import { expect } from "@std/expect";
 import { describe, it } from "node:test";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import * as tree from "../src/tree.ts";
 
 /** Repository root used by subprocess-backed SkillOpt fixtures. */
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -21,7 +22,9 @@ async function exists(path: string): Promise<boolean> {
 async function exportWorkspace(
   mode: string,
   reference?: string,
-): Promise<void> {
+  extra: string[] = [],
+  expectedSuccess = true,
+): Promise<Deno.CommandOutput> {
   const referenceArgs = reference === undefined
     ? []
     : ["--reference", reference];
@@ -29,27 +32,33 @@ async function exportWorkspace(
     cwd: root,
     args: [
       "run",
-      "--node-modules-dir=manual",
+      "--node-modules-dir=none",
+      "--config",
+      join(root, "deno.json"),
       "--allow-read",
       "--allow-write",
+      "--allow-env=LOG_TOKENS,LOG_STREAM",
       "scripts/export_skillopt.ts",
       "--skill",
       "build-clis",
       "--mode",
       mode,
       "--with",
-      "deliver-software",
+      "verify-behavior",
       "--with",
       "explore-ecosystems",
       ...referenceArgs,
+      ...extra,
     ],
     stdout: "piped",
     stderr: "piped",
   }).output();
-  expect(
-    output.code,
-    new TextDecoder().decode(output.stderr),
-  ).toBe(0);
+  if (expectedSuccess) {
+    expect(output.code, new TextDecoder().decode(output.stderr)).toBe(0);
+  } else {
+    expect(output.code).not.toBe(0);
+  }
+  return output;
 }
 
 /** Verify one exported workspace through the repository's digest verifier. */
@@ -58,7 +67,9 @@ async function verifyWorkspace(mode: string): Promise<Deno.CommandOutput> {
     cwd: root,
     args: [
       "run",
-      "--node-modules-dir=manual",
+      "--node-modules-dir=none",
+      "--config",
+      join(root, "deno.json"),
       "--allow-read",
       "scripts/verify_skillopt_workspace.ts",
       "--workspace",
@@ -77,28 +88,32 @@ describe("SkillOpt workspace export", () => {
       await exportWorkspace("release");
       expect(await exists(join(target, "optimize", "context.md"))).toBe(false);
       expect(await exists(join(target, "optimize", "initial.md"))).toBe(false);
-      expect(await exists(
-        join(
-          target,
-          "optimize",
-          "candidate",
-          "skills",
-          "build-clis",
-          "references",
-          "config.md",
+      expect(
+        await exists(
+          join(
+            target,
+            "optimize",
+            "candidate",
+            "skills",
+            "build-clis",
+            "references",
+            "config.md",
+          ),
         ),
-      )).toBe(true);
-      expect(await exists(
-        join(
-          target,
-          "optimize",
-          "companions",
-          "skills",
-          "explore-ecosystems",
-          "references",
-          "topology.md",
+      ).toBe(true);
+      expect(
+        await exists(
+          join(
+            target,
+            "optimize",
+            "companions",
+            "skills",
+            "explore-ecosystems",
+            "references",
+            "topology.md",
+          ),
         ),
-      )).toBe(true);
+      ).toBe(true);
 
       const optimize = await Deno.readTextFile(
         join(target, "optimize", "data", "train.jsonl"),
@@ -120,6 +135,9 @@ describe("SkillOpt workspace export", () => {
       expect(workspace.optimizationUnit).toBe("root-router");
       expect(workspace.immutablePaths).toContain(
         "candidate/skills/build-clis/references/config.md",
+      );
+      expect(workspace.immutablePaths).toContain(
+        "candidate/skills/build-clis/references/shared/guides/engineering-standards.md",
       );
 
       const releaseWorkspace = JSON.parse(
@@ -148,6 +166,11 @@ describe("SkillOpt workspace export", () => {
       expect(await Deno.readTextFile(installedTarget)).toMatch(
         /optimization probe/,
       );
+      const mutableVerified = await verifyWorkspace("optimize");
+      expect(
+        mutableVerified.code,
+        new TextDecoder().decode(mutableVerified.stderr),
+      ).toBe(0);
 
       const immutablePath = workspace.immutablePaths.find((path: string) =>
         path.endsWith("references/config.md")
@@ -220,4 +243,84 @@ describe("SkillOpt workspace export", () => {
     }
   });
 
+  it("pins an edited candidate for held-out evaluation and rejects identity or dependency changes", async () => {
+    const target = join(root, ".skillopt", "build-clis");
+    try {
+      await exportWorkspace("optimize");
+      const sourceManifest = join(target, "optimize", "workspace.json");
+      const original = JSON.parse(await Deno.readTextFile(sourceManifest));
+      const selected = join(target, "optimize", original.mutablePaths[0]);
+      await Deno.writeTextFile(
+        selected,
+        await Deno.readTextFile(selected) +
+          "\nCandidate evidence: check the final command output.\n",
+      );
+      const allowed = await verifyWorkspace("optimize");
+      expect(allowed.code, new TextDecoder().decode(allowed.stderr)).toBe(0);
+
+      await exportWorkspace("evaluate", undefined, [
+        "--candidate-workspace",
+        sourceManifest,
+      ]);
+      const evaluated = JSON.parse(
+        await Deno.readTextFile(join(target, "evaluate", "workspace.json")),
+      );
+      expect(evaluated.mutablePaths).toEqual([]);
+      expect(evaluated.skillRevisions["build-clis"]).not.toBe(
+        original.skillRevisions["build-clis"],
+      );
+      const installed = join(target, "evaluate", "candidate/skills/build-clis");
+      expect(evaluated.skillRevisions["build-clis"]).toBe(
+        await tree.getDigest(installed),
+      );
+      expect(await Deno.readTextFile(join(installed, "SKILL.md"))).toContain(
+        "Candidate evidence:",
+      );
+      const verified = await verifyWorkspace("evaluate");
+      expect(verified.code, new TextDecoder().decode(verified.stderr)).toBe(0);
+      expect(await exists(join(target, "evaluate", "data/test-frozen.jsonl")))
+        .toBe(false);
+
+      await Deno.writeTextFile(
+        join(installed, "SKILL.md"),
+        "Unpinned evaluation mutation\n",
+      );
+      expect((await verifyWorkspace("evaluate")).code).not.toBe(0);
+
+      const mismatch = await exportWorkspace(
+        "evaluate",
+        "references/optique.md",
+        ["--candidate-workspace", sourceManifest],
+        false,
+      );
+      expect(new TextDecoder().decode(mismatch.stderr)).toContain(
+        "identity differs",
+      );
+      const evaluationInput = await exportWorkspace("release", undefined, [
+        "--candidate-workspace",
+        join(target, "evaluate", "workspace.json"),
+      ], false);
+      expect(new TextDecoder().decode(evaluationInput.stderr)).toContain(
+        "must use optimize mode",
+      );
+
+      const dependency =
+        "candidate/skills/build-clis/references/shared/guides/engineering-standards.md";
+      await Deno.writeTextFile(
+        join(target, "optimize", dependency),
+        "Changed shared dependency\n",
+      );
+      const rejected = await exportWorkspace("evaluate", undefined, [
+        "--candidate-workspace",
+        sourceManifest,
+      ], false);
+      expect(new TextDecoder().decode(rejected.stderr)).toContain(
+        "immutable content changed",
+      );
+    } finally {
+      await Deno.remove(target, { recursive: true }).catch((error) => {
+        if (!(error instanceof Deno.errors.NotFound)) throw error;
+      });
+    }
+  });
 });

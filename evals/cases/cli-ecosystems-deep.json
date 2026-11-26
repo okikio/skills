@@ -48,7 +48,8 @@
         "precedence"
       ],
       "rationale": "Parser defaults are a recurring source-precedence failure.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-optique-package-version-handoff",
@@ -96,7 +97,8 @@
         "versions"
       ],
       "rationale": "The attached implementation contains a real stable/prerelease split.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-optique-static-registration",
@@ -144,7 +146,8 @@
         "distribution"
       ],
       "rationale": "Source discovery can succeed while compiled commands disappear.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-optique-prompt-automation",
@@ -197,7 +200,8 @@
         "automation"
       ],
       "rationale": "A prompt package does not own the automation policy.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-c12-operation-order",
@@ -252,7 +256,8 @@
         "arrays"
       ],
       "rationale": "Operation composition is the most fragile part of the merge contract.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-c12-atomic-union",
@@ -299,7 +304,8 @@
         "unions"
       ],
       "rationale": "Generic recursive merging corrupts discriminated unions.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-c12-factory-once",
@@ -352,7 +358,8 @@
         "frozen"
       ],
       "rationale": "Static inspection cannot prove dynamic factories execute once.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-c12-provenance",
@@ -407,7 +414,8 @@
         "provenance"
       ],
       "rationale": "Configuration inspection must answer field-specific decisions.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-logtape-result-isolation",
@@ -462,7 +470,8 @@
         "stdout"
       ],
       "rationale": "One transport requires category isolation to preserve composability.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-logtape-structured-redaction",
@@ -514,7 +523,8 @@
         "security"
       ],
       "rationale": "Field redaction cannot inspect opaque serialized values.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-logtape-bootstrap",
@@ -571,7 +581,8 @@
         "frozen"
       ],
       "rationale": "Fallible configuration precedes normal logger setup.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-logtape-artifact-handoff",
@@ -621,7 +632,8 @@
         "artifacts"
       ],
       "rationale": "Sole process output transport does not make a logger the data store.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-unjs-package-selection",
@@ -685,7 +697,8 @@
         "unjs"
       ],
       "rationale": "The ecosystem is valuable only when package ownership remains explicit.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-unjs-overlap-rejection",
@@ -738,7 +751,8 @@
         "safety"
       ],
       "rationale": "Ecosystem accumulation creates conflicting public contracts.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-unjs-recovery-honesty",
@@ -797,7 +811,8 @@
         "frozen"
       ],
       "rationale": "Persistence adapters do not establish exactly-once recovery.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-end-to-end-source-trace",
@@ -862,7 +877,8 @@
         "integration"
       ],
       "rationale": "A public term is incomplete when any ownership arrow is missing.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-unjs-adapter-handoffs-seen",
@@ -917,7 +933,8 @@
         "adapters"
       ],
       "rationale": "A seen case teaches selection without reducing the ecosystem to package-name recall.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-integration-normal-path-seen",
@@ -984,7 +1001,8 @@
         "lifecycle"
       ],
       "rationale": "A seen composition case prevents individually correct references from producing a broken lifecycle.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-five-library-audit",
@@ -1053,7 +1071,8 @@
         "zod"
       ],
       "rationale": "The hardest failures happen at ownership handoffs between otherwise good libraries.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-five-library-stack-train",
@@ -1118,7 +1137,8 @@
         "zod"
       ],
       "rationale": "Agents need the integrated stack map before applying detailed implementation rules.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-five-library-stack-seen",
@@ -1189,7 +1209,8 @@
         "verification"
       ],
       "rationale": "A seen value trace proves the reference is usable, not just conceptually complete.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-five-library-mental-model",
@@ -1272,7 +1293,8 @@
         "zod"
       ],
       "rationale": "The skill must transfer enough structure that another agent can implement safely, not merely recall package names.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-optique-12-deferred-defaults",
@@ -1332,7 +1354,8 @@
         "defaults"
       ],
       "rationale": "Optique 1.2 makes deferred values tempting, but most defaults still belong to schemas.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-c12-two-mergers",
@@ -1408,7 +1431,8 @@
         "testing"
       ],
       "rationale": "The single-merger shortcut breaks loader semantics before application validation can help.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-five-library-benchmark-baseline",
@@ -1475,7 +1499,8 @@
         "mitata"
       ],
       "rationale": "Agents need a baseline measurement vocabulary before reviewing a specific performance claim.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-optique-zod-default-ownership",
@@ -1489,7 +1514,7 @@
       ],
       "requiredReferences": [
         "build-clis/references/defaults-provenance.md",
-        "build-clis/references/testing.md"
+        "build-clis/references/cli-testing.md"
       ],
       "assertions": [
         {
@@ -1541,7 +1566,8 @@
         "provenance"
       ],
       "rationale": "The adapter handoff is where parser-visible metadata is most often mistaken for runtime default ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-provenance-equal-value",
@@ -1610,7 +1636,8 @@
         "optique"
       ],
       "rationale": "Equal values are the simplest counterexample to provenance reconstructed after merging.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-five-library-benchmark-plan",
@@ -1624,7 +1651,7 @@
       ],
       "requiredReferences": [
         "build-clis/references/benchmarking.md",
-        "build-clis/references/testing.md"
+        "build-clis/references/cli-testing.md"
       ],
       "assertions": [
         {
@@ -1687,7 +1714,8 @@
         "provenance"
       ],
       "rationale": "Component throughput and user-visible command latency require different evidence.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-config-verification-oracles",
@@ -1700,7 +1728,7 @@
         "build-clis"
       ],
       "requiredReferences": [
-        "build-clis/references/testing.md",
+        "build-clis/references/cli-testing.md",
         "build-clis/references/defaults-provenance.md",
         "build-clis/references/benchmarking.md"
       ],
@@ -1765,7 +1793,8 @@
         "benchmark"
       ],
       "rationale": "The refactor crosses enough handoffs that no single test layer can establish correctness.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-kaiju-casebook-browser-trace",
@@ -1832,7 +1861,8 @@
         "provenance"
       ],
       "rationale": "The browser command combines nearly every CLI concern and catches generic advice.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-kaiju-casebook-stage-handoffs",
@@ -1900,7 +1930,8 @@
         "redaction"
       ],
       "rationale": "Artifact/log handoff mistakes are high-risk in capture pipelines.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "cli-deep-kaiju-casebook-lifecycle-reality",
@@ -1966,7 +1997,8 @@
         "concurrency"
       ],
       "rationale": "Cancellation and cleanup are easy to overclaim without end-to-end signal tracing.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     }
   ]
 }

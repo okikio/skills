@@ -1,5 +1,14 @@
 # API query contracts and collection endpoints
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution and read the
+service reference for definitions, compilation, and Fetch runtime ownership.
+The rules below apply to the selected implementation, not a required app layout.
+Hono validation examples apply only to a Hono-owned validation path; compiled
+services supply validated `input` and their own rejection contract. Verify each example against the resolved artifact before implementation.
+
+
 Use this reference when an HTTP/API endpoint exposes filtering, sorting, field selection, pagination, counts, search, or graph queries. It owns public syntax and semantic compatibility. Compose with `build-data/references/queries.md` for storage compilation and execution.
 
 ## Contents
@@ -50,7 +59,7 @@ query: filter[status][in]=open,blocked&sort=-created_at&fields=id,status
 
 Do not merge sources by an undocumented precedence such as JSON over query over form. If an endpoint accepts multiple sources, define whether duplicate components conflict, one source wins, or the request is rejected.
 
-The retained finance utilities provide separate query/JSON/form adapters for filters, sorts, fields, and pagination, and a composite factory. Treat those exact function names as repository-local unless their public package exports are confirmed.
+The current `@okikio/query` definition parses the declared request language and can encode its supported wire form. Inspect exported fields/operators and pagination contracts. The application's backend adapter executes the checked data and rejects unsupported semantics; parsing alone proves neither query execution nor authorization.
 
 Parsing and policy are separate:
 
@@ -163,14 +172,14 @@ Define:
 
 - stable sort and tiebreaker;
 - opaque authenticated token policy;
-- TTL and expired status (the retained finance utility maps expiry to 410; confirm this public choice);
+- TTL and the endpoint's documented expired-token status;
 - invalid/tampered/cross-endpoint status;
 - binding to filters, sort, resource, API version, and relevant authority context;
 - next and previous direction semantics;
 - behavior under inserts, deletes, and updates;
 - page size and `limit + 1` continuation detection.
 
-The retained cursor schema contains sort field/value, tiebreaker/value, direction, and created time. Its inspected shape does not include a filter/resource digest. Do not copy it unchanged for a contract where cross-filter replay would be wrong.
+A cursor that contains only sort values, a tiebreaker, direction and creation time does not bind itself to a resource, filter or authorization scope. Include and validate that context when cross-query replay would change the contract.
 
 Offset/page pagination must define maximum offset and concurrent-write instability. It can be appropriate for bounded administration or snapshot-stable results.
 
@@ -282,7 +291,7 @@ Start the actual service, issue encoded requests with `curl` or the repository c
 
 ## Deliberate exclusions
 
-- Do not force the finance query utility, Hono, Zod, Drizzle, or SPARQL library.
+- Do not force one query utility, Hono, Zod, Drizzle, or SPARQL library.
 - Do not advertise operators the selected backend cannot implement consistently.
 - Do not accept and ignore unsupported query parameters.
 - Do not expose raw database fields through wildcard selection.
@@ -293,4 +302,4 @@ Start the actual service, issue encoded requests with `curl` or the repository c
 
 ## Sources and freshness
 
-Grounded in the retained finance `utils/query` implementation and extensive tests, endpoint/validation/response utilities, service-module authoring guides, and PopModern search/SPARQL consumers, reviewed 2026-07-17. Exact finance utility exports are observed private/workspace evidence unless independently published. Cursor, validator, Hono, OpenAPI, and generated-client behavior is version-sensitive and must be tested at installed versions.
+Public utility source: [`query`](https://github.com/okikio/utils/tree/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/query) and [`server/endpoint`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/server/endpoint/mod.ts), inspected at the pinned revision. Source APIs do not prove registry availability. The conceptual contracts in this guide are application design criteria, not additional package exports. Verify wire encoding, cursor context, OpenAPI and generated clients in the consumer's selected version.

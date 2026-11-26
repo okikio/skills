@@ -1,4 +1,4 @@
 interface:
   display_name: "Use Okikio Libraries"
-  short_description: "Use Okikio libraries from verified source."
-  default_prompt: "Use $use-okikio to research and apply the relevant Okikio library or project pattern."
+  short_description: "Integrate standalone libraries from verified source."
+  default_prompt: "Use $use-okikio to verify and integrate the standalone library needed for this task."

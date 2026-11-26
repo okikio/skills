@@ -9,6 +9,7 @@ import {
 import { copyDirectory, walkFiles } from "./files.ts";
 import { prepareFixture } from "./fixture.ts";
 import * as hash from "./hash.ts";
+import { effectivePrompt } from "./interpretation.ts";
 import * as qualitative from "./judge.ts";
 import type { ModelAdapterType } from "./model.ts";
 import * as provider from "./provider.ts";
@@ -245,7 +246,7 @@ async function callTarget(
     kind: "rollout",
     runId: options.runId,
     caseId: options.caseRecord.id,
-    prompt: options.evaluation.prompt,
+    prompt: effectivePrompt(options.evaluation),
     cwd: resources.fixture,
     skillsRoot: resources.skills,
     targetSkill: options.withoutTarget
@@ -352,8 +353,7 @@ async function scoreTarget(
       model: options.judgeModel,
       runId: options.runId,
       caseId: options.caseRecord.id,
-      prompt: options.evaluation.prompt,
-      rubric: options.evaluation.rubric,
+      evaluation: options.evaluation,
       response: targetEvidence.response,
       changedFiles: targetEvidence.changes.changedFiles,
       assertionResults: targetEvidence.assertionResults,
@@ -433,6 +433,18 @@ async function scoreTarget(
   const trace = {
     schemaVersion: 2,
     runId: options.runId,
+    case: {
+      id: options.caseRecord.id,
+      digest: options.caseRecord.digest,
+      interpretation: options.evaluation.interpretation,
+      originalPrompt: options.evaluation.prompt,
+      originalPromptDigest: await hash.text(options.evaluation.prompt),
+      effectivePrompt: effectivePrompt(options.evaluation),
+      effectivePromptDigest: await hash.text(
+        effectivePrompt(options.evaluation),
+      ),
+      originalRubric: options.evaluation.rubric,
+    },
     target: {
       modelId: options.targetModel.id,
       stdout: targetEvidence.call.stdout,

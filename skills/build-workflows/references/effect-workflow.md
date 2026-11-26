@@ -1,5 +1,15 @@
 # Effect and `@effect/workflow`
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 ## Contents
 
 - [Status and evidence limit](#status-and-evidence-limit)
@@ -17,23 +27,18 @@
 
 ## Status and evidence limit
 
-Official Effect material currently describes Workflows as alpha. The uploaded
-repositories pin `effect` 3.21.x and `@effect/workflow` 0.18.x in package
-manifests, while Deno import maps use broad major ranges. Pin an exact tested pair
-before production use and re-check source/API semantics during upgrades.
+The example below is scoped to `@effect/workflow` 0.18.2 and compatible Effect
+3.21.x APIs. The published 0.18.2 manifest declares Effect `^3.21.2` plus RPC,
+Platform and Experimental peer dependencies. This is a versioned example, not a
+claim about the latest release. Resolve an exact compatible set and check it
+again during upgrades.
 
-The uploaded code proves:
-
-- `Workflow.make`, workflow `toLayer`, `WorkflowEngine.layerMemory`, and a
-  `ManagedRuntime` can execute and poll a test workflow;
-- a registration catalog exposes name, version, triggers, and runtime values;
-- an adapter seam can start, poll, interrupt, and resume workflows;
-- an in-memory control-plane path has focused tests.
-
-It does not prove durable production execution. The supplied
-`effect_sql_adapter.ts` returns explicit not-implemented errors for register,
-identity, start, poll, interrupt, and resume. Preserve that honest capability
-status until a restart-tested adapter exists.
+The public artifact exports `Workflow.make`, workflow `toLayer` and
+`WorkflowEngine.layerMemory`. A memory-engine test can establish local execution
+and registration. Durable production execution also needs a persistent adapter,
+committed transitions and restart/recovery evidence. Verify the selected adapter's
+start, poll, interruption and resume behavior; placeholder methods and type
+interfaces do not prove implementation.
 
 ## Core Effect architecture
 
@@ -60,7 +65,8 @@ Layer supplies deterministic fakes. Use `Layer.scoped` and
 
 ## Workflow definition and Layer
 
-The uploaded 0.18.x code uses this shape:
+This composition sketch uses the verified 0.18.2 workflow API. `ImportService`
+and `ImportServiceLive` are application-owned services supplied by the consumer:
 
 ```ts
 import { Workflow, WorkflowEngine } from "@effect/workflow"
@@ -203,7 +209,7 @@ For a durable wait, persist or engine-own:
 Timeout, signal, and cancellation are a race. The winning transition and resume
 publication must be one transaction or repairable by a reconciler.
 
-The uploaded wait router performs:
+A wait router has an atomicity gap if it performs these as independent commits:
 
 ```text
 mark wait timed out
@@ -212,10 +218,10 @@ mark wait timed out
   -> mark execution pending
 ```
 
-These are separate calls. A crash after the first call removes the wait from due
-scans but never enqueues resume work. Treat this as a concrete atomicity gap to
-fix, not a pattern to copy. Prefer a store method that commits the winning wait
-transition, resume queue item, timeline event, and projection together.
+A crash after the first commit can remove the wait from due scans without
+enqueuing resume work. Commit the winning transition, resume queue item, timeline
+event and required projection together, or provide a reconciler that can find
+and repair the partial transition.
 
 ## Typed errors and retry
 
@@ -324,16 +330,10 @@ Until then expose the driver as experimental/unavailable, not production.
 
 ## Sources and freshness
 
-- Current-version source: pinned `@effect/workflow` 0.19.0 npm tarball and the
-  Effect site https://effect.website/ (checked 2026-07-17; current product
-  material labels Workflows alpha).
-- Exact example source: `new-finance-app(1).zip:utils/workflows` and
-  `better-auth.zip:.agents/research/inngest_effect_architecture_handoff.md`,
-  verified 2026-07-17 as observed tests plus research/design evidence.
-- Exact exported values and options including `Workflow.make`, `toLayer`,
-  `WorkflowEngine.layerMemory`, `Activity`, `DurableClock`, and `DurableDeferred`
-  are version-sensitive. Uploaded manifests pin `@effect/workflow` `^0.18.2` and
-  `effect` `^3.21.3`; the Deno import map's broad `@effect/workflow@0` range must
-  not be treated as a reproducible production pin.
-- The uploaded `runtime/effect_sql_adapter.ts` is explicit counterevidence: its
-  production operations are not implemented.
+- [`@effect/workflow` 0.18.2 metadata and published artifact](https://registry.npmjs.org/@effect/workflow/0.18.2), inspected 2026-11-26. `src/Workflow.ts` and `src/WorkflowEngine.ts` establish the example's make, layer and memory-engine surfaces.
+- [Effect workflow source](https://github.com/Effect-TS/effect/tree/main/packages/workflow) and [official documentation](https://effect.website/) for current development; resolve the consumer's actual version before adopting changes.
+
+`Workflow.make`, `toLayer`, `WorkflowEngine.layerMemory`, Activity, DurableClock
+and DurableDeferred are version-sensitive. This guide does not establish that an
+application SQL adapter exists or that production recovery has been tested.
+The application services and transition protocols are design responsibilities.

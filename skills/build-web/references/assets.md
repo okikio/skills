@@ -1,5 +1,11 @@
 # Renderer-owned icons and fonts
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 ## Contents
 
 - Ownership rules

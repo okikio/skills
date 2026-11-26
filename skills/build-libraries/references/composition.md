@@ -182,7 +182,7 @@ The CLI may be one first-party adapter:
 ```text
 Optique parser + c12 resolution + LogTape configuration
   -> AnalyzeDomainsRequest
-  -> @kaiju/analysis
+  -> @example/analysis
   -> result/failure/events
   -> CLI renderer and exit mapping
 ```

@@ -34,7 +34,7 @@ Classify every artifact before choosing its format:
 
 Do not let a convenient staging file silently become the source of truth. Record which upstream object, transaction, or retrieval produced it and whether it is replaceable.
 
-The retained PopModern code demonstrates both the useful intent and the incomplete implementation. It writes raw MediaWiki pages, daily staging JSONL, Parquet, RDF, Typesense documents, profiles, run-state YAML, and metrics. However, many writes are best-effort, several exceptions are swallowed, daily JSONL is appended across runs, and the run state contains counts rather than committed artifact identities. Treat that code as counterexample evidence for why a manifest is necessary, not as a production commit protocol to copy.
+A pipeline may write raw captures, staging JSONL, Parquet, RDF, search documents, profiles and run state. If these writes are independent, a later failure can leave a partial output set. A manifest must identify which outputs committed; a count or a daily append-only filename cannot establish that relationship.
 
 ## Artifact identity and directory layout
 
@@ -95,7 +95,7 @@ Use an envelope when provenance or multiple record types must travel with each i
 {"schema":"mediawiki.toy.normalized","version":2,"record_id":"tfwiki:123:456","source":{"page_id":123,"revision_id":456},"data":{"name":"Example"}}
 ```
 
-Do not infer a production table schema by scanning the first thousand JSONL lines. The retained PopModern `pg_loader.py` does exactly that, flattens top-level keys, stringifies through CSV, skips invalid JSON, and interpolates table and column identifiers. Its own docstring says it is unsuitable for nested production structures. A production loader requires an explicit schema, safe identifier ownership, typed conversion, a rejected-record channel, and a count/hash reconciliation.
+Do not infer a production table schema from the first sample of JSONL records. Later records can contain different fields, types or nested values. Use an explicit schema, code-owned identifiers, typed conversion, a rejected-record channel and count/hash reconciliation. Never hide rejected JSON or interpolate untrusted table and column names.
 
 ## Parquet contracts
 
@@ -113,7 +113,7 @@ Parquet is useful for typed columnar batches, analytical staging, and interopera
 - field-add, field-remove, rename, widening, and incompatible-change policy;
 - empty artifact behavior and whether an empty schema is valid.
 
-The retained `write_records_to_parquet()` materializes `list(records)` and derives a table from the resulting Python objects. Its comment correctly warns that large streams need chunking. Do not call that helper bounded merely because the surrounding pipeline is iterative. Use a `ParquetWriter` or equivalent and flush bounded record batches:
+A writer that calls `list(records)` materializes the whole input even when its caller passes an iterator. Use an explicitly bounded writer, such as `ParquetWriter`, and flush record batches within the chosen memory budget:
 
 ```py
 writer = pq.ParquetWriter(temp_path, declared_schema, compression="zstd")
@@ -305,4 +305,4 @@ Verification is incomplete until an interruption test proves that no final manif
 
 ## Sources and freshness
 
-Grounded in the retained PopModern `DATA_PIPELINE.md`, `infra/mediawiki_ingest/etl_runner.py`, `infra/importer/utils/{parquet.py,pg_loader.py,profiling.py,state.py}`, the general importer and its JSONL/N-Triples sinks, reviewed 2026-07-17. The codebase is observational and includes acknowledged prototypes; its swallowed errors, materialized Parquet writes, inferred PostgreSQL loader, and non-transactional run state are counterexamples, not endorsed APIs. Format and storage-provider behavior must be rechecked against the versions installed by the consumer.
+Primary format references: [Apache Parquet](https://parquet.apache.org/docs/) and [PyArrow ParquetWriter](https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetWriter.html). Artifact identity, publication and recovery are application design obligations. Confirm the actual writer and storage provider's atomicity, consistency and durability contract at the installed version, then test interruption and reconciliation.

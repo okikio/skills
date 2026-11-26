@@ -1,5 +1,15 @@
 # Storage ownership and authority
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 Use this reference before introducing, removing, or integrating a database, search engine, graph store, cache, artifact format, or queue. The goal is not to assign one fashionable product per workload. The goal is to name the authority, guarantees, failure path, recovery path, and operational owner for every fact.
 
 ## Contents
@@ -33,7 +43,7 @@ manifests and lockfiles
   -> production tasks and health checks
 ```
 
-A README label is a discovery lead, not operational proof. The retained PopModern repository contains active QLever and Typesense infrastructure, PostgreSQL/Supabase migrations, ClickHouse scaffolding, older graph/export artifacts, and documentation from different phases. Determine which components actually start, receive writes, and serve reads.
+A README label is a discovery lead. A repository can contain current deployment files, older migrations, experimental engines and documentation from different phases. Trace startup, write and read paths before assigning operational authority to any component.
 
 For each fact/domain, record:
 
@@ -149,7 +159,7 @@ Tenant authority belongs in server-controlled policy and the authoritative schem
 - propagate tenant moves and membership revocations explicitly;
 - inventory every projection and artifact affected by deletion/export requests.
 
-The retained finance schema uses organization identifiers and composite keys across `auth`, `finance`, and `workflows`. That is useful observed design evidence, but it does not prove every query enforces organization policy. Inspect query call sites and request authorization separately.
+A schema can enforce organization-scoped relationships with composite keys. It cannot prove every query enforces the caller's organization policy. Inspect query call sites and request authorization separately; use the consuming application's domain names.
 
 ## Lifecycle and resource ownership
 
@@ -163,7 +173,7 @@ For every runtime client, identify:
 - cancellation of in-flight requests;
 - test replacement/fake interface.
 
-The retained finance `createDatabase()` creates a `postgres.js` client and returns only the Drizzle wrapper. That shape can obscure `client.end()` from the composition root. A production design can return `{ db, client, close }`, accept an externally owned client, or otherwise make shutdown reachable. Do not claim graceful shutdown from a wrapper type alone.
+A database factory that returns only a query wrapper can hide the driver's close operation. Expose a disposable owner, an explicit close handle, or an injected borrowed client. Test shutdown at the composition root; a wrapper type alone does not establish graceful cleanup.
 
 Global logging or environment reads are separate owners. Database construction must not silently configure the application's logger or require environment access at import time. Preserve the consumer's selected owners.
 
@@ -239,4 +249,4 @@ Apply migrations to an empty disposable database and upgrade from a representati
 
 ## Sources and freshness
 
-Grounded in the retained new/old finance database package, generated Drizzle migration and cross-schema finance/workflow schemas, finance query utilities, PopModern data pipeline, QLever/Typesense/ClickHouse infrastructure, and projection code, reviewed 2026-07-17. The finance and PopModern repositories contain current, legacy, and prototype paths; use them to identify real contracts and counterexamples, not as proof of the consumer's deployment. Recheck database, engine, driver, and adapter guarantees at installed versions.
+Use the consumer's active deployment, migrations, startup and query paths to establish authority. Public utility storage contracts are available in [`storage`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/storage/mod.ts); a focused store adapter does not supply an application-wide database policy. Review the selected database or engine's official transaction and recovery documentation at the deployed version. The ownership tables are design criteria, not deployment evidence.

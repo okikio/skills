@@ -1,5 +1,11 @@
 # Astro Icon and Unplugin Icons
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 ## Contents
 
 - Ownership decision
@@ -214,6 +220,6 @@ Also:
 ## Sources and freshness
 
 - Primary: [Astro Icon documentation](https://www.astroicon.dev/) and [Unplugin Icons repository/documentation](https://github.com/unplugin/unplugin-icons), verified 2026-07-17.
-- Attachments: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `thunderstrike-blog(4).zip`, and `new-finance-app(1).zip`, inspected 2026-07-17 for actual configs and component imports.
+- Attachments: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `thunderstrike-blog(4).zip`, and a product application archive, inspected 2026-07-17 for actual configs and component imports.
 
 Compiler names, virtual-module types, custom loaders, and Astro integration options are version-sensitive. Verify the target lockfile and generated types rather than extrapolating from one attachment.

@@ -5,6 +5,39 @@ description: Design, implement, refactor, review, benchmark, package, or verify 
 
 # Build libraries
 
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
 A library is a programming model, not code moved into a package directory. Design
 from concrete consumer call sites, domain values, workload shape, resource
 ownership, and selective adoption. Keep common use cases deep and convenient
@@ -12,7 +45,7 @@ while preserving independently useful lower-level capabilities.
 
 ## Composition contract
 
-`deliver-software` owns request authority, repository-wide implementation,
+the shared quality contract owns request authority, repository-wide implementation,
 cleanup, and the final verdict. `explore-ecosystems` owns dependency topology and
 source evidence. `build-devtools` owns build automation, generated artifacts,
 release mechanics, and toolchain parity. `build-clis` owns command language,
@@ -71,7 +104,7 @@ file that looks tree-shakable is not proof that the distributed package shakes.
 
 1. Start from concrete use cases and desired consumer call sites. Do not extract
    the current application's execution sequence as the public architecture.
-2. Put generic programming models and execution mechanics in `utils/`. Put concrete domain capabilities in focused packages. Reusability alone does not make something a utility. Avoid `shared/`, `common/`, `misc/`, and `helpers/` dumping grounds.
+2. Place generic programming models and execution mechanics with the repository's utility owner (often `utils/` or a published utility workspace). Put concrete domain capabilities in focused packages. Reusability alone does not make something a utility. Avoid `shared/`, `common/`, `misc/`, and `helpers/` dumping grounds.
 3. Organize modules around domain knowledge and design decisions likely to
    change, not generic `Runtime`, `Context`, `Stage`, or `Handler` machinery.
 4. Provide a deep common-case facade and independently useful lower-level
@@ -154,3 +187,17 @@ and buffering remain bounded; public results and failures retain their machine
 contracts; package exports and declarations match; clean consumers pass; and
 performance or recovery claims have executable evidence. Report blocked checks
 separately from failures and never infer artifact behavior from source alone.
+
+## Detailed guides
+
+- [library-first-architecture-guidebook.md](../../guides/library-first-architecture-guidebook.md): For deep consumer-first composition, data shape, ownership, selective adoption, or recovery design.
+- [engineering-standards.md](../../guides/engineering-standards.md): For detailed engineering conventions when more depth is needed.
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.
+
+## Project procedures
+
+When the project adopts this playbook, use its procedure and evidence gates: [Task prompts](../../handbook/tasks/README.md).

@@ -44,7 +44,7 @@ Define the public contract with `exports`:
 
 ```json
 {
-  "name": "@kaiju/analysis",
+  "name": "@example/analysis",
   "type": "module",
   "exports": {
     ".": {

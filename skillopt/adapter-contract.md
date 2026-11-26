@@ -114,8 +114,20 @@ The adapter writes one `RolloutResponseSchema` document:
 
 Token counts are optional. Omit data the provider does not expose rather than
 fabricating it. `activatedSkills` can contain only supplied skills.
-`referencesRead` uses `<skill>/references/<path>.md`; the repository verifies
-that every reported path names a real file in the disposable installed tree.
+`referencesRead` uses `<skill>/<document>.md`, relative to the installed skill
+directory. Examples include `build-clis/references/config.md`,
+`build-clis/references/shared/guides/engineering-standards.md`, and
+`shadcn/cli.md`. Report the installed path, not its authored collection path.
+The root `SKILL.md` belongs to activation telemetry and is not a supporting
+reference. The repository checks that every reported reference is a real
+ordinary file under an installed skill. Traversal, symbolic links, missing files
+and references belonging to an uninstalled skill fail telemetry validation.
+
+Every supplied skill includes its shared document dependencies as regular files.
+An adapter can copy that individual directory without the collection's root
+`guides/`, `references/` or `handbook/` folders. Companion source links do not
+authorize the adapter to install more skills. Expose exactly the skills listed
+in the request so the no-target baseline remains reproducible.
 
 ## Qualitative judge request
 

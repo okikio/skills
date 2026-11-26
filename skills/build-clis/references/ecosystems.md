@@ -64,7 +64,7 @@ Schema is a validator-neutral interoperability protocol. Standard JSON Schema is
 another representation contract. Do not install multiple validators without an
 interop or migration reason.
 
-For Okikio/Kaiju-style project data, current convention is Zod `*Schema` plus
+For a TypeScript project that selects Zod, this collection defaults to `*Schema` plus
 schema-derived `*Type` when Zod is the selected project owner.
 
 ## Logging and terminal output

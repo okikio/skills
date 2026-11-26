@@ -1,5 +1,11 @@
 # Astro site architecture and runtime manual
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference for Astro routes, layouts, content, endpoints, middleware, adapters, islands, view transitions, images, fonts, and generated documents. Verify the installed Astro major and integration versions before applying configuration: several uploaded projects use Astro 6 or 7 and experimental options.
 
 ## Contents
@@ -67,7 +73,7 @@ export const prerender = true;
 <MarketingHome />
 ```
 
-The Kaiju marketing project uses server output but prerenders its homepage. The Kaiju docs app uses static output and generates API reference routes. The finance auth pages use `prerender = false` because server capability/session data is request-time.
+The Kaiju marketing project uses server output but prerenders its homepage. The Kaiju docs app uses static output and generates API reference routes. A hybrid application's auth pages use `prerender = false` because server capability/session data is request-time.
 
 Choose the adapter from the deployment runtime and features. Verify environment access, streaming, image service, sessions, server islands, headers, filesystem assumptions, and startup behavior. An auto-adapter reduces configuration only if its detection result and production behavior are tested.
 
@@ -150,7 +156,7 @@ request
   -> route
 ```
 
-The finance upload classifies `public`, `auth`, `auth-required`, and `app` routes. That can prevent duplicated pathname logic, but the classification is security-sensitive. Test every prefix, catch-all, trailing slash, API route, static asset, and new route.
+One reviewed application classifies `public`, `auth`, `auth-required`, and `app` routes. That can prevent duplicated pathname logic, but the classification is security-sensitive. Test every prefix, catch-all, trailing slash, API route, static asset, and new route.
 
 Never let public be the accidental fallback for an unrecognized authenticated route. Prefer route metadata or a test that inventories every route when the framework exposes it.
 
@@ -268,5 +274,5 @@ Review this ownership table:
 - Astro directives: https://docs.astro.build/en/reference/directives-reference/ (reviewed 2026-07-17).
 - Astro server islands: https://docs.astro.build/en/guides/server-islands/ (reviewed 2026-07-17).
 - Astro view transitions: https://docs.astro.build/en/guides/view-transitions/ (reviewed 2026-07-17).
-- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, `thunderstrike-blog(4).zip`.
+- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, a product application archive, `thunderstrike-blog(4).zip`.
 - Astro 6/7, auto-adapters, Emdash, and experimental config are version-sensitive. Inspect installed source/docs before implementing.

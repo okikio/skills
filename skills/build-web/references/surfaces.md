@@ -1,5 +1,11 @@
 # Web surface classification and ownership
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use this reference before choosing a framework, renderer, hydration directive, state library, or deployment adapter. The repository name and dependency list are not enough. Classify each reachable route and subsystem from runtime evidence.
 
 ## Contents
@@ -123,9 +129,9 @@ product frontend
   -> URL/query/local state
 ```
 
-### Finance application
+### Hybrid application with server auth
 
-The finance app configures Astro server output and marks auth pages `prerender = false`. Server code derives enabled auth capabilities and passes only client-safe provider identifiers into React form islands. Middleware classifies public, auth, auth-required, and app routes before applying session and cache policy.
+A hybrid application configures Astro server output and marks auth pages `prerender = false`. Server code derives enabled auth capabilities and passes only client-safe provider identifiers into React form islands. Middleware classifies public, auth, auth-required, and app routes before applying session and cache policy.
 
 The architecture is not “Astro versus React.” Astro owns request routing, layouts, middleware, response headers, and document output; React owns the form interaction subtree.
 
@@ -197,7 +203,7 @@ Verify classification with evidence, not a prose review:
 
 ## Sources and freshness
 
-- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, `old-finance-app(1).zip`, and `thunderstrike-blog(4).zip`.
+- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, two archives of one product application, and `thunderstrike-blog(4).zip`.
 - Astro on-demand rendering: https://docs.astro.build/en/guides/on-demand-rendering/ (reviewed 2026-07-17).
 - Astro server islands: https://docs.astro.build/en/guides/server-islands/ (reviewed 2026-07-17).
 - Treat deployment adapters, experimental Astro options, and application-local route conventions as version-sensitive. Verify the installed manifest and adapter documentation before copying configuration.

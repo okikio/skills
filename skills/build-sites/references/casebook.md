@@ -1,5 +1,11 @@
 # Site evidence casebook
 
+Historical project examples illustrate specific contracts. They do not require
+private source access, select this project's stack, or establish current upstream
+APIs. Use the active consumer, public primary sources and actual checks for a
+new adoption.
+
+
 Use these cases as reasoning patterns, not templates. Each case separates observed active architecture, useful pattern, counterexample, unresolved claim, and verification.
 
 ## Contents
@@ -7,7 +13,7 @@ Use these cases as reasoning patterns, not templates. Each case separates observ
 - How to use the casebook
 - Kaiju marketing site
 - Kaiju documentation site
-- Finance hybrid site/application
+- Hybrid site and application with server auth
 - ThunderStrike runtime CMS site
 - Solid motion experiment
 - Cross-case decisions
@@ -104,7 +110,7 @@ For browser “try it,” the docs origin, service origin, cookie scope, trusted
 - run allowed and rejected credentialed CORS from the docs origin;
 - confirm examples/logs contain no credentials.
 
-## Finance hybrid site/application
+## Hybrid site and application with server auth
 
 ### Observed active architecture
 
@@ -114,7 +120,7 @@ For browser “try it,” the docs origin, service origin, cookie scope, trusted
 - TanStack Form owns local field state/validation timing; Better Auth owns auth requests/session.
 - middleware derives route intent and cache/security headers.
 - Astro layouts own document and shell composition; slots provide route-specific regions.
-- URL helper functions preserve/removes query values for server-rendered finance views.
+- URL helper functions preserve/removes query values for server-rendered views.
 - richer data-grid examples use TanStack Table plus TanStack Virtual.
 
 ### Useful decisions
@@ -231,5 +237,5 @@ The case teaches:
 
 ## Sources and freshness
 
-- `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, `old-finance-app(1).zip`, `thunderstrike-blog(4).zip`, and `solid-motion-experiments.zip`, reviewed 2026-07-17.
+- `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, two archives of one product application, `thunderstrike-blog(4).zip`, and `solid-motion-experiments.zip`, reviewed 2026-07-17.
 - These cases preserve observed ownership and failure lessons. Package APIs, versions, and experimental configs must be reverified in the target repository.

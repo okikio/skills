@@ -93,6 +93,17 @@ For reusable libraries, isolate runtime-specific file/process logic behind
 explicit adapters/subpaths rather than scattering `if (Deno)`/`if (process)`
 through domain logic.
 
+## Runtime imports are not a portability repair
+
+An explicit `node:process` import can satisfy a Deno lint preference while still
+breaking a browser-shared import graph. Review static Node/builtin imports and
+ambient Node/Deno globals together. Prefer an existing utility owner; isolate
+necessary host access at the selected runtime adapter. A guarded lazy lookup
+avoids an absent-global access but must preserve permissions and missing-runtime
+behavior. `process.getBuiltinModule` is version/capability dependent; a dynamic
+`import("node:fs")` may still be resolved by a bundler. Verify the distributed
+entrypoint rather than assuming either spelling proves compatibility.
+
 ## One source across runtimes
 
 When the goal is cross-runtime support, prefer one core TypeScript
