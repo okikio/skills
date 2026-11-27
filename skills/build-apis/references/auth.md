@@ -1,5 +1,14 @@
 # Authentication, organization policy, and Better Auth
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution and read the
+service reference for definitions, compilation, and Fetch runtime ownership.
+The rules below apply to the selected implementation, not a required app layout.
+Hono validation examples apply only to a Hono-owned validation path; compiled
+services supply validated `input` and their own rejection contract. Verify each example against the resolved artifact before implementation.
+
+
 ## Contents
 
 - [Separate identity from authorization](#separate-identity-from-authorization)
@@ -230,8 +239,4 @@ Test:
 
 - Better Auth official documentation: https://www.better-auth.com/docs
   (primary source, checked 2026-07-17; plugin and framework APIs are version-sensitive).
-- Attachment, verified 2026-07-17: `evidence/app/better-auth/utils/auth/` and
-  `utils/middleware/auth.ts` (observed integration, not the upstream Better Auth monorepo).
-- Attachment, verified 2026-07-17: `evidence/app/new-finance/docs/intent-doc.md`
-  and frontend access middleware (normative ownership and counterexample evidence;
-  frontend guards are not server authorization proof).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/authz/mod.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

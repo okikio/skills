@@ -6,24 +6,67 @@ deterministic assertions, qualitative judging, aggregate reports, and candidate
 gating. Model hosts connect through the provider-neutral protocol in
 [`adapter-contract.md`](./adapter-contract.md).
 
+## Authored guidance and installed skills
+
+The collection keeps one authored copy of each shared guide, reference and
+handbook document. `deno task bundle --out .dist/skills` builds independent
+skill folders from those sources. Add `--skill build-clis` to build one skill,
+or `--ref <git-ref>` to pin optional companion links to a branch or commit.
+
+`skillopt:export` uses the same materializer. Shared files appear below
+`references/shared/` inside each installed skill. Source-relative Markdown
+links are rewritten to those installed locations. Code examples stay literal.
+Links to other skills become public source URLs with named optional companions;
+they do not install another skill. Use `--with` when a benchmark requires a
+companion to be installed.
+
+Exported cases must fit that explicit installation. Every positive
+`expectedSkills` entry and every skill prefix in `requiredReferences` must be present,
+whether the case names the target directly or is a composition case. Composition
+cases also require their forbidden skills to be installed so the routing choice
+can be observed. A primary case may forbid an absent skill. Add the required
+companions with `--with` to include cases that depend on them.
+
+After this selection, both root and reference optimization require train and
+valid-seen cases. Evaluation requires at least one eligible held-out case;
+release requires at least one eligible frozen case. An empty selection fails
+before replacing the previous workspace. A paired `--without-target` rollout
+uses the same exported cases and omits the target only at execution time.
+
+Each generated `bundle.json` records the canonical source path, source digest
+and installed digest for every file. Workspace `skillRevisions` hash the complete
+generated skill, including this manifest. A change to a shared dependency
+therefore changes the revision of every bundle that includes it. The source
+checkout is not needed at rollout time.
+
 ## Optimization flow
 
 1. Run `deno task skillopt:export --skill deno-software --mode optimize`.
    Add immutable companions with repeated `--with` flags.
 2. For an individual-reference pass, add exactly one path such as
-   `--reference references/optique.md`. The root router and every other
-   reference remain immutable.
+   `--reference references/optique.md` for `build-clis`,
+   `--reference references/shared/guides/engineering-standards.md` when that
+   guide has cases for the selected skill, or `--reference cli.md` for `shadcn`.
+   The path is relative to the installed skill. The root router and every other
+   file remain immutable.
 3. Install Microsoft SkillOpt in an isolated Python environment from a pinned
    release.
 4. Train only with train and valid-seen data.
 5. Export the best candidate under `.skillopt/<skill>/optimize/candidate/`.
 6. Run `deno task skillopt:verify --workspace
    .skillopt/<skill>/optimize/workspace.json` after every optimizer process.
-   Reject a candidate if immutable skill content, skill-tree revisions, or
-   exported case data no longer match the manifest.
-7. Export a held-out workspace with `--mode evaluate`. It contains
-   valid-unseen, transfer, and adversarial cases but never frozen cases.
+   The one declared mutable file may change. Immutable dependencies, companion
+   revisions and exported case data must still match. The original target
+   revision remains provenance for that optimization input.
+7. Export the edited candidate with `--mode evaluate --candidate-workspace
+   .skillopt/<skill>/optimize/workspace.json`. Repeat the same `--skill`,
+   `--reference` and `--with` choices used by the optimize export. This command
+   verifies the input, copies its pinned dependencies, checks installed links
+   and records the candidate's actual bytes as a new immutable revision.
+   The held-out export contains valid-unseen, transfer and adversarial cases.
 8. Roll out the baseline and candidate over the **same exact case/run matrix**.
+   Retain their workspaces separately before exporting the next variant into
+   the default output directory.
    Qualitative cases require an explicit `--judge` adapter. Use
    `--without-target` for a real no-skill baseline instead of hiding the target
    from telemetry after it was installed.
@@ -35,8 +78,11 @@ gating. Model hosts connect through the provider-neutral protocol in
 10. Use `skillopt:gate` on paired baseline/candidate reports. A benchmark with
     provider, judge, telemetry, or integrity-invalid runs is not eligible for
     promotion even if its average model score improved.
-11. Create the frozen release workspace only with `--mode release`. Never expose
-    it to optimizer prompts, candidate reflection, or failure reports.
+11. Create the frozen release workspace with `--mode release` and the same
+    `--candidate-workspace` input used for evaluation. Candidate selection accepts
+    only an optimize workspace and checks that mode before reading its case data.
+    Keep the frozen export out of optimizer prompts, candidate reflection and
+    training failure reports.
 12. Review and port accepted edits manually with their supporting eval changes.
 
 ## Rollout execution
@@ -165,9 +211,9 @@ listed by `mutablePaths`. Protected material includes frontmatter, security
 rules, source citations, frozen-test isolation, cross-skill ownership, and the
 rule against claiming checks that did not run.
 
-The exporter preserves the target and companion skill directory trees. It does
-not concatenate every reference into one context file because that defeats
-selective loading and makes reference efficiency impossible to measure. Only
+The exporter materializes the target and each explicitly selected companion as
+separate, self-contained directories. References remain separate files for
+selective loading and reference-efficiency measurement. Only
 the target skill's `SKILL.md` is mutable during a root-router optimization pass.
 A reference pass makes exactly one selected reference mutable. Every other
 candidate file and all companion paths remain immutable. Evaluate and release
@@ -182,3 +228,15 @@ outside the disposable fixture and skill installation roots.
 Run `deno task skillopt:matrix` before release to prove that every registered
 capability reference, root router, and frozen composition topology can be
 exported and that every resulting workspace passes the integrity verifier.
+The matrix runs at most four skill lanes at once, keeps each skill's exports
+sequential and finishes the reference, root and frozen-composition phases in
+order. Each frozen composition topology is exported once per distinct positively
+expected target, retaining the other topology members as companions. This checks
+both positive orientations when cases share an installation but route differently.
+
+Source validation follows real Markdown links from each entrypoint, including
+resource indexes. Every operational source needs a capability owner with
+source-grounded train, seen and held-out cases. Generated shared copies inherit
+their single source owner's coverage; they do not create duplicate capabilities.
+Vendored rule examples, templates, assets and source snapshots remain supporting
+material. A broken required local link or symbolic source fails the build.

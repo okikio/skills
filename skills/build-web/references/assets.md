@@ -1,5 +1,12 @@
 # Renderer-owned icons and fonts
 
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
+
+
 ## Contents
 
 - Ownership rules
@@ -81,6 +88,6 @@ Run the production server/client build, inspect built HTML/CSS, trace network fo
 ## Sources and freshness
 
 - Primary: [Astro Icon](https://www.astroicon.dev/), [Unplugin Icons](https://github.com/unplugin/unplugin-icons), [Astro Fonts](https://docs.astro.build/en/guides/fonts/), and [Fontsource](https://fontsource.org/docs/). Unplugin Icons was rechecked 2026-08-19 for on-demand imports, Vite/Rollup/Webpack/Nuxt/Rspack adapters, React/Solid compilers, SSR/SSG, custom collections, auto import, and TypeScript support.
-- Attachments: `kaiju-site-scope(17).zip/apps/frontend`, `kaiju-site-scope(17).zip/apps/docs`, and `kaiju-website(6).zip`, inspected 2026-07-17 for cross-renderer asset ownership.
+- Historical source scope: application, documentation, and marketing-site reviews from 2026-07-17, adapted into anonymized asset-ownership examples.
 
 Renderer compilers, Astro APIs, and generated virtual modules are version-sensitive. This reference defines ownership; exact imports must be verified against the target framework and lockfile.

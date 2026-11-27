@@ -114,7 +114,9 @@ async function runGate(
     cwd: root,
     args: [
       "run",
-      "--node-modules-dir=manual",
+      "--node-modules-dir=none",
+      "--config",
+      join(root, "deno.json"),
       "--allow-read",
       "scripts/gate_skillopt.ts",
       "--baseline",
@@ -129,7 +131,10 @@ async function runGate(
 
 describe("SkillOpt aggregate gate", () => {
   it("rejects a task regression despite unseen improvement", async () => {
-    const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+    const directory = await Deno.makeTempDir({
+      dir: root,
+      prefix: ".gate-test-",
+    });
     try {
       const output = await runGate(
         directory,
@@ -149,7 +154,10 @@ describe("SkillOpt aggregate gate", () => {
   });
 
   it("accepts a paired non-regressing strict improvement", async () => {
-    const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+    const directory = await Deno.makeTempDir({
+      dir: root,
+      prefix: ".gate-test-",
+    });
     try {
       const output = await runGate(
         directory,
@@ -167,7 +175,10 @@ describe("SkillOpt aggregate gate", () => {
   });
 
   it("rejects reports built for different optimization targets", async () => {
-    const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+    const directory = await Deno.makeTempDir({
+      dir: root,
+      prefix: ".gate-test-",
+    });
     try {
       const baseline = report({
         optimizationUnit: "reference",
@@ -179,42 +190,57 @@ describe("SkillOpt aggregate gate", () => {
       });
       const output = await runGate(directory, candidate, baseline);
       expect(output.code).not.toBe(0);
-      expect(new TextDecoder().decode(output.stderr)).toMatch(/targetReference/);
+      expect(new TextDecoder().decode(output.stderr)).toMatch(
+        /targetReference/,
+      );
     } finally {
       await Deno.remove(directory, { recursive: true });
     }
   });
 
   it("rejects reports graded by different judge versions", async () => {
-    const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+    const directory = await Deno.makeTempDir({
+      dir: root,
+      prefix: ".gate-test-",
+    });
     try {
       const output = await runGate(
         directory,
         candidateReport({ judgeModelVersion: "2" }),
       );
       expect(output.code).not.toBe(0);
-      expect(new TextDecoder().decode(output.stderr)).toMatch(/judgeModelVersion/);
+      expect(new TextDecoder().decode(output.stderr)).toMatch(
+        /judgeModelVersion/,
+      );
     } finally {
       await Deno.remove(directory, { recursive: true });
     }
   });
 
   it("rejects self-labelled variant comparisons", async () => {
-    const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+    const directory = await Deno.makeTempDir({
+      dir: root,
+      prefix: ".gate-test-",
+    });
     try {
       const output = await runGate(
         directory,
         candidateReport({ variantId: "baseline" }),
       );
       expect(output.code).not.toBe(0);
-      expect(new TextDecoder().decode(output.stderr)).toMatch(/distinct variantId/);
+      expect(new TextDecoder().decode(output.stderr)).toMatch(
+        /distinct variantId/,
+      );
     } finally {
       await Deno.remove(directory, { recursive: true });
     }
   });
 
   it("accepts a no-skill baseline without pretending skill size is comparable", async () => {
-    const directory = await Deno.makeTempDir({ dir: root, prefix: ".gate-test-" });
+    const directory = await Deno.makeTempDir({
+      dir: root,
+      prefix: ".gate-test-",
+    });
     try {
       const baseline = report({
         targetSkillRevision: null,

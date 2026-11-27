@@ -1,17 +1,55 @@
 ---
 name: build-sites
-description: Design, implement, migrate, review, diagnose, or verify content-first websites, marketing sites, documentation, blogs, feeds, and CMS-backed publishing. Use for Astro routes, layouts, content collections, live CMS adapters, content migrations, islands, SEO, structured data, feeds, redirects, fonts, icons, deployment adapters, and static or server rendering. Do not use as the primary skill for a stateful product application with substantial URL, query-cache, session, and local interaction state.
+description: Design, implement, migrate, review, diagnose, or verify content-first websites, marketing sites, documentation, blogs, feeds, and CMS-backed publishing. Use for Astro routes, layouts, content collections, live CMS adapters, content migrations, islands, SEO, structured data, feeds, redirects, fonts, icons, deployment adapters, and static or server rendering. Do not use as the primary skill for a stateful product application with substantial URL, query-cache, session, and local interaction state. Compose with design-interfaces when visual hierarchy, layout, or polish changes.
 ---
 
 # Build content-first sites
+
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
 
 This skill owns the publishing contract of a content-first web surface: content
 authority, page composition, render mode, discovery metadata, feeds, redirects,
 assets, previews, and deployment behavior.
 
 When `build-web` is active, consume its renderer, component, motion, security,
-and browser map instead of repeating discovery. `deliver-software` owns the
+and browser map instead of repeating discovery. the shared quality contract owns the
 final completion verdict.
+
+For visual creation, redesign, or polish, select `design-interfaces` when
+installed. It owns visual judgment; this skill retains its implementation
+contracts. A frontend logic change that leaves the design unchanged does not
+need that companion.
 
 ## Outcome
 
@@ -137,8 +175,8 @@ Verify the page as a publication artifact, not only as a component:
   compilers, local SVG collections, accessibility, and bundle control.
 - [fonts.md](references/fonts.md): Astro Fonts, Fontsource, local/variable
   fonts, privacy, preload, fallback metrics, and layout shift.
-- [casebook.md](references/casebook.md): Kaiju and ThunderStrike source-backed
-  patterns, counterexamples, and evidence classification.
+- [casebook.md](references/casebook.md): anonymized site architecture examples,
+  counterexamples, and evidence classification.
 
 Do not infer browser-extension support or application behavior from a site
 repository name. Route stateful product work to `build-web-apps`.
@@ -150,3 +188,14 @@ reachable, content and relation failures must be handled as designed, metadata
 and feeds must agree with route truth, interactive islands must work in the
 browser, assets must resolve from built output, and the selected deployment
 adapter must be verified for any deployment-specific claim.
+
+## Astro source and neighboring owners
+
+Read the maintained [Astro reference](references/astro.md) for the route/island decision in scope. Inspect the site or frontend app, the installed version, renderer imports, adapter and hydration directives. Historical audits and their scripts live in Git; they are not current gates.
+
+Select build-web for browser/renderer/island lifetime and hydration, build-web-apps for session/URL/cache/product state, design-interfaces for visual/motion judgment, accessibility for detailed access testing and shadcn for its installed components. A .tsx filename does not identify React; an Astro page does not authorize changing the existing UI. Keep framework examples subordinate to the actual repository.
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

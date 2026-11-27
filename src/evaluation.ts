@@ -85,19 +85,22 @@ export const EvalResultSchema = z.strictObject({
   ) {
     context.addIssue({
       code: "custom",
-      message: "configured judge results require judgeHost and judgeAdapterVersion",
+      message:
+        "configured judge results require judgeHost and judgeAdapterVersion",
       path: ["judgeModelId"],
     });
   }
-  if (!judgeConfigured && [
-    value.judgeHost,
-    value.judgeModel,
-    value.judgeModelVersion,
-    value.judgeAdapterVersion,
-    value.judgeDurationMs,
-    value.judgeInputTokens,
-    value.judgeOutputTokens,
-  ].some((item) => item !== undefined)) {
+  if (
+    !judgeConfigured && [
+      value.judgeHost,
+      value.judgeModel,
+      value.judgeModelVersion,
+      value.judgeAdapterVersion,
+      value.judgeDurationMs,
+      value.judgeInputTokens,
+      value.judgeOutputTokens,
+    ].some((item) => item !== undefined)
+  ) {
     context.addIssue({
       code: "custom",
       message: "judge telemetry requires judgeModelId",

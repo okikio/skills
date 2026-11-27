@@ -1,4 +1,4 @@
-Kaiju readable Markdown and plain technical English handbook
+Readable Markdown and plain technical English handbook
 =============================================================
 
 A Hongdown-inspired Markdown style with an ASD-STE100-inspired language layer.
@@ -9,7 +9,7 @@ Current cross-project authority: `engineering-standards.md`. This handbook remai
 Default writing mode
 --------------------
 
-Use plain English for normal Kaiju and Okikio documentation.
+Use plain English for normal software documentation.
 
 Apply ASD-STE100 or the controlled Simplified Technical English rules in this
 handbook only when the user explicitly requests that writing mode, when a
@@ -25,10 +25,18 @@ This distinction matters because clear software documentation sometimes needs
 ordinary English to explain architecture, tradeoffs, and unfamiliar concepts
 without becoming mechanical or losing necessary nuance.
 
+Authority when composed with skills
+------------------------------------
+
+The shared engineering base reference is the compact current engineering
+baseline. This handbook provides selected writing depth; its historical examples
+and formatting preferences do not override newer repository instructions or the
+configured tool. Preserve current API names and the complete technical meaning.
+
 Purpose
 -------
 
-This handbook explains how to write Kaiju documents that are easy to read in
+This handbook explains how to write project documents that are easy to read in
 two forms:
 
  -  as raw Markdown
@@ -36,13 +44,13 @@ two forms:
 
 The handbook combines three types of guidance:
 
-1.  Kaiju documentation standards
+1.  Project documentation standards
 2.  a complete paraphrased map of the ASD-STE100 Issue 9 writing rules
 3.  Hongdown-inspired Markdown structure
 
 These types of guidance do different jobs.
 
-Kaiju documentation standards decide what the document must explain.  They also
+Project documentation standards decide what the document must explain.  They also
 decide how the document must use evidence, examples, risks, alternatives, and
 verification.
 
@@ -54,10 +62,10 @@ Hongdown-inspired formatting makes the raw Markdown easy to scan.
 Use this order of authority:
 
 1.  The user's request
-2.  The latest Kaiju skill, guide, or source-of-truth document
+2.  Verified repository instructions and the selected current guidance
 3.  The correct method for the document type
 4.  The real behavior and evidence
-5.  Kaiju terminology
+5.  project terminology
 6.  The plain technical English rules in this handbook
 7.  The Markdown formatting rules in this handbook
 
@@ -72,7 +80,7 @@ changes, why it matters, and how it works**. Use concrete behavior, not a vague
 claim of reliability. Surface a material required action or release limit early.
 An experienced reader should understand the change without reading the background.
 A new reader should then find the background needed to understand it in depth.
-The delivery skill's pull-request reference owns the PR workflow; this section
+The prepare-pull-requests skill owns the PR workflow; this section
 explains the reading order and how to make the background visible.
 
 For example, a fictional alert PR could open with:
@@ -189,14 +197,14 @@ contains writing rules and a controlled dictionary.  The dictionary uses a
 small set of approved general words.  It also permits approved technical nouns
 and technical verbs for a company, industry, or subject.
 
-This handbook does not claim that Kaiju documents comply with the full
+This handbook does not claim that project documents comply with the full
 ASD-STE100 standard.
 
 Full compliance would require:
 
  -  the complete official standard
  -  its controlled dictionary
- -  a Kaiju terminology database
+ -  a project terminology database
  -  trained writers or reviewers
  -  rule-by-rule validation
 
@@ -255,7 +263,7 @@ Use the official PDF when:
  -  a reviewer must validate each rule
  -  the exact official wording affects a decision
 
-Use this handbook when you need to apply the rules to Kaiju software
+Use this handbook when you need to apply the rules to software
 documentation without claiming formal compliance.
 
 
@@ -273,7 +281,7 @@ Use a word only when it is one of these types:
  -  a technical noun
  -  a technical verb
 
-**Kaiju use:** Keep an approved Kaiju terminology list.  Treat product names,
+**Project use:** Keep an approved project terminology list.  Treat product names,
 protocol names, API terms, runtime resources, and domain operations as technical
 nouns or technical verbs when they meet the project rules.
 
@@ -284,8 +292,8 @@ Use a dictionary word only as the part of speech that the dictionary approves.
 
 A word approved as a noun is not automatically approved as a verb.
 
-**Kaiju use:** This rule is mandatory only for text that claims STE compliance.
-For normal Kaiju documents, still check that a word has the intended grammatical
+**Project use:** This rule is mandatory only for text that claims STE compliance.
+For normal project documents, still check that a word has the intended grammatical
 function.
 
 
@@ -295,7 +303,7 @@ Use an approved word only with its approved STE meaning.
 
 Do not use a familiar word with a second, informal, or metaphorical meaning.
 
-**Kaiju use:** Prefer the meaning in the Kaiju terminology list.  Do not use one
+**Project use:** Prefer the meaning in the project terminology list.  Do not use one
 common word for several unrelated system concepts.
 
 
@@ -303,7 +311,7 @@ common word for several unrelated system concepts.
 
 Use only the forms that the dictionary approves for a verb or adjective.
 
-**Kaiju use:** Apply this rule only in formal STE-controlled text.  In all other
+**Project use:** Apply this rule only in formal STE-controlled text.  In all other
 documents, avoid unusual forms that make the sentence difficult to parse.
 
 
@@ -311,7 +319,7 @@ documents, avoid unusual forms that make the sentence difficult to parse.
 
 Use a technical noun only when it belongs to an accepted subject-field category.
 
-**Kaiju use:** A technical noun must name a real software, product, business,
+**Project use:** A technical noun must name a real software, product, business,
 legal, operational, or web-observation concept.  Do not label a vague
 architecture idea as a technical noun.
 
@@ -321,7 +329,7 @@ architecture idea as a technical noun.
 Use a word that is not approved only when it is a technical noun or part of a
 technical noun.
 
-**Kaiju use:** Formal STE text needs this restriction.  Other Kaiju documents
+**Project use:** Formal STE text needs this restriction.  Other project documents
 can use general words outside the dictionary, but the writer must still prefer
 short, common, precise words.
 
@@ -338,7 +346,7 @@ Clearer when `queue` is only a noun:
 
 > Add the route to the queue.
 
-**Kaiju use:** A documented Kaiju operation can be a technical verb.  For
+**Project use:** A documented project operation can be a technical verb.  For
 example, `capture`, `lease`, or `enqueue` can be valid when the project glossary
 defines the operation.
 
@@ -347,9 +355,9 @@ defines the operation.
 
 Use technical nouns that the company, industry, or subject field approves.
 
-**Kaiju use:** Source technical terms from:
+**Project use:** Source technical terms from:
 
- -  the Kaiju terminology list
+ -  the project terminology list
  -  public API contracts
  -  package documentation
  -  standards
@@ -400,7 +408,7 @@ and accurately names the operation.
 
 Use a common approved verb when it gives the same meaning.
 
-**Kaiju use:** Keep a small, reviewed list of domain verbs such as:
+**Project use:** Keep a small, reviewed list of domain verbs such as:
 
  -  capture
  -  extract
@@ -432,7 +440,7 @@ In the second sentence, `page capture` is an explicit technical noun.
 Use American English spelling unless an official directive requires another
 spelling system.
 
-**Kaiju use:** The project must select one official spelling policy.  Preserve
+**Project use:** The project must select one official spelling policy.  Preserve
 the spelling in existing documents during a narrow edit.  Do not create a large
 formatting diff only to change spelling.
 
@@ -452,7 +460,7 @@ Clearer:
 
 > policy for failed route captures
 
-**Kaiju use:** Exact code symbols can contain more conceptual parts.  The prose
+**Project use:** Exact code symbols can contain more conceptual parts.  The prose
 that explains the symbol must still be easy to parse.
 
 
@@ -477,7 +485,7 @@ Section 3: Verbs
 
 Use only the verb forms that the STE dictionary gives.
 
-**Kaiju use:** This is a formal-compliance rule.  Normal Kaiju documents must
+**Project use:** This is a formal-compliance rule.  Normal project documents must
 still use standard, recognizable verb forms.
 
 
@@ -494,7 +502,7 @@ Formal STE permits these main forms:
 
 Avoid progressive, perfect, and other complex constructions in formal STE.
 
-**Kaiju use:** Prefer simple tenses.  Use another tense only when it is necessary
+**Project use:** Prefer simple tenses.  Use another tense only when it is necessary
 to express an exact event order or continuing state.
 
 
@@ -529,7 +537,7 @@ technical noun.
 
 Formal STE does not use progressive verb forms.
 
-**Kaiju use:** Keep established terms such as `billing`, `logging`, `routing`,
+**Project use:** Keep established terms such as `billing`, `logging`, `routing`,
 and `rendering` when they are approved technical nouns.  Rewrite an `-ing`
 clause when it hides the actor or event order.
 
@@ -644,7 +652,7 @@ Section 5: Procedural writing
 A work-step sentence, warning, caution, or other safety instruction has a
 maximum of 20 words in formal STE.
 
-**Kaiju use:** Apply this as a hard limit in text marked STE-controlled.  Use it
+**Project use:** Apply this as a hard limit in text marked STE-controlled.  Use it
 as a strong review limit for all new commands, procedures, and error-recovery
 steps.
 
@@ -738,7 +746,7 @@ Do not replace a key term with a synonym only to create variety.
 
 A descriptive sentence has a maximum of 25 words in formal STE.
 
-**Kaiju use:** Apply this as a hard limit in STE-controlled text.  Use it as a
+**Project use:** Apply this as a hard limit in STE-controlled text.  Use it as a
 strong review limit in all new guidebooks, design notes, PRDs, and reviews.
 
 
@@ -761,7 +769,7 @@ parts support the same topic.
 
 A descriptive paragraph has no more than six sentences in formal STE.
 
-**Kaiju use:** Use six sentences as the normal maximum.  Split the paragraph
+**Project use:** Use six sentences as the normal maximum.  Split the paragraph
 earlier when the text changes topic, lifecycle stage, owner, or evidence class.
 
 
@@ -811,7 +819,7 @@ Formal STE permits standard English punctuation except the semicolon.
 
 Replace a semicolon with two sentences or another clear structure.
 
-**Kaiju use:** Do not add semicolons to new technical prose.  Preserve
+**Project use:** Do not add semicolons to new technical prose.  Preserve
 semicolons in code, exact quotations, generated output, and existing text during
 a narrow edit.
 
@@ -841,7 +849,7 @@ Formal STE permits parentheses for controlled purposes such as:
  -  short explanations
  -  alternatives
 
-**Kaiju use:** Keep parenthetical text short.  Move required conditions,
+**Project use:** Keep parenthetical text short.  Move required conditions,
 warnings, and main explanations into normal sentences.
 
 
@@ -1069,14 +1077,14 @@ Potentially harder:
 Rewrite stacked possessives.
 
 
-Kaiju adoption profile
+Optional project adoption profile
 ======================
 
-Rules that Kaiju applies as strong defaults
+Rules a project can adopt as strong defaults
 -------------------------------------------
 
-Apply these rules to all new Kaiju technical documents unless a higher standard
-requires another form:
+When the project selects this writing profile, apply these rules unless a
+higher requirement calls for another form:
 
  -  1.8 through 1.11 for approved and consistent terminology
  -  2.1 and 2.2 for noun groups
@@ -1108,7 +1116,7 @@ explicitly STE-controlled:
  -  the formal word-count rules
  -  American English spelling when no other directive exists
 
-Normal Kaiju documents can use these rules as strong review guidance without
+Normal project documents can use these rules as strong review guidance without
 claiming compliance.
 
 
@@ -1217,7 +1225,7 @@ It helps the reader find:
 This layer makes the raw file feel complete.
 
 
-Kaiju plain technical English
+Plain technical English
 =============================
 
 Use one main topic in each sentence
@@ -1234,7 +1242,7 @@ Hard to read:
 
 Easy to read:
 
-> Kaiju loads and validates the configuration first.
+> The collector loads and validates the configuration first.
 >
 > It then starts the browser process.
 >
@@ -1272,7 +1280,7 @@ matter.
 
 Example:
 
-> The response body was damaged before Kaiju received it.
+> The response body was damaged before the collector received it.
 
 In this example, the writer does not know which system damaged the body.  The
 passive voice does not hide useful information.
@@ -1367,13 +1375,13 @@ After this definition, use `capture record` each time.  Do not later call the
 same item an event or payload.
 
 This rule is similar to the STE principle of one word for one meaning.  It also
-matches the Kaiju naming guide.
+matches the project naming guide.
 
 
 Define technical terms with concrete behavior
 ---------------------------------------------
 
-Kaiju needs technical nouns and technical verbs.  Do not remove these terms
+Software needs technical nouns and technical verbs.  Do not remove these terms
 when they are correct.
 
 Define the term when the reader first needs it.
@@ -1480,25 +1488,25 @@ Issue 9 defines these formal limits:
 
 For text that claims STE compliance, these are hard limits.
 
-For other Kaiju documents, treat them as strong review limits.  First try to
+For other project documents, treat them as strong review limits.  First try to
 split a long sentence.  Keep a longer sentence only when the split would make
 the technical relationship less accurate or less clear.
 
 Hard to read:
 
-> Kaiju uses a browser-process pool so several domains can capture pages in
+> The collector uses a browser-process pool so several domains can capture pages in
 > parallel while each process remains disposable, which reduces shared crash
 > risk but adds scheduling, readiness, recycling, and shutdown coordination.
 
 Easy to read:
 
-> Kaiju keeps several browser processes ready.
+> The collector keeps several browser processes ready.
 >
 > The pool gives each domain to one process.
 >
 > If one process crashes, the other processes can continue.
 >
-> Kaiju can also replace a process that uses too much memory.
+> The collector can also replace a process that uses too much memory.
 >
 > The pool needs extra code for scheduling, readiness, replacement, and
 > shutdown.
@@ -1514,15 +1522,15 @@ Short sentences can still be poor.
 
 Choppy:
 
-> Kaiju starts a process.  It starts a browser.  It opens a context.  It opens a
+> The collector starts a process.  It starts a browser.  It opens a context.  It opens a
 > page.  It captures data.
 
 Better:
 
-> Kaiju starts one browser process.  That process starts a browser and opens a
+> The collector starts one browser process.  That process starts a browser and opens a
 > context for the domain.
 >
-> The context opens a page.  Kaiju then captures the page data.
+> The context opens a page.  the project then captures the page data.
 
 The better version groups actions that belong to one local event.
 
@@ -1557,7 +1565,7 @@ Hard to read:
 
 Easy to read:
 
-> a failure that occurs when Kaiju validates browser-process readiness during
+> a failure that occurs when the collector validates browser-process readiness during
 > startup
 
 Break the noun group into:
@@ -1581,7 +1589,7 @@ Hard to read:
 
 Easy to read:
 
-> Kaiju gives important routes a higher priority.
+> The collector gives important routes a higher priority.
 >
 > The browser processes capture these routes first.
 >
@@ -1779,7 +1787,7 @@ Some terms are established technical nouns:
  -  routing
  -  rendering
 
-Use these terms when they are the correct Kaiju term.  Do not use an `-ing`
+Use these terms when they are the correct project term.  Do not use an `-ing`
 clause when a direct sentence is clearer.
 
 
@@ -1818,7 +1826,7 @@ Easy to read:
 >
 > The queue rejected the next record.
 >
-> As a result, Kaiju did not analyze that capture record.
+> As a result, the project did not analyze that capture record.
 
 The easy version gives the reader a causal chain.
 
@@ -1838,7 +1846,7 @@ Easy to read:
 
 Hard to read:
 
-> Kaiju supports many routes.
+> The collector supports many routes.
 
 Easy to read:
 
@@ -1856,7 +1864,7 @@ Hard to read:
 
 Easy to read:
 
-> Analysis starts after Kaiju commits the capture record.
+> Analysis starts after the collector commits the capture record.
 
 Hard to read:
 
@@ -1879,7 +1887,7 @@ Hard to read:
 
 Easy to read:
 
-> Kaiju observed the `x-magento-vary` cookie and Magento JavaScript modules.
+> The collector observed the `x-magento-vary` cookie and Magento JavaScript modules.
 >
 > This evidence supports a Magento-family classification.
 >
@@ -1910,7 +1918,7 @@ Compressed:
 
 Clear:
 
-> Kaiju must capture several domains at the same time.
+> The collector must capture several domains at the same time.
 >
 > One browser process cannot isolate a crash from the other domains.
 >
@@ -1918,7 +1926,7 @@ Clear:
 >
 > A browser-process pool keeps several reusable processes ready.
 >
-> If one process fails, Kaiju can replace that process without stopping the
+> If one process fails, the project can replace that process without stopping the
 > other captures.
 >
 > For these reasons, the pool is the least costly option that meets the
@@ -1955,11 +1963,11 @@ Plain English does not mean shallow English.
 
 Weak simplification:
 
-> Kaiju saves some browser data.
+> The collector saves some browser data.
 
 Clear technical text:
 
-> Kaiju saves cookies, local storage, session storage, IndexedDB metadata, and
+> The collector saves cookies, local storage, session storage, IndexedDB metadata, and
 > cache entries for each page context.
 
 The second form uses technical terms.  It is still clear because it names the
@@ -2177,7 +2185,7 @@ Use a browser-process pool.
 
 ### Objective
 
-Kaiju must capture several domains at the same time.  A crash in one browser
+The collector must capture several domains at the same time.  A crash in one browser
 process must not stop all active captures.
 
 ### Options
@@ -2195,7 +2203,7 @@ A new process for every route gives strong isolation.  Its startup cost is too
 high when a domain has many routes.
 
 A process pool keeps the startup cost low after the first processes start.  It
-also lets Kaiju replace one failed process.
+also lets the collector replace one failed process.
 
 ### Trade-off
 
@@ -2416,7 +2424,7 @@ Hard to read:
 
 Clear:
 
-> Kaiju must capture several domains at the same time.
+> The collector must capture several domains at the same time.
 >
 > A crash in one browser process must not stop the other captures.
 >
@@ -2440,7 +2448,7 @@ Hard to read:
 
 Clear:
 
-> Kaiju observed Magento JavaScript modules and the `x-magento-vary` cookie.
+> The collector observed Magento JavaScript modules and the `x-magento-vary` cookie.
 >
 > This evidence supports a Magento-family classification.
 >
@@ -2459,7 +2467,7 @@ Hard to read:
 
 Clear:
 
-> Kaiju cannot find a route source.
+> The collector cannot find a route source.
 >
 > You did not supply a route in:
 >
@@ -2577,7 +2585,7 @@ Ask:
 
  -  Does this word have one clear meaning here?
  -  Did the document use a different term for the same concept?
- -  Is this a Kaiju technical noun or technical verb?
+ -  Is this a project technical noun or technical verb?
  -  Did the document define it?
  -  Is a shorter and more common word equally precise?
 
@@ -2632,7 +2640,7 @@ Use these heading forms for new long-form Markdown:
 Example:
 
 ~~~~ markdown
-Kaiju route capture guide
+Example route capture guide
 =========================
 
 Capture lifecycle
@@ -2804,7 +2812,7 @@ Sentence checks
  -  The sentence does not hide actions in abstract nouns.
  -  A pronoun has one clear reference.
  -  The sentence does not contain a long noun group.
- -  The sentence uses the established Kaiju term.
+ -  The sentence uses the established project term.
  -  An exact quantity replaces a vague quantity when possible.
  -  Uncertainty is visible.
  -  The sentence is short enough to parse.
@@ -2878,11 +2886,11 @@ Do not use it as a reason to remove:
  -  project terminology
  -  document-specific structure
 
-A good Kaiju sentence should let the reader answer:
+A good technical sentence should let the reader answer:
 
 > Who does what, under which condition, and with which result?
 
-A good Kaiju document should let the reader answer:
+A good technical document should let the reader answer:
 
 > What is this, why does it matter, how does it work, what can fail, and how do
 > I know the result is correct?
@@ -2896,7 +2904,7 @@ Sources
 
 This handbook includes a paraphrased map of all 53 writing rules in
 ASD-STE100 Issue 9.  It also adapts the eight Issue 9 general recommendations
-for Kaiju software documentation.
+for software documentation.
 
 The rule map is not the official wording and does not replace the official
 standard or its controlled dictionary.

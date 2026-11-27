@@ -66,7 +66,7 @@ Package-local `deno task` commands can still be valid implementation details. Av
 
 ## `node:test` in a Deno-first repository
 
-This is valid when the project deliberately uses one shared TypeScript test source across Deno and Node. In the current Okikio/Kaiju pattern, `node:test` plus `@std/expect` is the normal package-test API while runtime-specific suites prove Deno/browser/worker/Node/Bun claims.
+This is valid when the project deliberately uses one shared TypeScript test source across Deno and Node. In the Deno-first default used by this collection, `node:test` plus `@std/expect` is the normal package-test API while runtime-specific suites prove Deno/browser/worker/Node/Bun claims.
 
 Do not replace the shared test API with a Deno-only wrapper merely because Deno is the primary runtime.
 

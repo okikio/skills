@@ -8,7 +8,9 @@ import * as provider from "../src/provider.ts";
 /** Write one deterministic adapter that implements both protocol request kinds. */
 async function createAdapter(root: string): Promise<string> {
   const path = join(root, "adapter.ts");
-  await Deno.writeTextFile(path, `
+  await Deno.writeTextFile(
+    path,
+    `
     const [requestPath, responsePath] = Deno.args;
     const request = JSON.parse(await Deno.readTextFile(requestPath));
     if (request.kind === "rollout") {
@@ -41,7 +43,8 @@ async function createAdapter(root: string): Promise<string> {
     } else {
       throw new Error("Unexpected request kind");
     }
-  `);
+  `,
+  );
   return path;
 }
 
@@ -141,7 +144,9 @@ describe("provider adapter invocation", () => {
     const root = await Deno.makeTempDir({ prefix: "skills-provider-" });
     try {
       const adapter = join(root, "mutating-adapter.ts");
-      await Deno.writeTextFile(adapter, `
+      await Deno.writeTextFile(
+        adapter,
+        `
         const [requestPath, responsePath] = Deno.args;
         const request = JSON.parse(await Deno.readTextFile(requestPath));
         await Deno.writeTextFile(requestPath, JSON.stringify({ ...request, seed: 99 }));
@@ -158,7 +163,8 @@ describe("provider adapter invocation", () => {
           toolCalls: [],
           commands: [],
         }));
-      `);
+      `,
+      );
       const request = RolloutRequestSchema.parse({
         schemaVersion: 1,
         kind: "rollout",

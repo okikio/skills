@@ -1,8 +1,8 @@
 # Standalone delivery fallback
 
-Load this reference only when deliver-software is unavailable. It preserves the
-complete Deno delivery workflow without imposing duplicate lifecycle guidance
-when the two skills are composed.
+Load this reference when Deno is the only selected implementation capability.
+It preserves the complete change lifecycle without imposing a duplicate plan
+when a focused capability and domain owner already cover that work.
 
 ## End-to-end workflow
 

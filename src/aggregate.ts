@@ -162,8 +162,10 @@ export const AggregateReportSchema = z.strictObject({
   }
   const installed = [...value.installedSkills].sort();
   const revisions = Object.keys(value.installedSkillRevisions).sort();
-  if (installed.length !== revisions.length ||
-    installed.some((skill, index) => skill !== revisions[index])) {
+  if (
+    installed.length !== revisions.length ||
+    installed.some((skill, index) => skill !== revisions[index])
+  ) {
     context.addIssue({
       code: "custom",
       message: "installedSkillRevisions must match installedSkills exactly",
@@ -177,7 +179,9 @@ export const AggregateReportSchema = z.strictObject({
       path: ["caseIds"],
     });
   }
-  const runIdentities = value.runKeys.map((key) => `${key.seed}:${key.repetition}`);
+  const runIdentities = value.runKeys.map((key) =>
+    `${key.seed}:${key.repetition}`
+  );
   if (new Set(runIdentities).size !== runIdentities.length) {
     context.addIssue({
       code: "custom",
@@ -237,16 +241,19 @@ export const AggregateReportSchema = z.strictObject({
   ) {
     context.addIssue({
       code: "custom",
-      message: "configured judge reports require judgeHost and judgeAdapterVersion",
+      message:
+        "configured judge reports require judgeHost and judgeAdapterVersion",
       path: ["judgeModelId"],
     });
   }
-  if (!judgeConfigured && [
-    value.judgeHost,
-    value.judgeModel,
-    value.judgeModelVersion,
-    value.judgeAdapterVersion,
-  ].some((item) => item !== undefined)) {
+  if (
+    !judgeConfigured && [
+      value.judgeHost,
+      value.judgeModel,
+      value.judgeModelVersion,
+      value.judgeAdapterVersion,
+    ].some((item) => item !== undefined)
+  ) {
     context.addIssue({
       code: "custom",
       message: "judge identity requires judgeModelId",
@@ -267,26 +274,36 @@ export const AggregateReportSchema = z.strictObject({
       path: ["metrics", "frozen"],
     });
   }
-  if (value.judgeModelId !== undefined && value.metrics.invalidRun.value === 0 &&
+  if (
+    value.judgeModelId !== undefined && value.metrics.invalidRun.value === 0 &&
     (value.judgeHost === undefined || value.judgeModel === undefined ||
-      value.judgeModelVersion === undefined || value.judgeAdapterVersion === undefined)) {
+      value.judgeModelVersion === undefined ||
+      value.judgeAdapterVersion === undefined)
+  ) {
     context.addIssue({
       code: "custom",
       message: "valid judged reports require complete judge identity",
       path: ["judgeModelId"],
     });
   }
-  if (value.targetSkillRevision === null && value.installedSkills.includes(value.targetSkill)) {
+  if (
+    value.targetSkillRevision === null &&
+    value.installedSkills.includes(value.targetSkill)
+  ) {
     context.addIssue({
       code: "custom",
       message: "an installed target skill requires targetSkillRevision",
       path: ["targetSkillRevision"],
     });
   }
-  if (value.targetSkillRevision !== null && !value.installedSkills.includes(value.targetSkill)) {
+  if (
+    value.targetSkillRevision !== null &&
+    !value.installedSkills.includes(value.targetSkill)
+  ) {
     context.addIssue({
       code: "custom",
-      message: "targetSkillRevision must be null when the target skill is omitted",
+      message:
+        "targetSkillRevision must be null when the target skill is omitted",
       path: ["targetSkillRevision"],
     });
   }

@@ -282,7 +282,7 @@ overwriting an immutable version.
 - Attached production CLI guidebook v1.1 and config-resolution handoff, normative
   portable contract, sparse source, provenance, lifecycle, output, package, and
   verification patterns; verified 2026-07-13.
-- Retained uploaded CLI, finance, site, data, workflow, Better Auth, Undent and
+- Retained uploaded CLI, application, site, data, workflow, Better Auth, Undent and
   Wikitext codebases, observed connected integration/failure/generator/release
   behavior; verified 2026-07-17.
 - Current exact-version primary source records for deep ecosystem references;

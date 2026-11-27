@@ -5,13 +5,50 @@ description: Design, implement, migrate, review, diagnose, or verify durable wor
 
 # Build durable workflows and pipelines
 
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
+If the reviewed workflow is run or tested by Deno, load `deno-software` even
+for a read-only review of local control or replay. The execution environment is
+independent of whether a change to runtime configuration was requested.
+
 Durability is a recovery property, not a naming convention. Start from the state
 that must survive process loss, then design execution, queues, effects, leases,
 checkpoints, timers, signals, and operator recovery around that authority.
 
 `build-data` owns storage engines and artifact formats. `build-apis` owns public
 HTTP exposure. `build-libraries` owns reusable restart/checkpoint contracts that
-do not themselves provide durable orchestration. `deliver-software` owns the
+do not themselves provide durable orchestration. the shared quality contract owns the
 final completion verdict.
 
 ## Outcome
@@ -156,6 +193,10 @@ A happy-path retry unit test does not prove durability.
 
 ## Reference routing
 
+- [utility-workflows.md](references/utility-workflows.md): current Context/Task/
+  activity/history/dispatch model and the proof separating local replay from
+  durable restart; use for current Core or standalone utility work.
+
 - [durability.md](references/durability.md): authority, engine selection,
   identities, determinism, completion, and durability classification.
 - [effect-workflow.md](references/effect-workflow.md): Effect services/Layers and
@@ -198,3 +239,8 @@ result, required cross-system gaps have reconciliation, cancellation and cleanup
 are coherent, and an operator can inspect and repair the run. Clearly separate
 unimplemented adapters, blocked runtime tests, and aspirational design from
 verified behavior.
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

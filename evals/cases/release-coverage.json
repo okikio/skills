@@ -50,7 +50,8 @@
         "hybrid"
       ],
       "rationale": "Frozen root-router case for cross-surface ownership rather than framework-name recall.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "frozen-web-native-first-failure",
@@ -101,7 +102,8 @@
         "native-first"
       ],
       "rationale": "Frozen adversarial case for common cross-renderer hallucinations.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "frozen-devtools-generation-release",
@@ -152,7 +154,8 @@
         "release"
       ],
       "rationale": "Frozen developer-tooling case joining generation to real release evidence.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "frozen-devtools-toolchain-parity",
@@ -201,7 +204,8 @@
         "toolchain"
       ],
       "rationale": "Frozen anti-hallucination case for overlapping public and private toolchains.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "frozen-sites-font-icon-ownership",
@@ -254,7 +258,8 @@
         "icons"
       ],
       "rationale": "Second frozen site case protects two volatile asset ecosystems.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "frozen-okikio-source-status-gate",
@@ -306,7 +311,8 @@
         "anti-hallucination"
       ],
       "rationale": "Second frozen personal-library case enforces evidence status and consumer ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     }
   ]
 }

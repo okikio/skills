@@ -1,0 +1,1157 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "portable-frozen-accessibility-1",
+      "title": "accessibility held-out contract 1",
+      "skill": "accessibility",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "An account recovery form moves focus into an error toast, removes the entered email and cannot be submitted with Enter. Review the complete keyboard and screen-reader recovery path using only the available implementation evidence.",
+      "expectedSkills": [
+        "accessibility"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "accessibility/references/A11Y-PATTERNS.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Traces the complete keyboard and assistive operation, including error association, focus and recovery.",
+        "Distinguishes observed behavior and automated support from a conformance claim."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-accessibility-2",
+      "title": "accessibility held-out contract 2",
+      "skill": "accessibility",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A custom tree widget passes a static scan but its collapsed descendants remain in the tab order. Specify the semantics and behavioral checks needed before its accessibility claim can be accepted.",
+      "expectedSkills": [
+        "accessibility"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "accessibility/references/A11Y-PATTERNS.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Traces the complete keyboard and assistive operation, including error association, focus and recovery.",
+        "Distinguishes observed behavior and automated support from a conformance claim."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-benchmark-code-1",
+      "title": "benchmark-code held-out contract 1",
+      "skill": "benchmark-code",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Two parsers are benchmarked with different validation rules and only the fastest timing is published. Evaluate the claimed improvement and propose the smallest comparison that answers the real workload question.",
+      "expectedSkills": [
+        "benchmark-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "benchmark-code/references/shared/references/benchmarks.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Requires equivalent correct work and identifies the real performance and memory contract.",
+        "Reports workload, setup, distribution and limits rather than selecting one favorable number."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-benchmark-code-2",
+      "title": "benchmark-code held-out contract 2",
+      "skill": "benchmark-code",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A byte-processing change reduces median time but increases peak retained memory past the service limit. Assess the acceptance decision with the actual workload, variance, correctness and resource budget.",
+      "expectedSkills": [
+        "benchmark-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "benchmark-code/references/shared/references/benchmarks.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Requires equivalent correct work and identifies the real performance and memory contract.",
+        "Reports workload, setup, distribution and limits rather than selecting one favorable number."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-build-auth-1",
+      "title": "build-auth held-out contract 1",
+      "skill": "build-auth",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A signed-in customer can load another team record by changing a route parameter even though the UI hides that team. Trace the authorization defect and a server-side acceptance test without assuming the session itself grants access.",
+      "expectedSkills": [
+        "build-auth"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-auth/references/better-auth.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Separates authentication from server-enforced tenant and resource policy.",
+        "Checks installed contracts, migration and complete session behavior without inventing adapter APIs."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-build-auth-2",
+      "title": "build-auth held-out contract 2",
+      "skill": "build-auth",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A session plugin upgrade is proposed without the lockfile or generated migration. State the source, database, cookie and client/server evidence required before claiming a safe integration.",
+      "expectedSkills": [
+        "build-auth"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-auth/references/better-auth.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Separates authentication from server-enforced tenant and resource policy.",
+        "Checks installed contracts, migration and complete session behavior without inventing adapter APIs."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-commit-changes-1",
+      "title": "commit-changes held-out contract 1",
+      "skill": "commit-changes",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A working tree contains your parser fix, its regression test and an unrelated user edit to deployment settings. Prepare a coherent commit plan and evidence without staging or rewriting the user edit.",
+      "expectedSkills": [
+        "commit-changes"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "commit-changes/references/commits.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Inventories current branch, diff and ownership before selecting files.",
+        "Groups coherent behavior and its evidence, preserves unrelated work and writes factual change/reason/impact prose."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-commit-changes-2",
+      "title": "commit-changes held-out contract 2",
+      "skill": "commit-changes",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "An unpushed change combines a formatter sweep, a removed public export and regenerated snapshots. The owner asks for reviewable commits. Explain how to separate intent, verify consumers and preserve recoverable state before publishing.",
+      "expectedSkills": [
+        "commit-changes"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "commit-changes/references/commits.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Inventories current branch, diff and ownership before selecting files.",
+        "Groups coherent behavior and its evidence, preserves unrelated work and writes factual change/reason/impact prose."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-design-interfaces-1",
+      "title": "design-interfaces held-out contract 1",
+      "skill": "design-interfaces",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A financial review screen hides the sign of a negative amount when space is narrow. Assess the observed state and propose hierarchy, wrapping and disclosure that preserve the decision-critical value.",
+      "expectedSkills": [
+        "design-interfaces"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "design-interfaces/references/rendered-content.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Keeps representative content and decision-critical information visible or explicitly accessible.",
+        "Bases design judgment on comparable rendered states and complete user operations."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-design-interfaces-2",
+      "title": "design-interfaces held-out contract 2",
+      "skill": "design-interfaces",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Compare two onboarding layouts when one variant uses shorter text and a different initial state. Define a fair interactive comparison and explain which observed flow would justify a choice.",
+      "expectedSkills": [
+        "design-interfaces"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "design-interfaces/references/rendered-content.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Keeps representative content and decision-critical information visible or explicitly accessible.",
+        "Bases design judgment on comparable rendered states and complete user operations."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-plan-changes-1",
+      "title": "plan-changes held-out contract 1",
+      "skill": "plan-changes",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A request says replace the queue, but the observed issue is a worker that never releases a lease after cancellation. Produce a bounded investigation and change plan that can disprove the replacement assumption.",
+      "expectedSkills": [
+        "plan-changes"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "plan-changes/references/planner.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Separates requested outcome, observed source and proposed design.",
+        "Traces affected owners and consumers, resolves consequential unknowns and ties acceptance to executable behavior."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-plan-changes-2",
+      "title": "plan-changes held-out contract 2",
+      "skill": "plan-changes",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A migration brief assumes that a new package is already wired into production, while current imports still use the old package. Establish the real starting state, consumers, removal criteria and verification sequence.",
+      "expectedSkills": [
+        "plan-changes"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "plan-changes/references/planner.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Separates requested outcome, observed source and proposed design.",
+        "Traces affected owners and consumers, resolves consequential unknowns and ties acceptance to executable behavior."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-prepare-pull-requests-1",
+      "title": "prepare-pull-requests held-out contract 1",
+      "skill": "prepare-pull-requests",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Draft a PR description from these facts: receipt exports now preserve the original decimal sign; export/amount.ts and its regression test changed; the unit test and package build passed; browser download behavior was not exercised. Explain the user consequence and actual proof in proportion to this change.",
+      "expectedSkills": [
+        "prepare-pull-requests"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "prepare-pull-requests/references/pulls.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Leads with the concrete change, reason and effect, then gives proportionate context.",
+        "Reports exact evidence and limits without introducing claims unsupported by the diff."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-prepare-pull-requests-2",
+      "title": "prepare-pull-requests held-out contract 2",
+      "skill": "prepare-pull-requests",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A team requests a PR description for a documentation-only correction to a setup command. No runtime code changed and only the manifest spelling was checked. Write the useful explanation without inventing tests, deployment or architecture impact.",
+      "expectedSkills": [
+        "prepare-pull-requests"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "prepare-pull-requests/references/pulls.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Leads with the concrete change, reason and effect, then gives proportionate context.",
+        "Reports exact evidence and limits without introducing claims unsupported by the diff."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-python-software-1",
+      "title": "python-software held-out contract 1",
+      "skill": "python-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A Python command adds an asynchronous HTTP client but creates it per record and never closes it on cancellation. Review ownership, typing and tests while preserving pytest and the current dependency manager.",
+      "expectedSkills": [
+        "python-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "python-software/references/python.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Uses the established Python tooling and traces resource lifetime or package contents.",
+        "Verifies the relevant real consumer and distinguishes source tests from the shipped artifact."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-python-software-2",
+      "title": "python-software held-out contract 2",
+      "skill": "python-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A Python package works in its checkout but omits a data file from its wheel. Define a clean-consumer verification and fix plan without replacing the build system solely to match an example.",
+      "expectedSkills": [
+        "python-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "python-software/references/python.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Uses the established Python tooling and traces resource lifetime or package contents.",
+        "Verifies the relevant real consumer and distinguishes source tests from the shipped artifact."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-release-software-1",
+      "title": "release-software held-out contract 1",
+      "skill": "release-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A release changes the public configuration format and removes an obsolete export. Source tests passed, but no installed consumer or migration check ran. Prepare the release decision and required evidence before publication.",
+      "expectedSkills": [
+        "release-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "release-software/references/releases.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Binds release notes, source identity, consumers and migration behavior to the exact artifact.",
+        "Requires relevant installed-output evidence and reports incomplete publication or recovery checks honestly."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-release-software-2",
+      "title": "release-software held-out contract 2",
+      "skill": "release-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A tag points to one commit and an uploaded artifact was built from a dirty tree. Explain how to identify the mismatch, preserve the state and prepare a reproducible release without claiming the existing artifact is verified.",
+      "expectedSkills": [
+        "release-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "release-software/references/releases.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Binds release notes, source identity, consumers and migration behavior to the exact artifact.",
+        "Requires relevant installed-output evidence and reports incomplete publication or recovery checks honestly."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-review-code-1",
+      "title": "review-code held-out contract 1",
+      "skill": "review-code",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "Review a change that retains a compatibility wrapper after every consumer has migrated and the request explicitly removes the old API. Identify any remaining exports, tests and documentation that can keep the old contract authoritative.",
+      "expectedSkills": [
+        "review-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "review-code/references/shared/references/review.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Traces actual consumers and semantic behavior before asserting a defect.",
+        "Prioritizes actionable contract findings and distinguishes evidence from text-search assumptions."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-review-code-2",
+      "title": "review-code held-out contract 2",
+      "skill": "review-code",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A source review reports a missing test assertion by searching for expect, but the suite uses an imported assertion helper. Explain how to verify the finding and review the actual protected behavior.",
+      "expectedSkills": [
+        "review-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "review-code/references/shared/references/review.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Traces actual consumers and semantic behavior before asserting a defect.",
+        "Prioritizes actionable contract findings and distinguishes evidence from text-search assumptions."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-rust-software-1",
+      "title": "rust-software held-out contract 1",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A native Rust CLI supports Linux and Windows. Its parser improvement passes Linux tests; Windows execution is unavailable. Report the result and remaining work without treating an unrelated Wasm build as the missing host proof.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/contract.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Derives verification from the declared operation and hosts rather than a universal portability rule.",
+        "Separates compiled, executed, measured and blocked evidence for the exact artifact."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-rust-software-2",
+      "title": "rust-software held-out contract 2",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A Rust package advertises browser Wasm for a decode operation, but only its scalar native benchmark ran. Define the actual browser artifact, correctness, ownership and performance checks before accepting that support claim.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/contract.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Derives verification from the declared operation and hosts rather than a universal portability rule.",
+        "Separates compiled, executed, measured and blocked evidence for the exact artifact."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-shadcn-1",
+      "title": "shadcn held-out contract 1",
+      "skill": "shadcn",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A generated component uses a render prop absent from the installed primitive and changes the application icon package. Explain the source inspection and adaptation required before integrating it.",
+      "expectedSkills": [
+        "shadcn"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "shadcn/rules/base-vs-radix.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Checks the installed primitive, configuration and component exports before applying a recipe.",
+        "Verifies accessible structure and the complete interaction, preserving local owners."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-shadcn-2",
+      "title": "shadcn held-out contract 2",
+      "skill": "shadcn",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A dialog preview looks correct but lacks a title, keyboard close and return focus. Review the current component composition and user flow without inferring behavior from the screenshot.",
+      "expectedSkills": [
+        "shadcn"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "shadcn/rules/base-vs-radix.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Checks the installed primitive, configuration and component exports before applying a recipe.",
+        "Verifies accessible structure and the complete interaction, preserving local owners."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-test-code-1",
+      "title": "test-code held-out contract 1",
+      "skill": "test-code",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A cancellation regression test passes only when run after another test creates a global client. Design an isolated behavioral test and cleanup that also works after setup failure.",
+      "expectedSkills": [
+        "test-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "test-code/references/shared/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Uses independent expected results and meaningful public behavior.",
+        "Keeps state isolated and owns resources across setup, success, failure and cancellation."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-test-code-2",
+      "title": "test-code held-out contract 2",
+      "skill": "test-code",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A property test computes expected values by calling the production parser itself. Replace that circular oracle with a useful contract and representative edge cases; do not add tests that merely mirror the implementation.",
+      "expectedSkills": [
+        "test-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "test-code/references/shared/references/testing.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Uses independent expected results and meaningful public behavior.",
+        "Keeps state isolated and owns resources across setup, success, failure and cancellation."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-use-utils-1",
+      "title": "use-utils held-out contract 1",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A consumer selects an npm @okikio package version that has no export map, while a source checkout contains the desired operation. Review the proposed import migration and state what evidence could establish a usable replacement.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/packages.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Distinguishes installed release bytes from source exports and refuses invented package counterparts.",
+        "Separates SQL compilation, database execution, live definitions and host-admitted artifact mounting."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-use-utils-2",
+      "title": "use-utils held-out contract 2",
+      "skill": "use-utils",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A utility migration treats query/postgres as the database executor and mounts an arbitrary serialized service document as a live definition. Explain the actual ownership and admission contracts that must be verified before implementation.",
+      "expectedSkills": [
+        "use-utils"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "use-utils/references/packages.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Distinguishes installed release bytes from source exports and refuses invented package counterparts.",
+        "Separates SQL compilation, database execution, live definitions and host-admitted artifact mounting."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-verify-behavior-1",
+      "title": "verify-behavior held-out contract 1",
+      "skill": "verify-behavior",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A patch was pushed after a successful local test, but the reported CI run belongs to the previous commit. Verify the current completion claim and identify the exact evidence still needed.",
+      "expectedSkills": [
+        "verify-behavior"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "verify-behavior/references/verifier.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Binds checks to the exact source and generated artifact identities.",
+        "Exercises the required public path and reports blocked or unrun checks separately from passes."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-verify-behavior-2",
+      "title": "verify-behavior held-out contract 2",
+      "skill": "verify-behavior",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A package type-checks but its command fails after extraction into a clean directory. Trace the shipped file and runtime path, then define proof for the repaired artifact rather than repeating the source check.",
+      "expectedSkills": [
+        "verify-behavior"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "verify-behavior/references/verifier.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Binds checks to the exact source and generated artifact identities.",
+        "Exercises the required public path and reports blocked or unrun checks separately from passes."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-write-docs-1",
+      "title": "write-docs held-out contract 1",
+      "skill": "write-docs",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "An onboarding page explains internals before telling the reader how to create the first successful report. Reorganize the content into a usable path while preserving reference details and honest prerequisites.",
+      "expectedSkills": [
+        "write-docs"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "write-docs/references/documentation-types.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Starts from the reader task and leads to the first useful outcome with necessary context.",
+        "Preserves exact technical meaning, lifecycle and evidence limits in plain English."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    },
+    {
+      "id": "portable-frozen-write-docs-2",
+      "title": "write-docs held-out contract 2",
+      "skill": "write-docs",
+      "kind": "trajectory",
+      "split": "test-frozen",
+      "prompt": "A reference comment says dispose releases memory immediately, but the actual contract only drops this owner and other references may remain. Write precise lifecycle documentation without promising behavior the implementation cannot establish.",
+      "expectedSkills": [
+        "write-docs"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "write-docs/references/documentation-types.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S"
+        }
+      ],
+      "rubric": [
+        "Starts from the reader task and leads to the first useful outcome with necessary context.",
+        "Preserves exact technical meaning, lifecycle and evidence limits in plain English."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-method"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "release-contract"
+      ],
+      "rationale": "Held-out task judged from an actual target trajectory. Nonempty output is only an integrity assertion; this case is never an optimization input."
+    }
+  ]
+}

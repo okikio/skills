@@ -43,16 +43,20 @@ describe("evaluation assertions", () => {
   it("distinguishes required and forbidden output", async () => {
     const root = await Deno.makeTempDir();
     try {
-      expect((await evaluateAssertion(
-        { kind: "contains", value: "verified", caseSensitive: false },
-        "VERIFIED",
-        root,
-      )).passed).toBe(true);
-      expect((await evaluateAssertion(
-        { kind: "not-contains", value: "published", caseSensitive: false },
-        "validated locally",
-        root,
-      )).passed).toBe(true);
+      expect(
+        (await evaluateAssertion(
+          { kind: "contains", value: "verified", caseSensitive: false },
+          "VERIFIED",
+          root,
+        )).passed,
+      ).toBe(true);
+      expect(
+        (await evaluateAssertion(
+          { kind: "not-contains", value: "published", caseSensitive: false },
+          "validated locally",
+          root,
+        )).passed,
+      ).toBe(true);
     } finally {
       await Deno.remove(root, { recursive: true });
     }
@@ -62,11 +66,12 @@ describe("evaluation assertions", () => {
     const root = await Deno.makeTempDir();
     try {
       await expectRejects(
-        () => evaluateAssertion(
-          { kind: "file-exists", value: "../outside" },
-          "",
-          root,
-        ),
+        () =>
+          evaluateAssertion(
+            { kind: "file-exists", value: "../outside" },
+            "",
+            root,
+          ),
         Error,
         "escapes",
       );
@@ -81,17 +86,21 @@ describe("evaluation assertions", () => {
     const previous = Deno.env.get(name);
     Deno.env.set(name, "must-not-leak");
     try {
-      const result = await evaluateAssertion({
-        kind: "command",
-        command: [
-          Deno.execPath(),
-          "eval",
-          `console.log(Deno.env.get("${name}") ?? "missing")`,
-        ],
-        expectedExitCode: 0,
-        stdout: "^missing$",
-        timeoutMs: 2_000,
-      }, "", root);
+      const result = await evaluateAssertion(
+        {
+          kind: "command",
+          command: [
+            Deno.execPath(),
+            "eval",
+            `console.log(Deno.env.get("${name}") ?? "missing")`,
+          ],
+          expectedExitCode: 0,
+          stdout: "^missing$",
+          timeoutMs: 2_000,
+        },
+        "",
+        root,
+      );
 
       expect(result.passed).toBe(true);
       expect(result.evidence).not.toContain("must-not-leak");
@@ -108,18 +117,22 @@ describe("evaluation assertions", () => {
     try {
       await Deno.writeTextFile(`${baseline}/doc.md`, "original\n");
       await Deno.writeTextFile(`${candidate}/doc.md`, "changed\n");
-      expect((await evaluateAssertion(
-        { kind: "file-changed", value: "doc.md" },
-        "",
-        candidate,
-        baseline,
-      )).passed).toBe(true);
-      expect((await evaluateAssertion(
-        { kind: "file-unchanged", value: "doc.md" },
-        "",
-        candidate,
-        baseline,
-      )).passed).toBe(false);
+      expect(
+        (await evaluateAssertion(
+          { kind: "file-changed", value: "doc.md" },
+          "",
+          candidate,
+          baseline,
+        )).passed,
+      ).toBe(true);
+      expect(
+        (await evaluateAssertion(
+          { kind: "file-unchanged", value: "doc.md" },
+          "",
+          candidate,
+          baseline,
+        )).passed,
+      ).toBe(false);
     } finally {
       await Deno.remove(baseline, { recursive: true });
       await Deno.remove(candidate, { recursive: true });

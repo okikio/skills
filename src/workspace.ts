@@ -1,10 +1,11 @@
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { z } from "zod";
 import { EvalCaseSchema, SkillIdSchema } from "./corpus.ts";
 import { walkFiles } from "./files.ts";
+import { sourceFile } from "./guidance.ts";
+import { DocumentPathSchema, RelativePathSchema } from "./paths.ts";
 import * as hash from "./hash.ts";
 import * as tree from "./tree.ts";
-
 
 /** Manifest contract for one exported SkillOpt optimization/evaluation tree. */
 export const SkillOptWorkspaceSchema = z.strictObject({
@@ -12,12 +13,12 @@ export const SkillOptWorkspaceSchema = z.strictObject({
   mode: z.enum(["optimize", "evaluate", "release"]),
   optimizationUnit: z.enum(["root-router", "reference"]),
   targetSkill: SkillIdSchema,
-  targetReference: z.string().optional(),
+  targetReference: DocumentPathSchema.optional(),
   companionSkills: z.array(SkillIdSchema),
-  mutablePaths: z.array(z.string()),
-  immutablePaths: z.array(z.string()),
+  mutablePaths: z.array(RelativePathSchema),
+  immutablePaths: z.array(RelativePathSchema),
   immutableDigests: z.record(
-    z.string(),
+    RelativePathSchema,
     z.string().regex(/^[a-f0-9]{64}$/),
   ),
   skillRevisions: z.record(
@@ -68,11 +69,14 @@ export const SkillOptWorkspaceSchema = z.strictObject({
   }
   const ownedSkills = [value.targetSkill, ...value.companionSkills].sort();
   const revisionSkills = Object.keys(value.skillRevisions).sort();
-  if (ownedSkills.length !== revisionSkills.length ||
-    ownedSkills.some((skill, index) => skill !== revisionSkills[index])) {
+  if (
+    ownedSkills.length !== revisionSkills.length ||
+    ownedSkills.some((skill, index) => skill !== revisionSkills[index])
+  ) {
     context.addIssue({
       code: "custom",
-      message: "skillRevisions must describe exactly targetSkill and companionSkills",
+      message:
+        "skillRevisions must describe exactly targetSkill and companionSkills",
       path: ["skillRevisions"],
     });
   }
@@ -80,6 +84,16 @@ export const SkillOptWorkspaceSchema = z.strictObject({
     context.addIssue({
       code: "custom",
       message: "optimize workspaces require exactly one mutable path",
+      path: ["mutablePaths"],
+    });
+  }
+  const mutableTarget = `candidate/skills/${value.targetSkill}/${
+    value.targetReference ?? "SKILL.md"
+  }`;
+  if (value.mode === "optimize" && value.mutablePaths[0] !== mutableTarget) {
+    context.addIssue({
+      code: "custom",
+      message: "The mutable path must be the selected target document",
       path: ["mutablePaths"],
     });
   }
@@ -117,9 +131,11 @@ async function verifyFiles(
   const mutable = new Set(workspace.mutablePaths);
 
   for (const path of mutable) {
-    if (immutable.has(path)) failures.push(`${path}: both mutable and immutable`);
+    if (immutable.has(path)) {
+      failures.push(`${path}: both mutable and immutable`);
+    }
     try {
-      await Deno.stat(join(workspaceRoot, path));
+      await sourceFile(workspaceRoot, path);
     } catch {
       failures.push(`${path}: mutable path is missing`);
     }
@@ -132,7 +148,7 @@ async function verifyFiles(
       continue;
     }
     try {
-      if (await hash.file(join(workspaceRoot, path)) !== expected) {
+      if (await hash.file(await sourceFile(workspaceRoot, path)) !== expected) {
         failures.push(`${path}: immutable content changed`);
       }
     } catch (error) {
@@ -141,25 +157,36 @@ async function verifyFiles(
   }
 
   for (const path of Object.keys(workspace.immutableDigests)) {
-    if (!immutable.has(path)) failures.push(`${path}: unowned immutable digest`);
+    if (!immutable.has(path)) {
+      failures.push(`${path}: unowned immutable digest`);
+    }
   }
   for (const treePath of ["candidate/skills", "companions/skills"]) {
     const path = join(workspaceRoot, treePath);
     try {
       for await (const file of walkFiles(path)) {
-        const workspacePath = relative(workspaceRoot, file);
+        const workspacePath = relative(workspaceRoot, file).replaceAll(
+          "\\",
+          "/",
+        );
         if (!immutable.has(workspacePath) && !mutable.has(workspacePath)) {
           failures.push(`${workspacePath}: unregistered skill file`);
         }
       }
     } catch (error) {
-      if (!(error instanceof Deno.errors.NotFound)) throw error;
+      if (!(error instanceof Deno.errors.NotFound)) {
+        failures.push(`${treePath}: cannot verify skill files: ${error}`);
+      }
     }
   }
   return failures;
 }
 
-/** Recompute each logical skill-tree revision recorded by the export manifest. */
+/**
+ * Pin immutable evaluation trees and companions to their export revisions.
+ * An optimize target may change its one declared file; verifyFiles protects
+ * every other byte while its original revision remains export provenance.
+ */
 async function verifySkills(
   workspaceRoot: string,
   workspace: SkillOptWorkspaceType,
@@ -173,7 +200,12 @@ async function verifySkills(
       const actual = await tree.getDigest(join(workspaceRoot, relativeRoot));
       const expected = workspace.skillRevisions[skill];
       if (!expected) failures.push(`${skill}: skill revision is missing`);
-      else if (actual !== expected) failures.push(`${skill}: skill revision changed`);
+      else if (
+        actual !== expected &&
+        !(workspace.mode === "optimize" && skill === workspace.targetSkill)
+      ) {
+        failures.push(`${skill}: skill revision changed`);
+      }
     } catch (error) {
       failures.push(`${skill}: cannot verify skill revision: ${error}`);
     }
@@ -198,14 +230,31 @@ async function verifyCases(
   );
   const observed = new Map<string, string>();
   const dataRoot = join(workspaceRoot, "data");
+  const allowedSplits = workspace.mode === "optimize"
+    ? new Set(["train", "valid-seen"])
+    : workspace.mode === "evaluate"
+    ? new Set(["valid-unseen", "transfer", "adversarial"])
+    : new Set(["test-frozen"]);
 
   try {
     for await (const path of walkFiles(dataRoot)) {
       if (!path.endsWith(".jsonl")) continue;
+      const split = basename(path, ".jsonl");
+      if (!allowedSplits.has(split)) {
+        failures.push(
+          `${split}: split is not allowed in ${workspace.mode} mode`,
+        );
+        continue;
+      }
       for (const line of (await Deno.readTextFile(path)).split("\n")) {
         if (!line.trim()) continue;
         try {
           const item = EvalCaseSchema.parse(JSON.parse(line));
+          if (item.split !== split) {
+            failures.push(
+              `${item.id}: case split does not match ${split}.jsonl`,
+            );
+          }
           if (observed.has(item.id)) {
             failures.push(`${item.id}: exported case appears more than once`);
             continue;
@@ -213,8 +262,9 @@ async function verifyCases(
           const digest = await hash.text(JSON.stringify(item));
           observed.set(item.id, digest);
           const expectedDigest = expected.get(item.id);
-          if (!expectedDigest) failures.push(`${item.id}: unregistered exported case`);
-          else if (digest !== expectedDigest) {
+          if (!expectedDigest) {
+            failures.push(`${item.id}: unregistered exported case`);
+          } else if (digest !== expectedDigest) {
             failures.push(`${item.id}: exported case digest changed`);
           }
         } catch (error) {
@@ -230,7 +280,9 @@ async function verifyCases(
   }
 
   for (const record of workspace.cases) {
-    if (!observed.has(record.id)) failures.push(`${record.id}: exported case is missing`);
+    if (!observed.has(record.id)) {
+      failures.push(`${record.id}: exported case is missing`);
+    }
   }
   const actualSetDigest = await hash.text(
     [...observed.entries()]

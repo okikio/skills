@@ -59,7 +59,7 @@ extension. A file named `data.db` may be a required test fixture or leaked
 production-like state; a file named `tool` may be source or an 84 MB executable.
 
 Before calling two archives different versions, compare normalized relative
-paths and hashes. The retained `old-finance` and `new-finance` archives contain
+paths and hashes. Two retained application archives with different names contained
 identical source content despite different archive identities; inventing an
 evolution story would be a provenance error.
 

@@ -1,0 +1,404 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "rust-data-layout-train",
+      "title": "Choose a representation for the complete export",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A native Rust event exporter currently stores Vec<Event>. A proposal uses one Vec per field. A preliminary flag-only scan is faster, but the export must validate IDs, preserve event order and serialize every field once before releasing the records. The author measured neither construction nor full export and compared only the number of emitted rows. Plan the smallest useful comparison and the decision it can support. The exporter has no Wasm requirement. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/shared/guides/rust/data-oriented-design.md",
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/shared/handbook/rust/data-design.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Maps validation, selection, full-record serialization and release to fields, traversal order and actual pass counts before selecting a layout.",
+        "Keeps the current safe representation and complete independent expected output, including ID validity, ordering, errors and relevant empty/tail cases; a row count alone is insufficient.",
+        "Separates layout from text ownership and allocation strategy and measures construction, the required full export and release as well as the narrow scan.",
+        "Bases the decision on the complete native operation and maintenance costs; does not infer an export speedup from the scan or add Wasm as a new requirement."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-guide",
+        "portable-rust-data-design-procedure",
+        "portable-rust-data-design-handbook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "layout",
+        "train"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-data-layout-seen",
+      "title": "Compare a batched transform across declared hosts",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A Rust image transform supports a native ARM application and a browser Wasm worker. A proposed block-of-columns representation processes four channels in batches. The hot loop improved on one native machine, but the browser result must be converted into interleaved pixels and short final batches have not been checked. Define an evidence-backed implementation decision and verification plan without claiming new measurements. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/shared/guides/rust/data-oriented-design.md",
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/shared/handbook/rust/data-design.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Maps input conversion, channel processing, output interleaving and release to access patterns and lifetimes; considers whether removing a pass is preferable to changing storage.",
+        "Uses complete independently expected pixel output and error/limit cases, including empty input and final partial batches; checks checked indexing and narrowing on the declared targets.",
+        "Separates layout, conversion and acceleration effects and measures the complete operation plus relevant repeated-pass counts.",
+        "Keeps native ARM and browser Wasm evidence and baselines distinct, exercises both declared consumers, and does not treat native timing or a successful browser build as browser behavior."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-guide",
+        "portable-rust-data-design-procedure",
+        "portable-rust-data-design-handbook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "layout",
+        "valid-seen"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-data-layout-held-out",
+      "title": "Preserve stable handles during incremental updates",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A native Rust timeline editor stores clips in a contiguous record vector and gives UI callbacks stable handles. A proposed compact-ID side table plus columns makes a read-only summary smaller. Editing also deletes clips, reuses freed slots and can fail partway through inserting metadata. No edit path or callback lifetime was included in the comparison. Plan how to decide whether to adopt the representation. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/shared/guides/rust/data-oriented-design.md",
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/shared/handbook/rust/data-design.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Traces summary, insertion, deletion, slot reuse and callbacks rather than treating the read-only summary as the whole workload.",
+        "Makes handle generation or lifetime, equal column lengths, remapping and partial-failure invariants explicit; tests stale and invalid handles and the observable result after failed updates.",
+        "Prefers safe containers and complete independent outputs before custom unsafe storage, and compares mutation, complete lookup and build/release costs at relevant sizes.",
+        "Retains the project native scope, reports the summary result as limited evidence, and names a bounded editor-consumer check before claiming an improvement."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-guide",
+        "portable-rust-data-design-procedure",
+        "portable-rust-data-design-handbook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "layout",
+        "valid-unseen"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-data-retention-train",
+      "title": "Decide whether retaining source spans saves memory",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A Rust report parser returns a few labels that can outlive the request. Its new span-based result owns the entire source buffer so the labels stay valid. A request can contain 64 MiB while the retained labels total 32 bytes, and eight workers may retain results concurrently. The proposed change is described as zero-copy and therefore lower-memory. Plan an appropriate comparison and ownership decision. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/shared/guides/rust/data-oriented-design.md",
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/shared/handbook/rust/data-design.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Explains how a small escaped result retains the source owner, compares an owned-small-result alternative, and preserves validity after request input release.",
+        "Separates copying, output materialization and retention from record layout, and checks exact labels, byte ranges, Unicode boundaries and malformed/limit behavior.",
+        "Measures complete construction/use/release and retained memory with the declared input distribution and concurrency; does not substitute parent heap or allocation-call count for total memory.",
+        "Treats zero-copy as a mechanism rather than proof of lower memory and selects copying, spans or a bounded hybrid only from the actual lifetime and evidence."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-guide",
+        "portable-rust-data-design-procedure",
+        "portable-rust-data-design-handbook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "retention",
+        "train"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-data-retention-seen",
+      "title": "Evaluate a pool after a workload spike",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A long-running native Rust parser reuses an arena. Allocation calls fell on repeated large inputs, but later small requests leave the arena capacity high. A proposed fix discards every arena above an arbitrary threshold, while another teammate proposes shrinking after every request. Peak RSS, small-large-small behavior and shutdown have not been measured. Define the next comparison and what each observation would mean. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/shared/guides/rust/data-oriented-design.md",
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/shared/handbook/rust/data-design.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Keeps repeated-large and small-large-small request sequences distinct and records retained state after reset and final release.",
+        "Compares current reuse, fresh allocation and a measured retention policy on equal output and full lifecycle, including the churn introduced by discard or shrink behavior.",
+        "Separates allocation calls, used bytes, retained capacity, peak live bytes and RSS; does not promise that deallocation lowers residency.",
+        "Derives any threshold from workload, budget and concurrency, preserves inconclusive timings, and does not infer latency or memory improvement from fewer allocation calls alone."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-guide",
+        "portable-rust-data-design-procedure",
+        "portable-rust-data-design-handbook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "retention",
+        "valid-seen"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-data-retention-held-out",
+      "title": "Keep foreign views valid across cancellation and reuse",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A Rust library sends borrowed result views to a C callback that may retain them until an explicit release call. An optimization reuses a phase buffer when the async request is cancelled. A throughput benchmark joins only successful requests and runs one consumer at a time. The product allows several requests in flight. Review the ownership decision and define the evidence needed for the change. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/shared/guides/rust/data-oriented-design.md",
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/shared/handbook/rust/data-design.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Traces cancellation, callback retention, explicit foreign release and concurrent requests; does not assume cancellation ends the foreign consumer lifetime.",
+        "Requires valid view ownership or an explicit copy/transfer protocol before buffer reuse, with generation or lifetime checks where needed and complete result/error semantics.",
+        "Preserves cancelled and failed attempts and measures full acquire/work/cancel/release behavior, bounded concurrency and retained storage rather than success-only throughput.",
+        "Uses the actual C consumer and independent output/lifetime checks before accepting the optimization; keeps undocumented runtime and host support unclaimed."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-guide",
+        "portable-rust-data-design-procedure",
+        "portable-rust-data-design-handbook"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "retention",
+        "valid-unseen"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-layout-evidence-train",
+      "title": "Assess a source-derived layout prototype",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "train",
+      "prompt": "A team cites an upstream compiler that stores semantic fields in separate columns. Its local prototype repeats nine labels from a unit fixture into thousands of records, scans one flag and compares output checksums. The production operation walks a tree, validates associations and emits ordered records. The report calls the prototype a verified production speedup. Review the claim and identify the next bounded experiment. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/layout-evidence.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Separates upstream source inspection, the synthetic record projection and the production representation; an upstream choice does not establish a local performance result.",
+        "Requires complete independently expected output and matching validation, ordering and ownership before relying on checksums or ranking timings.",
+        "Keeps scan-only, construction, whole-record traversal and output costs distinct and states which mechanism the prototype changed.",
+        "Narrows the claim to the observed prototype and asks for a caller-level comparison preserving the actual product contract and workload before a production claim."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-procedure",
+        "portable-rust-layout-evidence"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "evidence",
+        "train"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-layout-evidence-seen",
+      "title": "Separate parser execution from semantic-table review",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A Rust dependency report inspected Oxc semantic-table source at commit A, then installed a package with the same version label whose package metadata points to commit B. The probe parses source and visits syntax nodes under one native host. Its result claims that the inspected semantic engine is verified on native and browser hosts. No raw artifact hashes or independent diagnostic expectations were saved. Assess the evidence and the smallest repair. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/layout-evidence.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Preserves distinct source-review and resolved-package identities and checks the exact enabled features and artifact before connecting them.",
+        "Explains that parsing and syntax visiting do not establish name resolution, type checking or execution of the semantic-table implementation.",
+        "Requires independent relevant syntax/diagnostic expectations and retained source, commands, errors and artifact identity; distinguishes cross-policy equality from an independent oracle.",
+        "Limits the current result to the executed native operation and identifies a bounded probe for any required semantic or browser claim without inventing prior execution."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-procedure",
+        "portable-rust-layout-evidence"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "evidence",
+        "valid-seen"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    },
+    {
+      "id": "rust-layout-evidence-held-out",
+      "title": "Review an apparent allocator win with mismatched evidence",
+      "skill": "rust-software",
+      "kind": "trajectory",
+      "split": "valid-unseen",
+      "prompt": "A report compares a native baseline that constructs, projects and releases owned records with a WASI candidate that visits prebuilt arena records. The candidate has fewer requested allocation calls. A new zipped traversal was added only to the last process, but all candidates are described as independently confirmed. The author calls an observed four-round range a confidence interval and says lower capacity proves lower RSS. Review what can be concluded and define a valid next comparison. Use the relevant installed Rust guidance. Ground the response in the supplied facts and do not claim that a command, benchmark or host check was executed.",
+      "expectedSkills": [
+        "rust-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "rust-software/references/data-oriented-design.md",
+        "rust-software/references/layout-evidence.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Rejects combining different hosts and lifecycle boundaries into a like-for-like speed comparison; uses separate comparable baselines and equal complete output.",
+        "Distinguishes requested calls, retained capacity and RSS and does not infer memory residency or allocator-only causation when representation or placement changed.",
+        "Identifies the zipped traversal as unconfirmed by the earlier processes and treats the observed range as descriptive rather than a confidence interval.",
+        "Retains the original samples and failures, proposes a fresh balanced comparison with exact identities and equivalent work, and narrows the decision until that evidence exists."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-rust-data-design-procedure",
+        "portable-rust-layout-evidence"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "rust",
+        "data-design",
+        "evidence",
+        "valid-unseen"
+      ],
+      "rationale": "The scenario requires a decision about equivalent behavior, ownership and evidence scope. The nonempty-response assertion checks output integrity only; the task-specific rubric governs semantic quality."
+    }
+  ]
+}

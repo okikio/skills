@@ -142,7 +142,7 @@ tests before claiming compliance.
 
 ### Archive names do not prove change
 
-The retained old/new finance archives normalize to identical contents. Describe
+Two retained application archives normalized to identical contents. Describe
 one evidence body with duplicate provenance, not a migration history.
 
 ### Documentation can outrun exports

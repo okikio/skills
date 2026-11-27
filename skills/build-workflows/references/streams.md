@@ -1,5 +1,15 @@
 # Workflow event streams, cursors, and SSE projections
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 ## Contents
 
 - [Separate workflow history from public events](#separate-workflow-history-from-public-events)
@@ -184,6 +194,4 @@ Test:
 - Temporal visibility/history and TypeScript workflow documentation:
   https://docs.temporal.io/develop/typescript and https://docs.temporal.io/visibility
   (primary sources; raw history is not treated as a public contract).
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/workflows/`
-  and `evidence/web/kaiju-site-scope/` (workflow timeline and product-scope
-  evidence; public stream projection design remains inferred until tested).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/streams/events.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

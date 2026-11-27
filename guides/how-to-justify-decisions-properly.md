@@ -1,4 +1,4 @@
-> **Current standards note (2026-08-19):** Use [Engineering Standards](./engineering-standards.md) for current cross-project naming, schema/type, comments/TSDoc, formatting, testing, logging, dependency, compatibility, validation, and delivery rules. This document remains authoritative for its domain-specific design and dated implementation evidence where it is more specific.
+> **Current standards note (2026-08-19):** Use [Engineering Standards](engineering-standards.md) for current cross-project naming, schema/type, comments/TSDoc, formatting, testing, logging, dependency, compatibility, validation, and delivery rules. This document remains authoritative for its domain-specific design and dated implementation evidence where it is more specific.
 
 ## 1. Core Principle
 

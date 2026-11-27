@@ -1,4 +1,6 @@
-import { isAbsolute, join, relative, resolve } from "node:path";
+import { join, resolve } from "node:path";
+import { sourceFile } from "./guidance.ts";
+import { InstalledReferenceSchema } from "./paths.ts";
 import type { RolloutResponseType } from "./protocol.ts";
 import * as tree from "./tree.ts";
 
@@ -28,25 +30,17 @@ async function getInvalidReferences(
   const root = resolve(skillsRoot, "skills");
 
   for (const reference of references) {
-    const [skill, first, ...rest] = reference.split("/");
+    const skill = reference.split("/")[0];
     if (
-      !skill || !installed.has(skill) || first !== "references" ||
-      rest.length === 0 || !reference.endsWith(".md") ||
-      rest.includes("..") || isAbsolute(reference)
+      !installed.has(skill) ||
+      !InstalledReferenceSchema.safeParse(reference).success
     ) {
       invalid.push(reference);
       continue;
     }
 
-    const path = resolve(root, reference);
-    const relation = relative(root, path);
-    if (isAbsolute(relation) || relation.startsWith("..")) {
-      invalid.push(reference);
-      continue;
-    }
     try {
-      const stat = await Deno.stat(path);
-      if (!stat.isFile) invalid.push(reference);
+      await sourceFile(root, reference);
     } catch {
       invalid.push(reference);
     }
@@ -102,7 +96,9 @@ export async function check(options: CheckOptionsType): Promise<string[]> {
   }
 
   try {
-    const baseline = await tree.digest(await tree.snapshot(options.baselineRoot));
+    const baseline = await tree.digest(
+      await tree.snapshot(options.baselineRoot),
+    );
     if (baseline !== options.baselineDigest) {
       errors.push("Rollout modified the hidden fixture baseline");
     }

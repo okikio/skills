@@ -2,9 +2,33 @@
 
 **Status:** current cross-project engineering standard  
 **Revision:** 2026-08-19  
-**Applies to:** Kaiju Platform, Kaiju Crawl, MediaD, OPFS, Luchalibre, Testrange, related packages, and new TypeScript projects unless a repository has a more specific rule
+**Applies to:** TypeScript repositories using these standards; repository-specific instructions narrow their application
 
 **Clarified on October 14, 2026:** functional composition, service-owned contracts, Mise tasks, and CI selection.
+
+## Apply by purpose (2026-10-14)
+
+Treat conventions as protections for a concrete contract. Namespace imports
+make coherent runtime operation families legible; direct test-runner/assertion,
+schema, and type imports remain appropriate. A private test fixture is not a
+public API. Document test helpers when they own a non-obvious invariant, not to
+meet a mechanical comment quota. Runtime schemas own validated serialized data,
+not every ephemeral local object or live behavioral interface.
+
+When using [okikio/utils](https://github.com/okikio/utils), read `use-utils`, the
+consumer's resolved public exports and the relevant implementation/tests. Source
+versions and published releases are separate evidence. Preserve the existing
+dependency owner when it meets the task; historical workspace aliases do not
+establish a current API.
+
+## Relationship to the compact baseline
+
+[Software quality](software-quality.md) owns the shared obligations. The
+[base reference](../references/base.md) supplies the compact engineering detail;
+this guide explains the rationale and examples. Use the owning project's
+requirements for runtime, toolchain, schema and naming choices. Installed
+bundles carry the same required sources with local links. Do not treat an older
+handoff or a copied example as a newer contract.
 
 ## Why this standard exists
 
@@ -17,6 +41,39 @@ The main idea is straightforward:
 > A reader should be able to understand what the system owns, how data and resources move through it, what can fail, and how the implementation was verified without reconstructing the design from scattered code and chat history.
 
 That affects architecture, names, schemas, comments, documentation, testing, logs, tooling, and the final artifact.
+
+## Readability and ownership
+
+Make every result clear enough for the user to understand, maintain, and share
+with someone who has not read the chat. Essential understanding must not depend
+on the author, an AI assistant, or missing conversation history. Apply this to
+explanations, research, plans, progress updates, code, names, comments, tests,
+interfaces, errors, documentation, commits, PRs, releases, and handoffs,
+including delegated work when delegation is authorized.
+
+Before starting, identify the intended reader, their task, the source of truth,
+and the context needed to follow the work. Include an understandable explanation
+and usable handoff in substantial acceptance criteria.
+
+For work spanning a product or several components, explain three connected
+views: the customer outcome and why it matters; the user's steps, visible
+results, and recovery options; and the system's owners, data, state changes, and
+failures. Trace one representative flow across them. Use concrete behavior
+before implementation vocabulary, and connect each technical decision to its
+effect on that flow. Do not substitute a list of components for the explanation.
+
+Before finishing, inspect the actual deliverable as a reader with the expected
+background who has not seen the conversation. Review words and names, sentences,
+explanation order, document navigation, code and system traceability, and
+ownership handoff. Lead with the concrete problem and behavior, then explain
+mechanisms, reasons, constraints, tradeoffs, and failures. Preserve necessary
+technical detail. The reader must be able to follow the steps, recognize the
+outcome, distinguish evidence from assumptions, and maintain the behavior.
+
+Revise essential gaps before claiming completion. Technical verification and
+understandable, maintainable, shareable work are both required. Scale the review
+to the task: a small answer needs a brief internal check, not a ritual checklist.
+Do not claim that technical checks or an AI review prove human comprehension.
 
 ## Authority when sources disagree
 
@@ -73,9 +130,12 @@ For a non-trivial change, inspect enough of these to understand the real effect:
 
 A public operation should be traceable through its important internal dependencies. Review the normal path and the paths that can corrupt state, leak resources, leave stale work active, or disagree across runtimes.
 
-## Architecture has three main placement levels
+## Architecture separates ownership roles
 
-The same placement rule now appears repeatedly across the projects:
+These are ownership roles, with one possible application layout below. The
+utility repository puts generic mechanisms under `packages/*`; its directory
+name does not make them product capabilities. Use the existing repository's
+layout and dependency graph rather than adding a second `utils/` tree.
 
 ```text
 utils/
@@ -91,7 +151,7 @@ clis/ and apps/
   executable composition, user interaction, and product policy
 ```
 
-### `utils/` is for generic mechanics
+### Generic mechanics remain useful outside the product
 
 A utility should remain meaningful outside the current domain.
 
@@ -109,7 +169,7 @@ process control
 generic codec representation conversion
 ```
 
-### `packages/` is for concrete capabilities
+### Concrete capabilities own domain semantics
 
 A concrete capability can be reusable without being generic.
 
@@ -127,7 +187,7 @@ media inspection
 storage providers
 ```
 
-Do not move a concrete capability into `utils/` merely because several applications use it.
+Sharing across applications does not erase a capability's domain semantics. Name and package the actual contract; folder names alone do not decide ownership.
 
 ### Composition belongs at executable roots
 
@@ -153,13 +213,13 @@ A reusable library can expose the capability. The executable decides how the pro
 Dependencies should move toward more foundational code.
 
 ```text
-apps / clis
+executable composition
     |
     v
-packages
+domain capabilities
     |
     v
-utils
+generic mechanisms
 ```
 
 Focused third-party libraries and Web APIs can enter at the layer that actually uses them.
@@ -524,7 +584,7 @@ A public `defineConfig(...)`-style helper should provide schema-derived contextu
 
 ## Standard Schema is for validator interoperability
 
-Zod is the normal first-party executable schema authoring tool in these projects.
+Zod is the default executable schema authoring example in this collection. Preserve a project's selected validator when it meets the contract.
 
 A generic package should not require Zod-specific introspection merely to accept a validator. When the real requirement is:
 
@@ -811,13 +871,13 @@ Use hierarchical categories that follow subsystem ownership:
 ```text
 media.convert
 media.download
-kaiju.browser.capture
-kaiju.analysis.extract
+app.browser.capture
+app.analysis.collect
 ```
 
 Avoid encoding all searchable dimensions in a message string. Keep stable properties structured. Use lazy properties for expensive diagnostic values and rate controls for repetitive hot paths when the record volume justifies them.
 
-The custom Kaiju formatter remains the default when it communicates Kaiju records, stages, metrics, process/resource trees, and compact success summaries better than a generic formatter. Treat `@logtape/pretty` as a useful reference or fallback, not an automatic replacement. Test narrow terminals, non-TTY output, multiline values, causes, and structured property rendering.
+Keep a repository-selected formatter when it communicates its records, stages, metrics, resource trees and completion summaries clearly. Treat `@logtape/pretty` as a useful reference or fallback, not an automatic replacement. Test narrow terminals, non-TTY output, multiline values, causes, and structured property rendering.
 
 ### Logs do not replace domain authority
 
@@ -859,7 +919,7 @@ Current LogTape 2.3.1 keeps a plain `Sink` synchronous. When output requires asy
 
 ## Optique is selected per CLI, not imposed on every library
 
-Kaiju CLIs that use Optique should let Optique own command grammar, choices, aliases, typo suggestions, source-aware parsing, help, completion, and manuals instead of duplicating those systems. Use `@optique/logtape` when its logging grammar matches the CLI instead of hand-building equivalent verbosity/output options.
+CLIs that use Optique should let Optique own command grammar, choices, aliases, typo suggestions, source-aware parsing, help, completion, and manuals instead of duplicating those systems. Use `@optique/logtape` when its logging grammar matches the CLI instead of hand-building equivalent verbosity/output options.
 
 That does not make Optique the parser for every project. A project can deliberately own a native parser. Luchalibre is an example of the distinction:
 
@@ -1161,11 +1221,15 @@ consumer flow
 
 Use the repository's canonical Deno tasks when available. Record every native gate as **passed**, **failed**, **blocked**, or **not applicable**. A blocked runtime check is not success. State the exact runtime/tool that was unavailable.
 
-When Deno or JSR is unavailable in an agent host, keep production imports unchanged. Use disposable `.agents/` validation with Node tooling only to prove what can be proved. Do not migrate production code to Node to satisfy the validation host.
+When Deno or JSR is unavailable in an agent host, keep production imports unchanged. A disposable host adaptation can prove only the behavior it actually exercises. Keep it in the repository-approved ignored investigation workspace, and record the native checks that remain unavailable. Do not migrate production code to Node to satisfy the validation host.
 
-## `.agents/` is disposable validation infrastructure
+## Keep maintained guidance separate from disposable investigation
 
-`.agents/` can hold:
+An installed `.agents/` tree contains maintained skills, guides and references.
+Preserve its source ownership and complete document dependencies. Do not place
+temporary shims, generated test builds or one-off scripts beside that guidance.
+
+Use the repository's established ignored investigation directory for:
 
 - temporary host shims;
 - generated test builds;
@@ -1173,9 +1237,14 @@ When Deno or JSR is unavailable in an agent host, keep production imports unchan
 - compatibility declarations used only by the validation host;
 - investigation scripts and reports.
 
-It must not become a production dependency or package export.
+Verify that Git ignores the directory and that normal test discovery, package
+contents, build inputs and container contexts exclude it. Do not impose a new
+directory name when the project already has an appropriate location. Temporary
+validation code must not become a production dependency or package export.
 
-Canonical repository tests should remain in the repository's normal test architecture.
+Keep durable regression tests and recurring tooling with their maintained
+owners. Preserve useful investigation evidence through the project's recovery
+process before discarding scratch files.
 
 ## `.mise/tasks/` owns repository tasks
 
@@ -1240,7 +1309,7 @@ Do not call work complete when a claimed behavior remains untested.
 These cross-project rules were rechecked on 2026-08-19. Repository lockfiles and current primary documentation still decide version-specific implementation details.
 
 - LogTape: https://logtape.org/ and https://logtape.org/changelog. LogTape 2.3.1 is the current release verified for this refresh. A plain `Sink` remains synchronous; asynchronous output uses `AsyncSink` and `fromAsyncSink()`.
-- Optique: https://optique.dev/ and its changelog. Optique 1.2.1 is the current stable release verified for this refresh; 1.3.0 material is unreleased and must not be presented as current stable behavior.
+- Optique: https://optique.dev/ and its changelog. The earlier source snapshot used Optique 1.2.1 and treated 1.3.0 as unreleased. Check the installed version and current release evidence before applying those examples.
 - Oxc: https://oxc.rs/docs/. Reuse the repository-selected Oxc parser, transform, lint, format, or resolver path when it satisfies the need instead of silently creating a parallel compiler stack.
 - Standard Schema: https://standardschema.dev/. Standard Schema validator interoperability and Standard JSON Schema representation are separate contracts.
 - Unplugin Icons: https://github.com/unplugin/unplugin-icons. Verify the exact bundler/framework compiler and generated SSR/SSG output rather than assuming an integration is correct because the package is installed.

@@ -1,5 +1,15 @@
 # PostgreSQL and Drizzle operational design
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 Use this reference for PostgreSQL schema, Drizzle ORM runtime, Drizzle Kit migrations, `postgres.js` client ownership, cross-schema relations, concurrency, and production verification. Treat Drizzle's schema types, query runtime, driver, and Kit artifacts as related but distinct systems.
 
 ## Contents
@@ -50,21 +60,22 @@ Put concurrency-sensitive invariants in PostgreSQL when it is the authority:
 
 Application validation improves errors but does not replace database constraints under concurrency.
 
-The retained finance schema separates `auth`, `finance`, and `workflows`; finance rows include `organization_id`; money uses `numeric(19,4)` with currency; state-like text fields have checks; and cross-schema relationships are explicit. Those are observed patterns, not universal table names.
+Choose schemas, precision, state checks, and tenant keys from the application's domain. No fixed schema names, money precision, or organization hierarchy apply to every database.
 
 ## Tenant and cross-schema design
 
 For tenant-owned relationships, consider composite keys so the database can prevent cross-tenant references:
 
 ```ts
-const account = finance.table('account', {
+// Fragment: schema/table builders come from the selected Drizzle version.
+const account = applicationSchema.table('account', {
   id: text().primaryKey(),
   organizationId: text('organization_id').notNull(),
 }, (t) => [
   unique('account_org_id_uq').on(t.organizationId, t.id),
 ])
 
-const entry = finance.table('entry', {
+const entry = applicationSchema.table('entry', {
   organizationId: text('organization_id').notNull(),
   accountId: text('account_id').notNull(),
 }, (t) => [
@@ -75,13 +86,17 @@ const entry = finance.table('entry', {
 ])
 ```
 
-PostgreSQL foreign keys target a primary key, unique constraint, or another supported unique key shape. The retained finance guide documents a real issue: a standalone unique index was not the right ownership when another table referenced the composite columns; use a table `UNIQUE` constraint for referenced key semantics. Do not duplicate `.unique()` and `uniqueIndex()` on the same columns.
+A referenced composite key needs a supported PostgreSQL uniqueness contract. Prefer an explicit table constraint when that is the intended invariant; inspect generated SQL and the selected server version. A supported non-partial unique index can also back a foreign key, so an index is not categorically invalid. See [PostgreSQL 18 CREATE TABLE](https://www.postgresql.org/docs/18/sql-createtable.html) for the referenced-key requirements. Avoid duplicate constraints/indexes on the same key.
 
-Database-level tenant integrity does not replace authorization. Queries must still bind the current authorized organization and resource.
+Database-level tenant integrity does not replace authorization. A foreign key
+can prove that a referenced row belongs to the stored organization while saying
+nothing about whether this caller may act for that organization. Bind the
+verified caller's allowed organization/resource in the actual read/write path;
+do not accept an organization ID merely because a matching database row exists.
 
 ## Drizzle schema and import ownership
 
-In monorepos, establish one dependency/version owner for Drizzle. The retained finance package exposes a central `@utils/db/drizzle` surface because Drizzle classes with private/protected fields can become TypeScript-incompatible when separate packages resolve different copies. Verify whether the consumer has this failure before centralizing imports, but avoid mixed versions and duplicate runtime class identities.
+In monorepos, inspect actual dependency resolution and class/type identity before centralizing Drizzle imports. Duplicate incompatible copies can break assignability and runtime identity. Choose the consumer's dependency owner; an application barrel is a local dependency decision, not a required public utility export.
 
 Separate exports:
 
@@ -134,7 +149,7 @@ Decide:
 - shutdown order and in-flight drain;
 - query logging/redaction owned by the application's observability layer.
 
-The retained `createDatabase()` constructs the client internally and returns only Drizzle. That can hide `client.end()`; repair the ownership rather than assuming the wrapper closes itself. It correctly separates optional LogTape sink configuration from database construction in the newer client file, while the retained server contains import-time logging configuration as a counterexample. Do not force LogTape if the consumer selected another observability owner.
+If a factory constructs a native client and returns only an ORM facade, check how the host reaches its close operation. Return or retain an explicit disposer and make shutdown ownership clear. Configure logging at host startup, not during import or pool construction. Preserve the consumer's selected observability library.
 
 ## Configuration model
 
@@ -155,11 +170,11 @@ interface DatabaseConfig {
 
 Importing schema or types should not require environment access, open a connection, or configure global logging. Tests and CLIs should be able to inject an explicit URL/client. Redact credentials from errors and diagnostic configuration.
 
-The retained package defaults `max` to 10 and `prepare` to false. Those are repository choices, not universal defaults. Derive them from the actual database/proxy/replica topology.
+Derive pool limits and prepared-statement policy from the actual database/proxy/replica topology. An example's connection count or prepare setting is not a portable default.
 
 ## Migration workflow
 
-The retained finance package uses:
+This configuration fragment illustrates ownership; resolve paths, environment, and keys from the selected repository and Drizzle Kit version:
 
 ```ts
 defineConfig({
@@ -185,9 +200,16 @@ At the consuming version, confirm config keys and CLI behavior. The operational 
 
 Use generated SQL migrations as reviewed history. `push` can be useful for disposable exploration but bypasses the same reviewed artifact sequence; do not use it as durable production history by accident.
 
-If intentionally rebuilding the baseline, remove/regenerate the complete migration metadata set coherently. The retained guide notes that deleting only parts of `drizzle/meta` can leave a missing journal. Never repair migration state by guessing which generated files are disposable.
+If the task authorizes rebuilding a baseline, regenerate SQL, snapshots and the journal as one coherent history. Preserve the recoverable previous state and verify the result on a disposable database. Never repair migration state by guessing which generated files are disposable.
 
 ## Transactions and concurrency
+
+Turn a claimed invariant into a competing-write expectation. For example, if a
+unique logical key permits one active owner, run two transactions for that key:
+one acceptance and one defined conflict, or a documented serialized result,
+with no duplicate durable owner. Test the selected invariant, isolation and
+retry path on a disposable database upgraded from empty and prior schemas.
+Mentioning concurrency or locks alone does not specify the expected outcome.
 
 Define transactions around authoritative state transitions, not repository method count. Test the actual driver/dialect transaction API and isolation.
 
@@ -276,12 +298,7 @@ Test:
 
 ## Executable verification
 
-Run pinned repository tasks, not generic commands if the project wraps Drizzle through Aube/mise/npm/Deno. The retained finance guide uses:
-
-```bash
-aube --dir utils/db db:generate
-aube --dir utils/db db:migrate
-```
+Discover and run the owning repository's pinned generation and migration tasks. Confirm their working directory, configuration, and database target. Use the consumer's task runner and actual migration owner.
 
 In a disposable database, apply committed migrations, inspect `pg_constraint`, `pg_indexes`, schemas, and migration history, then run real service queries. Upgrade a copied prior schema. Run two or more concurrent clients against uniqueness and claim paths. Stop the process during in-flight work and assert the pool closes or the documented timeout expires.
 
@@ -299,4 +316,4 @@ In a disposable database, apply committed migrations, inspect `pg_constraint`, `
 
 ## Sources and freshness
 
-Grounded in the retained new/old finance `utils/db` README, `client.ts`, `env.ts`, `drizzle.ts`, `drizzle.config.ts`, generated migration, auth/finance/workflow schemas, package manifests, and workflow PostgreSQL store, reviewed 2026-07-17. Observed package versions include Drizzle ORM 0.45.x, Drizzle Kit 0.31.x, and postgres.js 3.4.x in the uploaded package manifest; APIs and configuration are version-sensitive. Verify installed versions, lockfile resolution, generated artifacts, and real PostgreSQL behavior before copying examples.
+Primary references: [PostgreSQL constraints](https://www.postgresql.org/docs/current/ddl-constraints.html), [Drizzle migrations](https://orm.drizzle.team/docs/migrations) and [Drizzle transactions](https://orm.drizzle.team/docs/transactions). Verify the installed ORM, Kit, driver and server, then inspect generated SQL and real database behavior. The public utility source does not prescribe an application schema, generic database factory, migration folder or task runner.

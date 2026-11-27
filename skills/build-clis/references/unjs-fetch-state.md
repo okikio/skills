@@ -41,17 +41,20 @@ The exact stable package artifacts verified on 2026-07-17 are:
 | `ofetch` | `1.5.1` | npm 1.5.1 package README, exports, declarations, and built source | npm `alpha` is `2.0.0-alpha.3` |
 | `unstorage` | `1.17.5` | npm 1.17.5 package, declarations, drivers, core, and official guide | npm `alpha` is `2.0.0-alpha.7` |
 | `ohash` | `2.0.11` | npm 2.0.11 package README, exports, and declarations | npm `1x` is `1.1.6` |
-| `hookable` | `6.1.1` | npm 6.1.1 package README, exports, declarations, and built source | attached projects also pin `5.5.3` |
+| `hookable` | `6.1.1` | npm 6.1.1 package README, exports, declarations, and built source | historical example graphs also pinned `5.5.3` |
 
 Treat the version in the repository manifest and lockfile as authoritative for
-that repository. The attached evidence contains several distinct states:
+that repository. Historical project reviews recorded distinct dependency graphs,
+represented here as anonymized examples:
 
-- the attached CLI lock resolves `ohash@2.0.11`;
-- the attached finance, Better Auth, Kaiju website, and motion locks resolve
-  stable `ofetch@1.5.1`, `unstorage@1.17.5`, and `ohash@2.0.11` transitively;
-- attached projects resolve both `hookable@5.5.3` and `hookable@6.1.1`;
-- the attached Kaiju site scope also resolves `ofetch@2.0.0-alpha.3` and
-  `unstorage@2.0.0-alpha.7` through another dependency graph.
+- a CLI lockfile resolved `ohash@2.0.11`;
+- application, auth-integration, site, and motion examples resolved stable
+  `ofetch@1.5.1`, `unstorage@1.17.5`, and `ohash@2.0.11` transitively;
+- the example graphs included both `hookable@5.5.3` and `hookable@6.1.1`;
+- another application graph resolved `ofetch@2.0.0-alpha.3` and
+  `unstorage@2.0.0-alpha.7`.
+
+These are historical version combinations, not claims about the active project.
 
 A lockfile occurrence proves resolution, not direct application use or an
 approved API. Do not copy the stable examples below into an alpha dependency.
@@ -746,7 +749,7 @@ or resource cleanup.
 `callHook`. Use it only when those operations are sufficient. It is absent from
 the verified 5.5.3 package.
 
-The attached dependency graphs contain both 5.5.3 and 6.1.1. Common operations
+The historical example graphs contained both 5.5.3 and 6.1.1. Common operations
 such as `createHooks`, `hook`, `hookOnce`, sequential `callHook`, and parallel
 `callHookParallel` exist in the inspected v5.5.3 line, but v6 adds
 `HookableCore` and `clearHook` and changes the low-level `callHookWith` calling
@@ -1022,15 +1025,9 @@ Verified 2026-07-17 from primary package artifacts and official documentation:
   `sha512-U9LYDy1CwhMCnprUfeAZWZGByVbhd54hwepegYTK7Pi5NvqEj63ifz5z+xukznehT7i6NIZRu89Ay1AZmRsLEQ==`.
 - Official Hookable v6.1.1 source:
   <https://github.com/unjs/hookable/tree/v6.1.1>.
-- Attached version evidence: `live-browser-cli(41).zip/deno.lock`,
-  `new-finance-app(1).zip/aube-lock.yaml`,
-  `old-finance-app(1).zip/aube-lock.yaml`,
-  `better-auth.zip/aube-lock.yaml`,
-  `kaiju-website(6).zip/pnpm-lock.yaml`,
-  `kaiju-site-scope(17).zip/pnpm-lock.yaml`,
-  `solid-primitives(2).zip/pnpm-lock.yaml`,
-  `solid-motion-experiments.zip/aube-lock.yaml`, and
-  `thunderstrike-blog(4).zip/pnpm-lock.yaml`.
+- Historical version scope: CLI, application, auth-integration, site, and motion
+  lockfile reviews from 2026-07-17, adapted into the anonymized graph examples
+  above. Verify the active lockfile and consumer imports before adoption.
 
 Freshness limitations:
 
@@ -1040,7 +1037,7 @@ Freshness limitations:
   lines.
 - only representative unstorage drivers were inspected in detail; verify the
   exact selected driver, peer package, and backend behavior.
-- package presence in attached locks is not evidence that application code uses
+- package presence in historical example locks is not evidence that application code uses
   the package directly or relies on the behavior documented here.
 - no claim is made that a generic storage driver supplies transactions,
   compare-and-set, durable watches, or workflow recovery without backend-level

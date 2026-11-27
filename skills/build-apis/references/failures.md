@@ -1,5 +1,14 @@
 # API failure diagnosis, recovery, and reachability
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution and read the
+service reference for definitions, compilation, and Fetch runtime ownership.
+The rules below apply to the selected implementation, not a required app layout.
+Hono validation examples apply only to a Hono-owned validation path; compiled
+services supply validated `input` and their own rejection contract. Verify each example against the resolved artifact before implementation.
+
+
 Use this reference to diagnose API behavior that is wrong, unreachable, unsafe, duplicated, leaking internals, or operationally incomplete. Start from the executable request path. Definitions, generated OpenAPI, types, and handler files can all exist while the capability remains unreachable.
 
 ## Contents
@@ -53,7 +62,7 @@ Never upgrade a lower rung into a higher claim.
 | Service imports but cannot boot alone | hidden root dependency/env/global side effect | import graph, config/resource creation | standalone composition-root boot |
 | Correct route under wrong prefix | base path/function/mount drift | host routing and generated URLs | deployed-path request |
 
-The retained service guides make `mod.ts` the contract registry and `index.ts` the runtime composition/handler registry. Those names are local design evidence, not a universal framework requirement. Preserve the separation and add conformance at the consumer's actual registration seam.
+Separate the declared service contract from runtime composition and handler registration. The consumer owns file names and layout. Test conformance where its actual host binds handlers to the contract.
 
 ## Validation and contract failures
 
@@ -93,7 +102,7 @@ Failure signatures:
 - thrown exception bypasses stable problem mapping;
 - proxy headers trusted from untrusted peers.
 
-The retained finance server is a useful counterexample: it documents default CORS as allowing all origins, configures LogTape at module import, uses top-level await, and contains visible patch-marker lines in a doc comment. Do not copy it as a production default. Preserve the consuming application's logging/configuration owners and import safety.
+Check CORS against the actual route audience. Keep application LogTape configuration and resource startup at the executable root; importing a definition must not read environment configuration, start listeners, or configure process-wide logging.
 
 ## Authentication and authorization failures
 
@@ -220,4 +229,4 @@ Use repository-native tasks and a real HTTP client. Assert exact middleware invo
 
 ## Sources and freshness
 
-Grounded in the retained finance service-module authoring/structure guides; endpoint, validation, query, response, server, auth, middleware, and workflow utilities; and observed counterexamples including wildcard CORS defaults, import-time LogTape configuration, registry reachability risks, private schema inference mistakes, and incomplete workflow adapters, reviewed 2026-07-17. Framework, validation, auth, observability, and runtime APIs are version-sensitive; inspect the consuming repository and run actual requests before asserting capability.
+Primary utility source: [`server/service`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/server/service/mod.ts), [`http`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/http/mod.ts) and [`capability/resource`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/capability/resource/mod.ts). The tables describe conditions to investigate; they do not assert that a current library or consumer contains those defects. Reproduce a failure against the resolved framework, validation, authentication and runtime versions before assigning a cause.

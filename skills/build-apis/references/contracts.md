@@ -1,5 +1,14 @@
 # API contracts, validation, OpenAPI, and problems
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution and read the
+service reference for definitions, compilation, and Fetch runtime ownership.
+The rules below apply to the selected implementation, not a required app layout.
+Hono validation examples apply only to a Hono-owned validation path; compiled
+services supply validated `input` and their own rejection contract. Verify each example against the resolved artifact before implementation.
+
+
 ## Contents
 
 - [Contract layers](#contract-layers)
@@ -266,12 +275,10 @@ under a new schema while an older worker remains responsible for the run.
 
 ## Sources and freshness
 
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/endpoint/`,
-  `utils/middleware/validation.ts`, `utils/response/`, and `utils/query/`
-  (observed executable contracts and tests).
 - Standard Schema specification: https://github.com/standard-schema/standard-schema
   (primary source; validate the installed specification version).
 - Zod v4 documentation: https://zod.dev/ (primary source; examples assume v4).
 - OpenAPI Specification: https://spec.openapis.org/oas/latest.html (primary source;
   generator/library support can lag the latest specification).
 - RFC 9457 Problem Details: https://www.rfc-editor.org/rfc/rfc9457.html (stable standard).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/server/endpoint/mod.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

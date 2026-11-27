@@ -56,5 +56,4 @@ describe("evaluation corpus schema", () => {
     });
     expect(parsed.success).toBe(false);
   });
-
 });

@@ -1,5 +1,15 @@
 # Workers, queues, schedules, waits, and flow control
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 ## Contents
 
 - [Worker process contract](#worker-process-contract)
@@ -104,9 +114,9 @@ Schedule contract includes timezone, daylight-saving behavior, overlap, missed
 runs, catch-up window, jitter, pause/resume, backfill, start identity, and
 cancellation.
 
-Do not compute cron behavior with an interval helper. The uploaded scheduler
-explicitly declines to advance cron without calendar/timezone expansion; retain
-that honesty. Use a tested parser/platform and fixture DST transitions.
+Do not compute cron behavior with an interval helper. Require an explicit
+calendar/timezone implementation or reject the unsupported schedule. Use a tested
+parser or platform and test daylight-saving transitions.
 
 Publishing a due schedule and advancing `next_run_at` must be atomic or
 reconciled. Stable schedule-occurrence IDs deduplicate repeat scans.
@@ -219,5 +229,4 @@ and downstream saturation.
   (primary source, checked 2026-07-17).
 - Temporal TypeScript Worker documentation: https://docs.temporal.io/develop/typescript/workers
   (primary source; exact tuning/versioning options are SDK-version-sensitive).
-- Attachments, verified 2026-07-17: `evidence/app/new-finance/utils/workflows/worker/`
-  and `utils/workflows/env.ts` (observed source with cron and atomicity gaps called out).
+- Public utility source: [contract at the pinned revision](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/worker/mod.ts). Source availability is separate from release availability; inspect the selected consumer adapter and test its claimed behavior.

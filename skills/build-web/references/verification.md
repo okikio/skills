@@ -1,5 +1,12 @@
 # Web verification manual
 
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
+
+
 Use this reference to prove a web change across build artifacts, server output, hydration, browser behavior, accessibility, security, connected systems, performance, and resource lifetime. A passing typecheck is not a browser result.
 
 ## Contents
@@ -16,6 +23,12 @@ Use this reference to prove a web change across build artifacts, server output, 
 - Failure injection
 - Evidence report
 - Sources and freshness
+
+For difficult text, translated labels, and data-boundary checks, use the
+[Break UI catalog](../../design-interfaces/references/rendered-content.md).
+It owns field limits, fixture choices, and decisions about visible content.
+For drag cancellation, native scroll conflicts, or claims about how a phone's
+browser chrome and keyboard affect controls, use [touch interactions](touch-interactions.md).
 
 ## Verification target inventory
 
@@ -244,7 +257,7 @@ Do not merge failed and blocked checks. Do not claim a deployed, cross-browser, 
 
 ## Sources and freshness
 
-- Uploaded executable patterns reviewed 2026-07-17: `solid-motion-experiments.zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, `kaiju-website(6).zip`, `solid-primitives(2).zip`.
+- Historical source scope: motion, application, marketing, and Solid Primitives reviews from 2026-07-17, adapted into anonymized verification scenarios. Execute the selected checks against the active project.
 - Modern Web Guidance accessibility, security, forms, and deferred-rendering guides retrieved 2026-07-17.
 - Astro view transitions: https://docs.astro.build/en/guides/view-transitions/ (reviewed 2026-07-17).
 - Browser performance APIs and framework build commands are version-sensitive. Prefer repository-owned scripts and the target-browser policy.

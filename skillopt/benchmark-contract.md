@@ -4,6 +4,14 @@ Each SkillOpt case provides a prompt, optional repository fixture, required and
 forbidden routing behavior, deterministic assertions, and an optional
 qualitative rubric.
 
+An ownership migration can add an explicit `interpretation` with
+`schemaVersion: 1`, `kind: "skill-owner-migration"`, `legacyOwner` and
+`currentOwner`. The current owner must be positively expected, and the legacy
+owner must be absent from routing expectations. This records a name and
+ownership change while preserving the original prompt, assertions and rubric.
+It does not supply new acceptance criteria. An unannotated case keeps its
+original prompt without inferred aliases.
+
 ## Exported workspace
 
 The exported workspace contains:
@@ -13,6 +21,10 @@ The exported workspace contains:
 - `candidate/skills/<target>/references/`: selectively loaded candidate context;
   immutable during a root-router pass, with exactly one selected file mutable
   during an individual-reference pass;
+- `candidate/skills/<target>/references/shared/`: materialized shared guides,
+  references, handbook documents and their linked assets;
+- `candidate/skills/<target>/bundle.json`: source-to-install provenance and
+  per-file digests; supporting documents at the skill root are also retained;
 - `companions/skills/<skill>/`: immutable companion skill trees selected with
   `--with`;
 - `workspace.json`: target, companions, mutable/immutable paths, skill and case
@@ -20,9 +32,34 @@ The exported workspace contains:
 - `data/*.jsonl`: only the splits permitted by the selected export mode.
 
 `verifyWorkspace()` treats the skill trees **and evaluation data** as one export.
-It recomputes per-file immutable digests, each logical skill-tree revision, every
-JSONL case digest, and the complete case-set digest. A workspace does not pass
+It recomputes per-file immutable digests, companion revisions, every JSONL case
+digest and the complete case-set digest. Evaluation and release also require an
+exact target revision. Optimize mode permits its one declared mutable file to
+differ while retaining the original target revision as provenance. A workspace does not pass
 because its skill Markdown is unchanged while its held-out cases were edited.
+
+Skill revisions identify the actual installed bytes after Markdown links are
+relocated. Shared dependency bytes participate in that identity. Each companion
+has its own complete revision and immutable files. A target rollout receives a
+fresh copy, so mutations cannot change another rollout's installed dependencies.
+Symbolic entries fail integrity scans instead of disappearing from the digest.
+
+`--candidate-workspace` selects a verified optimize input for an evaluate or
+release export. Its target, optimization unit, reference and companions must
+match the requested topology. The exporter copies that candidate and its
+immutable dependencies, validates installed local links, refreshes the changed
+file's installed digest in bundle provenance and pins the complete new revision.
+It keeps original source digests. Candidate selection rejects other workspace
+modes before reading their case data, so frozen data cannot become a training
+input through this option.
+
+Capability completeness uses canonical authored paths. A shared source has one
+capability owner even when it is copied into many skills. A case refers to the
+copy in its selected skill, such as
+`prepare-pull-requests/references/shared/references/diagrams.md`. Reading that
+document does not require activating its capability owner's skill. Each
+capability's own `evalIds` must still require its exact installed reference and
+provide train, seen and held-out evidence.
 
 Optimize mode exposes train and valid-seen. Evaluate mode exposes valid-unseen,
 transfer, and adversarial cases. Release mode exposes only test-frozen. Never
@@ -60,6 +97,12 @@ The provider adapter owns provider-specific skill exposure, model invocation,
 sandboxing, and provider-observable telemetry. It must not guess activation or
 reference-read events that the provider cannot prove.
 
+For an annotated case, the runner appends a deterministic versioned ownership
+note to the original prompt. Both target and judge receive this effective prompt
+through the existing required `prompt` field. The target receives no rubric or
+assertion text. The judge receives the original criteria with the same ownership
+context. No additional adapter protocol field or version is required.
+
 `--without-target` creates a genuine no-skill variant: the target skill is not
 present in the disposable installation root and is omitted from the provider
 request. Exported companions remain installed. The normalized result still
@@ -71,6 +114,15 @@ case set across topologies.
 `skillopt:report` accepts complete normalized result sets. It does not read a
 mutable canonical case file to reinterpret an old run. Each result must match an
 exact case digest and the exact workspace case-set digest from which it ran.
+
+Exported JSONL retains the original case text and interpretation metadata. Both
+contribute to the parsed case and case-set digests. Removing or changing
+the interpretation invalidates that export and results from its prior identity.
+The trace records the interpretation, original prompt, effective prompt, each
+prompt's SHA-256 digest, and the original rubric. Provider request readback also
+checks that the serialized effective prompt was not modified during invocation.
+Reports continue to use the pinned exported case identity; they do not infer a
+new owner from current source files or rewrite historical scores.
 
 An evaluate report requires exactly one evaluate workspace. A release report
 requires exactly one evaluate workspace plus one release workspace with the same

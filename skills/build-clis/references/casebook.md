@@ -1,4 +1,11 @@
-# Kaiju CLI casebook
+# CLI architecture casebook
+
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
+
 
 ## Contents
 
@@ -28,11 +35,11 @@
 
 Load this casebook when a CLI has multiple input sources, generated command
 surfaces, durable artifacts, long-running source work, or the Optique + c12 +
-defu + LogTape + Zod stack. It gives concrete trace shapes from the Kaiju CLI so
-an agent can identify live behavior instead of relying on README claims,
-guidebook aspirations, or package-name recall.
+defu + LogTape + Zod stack. Its anonymized examples show how to trace a CLI's
+actual behavior through entrypoints, consumers, and checks. The `collector`
+executable, local helper names, and paths are illustrative; resolve the
+corresponding owners in the active repository.
 
-This is not a promise that every ideal lifecycle feature is complete in Kaiju.
 Keep three states separate while reviewing or editing:
 
 | State | Meaning | Required evidence |
@@ -43,13 +50,13 @@ Keep three states separate while reviewing or editing:
 
 ## Repository trace index
 
-Start with this map before changing a public CLI surface:
+Use this example map to find corresponding owners before changing a public CLI surface:
 
 | Concern | Primary files | What to inspect |
 |---|---|---|
 | Root command graph | `clis/main/src/shared/program.ts`, `clis/main/src/commands/index.ts` | Static command imports, `runProgram()` metadata, help/completion policy, source contexts, hooks |
 | Compatibility entrypoints | `clis/main/src/browser.ts`, `commoncrawl.ts`, `warc.ts`, `domains.ts`, `shared/entrypoint.ts` | Delegation to root program, bootstrap error logging, raw logging flag recovery |
-| Source contexts | `clis/main/src/shared/source.ts` | `KAIJU_` env source, c12 config source, route-derived default source, fallback order |
+| Source contexts | `clis/main/src/shared/source.ts` | `PROJECT_` env source, c12 config source, route-derived default source, fallback order |
 | Shared parser fragments | `shared/output.ts`, `shared/routes.ts`, `shared/run-config.ts`, `shared/logging.ts`, `shared/time.ts` | aliases, env/config binding, derived defaults, early controls, Temporal values |
 | Help-only defaults | `shared/defaults.ts`, `shared/defaults.test.ts` | `documentDefault()` preserves sparse parse output while feeding Optique docs |
 | Config overlay | `shared/config.ts` | `resolveCommandConfig()`, `applyConfigPatch()`, explicit argv provenance aliases |
@@ -93,8 +100,8 @@ Classify each public term first:
 
 ## Portable CLI policy overlay
 
-Kaiju is the worked example, but the reusable lesson is broader: a production
-CLI has an execution architecture and a human-interface policy. Optique,
+The worked example separates a CLI's execution architecture from its
+human-interface policy. Optique,
 LogTape, c12, defu, and Zod can implement pieces of that policy; none of them
 decides the product contract.
 
@@ -259,26 +266,26 @@ The parser does not own:
 
 ### Source contexts
 
-Kaiju uses three Optique source contexts:
+The example composes three Optique source contexts:
 
 ```ts
-export const kaijuEnvContext = createEnvContext({
-  prefix: "KAIJU_",
+export const envContext = createEnvContext({
+  prefix: "PROJECT_",
   envFile: [".env", ".env.local"],
 });
 
-export const kaijuConfigContext = createConfigContext({
+export const configContext = createConfigContext({
   schema: projectConfigPatchSchema,
 });
 
-export const kaijuDerivedDefaults = createDerivedDefaults({
+export const derivedDefaults = createDerivedDefaults({
   run_id: (parsed) => firstRouteValue(parsed)?.toLowerCase().replace(/[^a-z0-9._-]+/gu, "-"),
 });
 
-export const kaijuSourceContexts = [
-  kaijuEnvContext,
-  kaijuConfigContext,
-  kaijuDerivedDefaults.context,
+export const sourceContexts = [
+  envContext,
+  configContext,
+  derivedDefaults.context,
 ] as const;
 ```
 
@@ -322,7 +329,7 @@ Command modules should do only four things:
 3. resolve that patch against the hook-provided config snapshot;
 4. run the source project and print the stable result.
 
-Kaiju-style command shape:
+Illustrative command shape:
 
 ```ts
 export async function run(options, context) {
@@ -348,10 +355,10 @@ call `resolveConfig()` when hook context is present.
 The root program should be the only place that joins parser, source contexts,
 config snapshot, and logger resource.
 
-Observed Kaiju shape:
+Illustrative program shape:
 
 ```ts
-await runProgram<KaijuProgramResource>({
+await runProgram<ProgramResource>({
   commands,
   args,
   metadata,
@@ -359,7 +366,7 @@ await runProgram<KaijuProgramResource>({
   completion: "both",
   showDefault: true,
   showChoices: true,
-  contexts: kaijuSourceContexts,
+  contexts: sourceContexts,
   contextOptions: {
     async load(parsed) {
       const bootstrap = bootstrapConfigOptionsSchema.parse(parsed ?? {});
@@ -517,7 +524,7 @@ support, then let the complete runtime schema apply executable defaults.
 c12 owns project config discovery and authoring composition, not the final
 runtime contract.
 
-Kaiju-style loader policy:
+Illustrative loader policy:
 
 ```ts
 await loadConfig<ProjectConfigPatch>({
@@ -568,7 +575,7 @@ loader controls.
 
 ## Config merge and provenance mechanics
 
-Kaiju uses different schema shapes and different merge moments:
+The example separates schema shapes and merge stages:
 
 | Shape | Purpose | Defaults allowed? |
 |---|---|---|
@@ -708,7 +715,7 @@ a field was:
 3. inherited from the loaded base snapshot;
 4. supplied by the final Zod default.
 
-Kaiju's `inferExplicitCliProvenance()` collects supplied flags from argv and
+The example's `inferExplicitCliProvenance()` collects supplied flags from argv and
 maps aliases back to config paths:
 
 ```ts
@@ -932,7 +939,7 @@ Stable results must be pipe-safe:
 ```ts
 export function printCliResult(value: unknown, json: boolean, human: string): void {
   const result = json ? `${JSON.stringify(value, null, 2)}\n` : `${human}\n`;
-  emitKaijuResult(result);
+  emitProgramResult(result);
 }
 ```
 
@@ -940,7 +947,7 @@ The underlying LogTape config should isolate result output:
 
 ```ts
 {
-  category: ["kaiju", "result"],
+  category: ["project", "result"],
   sinks: ["result"],
   parentSinks: "override",
 }
@@ -954,7 +961,7 @@ inherit diagnostic prefixes and break automation.
 Diagnostics should carry structured properties:
 
 ```ts
-getKaijuLogger("cli", "entrypoint").error("{message}", {
+getProgramLogger("cli", "entrypoint").error("{message}", {
   error,
   message: `Config failed: ${error.message}`,
   command,
@@ -967,15 +974,15 @@ redaction must see nested keys such as `authorization`, `password`, `cookie`,
 
 ### Bootstrap failure route
 
-Some failures occur before the full parser or loaded config exists. Kaiju uses a
-small raw-argv recovery path:
+Some failures occur before the full parser or loaded config exists. The example
+uses a small raw-argv recovery path:
 
 ```text
 raw argv
   -> readPreHandlerLoggingOptions()
-  -> configureKaijuLogging()
+  -> configureProgramLogging()
   -> log one redacted entrypoint error
-  -> resetKaijuLogging()
+  -> resetProgramLogging()
   -> exit usage/config class
 ```
 
@@ -997,7 +1004,7 @@ duplicate the whole domain parser.
 Representative command:
 
 ```text
-kaiju browser detect --route example.com --capture-profile max --wacz --out out/browser
+collector browser detect --route example.com --capture-profile max --wacz --out out/browser
 ```
 
 Flow:
@@ -1035,7 +1042,7 @@ Key implementation details:
 Representative command:
 
 ```text
-kaiju commoncrawl detect --route https://example.com --crawls latest:2 --range-cache --out out/cc
+collector commoncrawl detect --route https://example.com --crawls latest:2 --range-cache --out out/cc
 ```
 
 Flow:
@@ -1071,7 +1078,7 @@ Key implementation details:
 Representative command:
 
 ```text
-kaiju warc detect --warc ./capture.warc.gz --route https://example.com --out out/warc
+collector warc detect --warc ./capture.warc.gz --route https://example.com --out out/warc
 ```
 
 Flow:
@@ -1105,7 +1112,7 @@ Key implementation details:
 Representative command:
 
 ```text
-kaiju domains verify --input domains.txt --audit --output accepted.txt --retry-output retry.txt
+collector domains verify --input domains.txt --audit --output accepted.txt --retry-output retry.txt
 ```
 
 Flow:
@@ -1208,7 +1215,7 @@ composition root owns signal
   -> stable cancellation exit
 ```
 
-Observed Kaiju behaviors to account for:
+Illustrated behaviors to check in the active repository:
 
 | Area | Behavior | Guardrail |
 |---|---|---|
@@ -1287,13 +1294,12 @@ Observed Kaiju behaviors to account for:
 
 ## Sources and freshness
 
-- Observed implementation: attached Kaiju CLI source tree, including Optique 1.2
-  migration, c12 two-merger config behavior, LogTape routing, stage writer,
-  browser/WARC/Common Crawl/domain source runs, and Zod default application points.
-- Normative source: `productionized-cli-pattern-guidebook-v1.2.md`, reviewed
-  2026-07-22.
-- Expansion notes: `productionized-cli-pattern-guidebook-v1.2-notes.md`,
-  `cli-guidelines-audit-and-expansion.md`, and
-  `kaiju-config-resolution-handoff.md`, reviewed 2026-07-22.
-- Re-check installed package exports, lockfile versions, and current tests before
-  copying APIs or behavior into another repository.
+- Historical source scope: CLI and configuration reviews from 2026-07-22,
+  adapted into anonymized examples of Optique 1.2 integration, c12 merge policy,
+  LogTape routing, artifact writers, source work, and Zod defaults.
+- Portable contract guidance: [architecture](architecture.md),
+  [configuration](config.md), and the
+  [CLI policy audit](../../../guides/cli-guidelines-audit-and-expansion.md).
+- Verify installed package exports, lockfile versions, active consumers, and
+  executed tests before adopting an example. These traces do not establish
+  current maintained APIs or successful execution in another repository.

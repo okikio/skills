@@ -8,7 +8,7 @@ Use this reference for native, Astro, React, Solid, TanStack Form, auth, file, p
 - Form state machine
 - Native form foundation
 - Validation timing and schemas
-- TanStack Form pattern from the finance app
+- TanStack Form pattern in a hybrid application
 - Async validation and races
 - Submission, idempotency, and optimistic state
 - Authentication and sensitive forms
@@ -146,9 +146,9 @@ const serverProfile = clientProfile.extend({
 
 Do not add `organizationId` to a public form schema if the server can derive the active organization.
 
-## TanStack Form pattern from the finance app
+## TanStack Form pattern in a hybrid application
 
-The uploaded finance app uses `@tanstack/react-form` 1.33 with Zod via form-level `onBlur` and `onSubmit` validators. Better Auth remains the request owner.
+One reviewed application uses `@tanstack/react-form` 1.33 with Zod via form-level `onBlur` and `onSubmit` validators. Better Auth remains the request owner.
 
 ```tsx
 const signInSchema = z.object({
@@ -315,7 +315,7 @@ For long-lived drafts handle server version conflicts. Do not overwrite a change
 
 ## Sources and freshness
 
-- Uploaded `new-finance-app(1).zip` and `old-finance-app(1).zip` auth forms, Astro shells, TanStack Form 1.33 usage, and auth capability interface, reviewed 2026-07-17.
+- Uploaded a product application archive and an earlier archive of that application auth forms, Astro shells, TanStack Form 1.33 usage, and auth capability interface, reviewed 2026-07-17.
 - TanStack Form validation docs: https://tanstack.com/form/latest/docs/framework/react/guides/validation (reviewed 2026-07-17).
 - Modern Web Guidance forms/accessibility/security guides retrieved 2026-07-17.
 - TanStack Form, Astro navigation, Better Auth, and passkey APIs are version-sensitive. Verify installed package APIs and provider policy.

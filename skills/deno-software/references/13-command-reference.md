@@ -28,7 +28,7 @@ import maps
 JSR/npm publish configuration
 ```
 
-The presence of Deno does not mean every task is Deno-only. Many Okikio/Kaiju repositories use Deno as the primary runtime while keeping Node/browser compatibility.
+The presence of Deno does not mean every task is Deno-only. Some repositories use Deno as the primary runtime while keeping Node/browser compatibility.
 
 ## Formatting
 
@@ -59,7 +59,7 @@ Check public entrypoints and runtime-specific subpaths that the package claims t
 
 ## Testing
 
-Deno can execute both Deno-native tests and Node-compatible `node:test` suites. The current Okikio/Kaiju default for portable package tests is:
+Deno can execute both Deno-native tests and Node-compatible `node:test` suites. For Deno-first portable package tests, this collection defaults to:
 
 ```ts
 import { describe, it } from "node:test";

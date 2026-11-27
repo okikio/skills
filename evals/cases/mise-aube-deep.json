@@ -47,7 +47,8 @@
         "config"
       ],
       "rationale": "Tests Mise as a layered toolchain rather than a single version file.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-devtools-mise-task-semantics",
@@ -95,7 +96,8 @@
         "tasks"
       ],
       "rationale": "Exercises operational task properties and their non-obvious failure behavior.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-devtools-mise-lock-provenance",
@@ -143,7 +145,8 @@
         "provenance"
       ],
       "rationale": "Held-out case prevents overclaiming lockfile and backend guarantees.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-devtools-aube-existing-lockfile",
@@ -191,7 +194,8 @@
         "migration"
       ],
       "rationale": "Tests Aube's coexistence capability without silently changing ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-devtools-aube-build-jail",
@@ -239,7 +243,8 @@
         "security"
       ],
       "rationale": "Exercises Aube's distinctive lifecycle security model.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-devtools-aube-workspace-deploy",
@@ -288,7 +293,8 @@
         "deploy"
       ],
       "rationale": "Held-out case covers the workspace ecosystem around the installer.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "deep-devtools-mise-aube-owner-loop",
@@ -338,7 +344,8 @@
         "safety"
       ],
       "rationale": "Composition case within one ecosystem catches mutually recursive tool ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     }
   ]
 }

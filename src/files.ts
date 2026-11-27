@@ -4,10 +4,14 @@ import { join } from "node:path";
  * Yields ordinary files below `root` in deterministic lexical order.
  *
  * Directories are traversed recursively. Symbolic links and other filesystem
- * entry kinds are not yielded, which keeps exported workspace digests tied to
- * the ordinary files the repository explicitly copies and verifies.
+ * entry kinds fail the scan so integrity checks cannot silently omit an
+ * unexpected dependency or follow files outside the inspected tree.
  */
 export async function* walkFiles(root: string): AsyncGenerator<string> {
+  const info = await Deno.lstat(root);
+  if (!info.isDirectory || info.isSymlink) {
+    throw new Error(`Refusing to scan non-directory entry: ${root}`);
+  }
   const entries = [];
   for await (const entry of Deno.readDir(root)) entries.push(entry);
   entries.sort((left, right) => left.name.localeCompare(right.name));
@@ -16,6 +20,7 @@ export async function* walkFiles(root: string): AsyncGenerator<string> {
     const path = join(root, entry.name);
     if (entry.isDirectory) yield* walkFiles(path);
     else if (entry.isFile) yield path;
+    else throw new Error(`Refusing to scan non-file entry: ${path}`);
   }
 }
 

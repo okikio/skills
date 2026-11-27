@@ -14,7 +14,7 @@ Before changing tooling, map the current owners:
 | Lint and format | repository tasks/config | Oxc, Deno, Biome, ESLint/Prettier |
 | Transform and bundle | build config, package exports | Oxc, Unplugin, Vite, Rollup, tsdown |
 | Browser tests | test config | Playwright |
-| Package tests | imports and tasks | `node:test` + `@std/expect` in current Okikio/Kaiju repos |
+| Package tests | imports and tasks | `node:test` + `@std/expect` for Deno-first portable packages, unless the project selects another runner |
 | Benchmarks | benchmark files/tasks | Mitata when selected |
 | Release | CI, release config, registry metadata | repository-selected release tooling |
 
@@ -63,6 +63,12 @@ mise run verify
 ```
 
 The names are examples, not requirements. Read the repository before invoking or creating tasks.
+
+Before adding package discovery or dispatch code, apply the
+[native-tool procedure](../../../handbook/engineering/native-tools.md).
+Use native member selection and package-owned tasks where they meet the
+contract. Keep any additional orchestration tied to a demonstrated missing
+behavior and migrate its callers before removing it.
 
 ## Oxc is a coherent selected toolchain, not a universal dependency
 

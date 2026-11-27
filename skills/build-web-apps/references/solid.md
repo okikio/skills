@@ -1,5 +1,12 @@
 # Solid and Solid Primitives
 
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
+
+
 ## Contents
 
 - Reactive ownership
@@ -152,7 +159,7 @@ EventBus is appropriate for hot one-to-many notifications. Do not replace routab
 
 ## Motion and presence lifecycle
 
-Treat the attached Solid motion package as experimental. The evidence notes incomplete gesture types and SSR/presence caveats. Use proven Solid Primitives or Web Animations/CSS where they satisfy the behavior. A type-compatible motion prototype is not production parity.
+Treat the illustrative Solid motion integration as experimental. The evidence notes incomplete gesture types and SSR/presence caveats. Use proven Solid Primitives or Web Animations/CSS where they satisfy the behavior. A type-compatible motion prototype is not production parity.
 
 Presence must preserve exit lifetime, cancellation/interruption, nested ownership, focus, reduced motion, and deterministic server output. Verify rapid enter/exit toggles and route navigation.
 
@@ -184,6 +191,6 @@ Presence must preserve exit lifetime, cancellation/interruption, nested ownershi
 ## Sources and freshness
 
 - Primary: [Solid Primitives documentation](https://primitives.solidjs.community/), verified 2026-07-17 for the published ecosystem and package-level guidance.
-- Attachments: `solid-primitives(2).zip` and `kaiju-site-scope(17).zip/apps/frontend`, inspected 2026-07-17 for package inventory, maturity stages, ownership, cleanup, SSR, scheduling, and consumer integration.
+- Historical source scope: Solid Primitives and application-consumer reviews from 2026-07-17, adapted into anonymized ownership, cleanup, SSR, and scheduling examples. Verify current package maturity and installed exports.
 
 Individual primitive APIs and maturity stages are package-version-sensitive. Experimental or stage-listed packages are not stable merely because they appear in the monorepo; verify their package manifest, README, tests, and installed version.

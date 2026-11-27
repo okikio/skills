@@ -192,7 +192,11 @@ Avoid deep imports unless there is no public alternative. If unavoidable, isolat
 
 ## Sources and freshness
 
-- Primary: [Drizzle ORM documentation](https://orm.drizzle.team/docs/overview), verified 2026-07-17 for public schema, SQL, dialect, driver/session, query, migration, relation, and transaction concepts.
-- Attachment: `kaiju-site-scope(17).zip/libs/clickhouse`, inspected 2026-07-17 for the custom Drizzle-like implementation and its dependency on Drizzle SQL internals.
+Primary source: [Drizzle documentation](https://orm.drizzle.team/docs/overview)
+for public schema, SQL, query, migration, relation and transaction concepts.
+The module and conformance criteria in this guide describe how to evaluate an
+adapter; they do not assert that a named custom adapter implements them.
 
-Drizzle internals and deep imports are version-sensitive. The uploaded Kaiju adapter is architecture evidence, not a published universal package contract; its package identity and public API are unverified.
+Drizzle internals and deep imports are version-sensitive. Resolve the actual
+package, declarations and source, then verify the adapter's compiler, native
+transport and migration behavior at its supported dependency versions.

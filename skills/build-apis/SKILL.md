@@ -1,9 +1,42 @@
 ---
 name: build-apis
-description: Design, implement, refactor, review, diagnose, or verify HTTP APIs and service modules. Use for endpoint definitions, handlers, Hono composition, Standard Schema or Zod validation, stable response and problem contracts, middleware order, authentication, organization/resource authorization, Better Auth, pagination, query specifications, OpenAPI, observability, streaming, deployment resources, and executable request tests. Do not use for an incidental fetch call with no API contract change.
+description: Design, implement, refactor, review, diagnose, or verify HTTP APIs and service modules. Use for endpoint definitions, handlers, service compilation, Fetch runtimes, gateways, optional Hono adapters, Standard Schema or Zod validation, stable response and problem contracts, middleware order, authentication, organization/resource authorization, Better Auth, pagination, query specifications, OpenAPI, observability, streaming, deployment resources, and executable request tests. Do not use for an incidental fetch call with no API contract change.
 ---
 
 # Build APIs and service modules
+
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
 
 This skill owns the transport-to-domain contract and service composition of an
 HTTP API. A route is not complete because a schema and handler file exist. It
@@ -11,7 +44,7 @@ must be registered, reachable through the real middleware stack, authorized,
 connected to its resource owner, represented accurately in generated contracts,
 and exercised through an executable request.
 
-`deliver-software` owns the overall change and final verdict.
+the shared quality contract owns the overall change and final verdict.
 `explore-ecosystems` owns dependency topology. `build-data` owns database/query
 semantics. `build-workflows` owns durable background execution. Keep those
 owners distinct.
@@ -88,7 +121,9 @@ route actually implements it.
    belong on the schema fields so editor/tooling users see the contract.
 3. **Validate at the owning layer.** Parse hostile transport input before domain
    code. Keep domain semantic validation distinct from parser/coercion rules.
-   Never read `c.req.valid(...)` before matching validator middleware executed.
+   For Hono-owned validation, read `c.req.valid(...)` only after the matching
+   validator. A compiled utility service supplies validated `input` itself; do
+   not add a second Hono validator or infer its failure status from old examples.
 4. **Responses are complete contracts.** Define status, headers, body, empty
    success, pagination metadata, and problem/error variants. Do not model only
    the happy payload.
@@ -101,7 +136,9 @@ route actually implements it.
 7. **Own resources at the composition root.** Pools, auth clients, workflow
    runtimes, long-lived HTTP clients, and application LogTape configuration are
    not rebuilt per request and are closed/drained deliberately.
-8. **Effect is conditional.** If the repository selected Effect, keep services,
+8. **Effect is conditional.** `@okikio/capability/effect` announces
+   declared side effects; it is distinct from the Effect TypeScript runtime.
+   If the repository selected the Effect runtime, keep services,
    Layers, typed errors, Scope/finalizers, and request runtime composition
    coherent. Do not add Effect merely because this skill has an Effect reference.
 9. **Unavailable behavior is explicit.** Do not expose a stub route that returns
@@ -179,8 +216,8 @@ Test or inspect:
 
 ## Reference routing
 
-- [service-modules.md](references/service-modules.md): definition/handler split,
-  grouping, service registries, composition roots, reachability, and deployment.
+- [service-modules.md](references/service-modules.md): import-safe definitions,
+  exact bindings, compilation, Fetch runtimes, gateways, and listener ownership.
 - [contracts.md](references/contracts.md): Standard Schema, Zod, request
   sources, normalization, responses, problems, OpenAPI, and evolution.
 - [effect-services.md](references/effect-services.md): Effect services,
@@ -190,6 +227,8 @@ Test or inspect:
   organization/resource policy, routes, and operational flows.
 - [queries.md](references/queries.md): filters, sorts, fields, pagination,
   counts, authorization constraints, and query construction.
+- [gateways.md](references/gateways.md): imported route authority, forwarding
+  policy, trust metadata, credentials, redirects, and response-body lifetime.
 - [runtime.md](references/runtime.md): HTTP adapters, middleware order,
   resources, LogTape, timeouts, errors, security, and shutdown.
 - [streaming.md](references/streaming.md): SSE framing, cursors, replay,
@@ -207,3 +246,12 @@ is proven, documented responses match executable behavior, generated API
 artifacts agree with the mounted service, and deployment/streaming behavior has
 been tested where claimed. Report unrun external-provider or deployment gates
 explicitly.
+
+## Project procedures
+
+When the project adopts this playbook, use its procedure and evidence gates: [Service readiness](../../handbook/services/README.md).
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

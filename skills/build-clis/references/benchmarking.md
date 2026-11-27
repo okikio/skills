@@ -268,6 +268,6 @@ The handoff should state:
 6. Whether the result is conclusive.
 7. Any unmeasured claim, such as Windows startup or network behavior.
 
-See [testing.md](testing.md) for correctness gates and
+See [testing.md](../../../references/testing.md) for correctness gates and
 [defaults-provenance.md](defaults-provenance.md) for the resolution invariants
 that benchmarks must preserve.

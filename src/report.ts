@@ -59,7 +59,10 @@ function getOne<T>(
 }
 
 /** Compare sorted string arrays as one installed-skill topology. */
-function sameStrings(left: readonly string[], right: readonly string[]): boolean {
+function sameStrings(
+  left: readonly string[],
+  right: readonly string[],
+): boolean {
   return left.length === right.length &&
     left.every((value, index) => value === right[index]);
 }
@@ -84,7 +87,9 @@ export function checkWorkspaces(
       throw new Error("Report workspaces target different skills");
     }
     if (!sameStrings([...workspace.companionSkills].sort(), companions)) {
-      throw new Error("Report workspaces use different companion-skill topologies");
+      throw new Error(
+        "Report workspaces use different companion-skill topologies",
+      );
     }
     if (workspace.optimizationUnit !== first.optimizationUnit) {
       throw new Error("Report workspaces use different optimization units");
@@ -188,14 +193,20 @@ function getJudgeIdentity(results: readonly EvalResultType[]) {
  * variant identity are also required to remain constant across all rollouts.
  */
 export function create(options: CreateOptionsType): AggregateReportType {
-  if (options.results.length === 0) throw new Error("Report has no rollout results");
+  if (options.results.length === 0) {
+    throw new Error("Report has no rollout results");
+  }
   if (options.cases.size === 0) throw new Error("Report has no exported cases");
-  if (!Number.isInteger(options.targetSkillBytes) || options.targetSkillBytes < 0) {
+  if (
+    !Number.isInteger(options.targetSkillBytes) || options.targetSkillBytes < 0
+  ) {
     throw new Error("targetSkillBytes must be a non-negative integer");
   }
 
   const caseIds = [...options.cases.keys()].sort();
-  const actualCaseIds = [...new Set(options.results.map((result) => result.caseId))]
+  const actualCaseIds = [
+    ...new Set(options.results.map((result) => result.caseId)),
+  ]
     .sort();
   if (!sameStrings(caseIds, actualCaseIds)) {
     throw new Error("Report results do not cover the exact exported case set");
@@ -203,13 +214,19 @@ export function create(options: CreateOptionsType): AggregateReportType {
   for (const result of options.results) {
     const record = options.cases.get(result.caseId)!;
     if (result.caseDigest !== record.digest) {
-      throw new Error(`${result.caseId}: result case digest does not match export`);
+      throw new Error(
+        `${result.caseId}: result case digest does not match export`,
+      );
     }
     if (result.corpusDigest !== record.corpusDigest) {
-      throw new Error(`${result.caseId}: result corpus digest does not match export`);
+      throw new Error(
+        `${result.caseId}: result corpus digest does not match export`,
+      );
     }
     if (result.targetSkill !== options.targetSkill) {
-      throw new Error(`${result.caseId}: result target skill does not match report`);
+      throw new Error(
+        `${result.caseId}: result target skill does not match report`,
+      );
     }
   }
 
@@ -219,11 +236,13 @@ export function create(options: CreateOptionsType): AggregateReportType {
     sameStrings,
   );
   const installedSkillRevisions = getOne(
-    options.results.map((result) => Object.fromEntries(
-      Object.entries(result.skillRevisions).sort(([left], [right]) =>
-        left.localeCompare(right)
-      ),
-    )),
+    options.results.map((result) =>
+      Object.fromEntries(
+        Object.entries(result.skillRevisions).sort(([left], [right]) =>
+          left.localeCompare(right)
+        ),
+      )
+    ),
     "installed skill revisions",
     sameRevisions,
   );
@@ -231,7 +250,9 @@ export function create(options: CreateOptionsType): AggregateReportType {
     Object.keys(installedSkillRevisions).sort().join("\n") !==
       installedSkills.join("\n")
   ) {
-    throw new Error("Installed skill revisions do not match installed skill topology");
+    throw new Error(
+      "Installed skill revisions do not match installed skill topology",
+    );
   }
   const targetInstalled = installedSkills.includes(options.targetSkill);
   const targetSkillRevision = targetInstalled
@@ -244,7 +265,9 @@ export function create(options: CreateOptionsType): AggregateReportType {
     throw new Error("No-skill variants must report zero target-skill bytes");
   }
   if (targetInstalled && options.targetSkillBytes === 0) {
-    throw new Error("Installed target skill cannot have zero target-skill bytes");
+    throw new Error(
+      "Installed target skill cannot have zero target-skill bytes",
+    );
   }
 
   const metrics = measure.getMetrics(options.results, options.cases);

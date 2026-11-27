@@ -23,14 +23,15 @@
 
 ## Evidence and version lines
 
-Treat the configuration handoff as the normative merge contract. Treat the
-attached Kaiju `@kaiju/config` package as observed implementation that still
-requires executable verification.
+Use the active repository's configuration contract to define merge policy.
+The `packages/config` owner below is an anonymized illustrative resolver,
+adapted from a historical project review. Its local schemas and helpers are
+example application code, not maintained exports from c12 or defu.
 
-The attached lockfile resolves both c12 3.3.4 and c12 4.0.0-beta.5, with jiti
-2.7.0 and defu 6.1.7. The CLI package selects c12 4 beta while other consumers
-may resolve c12 3. Do not assume layer fields, loader options, internal defaults,
-or TypeScript-loading behavior are identical across these lines.
+The historical example resolved c12 3.3.4 and c12 4.0.0-beta.5, with jiti 2.7.0
+and defu 6.1.7. Its CLI selected c12 4 beta while other consumers could resolve
+c12 3. These versions describe that example. Verify the active graph before
+using its layer fields, loader options, defaults, or TypeScript-loading behavior.
 
 Before changing config code:
 
@@ -107,7 +108,7 @@ select cwd, explicit path, environment, and source policy
   -> return runtime config plus provenance
 ```
 
-The observed Kaiju resolver calls c12 with an intentionally narrow source policy:
+The illustrative resolver calls c12 with an intentionally narrow source policy:
 
 ```ts
 await loadConfig({
@@ -201,8 +202,8 @@ processed `extends` before the application merger validated the sparse output.
 
 ## Implementation algorithm
 
-The observed Kaiju implementation uses this algorithm. Preserve the shape even
-when local field names differ.
+The illustrative resolver uses this algorithm. Check each step against the
+active repository's merge contract before adapting local fields or helpers.
 
 ```text
 authoring operation schemas
@@ -629,14 +630,14 @@ TypeScript and JSONC.
 
 ## Sources and freshness
 
-- Normative merge contract: `kaiju-config-resolution-handoff(2).md`, reviewed 2026-07-17.
-- Normative CLI architecture: `productionized-cli-pattern-guidebook-v1.2.md`, reviewed 2026-07-22.
-- Observed implementation: current Kaiju config c12 two-merger fix plus earlier `live-browser-cli(41).zip/packages/config` evidence.
+- Portable contract guidance: [configuration](config.md) and [CLI architecture](architecture.md).
+- Historical source scope: configuration and CLI reviews from 2026-07-17 and
+  2026-07-22, adapted here into an anonymized resolver example.
 - c12 official source: <https://github.com/unjs/c12>, discovery pointer for current loader APIs and version history.
 - defu official source: <https://github.com/unjs/defu>, discovery pointer for current merger callback behavior.
 - jiti official source: <https://github.com/unjs/jiti>, discovery pointer for loader/runtime behavior.
 
-Freshness status: the attached repository evidence resolves c12 3.3.4 and
-4.0.0-beta.5, defu 6.1.7, and jiti 2.7.0. The 2026-07-22 Kaiju fix proves the
-two-merger pattern against c12 4 beta. Do not generalize observed layer metadata
-or callback orientation to another version without integration tests.
+Historical version scope: the resolver example used c12 3.3.4 and
+4.0.0-beta.5, defu 6.1.7, and jiti 2.7.0. The recorded two-merger review concerned
+c12 4 beta. This example does not prove current behavior. Verify layer metadata,
+callback orientation, and both mergers with the active installed version.

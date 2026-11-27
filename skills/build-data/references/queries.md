@@ -1,5 +1,15 @@
 # Query execution, safety, pagination, and count semantics
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 Use this reference when translating a normalized query contract into SQL, SPARQL, search requests, or another storage protocol. The query layer must preserve server authority, public semantics, parameter safety, ordering, resource bounds, and error classification. A typed builder does not prove those properties.
 
 ## Contents
@@ -38,11 +48,11 @@ transport decoder
 
 Transport syntax does not own database identifiers. A public field such as `createdAt` maps through an allowlisted registry to a specific SQL column or SPARQL variable/pattern. The server owns tenant, organization, lifecycle, visibility, and other non-overridable constraints.
 
-The retained finance `utils/query` code is detailed observed evidence for filters, sorts, fields, HMAC cursors, query/JSON/form adapters, per-field operator definitions, limits, and exact/planned/estimated/no-count modes. It is not automatically a public package contract. Confirm the exact exports and installed source in the consuming repository.
+The current `@okikio/query` package owns checked query definitions and their supported wire encoding. Inspect its public field/operator, sort, and pagination contracts. An application adapter owns SQL/SPARQL execution, count semantics, authorization, and rejection of unsupported operators. A parsed query is data, not an executed or authorized query.
 
 ## Normalized query model
 
-Use one internal model after source decoding:
+Use one internal model after source decoding. The following is an application design sketch, not the exported `@okikio/query` type or an exhaustive list of its operators:
 
 ```ts
 type QuerySpec = {
@@ -62,7 +72,7 @@ type QuerySpec = {
 }
 ```
 
-Disabled features need explicit semantics. The retained query factory normalizes disabled filters/sorts/fields to `null`; that is useful if handlers/executors distinguish “feature unavailable” from an empty client request. Do not silently accept a public filter and then ignore it. Either reject it or document the disabled contract.
+Disabled features need explicit semantics. If a consumer represents unavailable filters, sorts or fields as `null`, distinguish that from an empty request. Reject supplied unsupported parameters or document their treatment; do not silently accept a filter and ignore it.
 
 Cap complexity before compilation: number of filters/sorts/selected fields, values in `in`, nesting if supported, offset, limit, decoded cursor size, query timeout, and maximum response rows/bytes.
 
@@ -100,7 +110,7 @@ Registry rules:
 - identifier/expression values come from code-owned registry entries only;
 - sortable/selectable/filterable are separate capabilities.
 
-An empty registry must have intentional semantics. The retained tests sometimes treat an empty allowlist as “allow any.” That is dangerous at a public storage compiler unless the expression mapping still prevents arbitrary identifiers. Prefer explicit deny-all or a separately named unrestricted internal mode.
+An empty registry must have intentional semantics. Prefer deny-all for public input. An unrestricted internal mode needs an explicit name and a separate trusted caller; an empty configuration must not accidentally authorize arbitrary identifiers.
 
 ## Server-owned constraints
 
@@ -149,7 +159,7 @@ Separate:
 - SPARQL JSON result parsing;
 - domain decoding and error mapping.
 
-Do not build `IN`, `between`, or cursor expressions by concatenating `.value` strings from a builder unless the library explicitly documents that as safe, correct serialization. The retained finance SPARQL executor uses `raw(...)` with joined expression values for several operators. That is valuable counterexample evidence: inspect the exact `@okikio/sparql` semantics and add malicious/typed literal tests before adopting it.
+Do not build `IN`, `between`, or cursor expressions by concatenating `.value` strings unless the builder explicitly guarantees safe, correct serialization. Verify the selected backend's parameter/term representation and test malicious values, typed literals, and unsupported operators at its execution adapter.
 
 Date values require correct RDF datatype and precision. A cursor value truncated to `YYYY-MM-DD` changes ordering if the field is actually `xsd:dateTime`. Tiebreaker comparisons through `STR(...)` can differ from numeric/IRI ordering. Match the cursor encoding and query term type exactly.
 
@@ -183,7 +193,7 @@ interface CursorV2 {
 
 Sign or authenticate opaque cursors where clients must not tamper with cursor positions. Canonicalize payloads before HMAC. Use constant-time signature comparison where the runtime provides it. Rotate secrets with a key/version identifier. Never include secret or private row data merely because the token is base64url encoded.
 
-The retained finance cursor includes one primary sort plus tiebreaker, direction, and creation time. It does not visibly bind the cursor to filter/resource context in the inspected schema. A cursor reused across filters can yield incorrect pages even with a valid HMAC. Add a context digest or enforce an equivalent server-side binding.
+Authentication of cursor bytes does not bind them to a resource, filter, sort, or authority context. A cursor reused across filters can return incorrect pages even with a valid HMAC. Add a context digest or an equivalent server-owned binding and test cross-context rejection.
 
 Offset pagination can be appropriate for bounded admin views or snapshot-stable results. Define maximum offset and concurrent-write behavior. Do not present it as stable traversal under ongoing inserts/deletes.
 
@@ -286,7 +296,7 @@ For SPARQL, run queries against the selected QLever/Blazegraph/other engine; par
 
 ## Deliberate exclusions
 
-- Do not require the retained finance query utilities or claim their exact names are published APIs.
+- Do not require one query implementation or infer public APIs from historical application code.
 - Do not force Zod; Standard Schema or another selected validator can own normalization.
 - Do not force Drizzle, `@okikio/sparql`, PostgreSQL, or a graph engine.
 - Do not allow a generic query DSL to claim operators a backend cannot implement faithfully.
@@ -297,4 +307,4 @@ For SPARQL, run queries against the selected QLever/Blazegraph/other engine; par
 
 ## Sources and freshness
 
-Grounded in the retained new/old finance `utils/query` schemas, filtering, sorting, field-selection, cursor pagination, composite query factory, tests/benchmarks, `utils/execution/{db,sparql}.ts`, PopModern SPARQL/search endpoints, and `@okikio/sparql` consumer evidence, reviewed 2026-07-17. Several implementation choices are counterexamples requiring correction or proof, especially empty allowlists, cursor context binding, raw SPARQL composition, and datatype comparisons. Recheck public exports and engine/builder behavior at installed versions.
+Primary utility source: [`query`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/query/mod.ts) and [`query/postgres`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/query/postgres.ts). The PostgreSQL adapter compiles SQL and parameters; it does not execute queries. The conceptual model in this guide is application-owned. Consult the selected database's official documentation and test identifier safety, cursor context, count policy and datatype comparisons against its installed version.

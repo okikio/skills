@@ -1,10 +1,4 @@
-import {
-  dirname,
-  isAbsolute,
-  join,
-  relative,
-  resolve,
-} from "node:path";
+import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { booleanArgument, stringArgument } from "../src/args.ts";
 import { ModelRegistrySchema } from "../src/model.ts";
@@ -88,9 +82,13 @@ if (!requiresJudge && judgeId) {
     `Case ${caseId} uses ${evaluation.oracleStrength} and does not require a qualitative judge`,
   );
 }
-if (judgeId && !judgeModel) throw new Error(`Unknown judge adapter: ${judgeId}`);
+if (judgeId && !judgeModel) {
+  throw new Error(`Unknown judge adapter: ${judgeId}`);
+}
 if (requiresJudge && judgeModel && !judgeModel.requests.includes("judge")) {
-  throw new Error(`Judge adapter ${judgeModel.id} does not support judge requests`);
+  throw new Error(
+    `Judge adapter ${judgeModel.id} does not support judge requests`,
+  );
 }
 if (requiresJudge && judgeModel && !judgeModel.enabled && !allowDisabled) {
   throw new Error(

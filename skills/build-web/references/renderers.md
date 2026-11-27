@@ -1,5 +1,12 @@
 # Renderers, islands, SSR, and hydration
 
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
+
+
 Use this reference when a route mixes Astro, Solid, React, plain scripts, custom elements, server islands, or client-side navigation. The goal is one DOM owner per subtree and deterministic server/client output.
 
 ## Contents
@@ -43,7 +50,7 @@ Choose the lowest owner that meets the behavior:
 6. A server island when personalized/dynamic server HTML can be deferred independently of a cacheable page.
 7. A full application router when long-lived navigation and application state dominate the surface.
 
-The Kaiju homepage demonstrates both sides: native `<details>` owns FAQ disclosure, while a Solid island owns a WebGL depth scene. Hydrating the FAQ would add a renderer without adding capability.
+The illustrative homepage separates two owners: native `<details>` owns FAQ disclosure, while a Solid island owns a WebGL depth scene. Hydrating the FAQ would add a renderer without adding capability.
 
 ## Astro client and server directives
 
@@ -220,5 +227,5 @@ Prefer event delegation to adding listeners to every link on every page load. Do
 - Astro view transitions: https://docs.astro.build/en/guides/view-transitions/ (reviewed 2026-07-17).
 - Solid props: https://docs.solidjs.com/concepts/components/props (reviewed 2026-07-17).
 - Solid `onMount` and `onCleanup`: https://docs.solidjs.com/reference/lifecycle/on-mount and https://docs.solidjs.com/reference/lifecycle/on-cleanup (reviewed 2026-07-17).
-- Uploaded evidence: `kaiju-website(6).zip`, `solid-motion-experiments.zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`.
+- Historical source scope: marketing, application, and experimental motion reviews, adapted here into anonymized renderer-ownership examples.
 - Client directives, transition persistence, Solid runtime details, and experimental renderer adapters are version-sensitive. Verify installed versions before using an option not shown in repository source.

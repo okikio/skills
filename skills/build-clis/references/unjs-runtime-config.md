@@ -78,10 +78,11 @@ runtime bundle where behavior was ambiguous.
 | pathe | 2.0.3 | `latest` | Normalizes filesystem paths to `/`; it is not a containment check |
 | ufo | 1.6.4 | `latest` | Parsing and normalization are permissive utilities, not URL authorization |
 
-The attached `live-browser-cli(41).zip` independently proves these application
-facts:
+Historical CLI and database-tooling reviews provide the following anonymized
+ownership examples. Paths are illustrative local owners, not upstream exports
+or a required repository layout:
 
-- the root resolves c12 4.0.0-beta.5 and defu 6.1.7 while its Deno import map
+- the example root resolved c12 4.0.0-beta.5 and defu 6.1.7 while its Deno import map
   also contains c12 3.3.4;
 - `packages/config/deno.json` selects jiti 2.7.0 and c12 4.0.0-beta.5;
 - `packages/config/src/index.ts` uses c12 behind an application resolver,
@@ -92,7 +93,7 @@ facts:
 - the ClickHouse tooling uses both `createJiti()` and c12, then validates the
   imported value before migrations, seeds, or connections can consume it.
 
-Those codebases are examples of ownership, not universal APIs. Their local
+These examples describe ownership, not maintained application APIs. Their local
 helpers, schemas, array operation language, and package aliases are not exports
 from UnJS packages.
 
@@ -1229,7 +1230,7 @@ Do not report this subsystem verified until:
 
 ## Sources and freshness
 
-Verified on 2026-07-17 from primary published artifacts and attached source.
+The recorded 2026-07-17 review used primary published artifacts and historical project source.
 
 - jiti 2.7.0: [official repository](https://github.com/unjs/jiti),
   [published tarball](https://registry.npmjs.org/jiti/-/jiti-2.7.0.tgz).
@@ -1249,12 +1250,10 @@ Verified on 2026-07-17 from primary published artifacts and attached source.
   [published tarball](https://registry.npmjs.org/pathe/-/pathe-2.0.3.tgz).
 - ufo 1.6.4: [official repository](https://github.com/unjs/ufo),
   [published tarball](https://registry.npmjs.org/ufo/-/ufo-1.6.4.tgz).
-- Attached `live-browser-cli(41).zip`: root `package.json` and `deno.jsonc`;
-  `packages/config/deno.json`; `packages/config/src/index.ts`;
-  `packages/config/src/merge.ts`; `packages/config/src/merge.test.ts`.
-- Attached ClickHouse source under `kaiju-site-scope(17).zip`:
-  `libs/clickhouse/src/kit/node.ts` and `libs/clickhouse/src/kit/loader.ts` for
-  independently observed jiti/c12 loading and immediate schema validation.
+- Historical CLI review, adapted into anonymized manifest, configuration
+  resolver, merge, and test owners under `packages/config`.
+- Historical ClickHouse tooling review, adapted into an anonymized loader
+  example for jiti/c12 loading followed by schema validation.
 
 Freshness rules:
 

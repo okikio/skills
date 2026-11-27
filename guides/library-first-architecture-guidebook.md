@@ -1,6 +1,9 @@
-> **Current standards note (2026-08-19):** Use [Okikio Engineering Standards](./engineering-standards.md) for current cross-project naming, schema/type, comments/TSDoc, formatting, testing, logging, dependency, compatibility, validation, and delivery rules. This document remains authoritative for its domain-specific design and dated implementation evidence where it is more specific.
+> **Current standards note (2026-08-19):** Use [Okikio Engineering Standards](engineering-standards.md) for current cross-project naming, schema/type, comments/TSDoc, formatting, testing, logging, dependency, compatibility, validation, and delivery rules. This document remains authoritative for its domain-specific design and dated implementation evidence where it is more specific.
 
 # Library-First Architecture Guidebook
+
+Package names under `@example/` and `analyzer` commands are illustrative, not
+published APIs. Adapt the ownership model to the project's actual contracts.
 
 ## Composable, tree-shakable, data-oriented TypeScript libraries with a CLI as an optional application interface
 
@@ -15,6 +18,19 @@
 \newpage
 
 # Executive handoff
+
+## Apply the model to current capabilities
+
+The corrective examples address a CLI-shaped extraction; they do not prohibit
+verified Context, Task, resource, endpoint, or workflow programming models.
+Name what each concept owns and inspect its actual public contract. The public
+[okikio/utils source](https://github.com/okikio/utils) separates definitions,
+bindings, compilation, runtime lifetime and host transport. Its source package
+identities do not prove registry availability. Ownership does not require a
+literal `utils/` directory. A coherent local
+Task does not become a durable engine, and a compiled service does not need an
+application-wide stage registry. Preserve the consumer's actual recovery claim
+and use the smallest independently useful level.
 
 ## The problem this guide addresses
 
@@ -92,7 +108,7 @@ Moving code from `cli/` to `packages/core/` does not make it a library. A librar
 A strong API describes the problem:
 
 ```ts
-import { analyzeDomains } from "@kaiju/analysis";
+import { analyzeDomains } from "@example/analysis";
 
 const result = await analyzeDomains(
   {
@@ -109,7 +125,7 @@ const result = await analyzeDomains(
 A framework-shaped API describes the implementation machinery:
 
 ```ts
-import { createRuntime, runStages } from "@kaiju/runtime";
+import { createRuntime, runStages } from "@example/runtime";
 
 const runtime = await createRuntime(options);
 const result = await runStages(runtime, stages);
@@ -316,7 +332,7 @@ When a dependency is strategically selected, use it directly at the boundary it 
 ```ts
 import { getLogger } from "@logtape/logtape";
 
-const logger = getLogger(["kaiju", "analysis", "browser"]);
+const logger = getLogger(["example", "analysis", "browser"]);
 ```
 
 LogTape specifically supports library authors recording namespaced logs while the application retains control of sinks, levels, and filters.[^logtape-library] Its adapter model also exists so applications can route those records into established logging systems instead of forcing one isolated logger per library.[^logtape-adapters]
@@ -380,7 +396,7 @@ Node's package `exports` field allows package authors to expose supported subpat
 
 ```json
 {
-  "name": "@kaiju/analysis",
+  "name": "@example/analysis",
   "type": "module",
   "exports": {
     ".": "./dist/index.js",
@@ -396,7 +412,7 @@ Node's package `exports` field allows package authors to expose supported subpat
 A consumer that analyzes WARC files should not import Playwright, browser pools, or Chromium-related code merely because they share a package.
 
 ```ts
-import { analyzeArchive } from "@kaiju/analysis/warc.js";
+import { analyzeArchive } from "@example/analysis/warc.js";
 ```
 
 ## Separate integrations physically
@@ -406,13 +422,13 @@ LogTape and Optique both demonstrate ecosystem composition through optional pack
 A similar package strategy can be used internally:
 
 ```text
-@kaiju/analysis
-@kaiju/analysis-browser
-@kaiju/analysis-warc
-@kaiju/analysis-commoncrawl
-@kaiju/analysis-clickhouse
-@kaiju/analysis-checkpoints
-@kaiju/analysis-temporal
+@example/analysis
+@example/analysis-browser
+@example/analysis-warc
+@example/analysis-commoncrawl
+@example/analysis-clickhouse
+@example/analysis-checkpoints
+@example/analysis-temporal
 ```
 
 Do not split packages merely to create a large monorepo. Split when a boundary has a distinct dependency graph, runtime target, release concern, or independently useful contract.
@@ -436,15 +452,15 @@ export const collectors = {
 Prefer caller-selected static imports:
 
 ```ts
-import { createBrowserCollector } from "@kaiju/analysis-browser";
+import { createBrowserCollector } from "@example/analysis-browser";
 ```
 
 When runtime selection is necessary, use explicit dynamic import boundaries:
 
 ```ts
 export const collectorModules = {
-  browser: () => import("@kaiju/analysis-browser"),
-  warc: () => import("@kaiju/analysis-warc"),
+  browser: () => import("@example/analysis-browser"),
+  warc: () => import("@example/analysis-warc"),
 } as const;
 ```
 
@@ -790,7 +806,7 @@ A reusable library may obtain category loggers and emit structured records:
 ```ts
 import { getLogger, lazy } from "@logtape/logtape";
 
-const logger = getLogger(["kaiju", "analysis", "detector"]);
+const logger = getLogger(["example", "analysis", "detector"]);
 
 logger.debug("processed observation batch", {
   batchSize: batch.length,
@@ -1160,10 +1176,10 @@ A modular parser ecosystem helps only if the executable preserves early paths. A
 Measure installed invocations, not only in-process parser calls:
 
 ```text
-kaiju --help
-kaiju analyze --help
-kaiju completion zsh
-kaiju analyze example.com
+analyzer --help
+analyzer analyze --help
+analyzer completion zsh
+analyzer analyze example.com
 ```
 
 ## Use lazy diagnostics, but do not hide results
@@ -1350,12 +1366,12 @@ Temporal resumes workflow execution through replay against persisted event histo
 The CLI becomes a client when work outlives it:
 
 ```text
-kaiju analysis start
-kaiju analysis inspect <run-id>
-kaiju analysis attach <run-id>
-kaiju analysis cancel <run-id>
-kaiju analysis retry <run-id>
-kaiju analysis repair <run-id>
+analyzer analysis start
+analyzer analysis inspect <run-id>
+analyzer analysis attach <run-id>
+analyzer analysis cancel <run-id>
+analyzer analysis retry <run-id>
+analyzer analysis repair <run-id>
 ```
 
 # 10. Recommended architecture
@@ -1363,7 +1379,7 @@ kaiju analysis repair <run-id>
 ## Package and ownership map
 
 ```text
-@kaiju/analysis-kernel
+@example/analysis-kernel
   pure or controlled data transforms
   detector compilation and indexes
   batch evaluation
@@ -1372,43 +1388,43 @@ kaiju analysis repair <run-id>
   no process globals
   no terminal output
 
-@kaiju/analysis
+@example/analysis
   named use cases
   request/result/failure/event contracts
   bounded async batch pipelines
   cancellation
   checkpoint protocol
 
-@kaiju/browser
+@example/browser
   browser acquisition and pooling
   disposable leases
   browser-specific collection and verification
   observation batch production
 
-@kaiju/warc
+@example/warc
   WARC/WACZ reading and writing
   byte streams
   archive-specific resources
   normalized observation production
 
-@kaiju/config
+@example/config
   c12 loading
   application-specific defu merger
   schemas, defaults, and transforms
   provenance and explanation
 
-@kaiju/checkpoints
+@example/checkpoints
   checkpoint schemas and compatibility
   unstorage adapters for suitable use cases
   database adapters for stronger guarantees
 
-@kaiju/observability
+@example/observability
   LogTape category conventions
   domain-event-to-log adapters
   redaction helpers
   no global sink configuration
 
-@kaiju/cli
+@example/cli
   Optique grammar
   early help/version/completion paths
   config source composition
@@ -1428,9 +1444,9 @@ The executable is allowed to be explicit and somewhat boring.
 import { configure, getLogger } from "@logtape/logtape";
 import { runProgram } from "@optique/run";
 
-import { createDomainAnalysis } from "@kaiju/analysis";
-import { createBrowserCollector } from "@kaiju/browser";
-import { resolveCliConfiguration } from "@kaiju/config";
+import { createDomainAnalysis } from "@example/analysis";
+import { createBrowserCollector } from "@example/browser";
+import { resolveCliConfiguration } from "@example/config";
 
 const exitCode = await runProgram(parser, {
   async run(parsed) {
@@ -1461,7 +1477,7 @@ const exitCode = await runProgram(parser, {
       await renderResult(result, config.output);
       return 0;
     } catch (error) {
-      return await renderFailure(error, getLogger(["kaiju", "cli"]));
+      return await renderFailure(error, getLogger(["example", "cli"]));
     }
   },
 });

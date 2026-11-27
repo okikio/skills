@@ -154,7 +154,7 @@ ClickHouse consistency is not a single switch. Specify:
 - whether version reconciliation needs `FINAL`;
 - how replica lag, failed parts, and Keeper availability surface.
 
-Do not expose a generic ORM `transaction()` that suggests multi-statement rollback. The reviewed Kaiju adapter correctly rejects transactional ORM sessions and requires idempotency/compensation.
+Expose a transaction facade only when the selected server and adapter support its stated atomicity and rollback behavior. Otherwise reject the operation explicitly and design idempotency or compensation for partial writes.
 
 ## Materialized views and projections
 
@@ -276,7 +276,12 @@ Then prove a clean lifecycle:
 
 ## Sources and freshness
 
-- Primary: [ClickHouse documentation](https://clickhouse.com/docs/) and linked ClickHouse engineering material, verified 2026-07-17 for parts, granules, sparse indexes, insert batching, async inserts, deduplication, mutations, views, projections, TTL, replication, and the stated 26.1/26.3 version lines.
-- Attachment: `kaiju-site-scope(17).zip/libs/clickhouse` source and tests, inspected 2026-07-17 as one custom-adapter implementation.
+Primary source: [ClickHouse documentation](https://clickhouse.com/docs/) for
+parts, indexes, ingestion, mutations, views, projections, TTL and replication.
+The [official JavaScript client](https://clickhouse.com/docs/integrations/javascript)
+defines its own transport and lifecycle contract. This guide does not establish
+a custom adapter's package identity or feature support.
 
-Server settings and SQL behavior are version-sensitive. Recheck the deployed ClickHouse version; do not promote the private Kaiju adapter's names or capabilities into public ClickHouse contracts.
+The detailed server examples include dated version references. Verify settings,
+SQL grammar and feature availability against the deployed ClickHouse release,
+then test the actual adapter and workload before making support claims.

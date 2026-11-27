@@ -32,7 +32,9 @@
         "training"
       ],
       "rationale": "The optimizer needs a complete topology trajectory.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-ecosystem-alternative",
@@ -64,7 +66,9 @@
         "training"
       ],
       "rationale": "Ecosystem awareness must not maximize package count.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-cli-public-trace",
@@ -97,7 +101,9 @@
         "training"
       ],
       "rationale": "Flag changes fail when generated and runtime surfaces drift.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-cli-config-shapes",
@@ -131,7 +137,9 @@
         "training"
       ],
       "rationale": "The config handoff supplies the optimizer's worked decision model.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-web-surface-classification",
@@ -171,7 +179,9 @@
         "training"
       ],
       "rationale": "The attached monorepo demonstrates three different web surfaces.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-web-renderer-binding",
@@ -205,7 +215,9 @@
         "training"
       ],
       "rationale": "Renderer mismatch is a recurring cross-ecosystem failure.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-site-island-decision",
@@ -242,7 +254,9 @@
         "training"
       ],
       "rationale": "The site evidence supports a concrete native-to-island decision ladder.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-site-cms-handoff",
@@ -275,7 +289,9 @@
         "training"
       ],
       "rationale": "Pages need stable models and one runtime source of truth.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-webapp-state-map",
@@ -317,7 +333,9 @@
         "training"
       ],
       "rationale": "The application evidence provides a complete state ownership map.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-webapp-solid-lifetime",
@@ -355,7 +373,9 @@
         "training"
       ],
       "rationale": "React-shaped lifecycle translations break Solid ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-api-service-reachability",
@@ -388,7 +408,9 @@
         "training"
       ],
       "rationale": "Typed definitions are incomplete until mounted and requested.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-api-better-auth",
@@ -427,7 +449,9 @@
         "training"
       ],
       "rationale": "The integration requires paired plugins and server-owned policy.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-workflow-durability-ladder",
@@ -459,7 +483,9 @@
         "training"
       ],
       "rationale": "Optimization must learn capability-status precision.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-workflow-crash-gaps",
@@ -500,7 +526,9 @@
         "training"
       ],
       "rationale": "Crash points reveal real durability semantics.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-data-storage-ownership",
@@ -541,7 +569,9 @@
         "training"
       ],
       "rationale": "The attached systems demonstrate complementary stores with drift risks.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-data-query-count",
@@ -580,7 +610,9 @@
         "training"
       ],
       "rationale": "Count and pagination strategies are distinct public contracts.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-devtools-generator",
@@ -618,7 +650,9 @@
         "training"
       ],
       "rationale": "The attached generator is a concrete production pattern.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-devtools-cross-runtime-package",
@@ -655,7 +689,9 @@
         "training"
       ],
       "rationale": "Cross-runtime publication needs separate executable proof.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "train-okikio-undent",
@@ -697,7 +733,9 @@
         "training"
       ],
       "rationale": "The package exposes a real decision surface beyond generic dedent.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "seen-okikio-package-status",
@@ -735,7 +773,9 @@
         "training"
       ],
       "rationale": "Personal library guidance must be especially resistant to memory-based hallucination.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     }
   ]
 }

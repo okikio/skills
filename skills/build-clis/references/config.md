@@ -145,7 +145,7 @@ A useful field decision can explain:
 field: log.level
 winner: cli --log-level=debug
 shadowed:
-  env KAIJU_LOG_LEVEL=info
+  env PROJECT_LOG_LEVEL=info
   project config=warn
 operation contributions: none
 normalized runtime value: debug

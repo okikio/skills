@@ -386,6 +386,6 @@ hidden compatibility aliases, repeated options, and negated flags.
 | Secret contribution | Redacted in human output, JSON, logs, and errors |
 | Recovery fallback | Marked `recovery`, never `runtime-default` |
 
-See [testing.md](testing.md) for executable test layers and
+See [testing.md](../../../references/testing.md) for executable test layers and
 [benchmarking.md](benchmarking.md) for measuring the cost of resolution and
 provenance without weakening these invariants.

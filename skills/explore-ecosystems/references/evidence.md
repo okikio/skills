@@ -288,7 +288,7 @@ protocol/interface placeholder labelled local and require source inspection.
 - `evals/sources.json` in this repository, source identity/status/digest/claim
   path registry for all retained uploads and current primary sources; validated
   against 16 distinct uploaded artifacts on 2026-07-17.
-- Retained `old-finance`/`new-finance` duplicate archives and Wikitext
+- Two retained duplicate application archives and Wikitext
   documentation/export discrepancy, observed counterexamples to name- and
   README-based inference; verified 2026-07-17.
 - Pinned registry source records for current deep package references, including

@@ -1,14 +1,57 @@
 ---
 name: build-web-apps
-description: Design, implement, refactor, review, diagnose, or verify stateful web applications with routing, URL state, server functions, remote query caches, sessions, authorization, local interaction state, complex forms, tables, virtualization, product UI, accessibility, and browser lifecycles. Use especially when SolidJS, TanStack Start/Router/Query/Form/Table/Virtual, Better Auth, Zod, Zaidan, Kobalte, Corvu, shadcn-style generation, or Solid Primitives are installed or under review. Do not use as the primary skill for a content-only marketing or documentation site.
+description: Design, implement, refactor, review, diagnose, or verify stateful web applications with routing, URL state, server functions, remote query caches, sessions, authorization, local interaction state, complex forms, tables, virtualization, product UI, accessibility, and browser lifecycles. Use especially when SolidJS, TanStack Start/Router/Query/Form/Table/Virtual, Better Auth, Zod, Zaidan, Kobalte, Corvu, shadcn-style generation, or Solid Primitives are installed or under review. Do not use as the primary skill for a content-only marketing or documentation site. Compose with build-web for renderer reactivity, browser semantics, accessibility, and their verification, including a single-app logic fix. Add deno-software when Deno runs the repository or its tests, and design-interfaces when visual hierarchy, layout, or polish changes.
 ---
 
 # Build stateful web applications
 
+## Reading boundary
+
+Minimum: read this entrypoint and the linked shared software-quality contract.
+Read resources explicitly marked required for the operation; for long guides,
+read the applicable sections before making that decision. Use other references
+only when they resolve a decision actually in scope. Do not read an entire tree
+or recursively select every companion to prove diligence. Recover truncated
+required reads. Stop expanding context when the applicable rules and source
+behavior are understood; report any material unavailable guidance.
+
+## Shared obligations and companion selection
+
+Read [software quality](../../guides/software-quality.md) before this capability's work.
+Comments, docs, naming, imports, readability and correctness are explicit duties
+even when no companion is separately selected. Read the applicable detailed
+sources linked there before judging those decisions; recover truncated required
+reads. The selected capability and real domain/runtime owners share one plan
+and verdict. Read this entrypoint and the shared contract first. Read linked detail only
+when its decision is in scope; stop when the applicable contract is understood.
+Do not recursively load companion skills or historical material for reassurance.
+
+
+
+## Select the complete task
+
+Read [applying standards](../../guides/applying-standards.md) before domain work.
+Select companions by the contracts being changed, with one discovery pass,
+plan, and verdict. For repository work, use the shared quality contract when installed
+for naming, schemas, tests, documentation, validation, and completion. Apply
+rules by purpose; test-runner imports and trivial private fixtures are not
+public runtime APIs. If a companion is absent, use the bundled compact defaults
+and inspect local instructions rather than inventing unavailable guidance.
+
 This skill owns state placement and product interaction across routes, server
 calls, remote caches, sessions, forms, tables, local UI, and browser lifetimes.
-When `build-web` is active, consume its shared renderer, component, motion,
-security, and browser map. `deliver-software` owns repository completion.
+Select `build-web` when the task changes or verifies renderer reactivity,
+component lifetimes, browser semantics, keyboard/focus behavior, or browser
+security, even in one application. Application state and renderer behavior are
+separate decisions; load both owners before editing a reactive computation.
+A server-only cache-key review need not load browser guidance. Select
+`deno-software` when Deno runs the repository or tests, even when no manifest
+changes. the shared quality contract owns repository completion.
+
+For visual creation, redesign, or polish, select `design-interfaces` when
+installed. It owns visual judgment; this skill retains its implementation
+contracts. A frontend logic change that leaves the design unchanged does not
+need that companion.
 
 ## Outcome
 
@@ -134,3 +177,8 @@ the intended state model, server authorization is proven, remote cache identity
 and invalidation behave correctly, failure states are usable, SSR/hydration are
 verified where claimed, browser resources clean up, and the key product flow has
 run in a real browser with representative state.
+
+## Resource navigation
+
+The [complete resource index](references/resources.md) lists this capability’s maintained detail and assets. Use it only to
+locate a decision-specific resource; it is not a reading checklist.

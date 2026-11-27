@@ -808,6 +808,182 @@
       "role": "PR-writing policy: connected product, usage and system explanations, selective diagrams, review priorities, and evidence limits.",
       "verifiedDate": "2026-10-18",
       "sha256": "1f344430d86a907826e2383cb15907f36c9b6ca714d79b77b764041a3d2adee5"
+    },
+    {
+      "id": "portable-guidance-method",
+      "artifact": "GUIDANCE.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Authored portable guidance roles, single source ownership, project scope and installed bundle contract",
+      "verifiedDate": "2026-11-26",
+      "sha256": "bbf9a46fba969e15f2d818e59ddcf8e6cc35e79570609b4780de78692b0d6a4b",
+      "claimPaths": [
+        "GUIDANCE.md"
+      ],
+      "notes": "Normative authored guidance. Registration and coverage do not establish completed model evaluation or project adoption."
+    },
+    {
+      "id": "portable-handbook-method",
+      "artifact": "handbook/README.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Reusable project procedures, adoption profiles, task records and evidence contracts",
+      "verifiedDate": "2026-11-26",
+      "sha256": "59997362500d2ddd9a5084e31e41b326b2c1d4989a6fa99a1235a1a51f7a9bef",
+      "claimPaths": [
+        "handbook/README.md"
+      ],
+      "notes": "Normative authored guidance. Registration and coverage do not establish completed model evaluation or project adoption."
+    },
+    {
+      "id": "public-utils-source-20261126",
+      "artifact": "https://github.com/okikio/utils/tree/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7",
+      "kind": "codebase",
+      "status": "observed-source",
+      "role": "Public utility export maps and implementation at the inspected source commit",
+      "verifiedDate": "2026-11-26",
+      "claimPaths": [
+        "packages/",
+        "deno.jsonc"
+      ],
+      "notes": "Source inspection establishes source contracts, not usable registry release availability. Consumer resolver, exact artifact and supported-host checks remain required."
+    },
+    {
+      "id": "portable-rust-data-design-guide",
+      "artifact": "guides/rust/data-oriented-design.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Portable product questions, operation mapping and complete lifecycle evidence for Rust data design",
+      "verifiedDate": "2026-11-27",
+      "sha256": "bbd139ed5b34b9f2651d091dd2d3ed1ebd109f0b091c94f90ea34ed7827ee742",
+      "claimPaths": [
+        "guides/rust/data-oriented-design.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-rust-data-design-procedure",
+      "artifact": "skills/rust-software/references/data-oriented-design.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Field, pass and lifetime analysis; comparable representations; semantic oracles; bounded retention and required-host evidence",
+      "verifiedDate": "2026-11-27",
+      "sha256": "b1916007783bb08249ca3026d954810d6bc2f8596c70f8ec9891dd9ab2ce8135",
+      "claimPaths": [
+        "skills/rust-software/references/data-oriented-design.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-rust-layout-evidence",
+      "artifact": "skills/rust-software/references/layout-evidence.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Interpretation limits for source patterns, executed artifacts, layout comparisons and memory measurements",
+      "verifiedDate": "2026-11-27",
+      "sha256": "6735961c9c14e4de96a59e3f8d2976d09ea77a155919958997619a618dce1e1d",
+      "claimPaths": [
+        "skills/rust-software/references/layout-evidence.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-rust-data-design-handbook",
+      "artifact": "handbook/rust/data-design.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Project procedure connecting the data-design question, experiment, ownership checks, measurement and next customer-facing decision",
+      "verifiedDate": "2026-11-27",
+      "sha256": "d33fa2e5b7ec980b626e2bc6550e25f837af126de460ff03f41ba0832830012b",
+      "claimPaths": [
+        "handbook/rust/data-design.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-native-selection-contract",
+      "artifact": "handbook/engineering/native-tools.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Native workspace member selection, manifest task ownership and required-work coverage",
+      "verifiedDate": "2026-11-27",
+      "sha256": "acdd5485649cad029d1da7ea1e196abc8417b779f9a8d5efa5a63ba486d1e858",
+      "claimPaths": [
+        "handbook/engineering/native-tools.md",
+        "skills/deno-software/references/05-workspaces.md",
+        "skills/build-devtools/references/toolchains.md"
+      ],
+      "notes": "Authored portable contract. Case registration and structural checks do not establish model behavior or repository adoption."
+    },
+    {
+      "id": "portable-guidance-storage-contract",
+      "artifact": "guides/engineering-standards.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Maintained agent guidance, disposable investigation and durable verification ownership",
+      "verifiedDate": "2026-11-27",
+      "sha256": "0980f6ddc4536e53bc655317ac567e751a211d69eeb708b7d2f6eb5a5c77537d",
+      "claimPaths": [
+        "guides/engineering-standards.md",
+        "references/testing.md",
+        "skills/deno-software/references/03-repository-discovery.md",
+        "skills/refactor-code/references/implementer.md"
+      ],
+      "notes": "Authored portable contract. Case registration and structural checks do not establish model behavior or repository adoption."
+    },
+    {
+      "id": "portable-structure-contract",
+      "artifact": "guides/naming-and-folder-structure-guide.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Contextual names, cohesive file responsibilities and native tool workspace owners",
+      "verifiedDate": "2026-11-27",
+      "sha256": "b62d1dfc95d204c0a1afaa69ed899d8ff7585d0d1f606539aff54778f4ad251e",
+      "claimPaths": [
+        "guides/naming-and-folder-structure-guide.md",
+        "handbook/architecture/files.md"
+      ],
+      "notes": "Authored portable contract. Case registration and structural checks do not establish model behavior or repository adoption."
+    },
+    {
+      "id": "deno-task-official",
+      "artifact": "https://docs.deno.com/runtime/reference/cli/task/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Workspace task member selection, working-directory selection and missing-task options",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
+    },
+    {
+      "id": "deno-test-official",
+      "artifact": "https://docs.deno.com/runtime/reference/cli/test/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Test-name filtering and native file discovery, distinct from workspace task selection",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
+    },
+    {
+      "id": "pnpm-filtering-official",
+      "artifact": "https://pnpm.io/filtering",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Native package selectors and empty-selection failure option",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
+    },
+    {
+      "id": "pnpm-run-official",
+      "artifact": "https://pnpm.io/cli/run",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Recursive script execution and skipped members without the requested script",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
     }
   ]
 }

@@ -1,5 +1,15 @@
 # Workflow and pipeline failure diagnosis
 
+## Select the utility owner
+
+Use `use-utils` when the consumer selects the public `okikio/utils` contracts. Verify source or release resolution. Query parsing,
+local Task control, recorded workflow instructions, and durable external
+execution have distinct owners and guarantees. Inspect the selected package and
+adapter; apply transaction, authorization, and recovery criteria to the actual
+claim. Verify public exports in the resolved artifact and keep the consumer's existing
+architecture when it already meets the task.
+
+
 Use this reference when durable work is stuck, duplicated, lost, falsely successful, unrecoverable, or only scaffolded. Prove reachability, atomicity, restart, reconciliation, and operator control. More workflow terminology cannot repair a missing commit protocol.
 
 ## Contents
@@ -31,7 +41,7 @@ types/definition
 
 Classify each feature independently: starts, event fan-out, queue claims, retries, schedules, waits, signals, cancellation, replay, runtime persistence, pipelines, and observability. A rich type model does not prove any worker calls it.
 
-The retained finance workflow package demonstrates this distinction. It has detailed definitions, schemas, store interfaces, PostgreSQL tables, control plane, queue workers, waits, schedules, and a memory Effect adapter. Yet `tickEventDispatcher()` returns `0`, the SQL-backed Effect runtime adapter returns `workflow_runtime_not_implemented` for every operation, cron expansion is incomplete, and several multi-write transitions are not transactional. Report that honestly.
+Trace a requested operation through registration, scheduler/dispatch, the selected engine, and its authoritative state changes. A README, store interface, memory adapter, or successful local replay cannot establish persistent execution. Classify incomplete paths by observed behavior; do not transfer an archived implementation's defects to a current package.
 
 ## Acceptance and start failures
 
@@ -60,7 +70,7 @@ For ambiguous client timeouts, query by idempotency/execution ID before retrying
 | Worker process starts but no loops run | boot/supervision missing | deployed process and tick/heartbeat evidence |
 | Shutdown drops leased work | abrupt exit/no drain | stop claims, cancel/drain, release/expire leases |
 
-The retained PostgreSQL queue first selects eligible rows then conditionally updates each ready row. Its comment acknowledges `FOR UPDATE SKIP LOCKED` as a stronger high-concurrency approach. Conditional update can prevent both callers from returning the same row, but batch fairness, ordering, owner-fenced ack, and transaction behavior still need concurrent executable tests.
+For the selected persistent queue, inspect selection, conditional claim, acknowledgement, and retry transitions. Prove concurrent claims and owner-fenced completion. Choosing a locking primitive alone does not establish fairness, ordering, transaction scope, or correct recovery.
 
 ## Wait, signal, schedule, and cancellation failures
 
@@ -75,7 +85,7 @@ The retained PostgreSQL queue first selects eligible rows then conditionally upd
 | Cancel says applied while runtime ignores it | request state confused with terminal cancellation | requested/cancelling/applied/terminal distinction |
 | Cancel races success | terminal-state policy absent | compare-and-set and allowed-outcome tests |
 
-In retained code, wait timeout state is updated before resume enqueue; signal flow records signal, updates wait, enqueues, marks processed, appends timeline, and updates execution separately. A crash can expose partial states. Make them repairable/transactional before durability claims.
+When wait state, resume enqueue, signal consumption, timeline, and execution updates occur in separate writes, identify each crash window. Use the selected owner's transaction/outbox or reconciliation contract and test interruption between writes. Do not assume the current utility package implements an application control plane.
 
 ## Cross-system and pipeline failures
 
@@ -103,7 +113,7 @@ Workflow runtimes do not make external effects atomic. Each activity needs an ef
 | Workflow code changes with in-flight executions | replay/version compatibility unknown | pin version or migration strategy |
 | Effect/Temporal API assumed from guide | alpha/version drift | inspect installed exports and executable fixture |
 
-Do not label an adapter durable because its interface uses `Effect` or its name contains `sql`. The retained `createEffectSqlWorkflowRuntimeAdapter()` is explicitly a placeholder.
+Do not label an adapter durable because its interface uses `Effect` or its name contains `sql`. Trace actual persistence, claim ownership, and fresh-owner reconstruction; an interface or placeholder cannot satisfy those guarantees.
 
 ## Recovery protocol
 
@@ -170,7 +180,7 @@ Unit tests against a memory store/adapter are useful for control logic but do no
 
 ## Deliberate exclusions
 
-- Do not force Effect, `@effect/workflow`, Temporal, or the retained finance workflow package.
+- Do not force Effect, `@effect/workflow`, Temporal, or any one workflow implementation.
 - Do not call types, tables, adapters, or definitions implemented behavior.
 - Do not call a memory adapter durable.
 - Do not claim external side effects are atomic because workflow state is durable.
@@ -181,4 +191,4 @@ Unit tests against a memory store/adapter are useful for control logic but do no
 
 ## Sources and freshness
 
-Grounded in the retained finance workflow README, definitions, control plane, store interfaces, PostgreSQL store, schema, workers, memory and placeholder SQL Effect adapters, endpoint helpers, and PopModern multi-stage/multi-sink ETL counterexamples, reviewed 2026-07-17. The retained workflow documentation describes intended behavior more strongly than several code paths currently guarantee; source inspection and failpoint tests take precedence. Runtime and driver behavior is version-sensitive.
+Public utility source: [`workflow`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/workflow/mod.ts), [`task`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/task/mod.ts) and [`storage`](https://github.com/okikio/utils/blob/32ecdf41cf9d29ea2cd0ffe2605f9199d4afa0a7/packages/storage/mod.ts). The failure signatures describe risks to investigate, not defects attributed to these packages. Trace the consumer's actual adapter and transaction participants, then reproduce the relevant crash window or lifecycle failure at the installed version.

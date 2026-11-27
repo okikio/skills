@@ -1,5 +1,12 @@
 # Web surface classification and ownership
 
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
+
+
 Use this reference before choosing a framework, renderer, hydration directive, state library, or deployment adapter. The repository name and dependency list are not enough. Classify each reachable route and subsystem from runtime evidence.
 
 ## Contents
@@ -7,7 +14,7 @@ Use this reference before choosing a framework, renderer, hydration directive, s
 - Required evidence inventory
 - Surface and route classification
 - Ownership decisions
-- Worked repository cases
+- Anonymized repository examples
 - Decision record
 - Failure paths
 - Verification
@@ -94,11 +101,11 @@ Failure: route error region, retry, empty state, expired-session redirect
 Verification: direct URL, reload, back/forward, cross-org request, SSR hydration
 ```
 
-## Worked repository cases
+## Anonymized repository examples
 
-### Kaiju marketing site
+### Marketing site
 
-The active homepage imports Astro sections and uses native `<details>` for FAQ disclosure. A separate Solid `Faq.tsx` exists but is not imported by the homepage. The import graph therefore supports:
+The illustrative homepage imports Astro sections and uses native `<details>` for FAQ disclosure. A separate Solid `Faq.tsx` exists but is not imported by the homepage. The example import graph supports:
 
 - Astro ownership for page copy, headings, anchors, metadata, and section layout;
 - native disclosure with no hydrated FAQ bundle;
@@ -107,7 +114,7 @@ The active homepage imports Astro sections and uses native `<details>` for FAQ d
 
 Do not conclude that every `.tsx` marketing component is an island. Do not hydrate the unused Solid FAQ merely because it is more abstract.
 
-### Kaiju documentation application
+### Documentation application
 
 The docs package uses static output and generates service pages plus OpenAPI JSON endpoints from service-owned factories. Rich API references do not require a runtime server when the schemas are build inputs. The product frontend remains a separate SSR application with auth and query state.
 
@@ -123,13 +130,13 @@ product frontend
   -> URL/query/local state
 ```
 
-### Finance application
+### Hybrid application with server auth
 
-The finance app configures Astro server output and marks auth pages `prerender = false`. Server code derives enabled auth capabilities and passes only client-safe provider identifiers into React form islands. Middleware classifies public, auth, auth-required, and app routes before applying session and cache policy.
+A hybrid application configures Astro server output and marks auth pages `prerender = false`. Server code derives enabled auth capabilities and passes only client-safe provider identifiers into React form islands. Middleware classifies public, auth, auth-required, and app routes before applying session and cache policy.
 
 The architecture is not “Astro versus React.” Astro owns request routing, layouts, middleware, response headers, and document output; React owns the form interaction subtree.
 
-### ThunderStrike CMS site
+### Runtime CMS site
 
 The site has a runtime CMS integration and a project-owned `cms.ts` adapter. The adapter maps provider records into article, author, topic, category, image, and page models. This adapter interface is reusable. The webhook file is counterexample evidence: it logs environment/secrets and payload data, lacks a trustworthy verification step, and mixes extraction, provider mapping, and delivery.
 
@@ -197,7 +204,7 @@ Verify classification with evidence, not a prose review:
 
 ## Sources and freshness
 
-- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `new-finance-app(1).zip`, `old-finance-app(1).zip`, and `thunderstrike-blog(4).zip`.
+- Historical source scope: marketing, documentation, hybrid application, and runtime CMS reviews from 2026-07-17, adapted into anonymized surface-ownership examples.
 - Astro on-demand rendering: https://docs.astro.build/en/guides/on-demand-rendering/ (reviewed 2026-07-17).
 - Astro server islands: https://docs.astro.build/en/guides/server-islands/ (reviewed 2026-07-17).
 - Treat deployment adapters, experimental Astro options, and application-local route conventions as version-sensitive. Verify the installed manifest and adapter documentation before copying configuration.

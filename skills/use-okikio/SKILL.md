@@ -1,161 +1,72 @@
 ---
 name: use-okikio
-description: Research, select, integrate, review, or debug Okikio-maintained libraries and recurring project patterns without inventing private APIs. Use for @okikio/undent, @okikio/wikitext, @okikio/sparql, @okikio/observables, @okikio/opfs and related storage work, RDF/SPARQL architecture, backend endpoint/query/response/database utilities, service modules, workflow/control-plane utilities, MediaD-style utils/packages architecture, package generation, and related personal repositories.
+description: Research, select, integrate, review, or debug standalone Okikio libraries including Undent, Observables, SPARQL, Wikitext, OPFS and related RDF/media packages. Verify versioned exports, source, maturity, runtime and ownership before using an API. Use use-utils for the separate okikio/utils workspace and its Context, Task, Workflow, Server, HTTP, Schema and resource packages.
 ---
 
-# Use Okikio libraries and patterns
+# Use verified Okikio libraries
 
-Okikio projects evolve quickly and several have documented target architectures
-that are ahead of published packages. Treat every remembered package, export, or
-pattern as a hypothesis until current source and tests prove it.
+Read [software quality](../../guides/software-quality.md) and the applicable
+[standards](../../guides/applying-standards.md). Select only the reference needed
+for the current decision. This skill supplies package knowledge; the domain
+skill owns the implementation and final verification.
 
-This skill owns exact personal-library knowledge and recurring project patterns.
-It does not replace the API, library, data, workflow, CLI, web, or delivery skill
-that owns the implementation domain.
+## Establish identity and status
 
-## Package status gate
+Resolve the exact spelling, repository, version or source commit, public export,
+license, runtime and consumers. Start with [package evidence](references/packages.md).
+Remembered names, target designs and old examples are discovery leads.
 
-Classify the exact target before writing usage code:
+Keep these evidence classes distinct:
 
-- **published and verified:** current version/export exists and tests or a clean
-  consumer exercise it;
-- **local/private and inspectable:** source exists in the supplied/current
-  repository but publication is not claimed;
-- **experimental:** prerelease/`0.0.x`, prototype, or incomplete surface;
-- **documented target:** design/handoff describes behavior not yet implemented;
-- **historical:** old code or handoff retained as evidence;
-- **remembered only:** no current source evidence.
+- **verified release:** registry version and artifact exports were inspected;
+- **verified source:** implementation exists at an immutable source revision;
+- **experimental:** the implementation or owner declares incomplete behavior;
+- **documented target:** a plan describes behavior not yet established in code;
+- **historical or unresolved:** the source is old or unavailable for this task.
 
-Use this authority order for an API claim:
+A public repository does not prove publication. A successful type check does not
+prove runtime compatibility. Inspect generated artifacts before describing
+consumer exports, and recheck dated version observations before upgrading.
 
-1. current export map/public entrypoint;
-2. executable tests and real consumers;
-3. package manifest/version and built artifacts;
-4. current implementation;
-5. README/API docs;
-6. design handoffs and plans;
-7. archived repositories and memory.
+The standalone `@okikio/observables` package supplies Observables and EventBus.
+The separate [okikio/utils workspace](https://github.com/okikio/utils) reuses it
+for Context state and input observation. Use [use-utils](../use-utils/SKILL.md)
+for that workspace's packages; the shared scope does not merge their ownership.
 
-Do not claim availability above the strongest evidence.
+## Integrate the smallest useful capability
 
-## Recurring current conventions
+1. Trace exports through implementation, tests and a real consumer. Mark
+   internal helpers and unimplemented design proposals explicitly.
+2. Compare the consumer's existing schema, logging, configuration, resource,
+   workflow and packaging owners. Replace an owner only when the task requires it.
+3. Preserve ownership of injected resources. Trace cancellation, unsubscribe,
+   disposal, partial construction and cleanup errors separately.
+4. For parsing, choose the least expensive useful representation: text/bytes,
+   tokens/events, retained tree, then findings. Do not build a full tree for a
+   question that source spans or events can answer.
+5. For storage, inspect actual provider capabilities, limits, partitioning,
+   durability and lifecycle. An adapter name does not establish filesystem parity.
+6. For RDF/SPARQL, separate data model, serialization, query building, transport
+   and engine execution. Keep trusted raw fragments away from untrusted values.
+7. Exercise import/type inference, success, failure and cleanup in the required
+   runtime. Check built packages when availability or distribution is claimed.
+8. If source is unavailable, identify the missing inspection and give a bounded
+   plan without inventing imports or claiming the integration is complete.
 
-When the inspected repository does not define a more specific rule, recent
-Okikio work strongly tends toward:
+## Read by contract
 
-- one-word-first concrete names;
-- short operations intended for coherent namespace imports;
-- `get` for addressable retrieval and `read` for actual/sequential reading;
-- Zod `*Schema` constants and schema-derived project `*Type` data;
-- behavior interfaces/classes named after the domain concept;
-- direct schema/type imports rather than namespace hiding;
-- Standard Schema at validator-neutral integration seams;
-- Deno-first strict ESM with explicit file extensions and the same core source
-  shared across Deno/Node/Bun/browser when claimed;
-- generic execution mechanics in `utils/`, concrete capabilities in `packages/`,
-  declarative definitions in `registry/`, executable composition in `clis/` or
-  `apps/`;
-- borrowed injected resources unless ownership transfer is explicit;
-- `AbortSignal` cancellation distinct from disposal/cleanup;
-- `AsyncDisposable`/disposal stacks where they improve ownership;
-- LogTape categories in reusable packages while applications own configuration;
-- `node:test` + `@std/expect` as the common portable test style, plus actual
-  runtime-specific validation for every claimed runtime;
-- Mitata for selected cross-runtime benchmarks and Playwright for real browser
-  capability tests;
-- extensive TSDoc/comments for important internal state, schemas, fields,
-  parser tables, regular expressions, resource factories, caches, generations,
-  leases, retry rules, and cleanup paths;
-- replacement of obsolete internal compatibility unless the requirement says to
-  preserve it.
+- [packages](references/packages.md): identity, evidence, release and integration checks.
+- [undent](references/undent.md): interpolation, newline and display-width behavior.
+- [observables](references/observables.md): subscriptions, errors, backpressure and interop.
+- [sparql](references/sparql.md): query construction, safe mapping and execution ownership.
+- [wikitext](references/wikitext.md): tokens/events/trees, source spans and maturity limits.
+- [opfs](references/opfs.md): provider capabilities, adapters and lifecycle.
+- [rdf](references/rdf.md): RDF/SPARQL package composition, conformance and streaming.
+- [media patterns](references/mediad.md): media parser costs and explicit ownership.
+- [backend composition](references/backend.md): combine standalone libraries with current utility contracts.
+- [workflow composition](references/workflows.md): distinguish observations, local work and durable execution.
+- [resource index](references/resources.md): conditional navigation.
 
-These are conventions, not proof of a specific package export. Verify the
-repository before applying them.
-
-## Procedure
-
-1. Resolve exact spelling, repository/workspace, version, export path, runtime,
-   license, maturity, and current consumers.
-2. Inspect sibling packages and related repositories only far enough to find the
-   correct capability owner. Do not install the whole personal ecosystem.
-3. Trace the public API from exports through implementation and tests. Label
-   unexported helpers and target-design documents honestly.
-4. Compare the consuming repository's schema, logging, configuration, resource,
-   task/workflow, and packaging owners. Reuse the Okikio pattern only when the
-   contracts align.
-5. Preserve caller ownership of injected resources unless an explicit option
-   transfers it. Trace cancellation, disposal, partial construction, and cleanup
-   errors.
-6. For parsers/data-oriented code, identify the cost ladder: bytes/text ->
-   tokens/events -> retained model/tree -> higher-level findings. Do not
-   materialize the expensive representation when a lower layer answers the
-   question.
-7. For OPFS/storage work, keep client/driver/adapter/filesystem/bridge concepts
-   distinct when the repository uses that model. Capabilities, limits,
-   partitioning, metrics, lifecycle, and provider semantics stay inspectable.
-8. For RDF/SPARQL work, separate core data model/serialization/query building
-   from optional engines and adapters. Do not make a comparison library a runtime
-   dependency unless it is intentionally an adapter.
-9. If source is unavailable, state the exact inspection needed. Provide an
-   integration/discovery plan, not invented imports.
-
-## Failure review
-
-Watch for:
-
-- documented symbol absent from the current public export;
-- old handoff used as evidence of implemented behavior;
-- generated package API inferred from generator source without inspecting output;
-- prototype workflow/adapter presented as durable production implementation;
-- observable/event API accidentally treated as cancellation or persistence
-  authority;
-- library configuring application LogTape globally;
-- parser tree/model built when event/range scan was sufficient;
-- storage adapter disposing caller-owned database/storage;
-- claimed cross-runtime support proven only by TypeScript;
-- benchmark comparing different semantics or omitting cleanup/startup cost.
-
-## Verification
-
-For a public Okikio integration, verify at the strongest available level:
-
-1. exact import/export and type inference;
-2. source/test contract;
-3. representative behavior including failure and cleanup;
-4. package/build artifact when publication matters;
-5. real claimed runtimes;
-6. benchmark or conformance suite when performance/standard compliance matters.
-
-## Reference routing
-
-- [packages.md](references/packages.md): package identity, evidence classes,
-  publication/generation protocol, dual-release behavior, and unresolved targets.
-- [undent.md](references/undent.md): dedentation, interpolation, newline and
-  Unicode display-width behavior.
-- [wikitext.md](references/wikitext.md): data-oriented token/event/tree cost
-  ladder, source spans, malformed input, sessions, and maturity limits.
-- [observables.md](references/observables.md): published Observable/operators,
-  error modes, EventBus, pull/backpressure, teardown, and interop.
-- [sparql.md](references/sparql.md): query/value/expression construction,
-  execution seam, safe mapping, federation/security, and engine differences.
-- [backend.md](references/backend.md): service modules, endpoint/validation/query/
-  response/database/auth/server patterns and current limitations.
-- [opfs.md](references/opfs.md): OPFS/storage clients, drivers, adapters, filesystem
-  semantics, bridges, capabilities, limits, partitioning, and lifecycle.
-- [mediad.md](references/mediad.md): MediaD library-first package ownership, media
-  cost ladders, task lifecycle, streaming parsers, HLS/DASH, and verification.
-- [rdf.md](references/rdf.md): RDF/SPARQL standards packages, streaming parsers,
-  stores, conformance, differential tests, and benchmark rules.
-- [workflows.md](references/workflows.md): workflow/control-plane definitions,
-  stores, workers, waits/signals, Effect adapters, and known durability gaps.
-
-Compose with the skill that owns the actual change. This skill supplies verified
-personal-library context; it does not override repository-local architecture or
-claim unimplemented plans as real APIs.
-
-## Completion gate
-
-Do not call an Okikio-library integration complete until the exact current API
-was verified, the consuming repository's ownership/lifecycle model remains
-coherent, important failure and runtime paths were tested, and any package or
-performance claim was checked against the relevant built artifact or benchmark.
+Report the exact evidence checked, behavior exercised and remaining limits.
+Do not present an Observable as a durable event log, a query builder as a database
+engine, or a source-only package as an installed release.

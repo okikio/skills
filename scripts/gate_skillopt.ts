@@ -31,10 +31,11 @@ function sameRunKeys(
   left: AggregateReportType["runKeys"],
   right: AggregateReportType["runKeys"],
 ): boolean {
-  return left.length === right.length && left.every((value, index) =>
-    value.seed === right[index]?.seed &&
-    value.repetition === right[index]?.repetition
-  );
+  return left.length === right.length &&
+    left.every((value, index) =>
+      value.seed === right[index]?.seed &&
+      value.repetition === right[index]?.repetition
+    );
 }
 
 /** Return companion revisions without the target variant under comparison. */
@@ -48,7 +49,8 @@ function companionRevisions(report: AggregateReportType): string[] {
 /** Ensure optional metric availability and authored sample counts are paired. */
 function sameMetric(left?: MetricType, right?: MetricType): boolean {
   return (left === undefined && right === undefined) ||
-    (left !== undefined && right !== undefined && left.samples === right.samples);
+    (left !== undefined && right !== undefined &&
+      left.samples === right.samples);
 }
 
 const baselineCompanions = baseline.installedSkills
@@ -94,15 +96,18 @@ const pairing = {
     companionRevisions(candidate),
   ),
   caseSetDigest: baseline.caseSetDigest === candidate.caseSetDigest,
-  caseIds: sameArray([...baseline.caseIds].sort(), [...candidate.caseIds].sort()),
+  caseIds: sameArray(
+    [...baseline.caseIds].sort(),
+    [...candidate.caseIds].sort(),
+  ),
   runKeys: sameRunKeys(baseline.runKeys, candidate.runKeys),
   runCount: baseline.runCount === candidate.runCount,
-  taskSamples:
-    baseline.metrics.taskSuccess.samples === candidate.metrics.taskSuccess.samples,
-  invalidRunSamples:
-    baseline.metrics.invalidRun.samples === candidate.metrics.invalidRun.samples,
-  validUnseenSamples:
-    baseline.metrics.validUnseen.samples === candidate.metrics.validUnseen.samples,
+  taskSamples: baseline.metrics.taskSuccess.samples ===
+    candidate.metrics.taskSuccess.samples,
+  invalidRunSamples: baseline.metrics.invalidRun.samples ===
+    candidate.metrics.invalidRun.samples,
+  validUnseenSamples: baseline.metrics.validUnseen.samples ===
+    candidate.metrics.validUnseen.samples,
   metricFamilies: pairedMetricKeys.every((key) =>
     sameMetric(baseline.metrics[key], candidate.metrics[key])
   ),
@@ -170,15 +175,27 @@ const regressions = [
     baseline.metrics.adversarial,
     candidate.metrics.adversarial,
   ),
-  higherRegression("transfer", baseline.metrics.transfer, candidate.metrics.transfer),
+  higherRegression(
+    "transfer",
+    baseline.metrics.transfer,
+    candidate.metrics.transfer,
+  ),
   higherRegression(
     "composition",
     baseline.metrics.composition,
     candidate.metrics.composition,
   ),
   higherRegression("safety", baseline.metrics.safety, candidate.metrics.safety),
-  higherRegression("artifact", baseline.metrics.artifact, candidate.metrics.artifact),
-  higherRegression("fixture", baseline.metrics.fixture, candidate.metrics.fixture),
+  higherRegression(
+    "artifact",
+    baseline.metrics.artifact,
+    candidate.metrics.artifact,
+  ),
+  higherRegression(
+    "fixture",
+    baseline.metrics.fixture,
+    candidate.metrics.fixture,
+  ),
   higherRegression(
     "markdownPreservation",
     baseline.metrics.markdownPreservation,
@@ -201,13 +218,17 @@ const regressions = [
   ),
 ].filter((value): value is string => value !== undefined);
 
-if (candidate.metrics.activation.precision < baseline.metrics.activation.precision) {
+if (
+  candidate.metrics.activation.precision < baseline.metrics.activation.precision
+) {
   regressions.push("activation.precision:lower");
 }
 if (candidate.metrics.activation.recall < baseline.metrics.activation.recall) {
   regressions.push("activation.recall:lower");
 }
-if (candidate.metrics.references.precision < baseline.metrics.references.precision) {
+if (
+  candidate.metrics.references.precision < baseline.metrics.references.precision
+) {
   regressions.push("references.precision:lower");
 }
 if (candidate.metrics.references.recall < baseline.metrics.references.recall) {
@@ -233,7 +254,8 @@ const efficient = booleanArgument("allow-longer") || !sizeComparable ||
   candidate.cost.targetSkillBytes <= baseline.cost.targetSkillBytes * 1.1;
 const benchmarkValid = baseline.metrics.invalidRun.value === 0 &&
   candidate.metrics.invalidRun.value === 0;
-const accepted = benchmarkValid && improved && regressions.length === 0 && efficient;
+const accepted = benchmarkValid && improved && regressions.length === 0 &&
+  efficient;
 const verdict = {
   benchmarkValid,
   accepted,

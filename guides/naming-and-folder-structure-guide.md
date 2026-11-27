@@ -1,15 +1,31 @@
-# Kaiju Naming and Folder Structure Guide
+# Naming and Folder Structure Guide
 
-> **Current cross-project rule:** read `engineering-standards.md` first. This guide remains the detailed naming and placement reference. The current standard owns cross-project `Schema`/`Type`, `get`/`read`, `ctx`, `utils/`, `packages/`, `registry/`, and executable-composition rules.
+> **Current cross-project rule:** read the applicable [engineering-standards](engineering-standards.md) sections first; inspect headings to select them rather than reading unrelated chapters. This guide remains the detailed naming and placement reference. The current standard owns cross-project `Schema`/`Type`, `get`/`read`, `ctx`, `utils/`, `packages/`, `registry/`, and executable-composition rules.
 
+
+## Applying the examples
+
+Judge a convention by the reader contract it protects. Namespace-oriented
+runtime operations do not require namespace imports for test runners, assertions,
+schemas, or types. Keep protocol-required spellings exact. Preserve local
+formatting and visible test scenarios; do not create public API documentation or
+schemas for trivial private fixtures just to reproduce an example's shape.
+
+Package paths under `@example/` and the illustrated folder layout are fictional.
+Use the repository's existing exports, formatter and ownership conventions.
 
 ## Purpose
 
-This guide defines how Kaiju symbols, files, folders, packages, and executable entry points should be named and organized.
+This guide defines how software symbols, files, folders, packages, and executable entry points should be named and organized.
 
 The objective is to make the codebase readable without prior context. Names should reveal what a value represents, what an operation does, which runtime resource owns it, and where an implementation belongs.
 
-This guide applies across `utils/`, `packages/`, `registry/`, and `clis/`.
+This guide separates generic mechanisms, concrete capabilities, declarative
+definitions, and executable composition. `utils/`, `packages/`, `registry/`, and
+`clis/` are an illustrative application layout. The public `okikio/utils`
+workspace instead keeps generic source packages under `packages/*`. Follow the
+consumer's actual ownership and dependency graph. Verify source or release
+resolution before adopting a package; directory names do not prescribe a taxonomy.
 
 ## Core principle
 
@@ -117,7 +133,7 @@ const res = await run({ route, ctx, writer, signal });
 A name may be shorter when its surrounding context carries the omitted meaning at both the definition and every usage.
 
 ```ts
-import * as processPool from '@kaiju/browser/pool';
+import * as processPool from '@example/browser/pool';
 
 const pool = processPool.create(options);
 await pool.dispose();
@@ -137,7 +153,7 @@ Do not shorten a public symbol when consumers are likely to import it directly a
 Prefer:
 
 ```ts
-import * as capture from '@kaiju/browser/capture';
+import * as capture from '@example/browser/capture';
 
 const result = await capture.page({ route, browserContext, archiveWriter, signal });
 ```
@@ -145,7 +161,7 @@ const result = await capture.page({ route, browserContext, archiveWriter, signal
 Avoid an ambiguous direct import:
 
 ```ts
-import { page } from '@kaiju/browser/capture';
+import { page } from '@example/browser/capture';
 
 const result = await page({ route, browserContext, archiveWriter, signal });
 ```
@@ -471,7 +487,7 @@ Avoid abstract names such as `OwnedContext` when the actual concept is an execut
 
 ## Comments and TSDoc establish terminology
 
-Use names to identify the concept, then use comments and TSDoc to teach the reader what that concept means in Kaiju. Documentation should add the domain meaning, lifecycle, ownership, constraints, or reason that the name alone cannot carry.
+Use names to identify the concept, then use comments and TSDoc to teach the reader what that concept means in the project. Documentation should add the domain meaning, lifecycle, ownership, constraints, or reason that the name alone cannot carry.
 
 Use TSDoc for public symbols and reusable internal contracts:
 
@@ -572,8 +588,8 @@ Use `UPPER_SNAKE_CASE` only for values that are conceptually fixed constants, pr
 
 ```ts
 const DEFAULT_BROWSER_PROCESS_COUNT = 4;
-const KAIJU_ARCHIVE_DIRECTORY = '.kaiju';
-const ROUTE_LEASE_HEADER = 'x-kaiju-route-lease';
+const ARCHIVE_DIRECTORY = '.archive';
+const ROUTE_LEASE_HEADER = 'x-example-route-lease';
 ```
 
 Use `camelCase` for ordinary module values even when declared with `const`.
@@ -681,6 +697,13 @@ mod.ts
 
 Do not rename conventional files merely to enforce kebab-case.
 
+A dash is a reason to inspect ownership. Check whether a meaningful parent can
+carry part of the name: a declaration tool with related operations may be
+clearer as `declarations/closure.ts` than `declaration-closure.ts`. Make that
+move only when the new parent expresses a real responsibility. Preserve an
+established compound, framework filename, package identity or public path when
+its consumers require it. Do not replace every dash with a directory separator.
+
 ### Name files after their primary concept
 
 A file should have one clear responsibility reflected in its name.
@@ -738,6 +761,18 @@ src/types.ts
 ```
 
 Split broad files by domain concept or capability.
+
+For a large file, map its responsibilities, state and callers before extracting
+code. Separate independent operations, fixture owners or runtime adapters when
+the split makes each contract easier to trace. Keep a cohesive algorithm or
+state transition together when extraction would scatter its invariants or
+duplicate setup. File length is a review signal, not a universal split threshold.
+Do not create a one-file folder merely to shorten a filename.
+
+Move useful internal comments and public documentation with the symbols they
+explain. Update imports, exports, generated registrations, tests, task inputs,
+cache identities and maintained examples as one cutover. A tree view should
+show the resulting owners; it cannot prove that their consumers were migrated.
 
 ### Entry-point files
 
@@ -918,7 +953,7 @@ Technical groupings such as `schemas.ts` or `types.ts` remain useful inside a fo
 
 ## Root architecture
 
-Kaiju follows a library-first dependency direction:
+The following example application layout illustrates a library-first dependency direction:
 
 ```text
 clis/
@@ -935,7 +970,7 @@ The essential responsibilities are:
 | Root | Responsibility |
 | --- | --- |
 | `utils/` | Generic, reusable, platform-level primitives |
-| `packages/` | Concrete capabilities, integrations, and Kaiju domain implementations |
+| `packages/` | Concrete capabilities, integrations, and product domain implementations |
 | `registry/` | Declarative definitions and registrations consumed by interpreters or packages |
 | `clis/` | Argument parsing, dependency selection, executable composition, terminal output, signals, and exit codes |
 
@@ -943,7 +978,7 @@ Dependencies should point toward more foundational layers. Generic code must not
 
 ## `utils/`
 
-`utils/` contains reusable primitives that do not know about Kaiju-specific products, vendors, storage systems, or crawl domains.
+In this application layout, `utils/` contains reusable primitives that do not know about the product or its domain. The utility repository packages these same ownership roles under `packages/*`.
 
 Appropriate examples:
 
@@ -987,13 +1022,13 @@ Those belong in `packages/`.
 
 ### Utility naming test
 
-A module belongs in `utils/` when its public API can be described accurately without mentioning Kaiju, a vendor, a database, a browser engine, or a specific business domain.
+A generic mechanism can be described accurately without the current product or a specific business domain. In the illustrated application layout it belongs in `utils/`; in the utility workspace it is a focused package under `packages/*`.
 
-If removing the domain name makes the API vague or misleading, the module probably belongs in `packages/`.
+If removing the domain name makes the API vague or misleading, preserve that domain in the capability's name and contract. Its directory follows the target repository's model.
 
 ## `packages/`
 
-`packages/` contains concrete capabilities and domain implementations that can be used independently from a CLI.
+In the illustrated application layout, `packages/` contains concrete capabilities and domain implementations usable independently from a CLI. This is not a restriction on a generic library workspace's `packages/*` directory.
 
 Appropriate examples:
 
@@ -1043,6 +1078,25 @@ packages/browser/pool/
 Keep public contracts and entry points easy to find. Keep implementation files close to the domain concept they implement.
 
 Do not introduce nested `src/` folders mechanically when the package is too small to benefit from them or when the repository uses a different established layout.
+
+### Maintained tools are workspace owners
+
+In a monorepo that uses `tools/`, treat it as a package container like
+`packages/`. Each maintained tool belongs in a cohesive member with its own
+manifest, declared dependencies and real callers. Include that member in the
+native workspace and its relevant check, test and build discovery. A loose
+implementation directly in the container, or a manifest with no integration,
+does not establish ownership.
+
+For example, a content tool can own `tools/content/build/pages.ts` and its
+package tasks. Runtime modules and generated output still belong with their
+actual consumers; moving the build command does not move the runtime contract.
+Use the repository's existing package conventions, without adding a workspace
+to a single-package project solely to reproduce this example.
+
+Keep one-off inspection scripts in the repository-approved ignored investigation
+workspace. A recurring generator or lint rule belongs in maintained tooling
+only when it has an ongoing consumer and verification contract.
 
 ## `registry/`
 
@@ -1129,7 +1183,7 @@ Do not implement the browser capture, archive writer, queue, extractor, or detec
 
 ## Dependency rules
 
-The expected dependency direction is:
+For the illustrated application layout, the expected dependency direction is:
 
 ```text
 clis → packages → utils
@@ -1139,7 +1193,7 @@ clis → packages → utils
 
 The exact relationship with `registry/` depends on the definition being consumed, but registries should remain declarative and foundational rather than importing executable orchestration.
 
-Prohibited dependency directions include:
+Within that layout, prohibited dependency directions include:
 
 ```text
 utils → packages
@@ -1176,7 +1230,7 @@ import { RouteSchema } from '#src/contracts/routes/schema.ts';
 Prefer package exports or source aliases over deep relative paths.
 
 ```ts
-import { defineResource } from '@kaiju/resource';
+import { defineResource } from '@example/resource';
 import { RouteSchema } from '#/contracts/routes/schema.ts';
 ```
 
@@ -1195,9 +1249,9 @@ Public APIs should expose focused contracts, factories, schemas, and types.
 Prefer focused package entry points:
 
 ```text
-@kaiju/browser/capture
-@kaiju/browser/pool
-@kaiju/db/clickhouse
+@example/browser/capture
+@example/browser/pool
+@example/db/clickhouse
 ```
 
 Avoid one giant package entry point that exposes unrelated implementations and creates accidental coupling.
@@ -1236,7 +1290,7 @@ mandatory multi-level folder template.
 | Can the parent path make a folder name unambiguous? | Prefer one concrete word; use multiword kebab-case only when needed |
 | Is the entry inside an auto-discovered command, route, or plugin tree but should not be discovered? | Prefix the narrowest support file or folder with `_` and verify the loader ignores it |
 | Is it a short project-owned filename or a genuinely multiword folder? | Use kebab-case |
-| Does the module work without Kaiju-specific knowledge? | Consider `utils/` |
+| Does the module work without product-specific knowledge? | Consider `utils/` |
 | Does it implement a concrete capability or integration? | Place it in `packages/` |
 | Is it a declarative definition interpreted elsewhere? | Place it in `registry/` |
 | Does it parse commands or compose an executable? | Place it in `clis/` |
@@ -1278,7 +1332,7 @@ Before accepting naming or structural changes, verify:
 - Comments and TSDoc explain domain-specific terminology, lifecycle, ownership, and shortened names without compensating for vague naming.
 - Imports use ESM, explicit extensions, and the `#/` alias where appropriate.
 - Obsolete compatibility aliases were not preserved without an explicit requirement.
-- Formatting follows the Kaiju Code Formatting Guide, especially compact call sites and flat extra-short structures.
+- Formatting follows the Code Formatting Guide, especially compact call sites and flat extra-short structures.
 
 ## Summary rule
 

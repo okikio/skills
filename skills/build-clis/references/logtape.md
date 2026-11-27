@@ -20,9 +20,9 @@
 
 ## Evidence and ownership
 
-Treat the productionized CLI guidebook as the normative architecture. Treat the
-attached Kaiju diagnostics package as an observed LogTape 2.2.4 implementation,
-not a complete or universally correct reference.
+Use the active repository's logging and output contracts. The diagnostics
+adapter examples are anonymized illustrations from a historical LogTape 2.2.4
+integration. Their local helpers do not define LogTape's public API.
 
 Before adopting this design, establish the existing output owner. If the
 repository does not use LogTape and the request does not authorize a migration,
@@ -253,7 +253,7 @@ Suggested semantics:
 - a configured level and repeated verbosity need an explicit algebra;
 - subsystem filters may raise or lower a category without changing siblings.
 
-The observed Kaiju adapter treats repeated verbosity as an override only when it
+The illustrative adapter treats repeated verbosity as an override only when it
 raises detail above its baseline. That is one product policy, not a LogTape rule.
 Document and test the chosen behavior.
 
@@ -443,13 +443,14 @@ invalid config with --log-format json --log-output errors.jsonl
 
 ## Sources and freshness
 
-- Normative source: `productionized-cli-pattern-guidebook-v1.1(1).md`, reviewed 2026-07-17.
-- Normative ecosystem audit: `cli-guidelines-audit-and-expansion(1).md`, reviewed 2026-07-17.
-- Observed implementation: `live-browser-cli(41).zip/packages/diagnostics/src/logging.ts` and its tests/manifests, reviewed 2026-07-17.
+- Portable guidance: [CLI architecture](architecture.md) and the
+  [CLI policy audit](../../../guides/cli-guidelines-audit-and-expansion.md).
+- Historical source scope: a diagnostics adapter and its tests/manifests,
+  reviewed 2026-07-17 and adapted here into anonymized examples.
 - Official documentation: <https://logtape.org/>, discovery pointer for current categories, sinks, formatters, filters, redaction, and integrations.
 - Official source: <https://github.com/dahlia/logtape>, discovery pointer for package/version history.
 
-Freshness status: the attached implementation evidence remains grounded in
-LogTape 2.2.4, while the sink lifecycle and async-sink notes were rechecked
+Historical version scope: the adapter examples concern LogTape 2.2.4.
+The recorded review of sink lifecycle and async-sink notes checked them
 against the official LogTape 2.3.1 documentation/changelog on 2026-08-19.
-Current LogTape 2.3.1 documentation also keeps a plain `Sink` synchronous; asynchronous output uses `AsyncSink` wrapped by `fromAsyncSink()`, and that wrapper requires asynchronous disposal. Always verify `parentSinks`, sink wrapper signatures, formatter APIs, context helpers, lint maturity, and optional package names against the repository's installed version before copying code.
+The reviewed LogTape 2.3.1 documentation keeps a plain `Sink` synchronous; asynchronous output uses `AsyncSink` wrapped by `fromAsyncSink()`, and that wrapper requires asynchronous disposal. Always verify `parentSinks`, sink wrapper signatures, formatter APIs, context helpers, lint maturity, and optional package names against the repository's installed version before copying code.

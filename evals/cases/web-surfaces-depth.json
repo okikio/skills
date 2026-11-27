@@ -48,7 +48,8 @@
         "ownership"
       ],
       "rationale": "Prevents package lists and dormant files from becoming hallucinated architecture.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-surface-seen-hybrid-cache-handoff",
@@ -96,7 +97,8 @@
         "cache"
       ],
       "rationale": "Tests route-level rendering and cache decisions.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-surface-heldout-name-only-extension",
@@ -143,7 +145,8 @@
         "anti-hallucination"
       ],
       "rationale": "Repository naming is a common source of invented runtime APIs.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-renderer-train-island-escalation",
@@ -191,7 +194,8 @@
         "islands"
       ],
       "rationale": "Tests decision completeness across Astro rendering mechanisms.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-renderer-seen-solid-hydration",
@@ -240,7 +244,8 @@
         "hydration"
       ],
       "rationale": "Targets renderer-specific hallucinations and cleanup mistakes.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-renderer-heldout-client-only-silencing",
@@ -288,7 +293,8 @@
         "anti-hallucination"
       ],
       "rationale": "Prevents hiding ownership and hydration defects behind client rendering.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-components-train-registry-contract",
@@ -336,7 +342,8 @@
         "registry"
       ],
       "rationale": "Generated component files are otherwise easy to copy incompletely.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-components-seen-solid-primitives-selection",
@@ -384,7 +391,8 @@
         "solid-primitives"
       ],
       "rationale": "Exercises the mandatory ecosystem hypothesis without over-installation.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-components-heldout-icon-font-bloat",
@@ -432,7 +440,8 @@
         "performance"
       ],
       "rationale": "Tests connected component/style/asset reasoning.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-motion-train-presence-lifecycle",
@@ -480,7 +489,8 @@
         "presence"
       ],
       "rationale": "Presence is a high-risk area for API-shaped hallucination.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-motion-seen-webgl-resource-owner",
@@ -528,7 +538,8 @@
         "webgl"
       ],
       "rationale": "Tests continuous-work cleanup and graceful enhancement.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-motion-heldout-types-without-runtime",
@@ -575,7 +586,8 @@
         "anti-hallucination"
       ],
       "rationale": "Explicitly punishes hallucinated feature parity.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-security-train-request-handoff",
@@ -623,7 +635,8 @@
         "authorization"
       ],
       "rationale": "Tests complete production handoff ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-security-seen-webhook-rewrite",
@@ -670,7 +683,8 @@
         "webhooks"
       ],
       "rationale": "Prevents copying the most dangerous observed endpoint.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-security-heldout-rich-snippet-xss",
@@ -718,7 +732,8 @@
         "xss"
       ],
       "rationale": "Raw-content handoffs are a frequent hallucination and security source.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-verify-train-layered-matrix",
@@ -767,7 +782,8 @@
         "matrix"
       ],
       "rationale": "Tests evidence-based completion reporting.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-verify-seen-navigation-leak",
@@ -815,7 +831,8 @@
         "lifetime"
       ],
       "rationale": "Makes an observed navigation defect reproducible.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-verify-heldout-check-substitution",
@@ -862,7 +879,8 @@
         "anti-hallucination"
       ],
       "rationale": "Prevents shallow validation from becoming a false completion claim.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-failures-train-hydration-diagnosis",
@@ -916,7 +934,8 @@
         "diagnosis"
       ],
       "rationale": "Tests precise diagnosis without broad speculative changes.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-failures-seen-cms-auth-chain",
@@ -969,7 +988,8 @@
         "connected-systems"
       ],
       "rationale": "Exercises failure signatures across content, cache and auth.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "web-failures-heldout-arbitrary-workaround",
@@ -1018,7 +1038,8 @@
         "anti-hallucination"
       ],
       "rationale": "Punishes plausible but unsafe workaround advice.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-astro-train-route-config",
@@ -1067,7 +1088,8 @@
         "architecture"
       ],
       "rationale": "Tests complete Astro configuration ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-astro-seen-client-router-lifetime",
@@ -1114,7 +1136,8 @@
         "navigation"
       ],
       "rationale": "Turns a concrete uploaded defect into an operational rule.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-astro-heldout-auto-adapter-assumption",
@@ -1163,7 +1186,8 @@
         "anti-hallucination"
       ],
       "rationale": "Auto-detection must not become an invented portability guarantee.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-content-train-adapter-model",
@@ -1211,7 +1235,8 @@
         "cms"
       ],
       "rationale": "Tests the complete content rendering contract missing from shallow skills.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-content-seen-local-reference-schema",
@@ -1258,7 +1283,8 @@
         "astro-collections"
       ],
       "rationale": "Separates migration inputs from valid runtime content.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-content-heldout-dual-source",
@@ -1307,7 +1333,8 @@
         "anti-hallucination"
       ],
       "rationale": "Migration safety must not create a permanent duplicate content system.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-quality-train-route-gates",
@@ -1356,7 +1383,8 @@
         "gates"
       ],
       "rationale": "Turns broad quality claims into executable acceptance criteria.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-quality-seen-performance-budget",
@@ -1403,7 +1431,8 @@
         "performance"
       ],
       "rationale": "Applies observed configuration risks to measurable quality work.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-quality-heldout-lighthouse-only",
@@ -1451,7 +1480,8 @@
         "anti-hallucination"
       ],
       "rationale": "Prevents surface-level audit scores from replacing behavior.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-casebook-train-evidence-classification",
@@ -1502,7 +1532,8 @@
         "evidence"
       ],
       "rationale": "Grounding requires evaluating source status, not only reading it.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-casebook-seen-kaiju-homepage",
@@ -1549,7 +1580,8 @@
         "kaiju"
       ],
       "rationale": "Casebooks must guide judgment instead of becoming templates.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "site-casebook-heldout-upload-authority",
@@ -1597,7 +1629,8 @@
         "anti-hallucination"
       ],
       "rationale": "Prevents grounding from degenerating into uncritical copying.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-forms-train-auth-state-machine",
@@ -1645,7 +1678,8 @@
         "auth"
       ],
       "rationale": "Tests a complete form contract rather than field snippets.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-forms-seen-async-races",
@@ -1692,7 +1726,8 @@
         "races"
       ],
       "rationale": "Exercises common mutation races shallow skills miss.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-forms-heldout-client-validation-trust",
@@ -1739,7 +1774,8 @@
         "anti-hallucination"
       ],
       "rationale": "Client libraries must not be mistaken for domain enforcement.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-data-train-url-query-ownership",
@@ -1786,7 +1822,8 @@
         "url-state"
       ],
       "rationale": "Tests the complete TanStack route/query ownership chain.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-data-seen-virtual-table",
@@ -1833,7 +1870,8 @@
         "virtualization"
       ],
       "rationale": "Virtualization needs operational detail beyond library names.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-data-heldout-table-implies-virtual",
@@ -1880,7 +1918,8 @@
         "anti-hallucination"
       ],
       "rationale": "Prevents headless-table imports from becoming invented features.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-verify-train-end-to-end",
@@ -1928,7 +1967,8 @@
         "end-to-end"
       ],
       "rationale": "Tests integration depth across the application state system.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-verify-seen-auth-switch",
@@ -1976,7 +2016,8 @@
         "tenant"
       ],
       "rationale": "Organization switching exposes cache and authority coupling.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "webapp-verify-heldout-mocked-success",
@@ -2024,7 +2065,8 @@
         "anti-hallucination"
       ],
       "rationale": "Prevents mock success from becoming an invented end-to-end result.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     }
   ]
 }

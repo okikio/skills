@@ -359,7 +359,4 @@ and then passes that output through the consumer whose contract it must satisfy.
 
 ## Sources and freshness
 
-- Attachment: `undent.zip/mod.ts`, `unicode.ts`, README, tests, and release scripts from `undent.zip`, inspected 2026-07-17.
-- Registry identity: [`@okikio/undent` on JSR](https://jsr.io/@okikio/undent); the detailed API in this reference is grounded in the attached `0.3.3` source, not inferred from the registry landing page.
-
-The exact export map, options, Unicode tables, and cache implementation are version-sensitive. APIs not present in the attached source remain unverified.
+Reference scope: reviewed 0.3.3 source, with public identity at [JSR `@okikio/undent`](https://jsr.io/@okikio/undent). This dated reference is not a claim that 0.3.3 is the latest published version. Resolve the installed artifact and verify its export map, options, Unicode tables and cache behavior before copying examples. An API absent from that artifact remains unverified.

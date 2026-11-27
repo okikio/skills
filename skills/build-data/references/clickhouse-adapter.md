@@ -1,302 +1,196 @@
-# Custom ClickHouse Drizzle-like adapter design
+# Custom ClickHouse adapter design
 
-## Contents
+Use this reference when a consumer is building or reviewing an adapter around
+ClickHouse and Drizzle's SQL representation. It describes acceptance criteria;
+it does not identify a published adapter package or assert Drizzle dialect parity.
+The public `okikio/utils` workspace has no implied ClickHouse/Drizzle replacement.
 
-- Status and evidence
-- Capability matrix
-- Module architecture
-- Schema DSL
-- Query AST and dialect
-- Driver, session, and results
-- Writes and mutations
-- Migration and seed system
-- Public API shape
-- Unsupported semantics
-- Test matrix
-- Delivery sequence
-- Sources and freshness
+## Start with the actual adapter
 
-## Status and evidence
+Resolve the consumer's package, source commit, public exports, native client,
+Drizzle version and ClickHouse server. Inspect which builder methods actually
+compile and execute. Keep unsupported operations explicit. An export, type or
+successful SQL snapshot does not establish server behavior.
 
-The uploaded Kaiju `libs/clickhouse` package is an inspectable custom adapter, not a verified package published for general use. Its source implements native ClickHouse columns, engine/table metadata, a Drizzle-SQL-based dialect, select/insert/mutation builders, a session and database facade, migration snapshots/diffs/generation/application, seed execution, an Optique CLI, and live integration tests.
-
-Do not invent an import specifier for it. Reuse the architecture only after confirming the consuming repository contains or publishes the package.
+Use the upstream ClickHouse client directly when it already fits the task.
+A custom adapter is useful only when its typed schema, result mapping or query
+composition removes enough application duplication to justify maintaining a
+second contract.
 
 ## Capability matrix
 
-Use an explicit matrix in the package documentation and release gates:
+Record supported, unsupported and unverified status against the actual source.
+Do not fill the status column from this guide.
 
-| Surface | Uploaded implementation | Required production proof |
-|---|---|---|
-| native table/columns | implemented | DDL and round-trip breadth |
-| MergeTree engine helpers | implemented | server-version grammar tests |
-| settings, codecs, TTL, indexes, projections | implemented | snapshot/diff/live DDL |
-| select/CTE/joins/sets | implemented | SQL goldens and live results |
-| `PREWHERE`, `FINAL`, `SAMPLE`, `QUALIFY`, totals, limit-by, settings | implemented | version matrix |
-| prepared placeholders | implemented over compiled queries | typed binding and repeated execution |
-| streaming iterator | implemented | early-return disposal/backpressure |
-| values insert | implemented through native client | batch/type/default behavior |
-| insert-select | implemented | live integration |
-| `ALTER UPDATE/DELETE` mutation | implemented and requires `WHERE` | async completion/error behavior |
-| multi-statement transaction | explicitly rejected | rejection test remains |
-| relational query API | not established | do not advertise |
-| FK/unique OLTP constraints | not ClickHouse semantics | do not emulate in types |
-| `RETURNING` parity | not established | do not advertise |
-| snapshot/diff/generate | implemented | transition/property tests |
-| migration apply/history | implemented | interrupted-file repair |
-| introspection/push/studio | not established | mark unsupported |
-| seed journal/hash | implemented | crash/retry/idempotency |
+| Surface | Evidence required before support is advertised |
+| --- | --- |
+| Native columns and table metadata | DDL rendering and value round trips |
+| MergeTree engine arguments | Supported server grammar and identifier escaping |
+| Settings, codecs, TTL, indexes and projections | Snapshot, diff and live DDL coverage |
+| Select, joins, CTEs and set operations | SQL fixtures and live result mapping |
+| ClickHouse-specific clauses | Clause order and a supported server version matrix |
+| Prepared placeholders | Typed parameter binding and repeated execution |
+| Streaming iteration | Backpressure, failure and early-return cleanup |
+| Values inserts and insert-select | Correct native transport, types and defaults |
+| Update/delete mutations | Required predicates and completion/error policy |
+| Transactions | Real supported semantics or an immediate explicit rejection |
+| Relational query APIs and `RETURNING` | Implemented behavior; names alone prove nothing |
+| Migration generation and application | Schema transitions and interrupted-run recovery |
+| Introspection, push and Studio | Explicit implemented integration |
+| Seeds | Stable identity, retry policy and partial-write recovery |
 
-## Module architecture
+## Keep ownership visible
 
-Recommended ownership:
+A possible module split is:
 
 ```text
-schema/
-  columns.ts       native builders, encode/decode, DDL metadata
-  engines.ts       structured engine arguments
-  table.ts         ClickHouse table identity and physical config
-  ddl.ts           CREATE TABLE renderer
-params.ts          bound value + ClickHouse type identity
-dialect.ts         Drizzle SQL AST -> ClickHouse SQL
-session.ts         prepare/execute/iterate + result mapping
-result.ts          ordered selection and decoder mapping
-select.ts          typed SELECT builder
-insert.ts          values and insert-select
-mutation.ts        ALTER UPDATE/DELETE with safety guard
-db.ts              public facade + unsafe escape hatch + close
-migrations/        snapshot, diff, types, SQL splitting, runner
-kit/               config loader and generation filesystem adapter
-seeds/             seed definition, hash/history, runner
-cli/               generate/migrate/seed/config commands and man page
+schema/       columns, table identity, engine arguments, DDL metadata
+params.ts     bound values and ClickHouse type identity
+dialect.ts    SQL representation to ClickHouse syntax
+session.ts    native execution, cancellation and result lifetime
+result.ts     ordered selection and decoder mapping
+select.ts     supported read operations
+insert.ts     values and insert-select
+mutation.ts   guarded mutation operations
+migrations/   snapshots, diffs, statement execution and history
 ```
 
-Keep the native client behind a structural `ClickHouseClientLike` interface so unit tests do not require a server. Avoid exporting Drizzle internal compiler types as the adapter's public contract where a small structural interface suffices.
+Choose names that fit the repository. Keep the native client behind a small
+structural interface so compiler tests need no server. Public types should not
+expose Drizzle internals merely because the implementation uses them. Isolate any
+unavoidable internal dependency and verify it at the pinned version.
 
-## Schema DSL
+## Schema and query contracts
 
-The uploaded package attaches a ClickHouse-specific table config to a Drizzle `Table` subclass and uses native `ColumnBuilder`/`Column` subclasses. The table config covers:
+Represent engine arguments according to what they mean. An identifier, a string
+literal, a number and a trusted SQL expression need different rendering rules.
+Keep raw-expression escape hatches explicit and restrict them to trusted code.
 
-- engine;
-- `PARTITION BY`, `ORDER BY`, `PRIMARY KEY`, and `SAMPLE BY` expressions;
-- TTL actions;
-- data-skipping indexes;
-- projections;
-- engine settings and comments;
-- database and cluster.
+Table metadata may need engine, partition/sort/primary/sample keys, TTL, indexes,
+projections, settings, database and cluster. Only expose fields the compiler and
+migration system actually support. Test native types by behavior:
 
-Use typed engine arguments:
+- signed and unsigned integer ranges, including values larger than safe JS integers;
+- Decimal, floating-point values and booleans;
+- String, FixedString, UUID and enum values;
+- dates, timestamps, precision and timezones;
+- Nullable, LowCardinality, arrays, maps, tuples and nested values;
+- server-specific JSON, Variant or aggregate-state types when supported;
+- materialized/default expressions, aliases, codecs and comments.
+
+Compile clause order from the deployed server's grammar. Keep result format with
+the session when its decoder relies on a particular format. Parameterize values
+with ClickHouse type information; public input must not choose SQL identifiers
+or raw expressions.
+
+Test compilation independently of transport. Assert exact SQL, parameter names,
+values and types. Then run the same operation against supported server versions.
+A valid TypeScript builder can still produce invalid or semantically wrong SQL.
+
+## Native client and result lifetime
+
+The official JavaScript client documents `query`, `command`, `insert` and `exec`
+for distinct operations, plus `close` for client lifetime. Query results support
+whole-result `json`/`text` consumption or streaming. Node and web clients use
+different stream implementations; inspect the chosen client's cancellation and
+cleanup API instead of assuming every result exposes the same close method.
+
+This example uses the official Node client API. It needs a reachable server and
+is not a claim that a custom adapter has equivalent methods:
 
 ```ts
-type EngineArgument =
-  | { kind: "identifier"; value: string }
-  | { kind: "string"; value: string }
-  | { kind: "number"; value: number }
-  | { kind: "expression"; value: string };
+import { createClient } from '@clickhouse/client';
+
+const client = createClient({ url: 'http://localhost:8123' });
+try {
+  const result = await client.query({
+    query: 'SELECT toUInt32(number) AS value FROM numbers({count:UInt32})',
+    query_params: { count: 3 },
+    format: 'JSONEachRow',
+  });
+  const rows = await result.json<Array<{ value: number }>>();
+  console.log(rows);
+} finally {
+  await client.close();
+}
 ```
 
-This prevents a replica path string, a version column identifier, a number, and `cityHash64(id)` from sharing an unsafe string-rendering rule. Keep `unsafeEngine()` or raw expression entrypoints visibly unsafe and limited to trusted static fragments.
+Whole-result materialization must fit the memory budget. A streaming wrapper
+must release its reader or native stream after completion, failure and early
+iterator return. Test this with the actual Node or web client.
 
-Example design, using names from the uploaded local source only:
+For positional formats, keep selection order and decoder order identical.
+Apply each column's decoder and define outer-join nullability. Return or retain
+the native client's disposer so the host can drain and close it. A borrowed
+client must not be closed by an individual query. Redact parameter logs and bound
+payload previews.
 
-```ts
-const events = clickhouseTable(
-  "events",
-  {
-    id: chUInt64("id"),
-    tenantId: chUUID("tenant_id"),
-    occurredAt: chDateTime64("occurred_at", { precision: 3, timezone: "UTC" }),
-    kind: chLowCardinality("kind", chString()),
-  },
-  (column) => ({
-    engine: mergeTree(),
-    partitionBy: sql`toYYYYMM(${column.occurredAt})`,
-    orderBy: [column.tenantId, column.occurredAt, column.id],
-  }),
-);
-```
+## Writes, mutations and recovery
 
-Verify actual factory signatures before copying this example: the source may evolve.
+A values insert needs a deliberate contract for empty input, column names,
+encoders, absent defaults, `undefined`, batching, settings, query IDs and aborts.
+An insert-select is a SQL operation; it does not use a values serialization path.
+Test retries against the selected server's deduplication settings and limits.
 
-Column coverage should be grouped and tested by behavior:
+Require a predicate before a mutation can execute. Accept known target columns
+and encode assignments through their types. Define whether the caller waits,
+polls or receives an operation identity. Name and document update/delete methods
+so callers understand the actual server operation.
 
-- integer widths and signedness, big integer mapping;
-- floating, Decimal, Boolean;
-- String, FixedString, UUID;
-- Date, Date32, DateTime, DateTime64/timezone;
-- Enum8/Enum16;
-- LowCardinality, Nullable;
-- Array, Map, Tuple, Nested;
-- IPv4/IPv6;
-- JSON/Object/Variant where server support permits;
-- aggregate-function state types;
-- aliases, materialized/default expressions, codecs, comments, statistics.
+A migration system must preserve every physical feature it claims to manage.
+Classify additive, expensive, destructive and manually staged changes. Changes
+to sorting or partition layout can need replacement, backfill and cutover;
+generation must not imply safe in-place migration.
 
-## Query AST and dialect
+For generated files, design recovery for a crash between writing SQL, a snapshot
+and a journal. A pending record plus atomic file replacement is one possible
+protocol. Risk rejection must leave the previous committed snapshot intact.
+For applied statements, track stable migration identity, content hash, attempts
+and completion. If earlier statements remain applied after a later failure,
+record that partial state and provide a repair path.
 
-Build on Drizzle's SQL AST, not a second ad hoc expression language. The dialect must compile ClickHouse clause order exactly:
+Seeds need their own identity and retry policy. A failed callback may already
+have written data. Do not claim rollback or exactly-once external effects from
+a seed journal or a query ID alone.
 
-```text
-WITH -> SELECT -> FROM -> SAMPLE -> JOIN/ARRAY JOIN -> PREWHERE -> WHERE
--> GROUP BY -> HAVING -> QUALIFY -> ORDER BY -> LIMIT BY -> LIMIT/OFFSET
--> SETTINGS -> FORMAT
-```
+## Public exports and unsupported operations
 
-Keep format ownership in the session when the result mapper requires `JSONCompactEachRow`; avoid allowing user `FORMAT` to invalidate decoding accidentally.
+Publish only implemented contracts through the actual export map. Separate
+runtime querying, schema construction, migration generation and migration
+application when consumers have different dependencies or permissions. Never
+copy conceptual file paths from this guide into consumer imports.
 
-Parameterize values with ClickHouse's typed query parameters. Preserve explicit type identity for placeholders and column-bound parameters. Reject unsafe inferred types when ambiguity would change semantics.
+Reject or omit capabilities that the selected adapter cannot guarantee:
 
-Test the dialect independently of transport:
+- transactional sessions or rollback beyond the server/client contract;
+- foreign-key or unique-constraint enforcement that is not implemented;
+- PostgreSQL/MySQL conflict or returning clauses;
+- relational-query methods that only exist as types or placeholders;
+- automatic migration of physical layouts without a tested plan;
+- Kit, Studio or introspection compatibility inferred from a Drizzle dependency.
 
-```ts
-const compiled = query
-  .prewhere(eq(events.tenantId, sql.placeholder("tenant")))
-  .where(gte(events.occurredAt, from))
-  .orderBy(desc(events.occurredAt), desc(events.id))
-  .limit(100)
-  .settings({ max_execution_time: 10 })
-  .toSQL();
-```
+## Verification and delivery
 
-Assert exact SQL, named parameter values, and ClickHouse parameter types.
+Unit checks cover rendering, injection rejection, parameter types, result
+mapping, decoder behavior, early cleanup, empty/default insert cases, predicate
+guards, deterministic snapshots, diff transitions, hash mismatches and recovery.
 
-## Driver, session, and results
+Use disposable live databases for DDL, inserts, queries, mutations and migration
+upgrade paths. Exercise timestamps, decimals, large integers, nested values,
+async inserts, deduplication, cancellation, interrupted work and client shutdown.
+Run against the minimum and target versions the adapter actually claims.
 
-Define four native operations:
-
-- `query({ query, format, query_params, clickhouse_settings, query_id, abort_signal })`;
-- `command(...)` for DDL/mutations;
-- `insert({ table, values, format, ... })` for batches;
-- `close()` for lifetime.
-
-The uploaded structural interface also models a result set with `json()`, `stream()`, and `close()`. The adapter session should close it after array materialization and in an iterator's `finally` path.
-
-Use positional rows such as `JSONCompactEachRow` only when `orderSelectedFields(...)` and result positions are deterministic. Apply each selected column's decoder. For outer joins, return a nested joined object as `null` when every selected field for that joined table is null; do not leave a misleading object full of null values.
-
-The database factory should return both the typed facade and reachable native client ownership. Logger hooks should receive SQL and parameters but redact secrets and high-volume payloads.
-
-## Writes and mutations
-
-Values inserts should:
-
-- require at least one row;
-- map property names to physical columns;
-- run column encoders;
-- omit server-default columns when absent;
-- reject runtime SQL defaults the native insert format cannot express;
-- avoid serializing `undefined` as a value accidentally;
-- support request settings, query IDs, and cancellation;
-- encourage batches and idempotency tokens.
-
-Insert-select compiles through the dialect and executes as a command. It is not the same transport as `client.insert(values)`.
-
-Mutation builders must require `WHERE` before execution. Accept only known target columns, encode assignments through those columns, and expose settings such as synchronous mutation waiting deliberately.
-
-Do not add `update()`/`delete()` names that imply immediate row-level OLTP semantics without documenting that they issue ClickHouse mutations.
-
-## Migration and seed system
-
-The uploaded design snapshots physical table metadata and diffs named columns, indexes, projections, TTL, settings, and layout keys. It classifies operations:
-
-- `safe`: additive/retryable DDL;
-- `caution`: type/index/projection/TTL work needing explicit acceptance;
-- `destructive`: data/object removal;
-- `manual`: physical layout changes requiring replacement/backfill/swap.
-
-Generation writes a pending metadata record before atomically installing SQL, snapshot, and journal. Preserve this crash-recovery protocol. Never advance the snapshot when risk gates reject the plan.
-
-The migration runner:
-
-- sorts and de-duplicates identifiers;
-- hashes normalized statements;
-- rejects applied-ID hash mismatch by default;
-- executes statements one at a time with stable query-ID prefixes;
-- records successful or failed attempts;
-- cannot roll back prior statements in the file.
-
-Seeds need their own identifiers/hashes/history. Make callbacks idempotent or rely on a proven ClickHouse deduplication guarantee. A failed seed may have written data before the process died.
-
-## Public API shape
-
-Export by capability, not internal file layout:
-
-```ts
-// runtime
-export { drizzleClickHouse, alias, bindValue } from "./src/index.ts";
-export type { ClickHouseDatabase, ClickHouseQueryOptions } from "./src/index.ts";
-
-// schema
-export { clickhouseTable, mergeTree, replacingMergeTree } from "./src/schema/index.ts";
-
-// migration generation/application
-export { defineClickHouseConfig, generateClickHouseMigration } from "./src/kit/index.ts";
-export { migrateClickHouse } from "./src/migrations/index.ts";
-```
-
-These paths illustrate ownership. Use the actual package export map, not deep imports, in consumers.
-
-## Unsupported semantics
-
-Reject or clearly omit:
-
-- transactional ORM sessions and multi-statement rollback;
-- foreign-key or unique-constraint enforcement not provided by ClickHouse;
-- PostgreSQL/MySQL conflict and returning clauses;
-- relational-query API unless fully implemented;
-- implicit row-by-row save/delete methods;
-- schema introspection, push, Studio, or Kit compatibility not implemented;
-- automatic migration of engine/sorting/partition keys;
-- exactly-once claims spanning external effects;
-- server features not covered by the supported version matrix.
-
-An explicit throw is a feature. Silent fallback to unsafe SQL is not.
-
-## Test matrix
-
-Unit and property tests:
-
-- every engine argument renderer and injection rejection;
-- every column type DDL plus encode/decode;
-- table DDL for partition/order/primary/sample/TTL/index/projection/settings;
-- SQL clause order and parameter types;
-- aliases, CTEs, joins, set operations, partial/nested selections;
-- prepared execution and result mapping;
-- iterator early close;
-- empty/mixed/default inserts;
-- mutation missing-`WHERE` rejection;
-- snapshot determinism and diff transitions;
-- SQL statement splitting across strings/comments;
-- pending-generation recovery;
-- migration/seed hash mismatch and failed history;
-- explicit transaction rejection and client close.
-
-Live container tests:
-
-- create all supported DDL against minimum and target servers;
-- values insert, insert-select, select, join, aggregation, and prepared query;
-- timestamps/timezones, UInt64/Decimal, nested types;
-- synchronous mutation and system-table observation;
-- async insert/dedup/retry behavior;
-- materialized view and projection use;
-- clean migration, representative upgrade, interrupted migration repair;
-- restart persistence and client shutdown.
-
-## Delivery sequence
-
-1. Publish a capability matrix and supported server/Drizzle/client versions.
-2. Stabilize native client and parameter interfaces.
-3. Complete schema/DDL breadth with container tests.
-4. Stabilize select/result mapping and streaming disposal.
-5. Stabilize inserts and bounded mutations.
-6. Freeze snapshot schema version and build exhaustive diff tests.
-7. Harden generation/history/crash recovery.
-8. Add seeds, CLI, man/completion, and configuration tracing.
-9. Run compatibility consumers outside the monorepo.
-10. Only then declare a stable public package.
+Before a release, install the packed artifact into an independent consumer and
+check types, exports, generated files and required runtimes. Report unsupported
+and untested behavior with the release. A public package name is justified by
+publication evidence, not by an architecture diagram or a local manifest.
 
 ## Sources and freshness
 
-- Attachment: `kaiju-site-scope(17).zip/libs/clickhouse/src` and `tests`, inspected 2026-07-17. This is the direct source for the described implementation.
-- Primary connected systems: [ClickHouse documentation](https://clickhouse.com/docs/) and [Drizzle ORM documentation](https://orm.drizzle.team/docs/overview), verified 2026-07-17 for public database and ORM contracts.
+- [Official ClickHouse JavaScript client documentation](https://clickhouse.com/docs/integrations/javascript), consulted 2026-11-26 for the native operations and result/stream distinctions.
+- [ClickHouse JavaScript client source](https://github.com/ClickHouse/clickhouse-js) for the exact installed client's interface and lifetime implementation.
+- [Drizzle documentation](https://orm.drizzle.team/docs/overview) for its public query, schema and driver contracts.
 
-The adapter's package identity, publication status, compatibility range, and external API are unverified and version-sensitive. Do not invent an import specifier or claim parity with Drizzle dialects that have upstream support.
+The proposed module split and acceptance criteria are design guidance. No custom
+adapter implementation or release is asserted here. Verify private/internal
+Drizzle interfaces and server features against the actual pinned dependency set.

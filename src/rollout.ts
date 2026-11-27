@@ -1,14 +1,15 @@
 import { join } from "node:path";
 import { evaluateAssertion } from "./assert.ts";
-import { type EvalCaseType, EvalCaseSchema } from "./corpus.ts";
+import { EvalCaseSchema, type EvalCaseType } from "./corpus.ts";
 import {
   type AssertionResultType,
-  type EvalResultType,
   EvalResultSchema,
+  type EvalResultType,
 } from "./evaluation.ts";
 import { copyDirectory, walkFiles } from "./files.ts";
 import { prepareFixture } from "./fixture.ts";
 import * as hash from "./hash.ts";
+import { effectivePrompt } from "./interpretation.ts";
 import * as qualitative from "./judge.ts";
 import type { ModelAdapterType } from "./model.ts";
 import * as provider from "./provider.ts";
@@ -19,10 +20,7 @@ import {
 } from "./protocol.ts";
 import * as target from "./target.ts";
 import * as tree from "./tree.ts";
-import {
-  type SkillOptWorkspaceType,
-  verifyWorkspace,
-} from "./workspace.ts";
+import { type SkillOptWorkspaceType, verifyWorkspace } from "./workspace.ts";
 
 /** One exported case identity stored in a SkillOpt workspace manifest. */
 export interface CaseRecordType {
@@ -162,7 +160,9 @@ export async function removeTemp(path: string): Promise<Error | undefined> {
 }
 
 /** Remove all acquired temporary paths and retain every cleanup failure. */
-async function release(paths: readonly (string | undefined)[]): Promise<Error[]> {
+async function release(
+  paths: readonly (string | undefined)[],
+): Promise<Error[]> {
   const errors: Error[] = [];
   for (const path of paths) {
     if (!path) continue;
@@ -246,10 +246,12 @@ async function callTarget(
     kind: "rollout",
     runId: options.runId,
     caseId: options.caseRecord.id,
-    prompt: options.evaluation.prompt,
+    prompt: effectivePrompt(options.evaluation),
     cwd: resources.fixture,
     skillsRoot: resources.skills,
-    targetSkill: options.withoutTarget ? undefined : options.workspace.targetSkill,
+    targetSkill: options.withoutTarget
+      ? undefined
+      : options.workspace.targetSkill,
     installedSkills: resources.installedIds.map((skill) => ({
       id: skill,
       path: join(resources.skills, "skills", skill),
@@ -276,14 +278,16 @@ async function callTarget(
     error: call.error,
   });
 
-  errors.push(...await target.check({
-    response,
-    installedSkills: resources.installedIds,
-    skillsRoot: resources.skills,
-    skillRevisions: resources.revisions,
-    baselineRoot: resources.baseline,
-    baselineDigest: resources.fixtureDigestBefore,
-  }));
+  errors.push(
+    ...await target.check({
+      response,
+      installedSkills: resources.installedIds,
+      skillsRoot: resources.skills,
+      skillRevisions: resources.revisions,
+      baselineRoot: resources.baseline,
+      baselineDigest: resources.fixtureDigestBefore,
+    }),
+  );
 
   try {
     await Deno.stat(resources.fixture);
@@ -338,7 +342,8 @@ async function scoreTarget(
   resources: ResourcesType,
   targetEvidence: TargetEvidenceType,
 ): Promise<EvidenceType> {
-  const requiresJudge = options.evaluation.oracleStrength === "trajectory-rubric" ||
+  const requiresJudge =
+    options.evaluation.oracleStrength === "trajectory-rubric" ||
     options.evaluation.oracleStrength === "mixed";
   const errors = [...targetEvidence.errors];
   let secrets = { ...targetEvidence.secrets };
@@ -348,8 +353,7 @@ async function scoreTarget(
       model: options.judgeModel,
       runId: options.runId,
       caseId: options.caseRecord.id,
-      prompt: options.evaluation.prompt,
-      rubric: options.evaluation.rubric,
+      evaluation: options.evaluation,
       response: targetEvidence.response,
       changedFiles: targetEvidence.changes.changedFiles,
       assertionResults: targetEvidence.assertionResults,
@@ -366,9 +370,8 @@ async function scoreTarget(
   }
 
   const rubricResults = judgeEvaluation?.results ?? [];
-  const passedAssertions = targetEvidence.assertionResults.filter((item) =>
-    item.passed
-  ).length;
+  const passedAssertions =
+    targetEvidence.assertionResults.filter((item) => item.passed).length;
   const passedRubrics = rubricResults.filter((item) => item.passed).length;
   const scoredChecks = targetEvidence.assertionResults.length +
     (requiresJudge ? rubricResults.length : 0);
@@ -396,7 +399,9 @@ async function scoreTarget(
     judgeHost: requiresJudge ? options.judgeModel?.host : undefined,
     judgeModel: judgeResponse?.model,
     judgeModelVersion: judgeResponse?.modelVersion,
-    judgeAdapterVersion: requiresJudge ? options.judgeModel?.adapterVersion : undefined,
+    judgeAdapterVersion: requiresJudge
+      ? options.judgeModel?.adapterVersion
+      : undefined,
     judgeDurationMs: judgeEvaluation?.call?.durationMs,
     variantId: options.variantId,
     targetSkill: options.workspace.targetSkill,
@@ -428,6 +433,18 @@ async function scoreTarget(
   const trace = {
     schemaVersion: 2,
     runId: options.runId,
+    case: {
+      id: options.caseRecord.id,
+      digest: options.caseRecord.digest,
+      interpretation: options.evaluation.interpretation,
+      originalPrompt: options.evaluation.prompt,
+      originalPromptDigest: await hash.text(options.evaluation.prompt),
+      effectivePrompt: effectivePrompt(options.evaluation),
+      effectivePromptDigest: await hash.text(
+        effectivePrompt(options.evaluation),
+      ),
+      originalRubric: options.evaluation.rubric,
+    },
     target: {
       modelId: options.targetModel.id,
       stdout: targetEvidence.call.stdout,
@@ -460,7 +477,11 @@ export async function evaluate(
   let evidence: EvidenceType | undefined;
   let primaryError: unknown;
   try {
-    evidence = await scoreTarget(options, resources, await callTarget(options, resources));
+    evidence = await scoreTarget(
+      options,
+      resources,
+      await callTarget(options, resources),
+    );
   } catch (error) {
     primaryError = error;
   }
@@ -480,7 +501,9 @@ export async function evaluate(
     }
     throw primaryError;
   }
-  if (!evidence) throw new Error("SkillOpt rollout ended without normalized evidence");
+  if (!evidence) {
+    throw new Error("SkillOpt rollout ended without normalized evidence");
+  }
   if (cleanupErrors.length === 0) return evidence;
 
   const cleanupMessages = cleanupErrors.map((error) => error.message);

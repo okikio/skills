@@ -33,7 +33,9 @@
         "explore-ecosystems"
       ],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-monorepo-hypothesis",
@@ -66,7 +68,9 @@
         "explore-ecosystems"
       ],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-unjs-selective",
@@ -97,7 +101,9 @@
       "rationale": "Organization membership does not make every package part of the selected stack.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-solid-binding",
@@ -128,7 +134,9 @@
       "rationale": "Similar component APIs do not establish renderer compatibility.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-standard-schema",
@@ -159,7 +167,9 @@
       "rationale": "Interoperability and application schema ownership are separate contracts.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-durable-not-promises",
@@ -190,7 +200,9 @@
       "rationale": "Retry alone does not survive process loss.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-clickhouse-drizzle",
@@ -221,7 +233,9 @@
       "rationale": "API resemblance cannot prove dialect capabilities.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-oltp-olap",
@@ -252,7 +266,9 @@
       "rationale": "The engines are complementary only under explicit ownership.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-private-okikio",
@@ -283,7 +299,9 @@
       "rationale": "Personal package names are not sufficient API evidence.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-mise-binary",
@@ -314,7 +332,9 @@
       "rationale": "Editor-managed binaries should not silently enter distributable source.",
       "expectedSkills": [],
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "ecosystem-composed-ownership",
@@ -324,7 +344,7 @@
       "split": "valid-unseen",
       "prompt": "Research and add LogTape packages to a Deno CLI, then implement and verify the result.",
       "expectedSkills": [
-        "deliver-software",
+        "refactor-code",
         "deno-software",
         "explore-ecosystems",
         "build-clis"
@@ -350,7 +370,15 @@
       ],
       "rationale": "Composed skills must cooperate without duplicating the lifecycle.",
       "forbiddenSkills": [],
-      "oracleStrength": "trajectory-rubric"
+      "oracleStrength": "trajectory-rubric",
+      "requiredReferences": [],
+      "forbiddenReferences": [],
+      "interpretation": {
+        "schemaVersion": 1,
+        "kind": "skill-owner-migration",
+        "legacyOwner": "deliver-software",
+        "currentOwner": "refactor-code"
+      }
     },
     {
       "id": "ecosystem-trivial-negative",
@@ -377,7 +405,9 @@
       "expectedSkills": [],
       "forbiddenSkills": [
         "explore-ecosystems"
-      ]
+      ],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     }
   ]
 }

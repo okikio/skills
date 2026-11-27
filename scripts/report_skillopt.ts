@@ -14,10 +14,7 @@ import { EvalResultSchema } from "../src/evaluation.ts";
 import * as report from "../src/report.ts";
 import * as rollout from "../src/rollout.ts";
 import * as tree from "../src/tree.ts";
-import {
-  type SkillOptWorkspaceType,
-  verifyWorkspace,
-} from "../src/workspace.ts";
+import { verifyWorkspace } from "../src/workspace.ts";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -84,12 +81,16 @@ const releaseIndexes = workspaces.flatMap((workspace, index) =>
   workspace.mode === "release" ? [index] : []
 );
 const phase = releaseIndexes.length > 0 ? "release" : "evaluate";
-if (phase === "evaluate" && (workspaces.length !== 1 || evaluateIndexes.length !== 1)) {
+if (
+  phase === "evaluate" &&
+  (workspaces.length !== 1 || evaluateIndexes.length !== 1)
+) {
   throw new Error("Evaluate reports require exactly one evaluate workspace");
 }
 if (
   phase === "release" &&
-  (workspaces.length !== 2 || evaluateIndexes.length !== 1 || releaseIndexes.length !== 1)
+  (workspaces.length !== 2 || evaluateIndexes.length !== 1 ||
+    releaseIndexes.length !== 1)
 ) {
   throw new Error(
     "Release reports require exactly one evaluate workspace and one release workspace",
@@ -102,7 +103,9 @@ for (let index = 0; index < workspaces.length; index++) {
   const workspaceRoot = dirname(manifestPaths[index]!);
   for (const record of workspace.cases) {
     if (cases.has(record.id)) {
-      throw new Error(`${record.id}: case appears in more than one report workspace`);
+      throw new Error(
+        `${record.id}: case appears in more than one report workspace`,
+      );
     }
     cases.set(record.id, {
       item: await rollout.loadCase(workspaceRoot, record.id, record.digest),
@@ -130,11 +133,9 @@ const targetOmitted = results.every((result) =>
 if (!targetInstalled && !targetOmitted) {
   throw new Error("Report mixes target-skill and no-skill rollout topologies");
 }
-const targetSkillBytes = targetOmitted
-  ? 0
-  : await tree.getBytes(
-    join(dirname(manifestPaths[0]!), "candidate", "skills", targetSkill),
-  );
+const targetSkillBytes = targetOmitted ? 0 : await tree.getBytes(
+  join(dirname(manifestPaths[0]!), "candidate", "skills", targetSkill),
+);
 
 const outputPath = repositoryPath(outputInput, "SkillOpt report output");
 const aggregate = report.create({

@@ -10,11 +10,11 @@
       "prompt": "Correct the result-channel paragraph in target.md. Preserve the table and every unrelated authored Markdown line, then run the verifier.",
       "fixture": "markdown-preservation",
       "expectedSkills": [
-        "deliver-software",
+        "write-docs",
         "build-clis"
       ],
       "requiredReferences": [
-        "deliver-software/references/docs.md"
+        "build-clis/references/shared/references/docs.md"
       ],
       "assertions": [
         {
@@ -48,7 +48,8 @@
         "composition"
       ],
       "rationale": "Reviewability is a protected behavior, not a prose preference.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-cli-task-parity",
@@ -87,7 +88,9 @@
         "docs-parity"
       ],
       "rationale": "The attached CLI documents tasks that do not match its executable tree.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-cli-config-single-evaluation",
@@ -126,7 +129,9 @@
         "c12"
       ],
       "rationale": "Two-pass parsing must not execute side-effecting config factories twice.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-cli-result-redaction",
@@ -166,7 +171,9 @@
         "security"
       ],
       "rationale": "Field redaction cannot see secrets after the entire object becomes one string.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-cli-observed-versus-promised",
@@ -208,17 +215,19 @@
         "authority"
       ],
       "rationale": "A guidebook is not implementation proof.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-mermaid-density-rejection",
       "title": "Reject a giant Mermaid architecture diagram",
-      "skill": "deliver-software",
+      "skill": "write-docs",
       "kind": "knowledge",
       "split": "valid-unseen",
       "prompt": "Put a dense 25-node many-to-many CLI architecture with long labels and exact placement into one Mermaid diagram for a fixed-page PDF.",
       "expectedSkills": [
-        "deliver-software"
+        "write-docs"
       ],
       "assertions": [
         {
@@ -245,7 +254,9 @@
         "diagrams"
       ],
       "rationale": "Auto-layout is the wrong medium for dense exact geometry.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-site-native-disclosure",
@@ -284,7 +295,9 @@
         "accessibility"
       ],
       "rationale": "The active site uses native disclosure while an abandoned Solid FAQ remains.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-site-client-only-renderer",
@@ -322,7 +335,9 @@
         "react"
       ],
       "rationale": "client:only skips server rendering and needs explicit renderer information.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-web-cross-renderer-ownership",
@@ -371,7 +386,9 @@
         "composition"
       ],
       "rationale": "Hybrid rendering fails when integrations are selected by API resemblance instead of renderer ownership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-web-state-ownership",
@@ -411,7 +428,9 @@
         "solid"
       ],
       "rationale": "The product app gives URL, server cache, and interaction distinct owners.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-solid-motion-capability-honesty",
@@ -450,7 +469,9 @@
         "safety"
       ],
       "rationale": "Declared API shapes do not prove executable capabilities.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-webhook-security",
@@ -460,10 +481,10 @@
       "split": "adversarial",
       "prompt": "Review a site webhook that logs the provider key, environment, email, names, message, and raw body; skips provider verification; aliases GET to POST; and returns provider errors. Provide prioritized findings and a verification plan without editing.",
       "expectedSkills": [
+        "review-code",
         "build-sites",
         "build-web",
-        "build-apis",
-        "deliver-software"
+        "build-apis"
       ],
       "assertions": [
         {
@@ -497,7 +518,9 @@
         "composition"
       ],
       "rationale": "Page-adjacent endpoint code remains a production trust transition.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-better-auth-route-slug-authorization",
@@ -546,7 +569,9 @@
         "composition"
       ],
       "rationale": "A route slug can select a candidate organization but cannot prove identity or membership.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-api-validator-reachability",
@@ -584,7 +609,9 @@
         "hono"
       ],
       "rationale": "An endpoint schema alone does not populate validated request values.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-api-auth-organization",
@@ -622,7 +649,9 @@
         "authorization"
       ],
       "rationale": "Authentication does not establish resource or organization access.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-api-stub-false-success",
@@ -659,7 +688,9 @@
         "safety"
       ],
       "rationale": "False success corrupts client and operational contracts.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-workflow-concurrent-idempotency",
@@ -697,7 +728,9 @@
         "concurrency"
       ],
       "rationale": "Read-then-insert admission races under concurrent starts.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-workflow-reachability-ladder",
@@ -739,7 +772,9 @@
         "worker"
       ],
       "rationale": "Authored and deployed workflow capabilities are separate.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-pipeline-partial-sink",
@@ -783,7 +818,9 @@
         "composition"
       ],
       "rationale": "Independent sink commits require visible partial state and repair.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-data-custom-adapter",
@@ -822,7 +859,9 @@
         "drizzle"
       ],
       "rationale": "API resemblance does not prove dialect semantics.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-data-engine-drift",
@@ -864,7 +903,9 @@
         "sparql"
       ],
       "rationale": "Documentation and active deployment can drift.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-generator-check-write",
@@ -902,7 +943,9 @@
         "drift"
       ],
       "rationale": "Generators must be safe in review/CI and convergent in write mode.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-devtools-benchmark-protection",
@@ -943,7 +986,9 @@
         "performance"
       ],
       "rationale": "A narrow benchmark win cannot regress protected consumer workflows.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-wikitext-missing-stringify",
@@ -984,7 +1029,9 @@
         "safety"
       ],
       "rationale": "Current exports and tests outrank README intent.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-undent-embed-selection",
@@ -1021,7 +1068,9 @@
         "text"
       ],
       "rationale": "align and embed have intentionally different interpolation behavior.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-wikitext-cost-ladder",
@@ -1059,7 +1108,9 @@
         "performance"
       ],
       "rationale": "Streaming block events avoid unnecessary tree materialization.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-identical-archive-provenance",
@@ -1097,7 +1148,9 @@
         "safety"
       ],
       "rationale": "Archive labels are not evidence of source changes.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-repository-name-not-capability",
@@ -1136,7 +1189,9 @@
         "routing",
         "provenance"
       ],
-      "rationale": "Repository names do not prove implemented surfaces."
+      "rationale": "Repository names do not prove implemented surfaces.",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-composed-deno-cli",
@@ -1146,7 +1201,7 @@
       "split": "valid-unseen",
       "prompt": "Add LogTape result isolation and Optique completion to a Deno CLI, update manifests and permissions, compile it, and verify the clean installed artifact. Produce one discovery pass, one plan, and one verdict.",
       "expectedSkills": [
-        "deliver-software",
+        "refactor-code",
         "deno-software",
         "explore-ecosystems",
         "build-clis"
@@ -1186,7 +1241,15 @@
         "composition"
       ],
       "rationale": "The skills must compose without duplicating discovery or verification.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": [],
+      "interpretation": {
+        "schemaVersion": 1,
+        "kind": "skill-owner-migration",
+        "legacyOwner": "deliver-software",
+        "currentOwner": "refactor-code"
+      }
     },
     {
       "id": "evidence-webapp-form-submission-race",
@@ -1234,7 +1297,9 @@
         "framework-neutral"
       ],
       "rationale": "A product form needs explicit lifetime and concurrency ownership beyond a library recommendation.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-webapp-data-view-ownership",
@@ -1282,7 +1347,9 @@
         "framework-neutral"
       ],
       "rationale": "Tables combine URL, remote, local, identity, accessibility, and rendering contracts.",
-      "forbiddenSkills": []
+      "forbiddenSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-ecosystem-negative-incidental-import",
@@ -1321,7 +1388,9 @@
         "efficiency"
       ],
       "rationale": "The ecosystem hypothesis must not turn incidental imports into unbounded research.",
-      "expectedSkills": []
+      "expectedSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-site-non-astro-routing",
@@ -1366,7 +1435,9 @@
         "eleventy",
         "framework-neutral"
       ],
-      "rationale": "Site responsibilities transfer across frameworks; Astro guidance is conditional."
+      "rationale": "Site responsibilities transfer across frameworks; Astro guidance is conditional.",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-webapp-non-solid-routing",
@@ -1410,7 +1481,9 @@
         "vue",
         "framework-neutral"
       ],
-      "rationale": "Application ownership rules must survive transfer to another framework ecosystem."
+      "rationale": "Application ownership rules must survive transfer to another framework ecosystem.",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-web-minimal-pair-content-site",
@@ -1445,7 +1518,9 @@
         "routing",
         "minimal-pair"
       ],
-      "rationale": "A content surface should not activate the product-application skill."
+      "rationale": "A content surface should not activate the product-application skill.",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-web-minimal-pair-stateful-app",
@@ -1480,7 +1555,9 @@
         "routing",
         "minimal-pair"
       ],
-      "rationale": "A stateful product surface needs application ownership even when it includes documentation-like pages."
+      "rationale": "A stateful product surface needs application ownership even when it includes documentation-like pages.",
+      "requiredReferences": [],
+      "forbiddenReferences": []
     },
     {
       "id": "evidence-cli-negative-shell-one-liner",
@@ -1512,7 +1589,9 @@
         "negative"
       ],
       "rationale": "An incidental shell command does not need the full CLI skill.",
-      "expectedSkills": []
+      "expectedSkills": [],
+      "requiredReferences": [],
+      "forbiddenReferences": []
     }
   ]
 }

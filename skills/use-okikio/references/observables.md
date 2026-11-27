@@ -260,7 +260,7 @@ Interop has cost and semantic risk. Verify cancellation, error, scheduling, hot/
 
 ## Sources and freshness
 
-- Primary: [JSR `@okikio/observables@1.4.0`](https://jsr.io/@okikio/observables/1.4.0), inspected 2026-07-17 for the documented lifecycle, operators, error modes, events, streams, interop, and runtime support.
-- Attachment status: no `@okikio/observables` source archive was provided in this evidence set; uploaded consumers are not treated as package API authority.
+- Versioned reference: [JSR `@okikio/observables@1.4.0`](https://jsr.io/@okikio/observables/1.4.0) for lifecycle, operators, errors, events, streams and interop.
+- Current package metadata: [npm `@okikio/observables`](https://registry.npmjs.org/@okikio/observables), rechecked 2026-11-26; it reports 1.4.0 and declared root/focused exports.
 
-Version 1.4.0 is the verified version line. Undocumented exports, exact scheduler/backpressure internals, and APIs from other versions remain unverified until the target export map, declarations, and source are inspected.
+Consumer examples do not establish package APIs. This package remains separate from `okikio/utils`; `@okikio/context/state` composes it for state observation. Verify the resolved artifact and required runtime behavior before adopting undocumented scheduler, buffering or disposal assumptions.
