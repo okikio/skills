@@ -1,20 +1,21 @@
 # Site evidence casebook
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
-Use these cases as reasoning patterns, not templates. Each case separates observed active architecture, useful pattern, counterexample, unresolved claim, and verification.
+Use these cases as reasoning patterns, not templates. Each case separates example architecture, useful pattern, counterexample, unresolved claim, and verification.
 
 ## Contents
 
 - How to use the casebook
-- Kaiju marketing site
-- Kaiju documentation site
+- Marketing site example
+- Documentation site example
 - Hybrid site and application with server auth
-- ThunderStrike runtime CMS site
+- Runtime CMS site example
 - Solid motion experiment
 - Cross-case decisions
 - Sources and freshness
@@ -23,15 +24,15 @@ Use these cases as reasoning patterns, not templates. Each case separates observ
 
 For a similar repository:
 
-1. Prove the same entrypoints and versions exist.
+1. Identify the current entrypoints, consumers, and installed versions.
 2. Classify observed source as positive, counterexample, experimental, or unresolved.
 3. Extract the ownership principle, not package/file names alone.
 4. Recompute the decision for current routes and deployment.
 5. Run the case's verification and failure checks.
 
-## Kaiju marketing site
+## Marketing site example
 
-### Observed active architecture
+### Example architecture
 
 - Astro page imports marketing sections and prerenders the homepage even though project output defaults to server.
 - Astro owns title/description, layout, content, headings, anchors, and sections.
@@ -76,9 +77,9 @@ The island hydration scope corresponds to resource ownership, not visual region 
 - assert listener/frame/WebGL cleanup;
 - inspect icon/font output and CSP/resource needs.
 
-## Kaiju documentation site
+## Documentation site example
 
-### Observed active architecture
+### Example architecture
 
 - Separate Astro app uses static output.
 - `getStaticPaths()` enumerates service catalog entries.
@@ -112,7 +113,7 @@ For browser “try it,” the docs origin, service origin, cookie scope, trusted
 
 ## Hybrid site and application with server auth
 
-### Observed active architecture
+### Example architecture
 
 - Astro server output and Node-targeted auto adapter.
 - React integration for form and application islands.
@@ -153,9 +154,9 @@ The client sees enabled provider ids, not server environment configuration. Fiel
 - test expired session, auth callback/origin, and provider capability mismatch;
 - inspect route bundles, fonts, icons, and headers.
 
-## ThunderStrike runtime CMS site
+## Runtime CMS site example
 
-### Observed active architecture
+### Example architecture
 
 - Astro server output with auto-selected adapter and Emdash integration.
 - local SQLite/media defaults for development, with configured runtime env.
@@ -237,5 +238,5 @@ The case teaches:
 
 ## Sources and freshness
 
-- `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, two archives of one product application, `thunderstrike-blog(4).zip`, and `solid-motion-experiments.zip`, reviewed 2026-07-17.
-- These cases preserve observed ownership and failure lessons. Package APIs, versions, and experimental configs must be reverified in the target repository.
+- Historical source scope: marketing, documentation, hybrid application, runtime CMS, and experimental Solid motion reviews from 2026-07-17, adapted into anonymized cases.
+- These illustrative cases preserve ownership and failure lessons. Verify package APIs, versions, active consumers, experimental configuration, and runtime behavior in the target repository.

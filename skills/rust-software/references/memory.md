@@ -41,6 +41,8 @@ the contained value safe to mutate concurrently.
 
 ## Keep data layout deliberate
 
+Use [data-oriented design](data-oriented-design.md) to map passes and lifetimes.
+
 Measure record size, padding, access stride, working set, and cache behavior.
 Keep hot fields together or in separate columns when the actual pass benefits.
 Indices/spans can reduce pointer chasing and duplicated strings; validate their

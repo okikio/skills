@@ -1,9 +1,10 @@
 # Motion, presence, canvas, and continuous work
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 Use this reference when implementing or reviewing animation, transitions, presence, gesture states, layout motion, canvas/WebGL, or scroll/pointer effects. Motion is a lifecycle and state-ownership problem before it is a visual problem.
@@ -153,7 +154,7 @@ Choose the smallest mechanism that provides the needed semantics:
 7. Layout projection only after ordinary layout/transform approaches cannot express the continuity.
 8. Canvas/WebGL only when the visual cannot be delivered efficiently and accessibly with document content or media.
 
-Do not add a framework island solely to rotate a disclosure icon. The Kaiju FAQ uses `<details>` plus a CSS `group-open` transition; that preserves native disclosure without hydration.
+Do not add a framework island solely to rotate a disclosure icon. The illustrative FAQ uses `<details>` plus a CSS `group-open` transition; that preserves native disclosure without hydration.
 
 ## State and priority model
 
@@ -343,7 +344,7 @@ Shared-layout ids require uniqueness and a defined scope. They do not automatica
 
 ## WebGL and continuous work
 
-The Kaiju depth scene provides a concrete resource checklist:
+The illustrative depth scene provides a concrete resource checklist:
 
 - Solid island begins after mount;
 - pointer listener is passive and removed;
@@ -412,8 +413,10 @@ Also:
 
 ## Sources and freshness
 
-- Uploaded `solid-motion-experiments.zip` source and research notes, reviewed 2026-07-17. Status: experimental; not proof of full Motion parity.
-- Uploaded `kaiju-website(6).zip` depth/WebGL and native FAQ implementations, reviewed 2026-07-17.
-- Uploaded `solid-primitives(2).zip`, including presence, transition, scheduling, visibility, observer, and lifecycle packages, reviewed 2026-07-17.
+- Historical source scope: experimental Solid motion source/research,
+  depth/WebGL and native FAQ implementations, and Solid Primitives presence,
+  transition, scheduling, visibility, observer, and lifecycle reviews from
+  2026-07-17, adapted into anonymized examples. The motion integration remains
+  an experimental example and does not prove full Motion parity.
 - Solid lifecycle docs: https://docs.solidjs.com/reference/lifecycle/on-mount and https://docs.solidjs.com/reference/lifecycle/on-cleanup (reviewed 2026-07-17).
 - Browser animation and WebGL behavior varies by runtime. Verify target-browser policy and installed library source before claiming gesture, presence, layout, or context-recovery support.

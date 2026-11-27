@@ -1,5 +1,11 @@
 # TanStack Start, Router, Query, Form, Table, and Virtual
 
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
+
 ## Contents
 
 - Ecosystem ownership
@@ -28,7 +34,7 @@ Treat TanStack as a family of complementary packages, not one framework import.
 | Table | headless column/row/filter/sort/selection model | remote fetching or rendering style |
 | Virtual | bounded rendering window and measurement | table semantics/accessibility policy |
 
-Use the renderer-specific packages (`@tanstack/solid-*` in a Solid app). The attached Better Auth integration includes copied React Table/Form components inside an Astro/React surface; they are not Solid implementation evidence.
+Use the renderer-specific packages (`@tanstack/solid-*` in a Solid app). The illustrative Better Auth integration includes copied React Table/Form components inside an Astro/React surface; they are not Solid implementation evidence.
 
 ## Route tree and layouts
 
@@ -49,7 +55,7 @@ export const Route = createRootRouteWithContext<AppRouterContext>()({
 
 `beforeLoad` can establish redirect/context prerequisites, but server authorization remains required in server functions/services. Preserve the intended destination when redirecting to sign-in and validate it before redirecting back.
 
-Route file-ignore patterns are architecture. The uploaded Kaiju Vite config excludes component folders, underscore helpers, server files, and tests from route generation. Verify generator output whenever the naming pattern changes.
+Route file-ignore patterns are architecture. The illustrative Vite config excludes component folders, underscore helpers, server files, and tests from route generation. Verify generator output whenever the naming pattern changes.
 
 ## URL/search contract
 
@@ -76,7 +82,7 @@ export const Route = createFileRoute("/(product)/_app/(search)/search")({
 });
 ```
 
-The exact `search.middlewares` API is version-specific. The attached source demonstrates `validateSearch`, `stripSearchParams`, and `loaderDeps`; inspect the installed Router release before copying syntax.
+The exact `search.middlewares` API is version-specific. The historical example used `validateSearch`, `stripSearchParams`, and `loaderDeps`; inspect the installed Router release before copying syntax.
 
 Reset dependent state explicitly: changing a filter should reset page/cursor. Canonicalize empty/default values to avoid equivalent URLs fragmenting cache and analytics.
 
@@ -140,7 +146,7 @@ Exact middleware/input APIs are versioned. Preserve this sequence regardless:
 6. map known failures to a safe stable result;
 7. record redacted diagnostics/correlation.
 
-Never trust the `organizationId`, price, plan, role, or redirect URL supplied by the browser. The attached Kaiju app wraps billing and auth operations in server functions and forwards request headers to Better Auth; inspect that server-function handoff for every mutation.
+Never trust the `organizationId`, price, plan, role, or redirect URL supplied by the browser. The illustrative application wraps billing and auth operations in server functions and forwards request headers to Better Auth; inspect that server-function handoff for every mutation.
 
 ## Mutations and invalidation
 
@@ -200,7 +206,7 @@ Create one QueryClient per server request and a long-lived browser client. Never
 
 Keep browser-only libraries out of server module initialization. Validate environment separation and adapter support for request headers, cookies, streaming, abort, background work, and native dependencies.
 
-The attached Kaiju app combines TanStack Solid Start, Nitro Vite, and a target deployment adapter. A successful Vite build does not prove deployed request/cookie/database behavior. Run adapter-equivalent requests.
+The illustrative application combines TanStack Solid Start, Nitro Vite, and a target deployment adapter. A successful Vite build does not prove deployed request/cookie/database behavior. Run adapter-equivalent requests.
 
 ## Failure signatures
 
@@ -232,6 +238,6 @@ The attached Kaiju app combines TanStack Solid Start, Nitro Vite, and a target d
 ## Sources and freshness
 
 - Primary starting points: [TanStack Start](https://tanstack.com/start/latest), [Router](https://tanstack.com/router/latest), [Query](https://tanstack.com/query/latest), [Form](https://tanstack.com/form/latest), [Table](https://tanstack.com/table/latest), and [Virtual](https://tanstack.com/virtual/latest), checked 2026-07-17 for current product scope.
-- Attachment: `kaiju-site-scope(17).zip/apps/frontend`, inspected 2026-07-17 for a Solid/Start composition, route structure, query ownership, and auth integration.
+- Historical source scope: a Solid/Start application review from 2026-07-17, adapted into anonymized route, query, and auth-integration examples.
 
 TanStack package signatures and Start deployment behavior evolve quickly and vary by renderer. Exact imports, server-function APIs, generated route behavior, and adapters are version-sensitive; verify the target lockfile and primary docs.

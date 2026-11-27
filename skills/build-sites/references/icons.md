@@ -1,9 +1,10 @@
 # Astro Icon and Unplugin Icons
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 ## Contents
@@ -70,7 +71,7 @@ import { Icon } from "astro-icon/components";
 </a>
 ```
 
-Prefer an explicit include list. The uploaded Kaiju and ThunderStrike configs currently include wildcard Fluent collections. That is evidence of existing configuration, not a recommended bundle policy. Replace wildcards only after inventorying literal and generated names so required icons do not disappear.
+Prefer an explicit include list. The illustrative site configurations include wildcard Fluent collections. Their presence does not establish an acceptable bundle policy. Replace wildcards only after inventorying literal and generated names so required icons do not disappear.
 
 Astro Icon names combine collection and icon name. Verify them against the installed Iconify collection or local collection; do not guess a Fluent suffix (`regular`, `filled`) or size.
 
@@ -90,7 +91,7 @@ export default defineConfig({
     Icons({
       compiler: "solid",
       customCollections: {
-        kaiju: FileSystemIconLoader("./src/icons"),
+        project: FileSystemIconLoader("./src/icons"),
       },
     }),
   ],
@@ -111,7 +112,7 @@ Then import only the icons used:
 
 ```tsx
 import ArrowRight from "~icons/fluent/arrow-right-24-regular";
-import KaijuMark from "~icons/kaiju/mark";
+import ProjectMark from "~icons/project/mark";
 
 export function Action() {
   return (
@@ -220,6 +221,6 @@ Also:
 ## Sources and freshness
 
 - Primary: [Astro Icon documentation](https://www.astroicon.dev/) and [Unplugin Icons repository/documentation](https://github.com/unplugin/unplugin-icons), verified 2026-07-17.
-- Attachments: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `thunderstrike-blog(4).zip`, and a product application archive, inspected 2026-07-17 for actual configs and component imports.
+- Historical source scope: site and application configuration/import reviews from 2026-07-17, adapted into anonymized examples. The `project` icon collection is a local example.
 
 Compiler names, virtual-module types, custom loaders, and Astro integration options are version-sensitive. Verify the target lockfile and generated types rather than extrapolating from one attachment.

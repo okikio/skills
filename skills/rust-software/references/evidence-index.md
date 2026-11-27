@@ -14,6 +14,12 @@ For each relevant probe retain:
 - artifact identity, elapsed/resource measurements and measurement scope;
 - interpretation, residual unknowns and the next decision.
 
+For data design, also retain fixture provenance, the fields/passes/lifetimes
+map, equivalent complete outputs, and the exact request sequence used to measure
+reuse and retention. Record source-review and executed-package identities
+separately. Use [layout evidence and limits](layout-evidence.md) before reusing a
+comparison; a source-derived model does not establish production behavior.
+
 Start with an existing operation or a tiny fixture. A successful compile does
 not prove runtime behavior. Generated instructions do not prove a speedup.
 An isolated kernel does not prove an application flow. Verify the required

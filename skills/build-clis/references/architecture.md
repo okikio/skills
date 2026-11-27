@@ -199,6 +199,7 @@ Verify architecture through behavior:
 6. verify generated help/completion/man without executing project work;
 7. verify packaged/compiled entrypoint uses the same domain behavior.
 
-Grounded in the current CLI guidebooks, Kaiju config handoff, current engineering
-standards, and official package documentation registered in the skill source
-ledger. Version-sensitive APIs must be rechecked against the installed package.
+Use the shared CLI guides, the active repository's configuration contract, and
+official package documentation registered in the skill source ledger. Historical
+configuration examples illustrate ownership. Recheck version-sensitive APIs
+against the installed package.

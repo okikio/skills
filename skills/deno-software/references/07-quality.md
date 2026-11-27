@@ -3,9 +3,9 @@
 Use this reference to design or verify the repository's quality gates. The goal
 is not to maximize command count. Each gate must prove a distinct contract.
 
-## Current Okikio/Kaiju default
+## Example shared test convention
 
-Where the repository follows the current shared convention:
+Where the repository has selected this shared convention:
 
 - test runner: `node:test`;
 - expectations: `@std/expect`;

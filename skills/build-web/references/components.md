@@ -1,9 +1,10 @@
 # Component systems, primitives, styles, and assets
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 Use this reference when selecting, generating, copying, repairing, or verifying UI components. A component file is the visible tip of a renderer, primitive, style, token, icon, font, and accessibility contract.
@@ -43,7 +44,7 @@ reusable primitives. A registry file such as `components.json` owns registry
 aliases, and the application's `package.json` declares the renderer and
 component dependencies.
 Verify the local primitive and its callers before importing a recipe from
-another renderer. For example, the Kaiju website uses Solid and Kobalte;
+another renderer. For example, a site may use Solid and Kobalte;
 similarly named dialogs and buttons are not interchangeable.
 
 ## Generated component contract
@@ -266,7 +267,7 @@ Never claim parity with a shadcn or upstream component by matching its public pr
 
 ## Sources and freshness
 
-- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, a product application archive, `kaiju-site-scope(17).zip`, `solid-primitives(2).zip`.
+- Historical source scope: site, application, and Solid Primitives reviews from 2026-07-17, adapted into anonymized component examples.
 - Solid Primitives official catalog: https://primitives.solidjs.community/ (reviewed 2026-07-17).
 - Solid props and `splitProps`: https://docs.solidjs.com/concepts/components/props (reviewed 2026-07-17).
 - Astro Icon and Unplugin Icons are detailed in `build-sites/references/icons.md`.

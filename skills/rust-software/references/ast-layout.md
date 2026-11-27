@@ -1,6 +1,7 @@
 # Choose data layout for the operations that matter
 
 Use this page for parsers, ASTs, indexes, and repeated scans.
+Apply [the data-oriented procedure](data-oriented-design.md) before borrowing a pattern.
 Start with the customer operation, input limits, mutation pattern, and lifetime.
 Measure traversal time, allocations, retained bytes, and full request latency.
 A compact structure helps only when its access pattern and ownership fit the work.
@@ -33,7 +34,8 @@ The compact representation needs an explicit maximum input size and overflow tes
 Oxc's allocator rejects types with destructors. Arena reset is not a substitute
 for closing resources or releasing owned heap allocations in arbitrary types.
 Reset invalidates arena allocations and retains the largest chunk for reuse.
-Test a large parse followed by many tiny parses: peak capacity can stay resident.
+Test a large parse followed by tiny parses: capacity can remain allocated.
+Measure process residency separately; allocator capacity is not RSS.
 Do not reset while references, callbacks, or foreign consumers can still reach data.
 The allocator's `fixed_size` feature targets 64-bit little-endian systems;
 `track_allocations` is documented as internal and unsafe for production use.
@@ -67,6 +69,7 @@ Check equal semantic output, identity stability, source offsets, and drop counts
 Test memory after the request and after a high-water workload, not only allocations.
 Keep a simpler layout as the reference until the alternative proves useful.
 Do not claim that an upstream architecture makes this product fast or portable.
+Use [layout evidence and limits](layout-evidence.md) to interpret a comparison.
 
 Primary sources, reviewed 2026-11-26:
 [Oxc allocator](https://github.com/oxc-project/oxc/blob/58b07b7fe4d2213dacb737a059a93d0be6a0d3da/crates/oxc_allocator/src/allocator.rs),

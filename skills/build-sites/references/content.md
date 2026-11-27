@@ -1,9 +1,10 @@
 # Content collections, CMS adapters, rich text, and publishing
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 Use this reference for local Astro content, live/runtime CMS data, migrations, previews, taxonomies, media, rich text, feeds, and SEO. The project should have one explicit runtime source of truth per route and a stable view-model interface.
@@ -70,7 +71,7 @@ Pages should not know provider field names, database ids, cache hint types, or r
 
 ## Astro local collections
 
-The Kaiju local content config demonstrates separate collections for authors, series, topics, categories, articles, and pages, with Astro `reference()` relationships and image-aware schemas. The exact `astro:content`, loader, and Zod APIs depend on the installed Astro major; verify them.
+The illustrative local content config separates collections for authors, series, topics, categories, articles, and pages, with Astro `reference()` relationships and image-aware schemas. The exact `astro:content`, loader, and Zod APIs depend on the installed Astro major; verify them.
 
 Design schemas around editorial contracts:
 
@@ -105,7 +106,7 @@ Do not model every field optional to make a migration pass. Separate incomplete 
 
 ## Runtime/live CMS adapter
 
-The ThunderStrike upload uses one Emdash live collection and queries named content types through provider functions. Its `cms.ts` maps provider entries into project-owned `CmsArticle`, `CmsAuthor`, `CmsTopic`, `CmsCategory`, `CmsImage`, heading, and page types. This adapter interface is the reusable architecture; the provider API is version-sensitive.
+The runtime CMS example uses one Emdash live collection and queries named content types through provider functions. Its `cms.ts` maps provider entries into project-owned `CmsArticle`, `CmsAuthor`, `CmsTopic`, `CmsCategory`, `CmsImage`, heading, and page types. This adapter interface is the reusable architecture; the provider API is version-sensitive.
 
 Adapter responsibilities:
 
@@ -282,7 +283,7 @@ Never merge local and CMS arrays at runtime to “avoid losing content” withou
 
 ## Sources and freshness
 
-- Uploaded `kaiju-website(6).zip` local Astro collection schemas, reviewed 2026-07-17.
-- Uploaded `thunderstrike-blog(4).zip` Emdash guidebooks, live configuration, CMS adapter, routes, and counterexample webhook, reviewed 2026-07-17.
-- Uploaded `kaiju-site-scope(17).zip` static service documentation factories, reviewed 2026-07-17.
-- Astro content APIs and Emdash APIs are version-sensitive. Verify the installed Astro/EMdash packages and generated types. Local Emdash examples are observed source, not a substitute for current public documentation.
+- Historical source scope: local Astro collection, Emdash integration, CMS adapter,
+  route, webhook, and static documentation reviews from 2026-07-17, adapted
+  into anonymized examples.
+- Astro content APIs and Emdash APIs are version-sensitive. Verify the installed Astro/EMdash packages and generated types. The local Emdash examples are illustrative; current public documentation and installed types control provider API use.

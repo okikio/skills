@@ -20,11 +20,11 @@
 
 ## Evidence and version discipline
 
-Treat the productionized CLI guidebook as normative architecture and the
-attached Kaiju CLI as observed implementation. Do not claim an Optique feature
-works merely because the package appears in a manifest or guide.
+Use the active repository's CLI architecture. The implementation examples are
+anonymized illustrations from historical CLI reviews. A package's presence in a
+manifest or guide does not prove that its features work in the active consumer.
 
-Older attached implementations mixed stable Optique 1.1.1 packages with prerelease 1.2 builds. Current official documentation lists 1.2.1 as the latest stable release as of 2026-08-19, while the unstable changelog also contains unreleased 1.3 material. Before editing any repository, verify the installed line rather than assuming this guidebook or a previous lockfile is current:
+Historical integration examples mixed stable Optique 1.1.1 packages with prerelease 1.2 builds. The recorded official documentation review on 2026-08-19 identified 1.2.1 as stable and 1.3 material as unreleased. Before editing any repository, verify the installed line rather than assuming this guidebook or a previous lockfile is current:
 
 1. inventory the root manifest, CLI manifest, import map, and lockfile;
 2. group every `@optique/*` package by the exact resolved version;
@@ -111,7 +111,7 @@ inside the domain handler.
 ## Typed grammar
 
 Use the smallest grammar that prevents invalid structures before execution.
-The attached implementation uses these public subpaths:
+The historical integration example used these public subpaths:
 
 ```ts
 import { merge, object } from "@optique/core/constructs";
@@ -171,8 +171,8 @@ explicit CLI
   > final request-schema default
 ```
 
-Use an Optique source context for each non-token source. In the observed Kaiju
-implementation:
+Use an Optique source context for each non-token source. The illustrative
+integration composes them as follows:
 
 ```ts
 import { createConfigContext } from "@optique/config";
@@ -342,7 +342,7 @@ import configValidate from "./commands/config/validate.ts";
 export const commands = [browserDetect, configShow, configValidate] as const;
 ```
 
-The observed Kaiju CLI passes a static registry to `runProgram()` even though it
+The illustrative CLI passes a static registry to `runProgram()` even though it
 uses `@optique/discover` command definitions. This preserves visibility to Deno
 compile and bundlers.
 
@@ -380,7 +380,7 @@ Generate these surfaces from the same parser document:
 - roff man pages through `@optique/man`;
 - command examples, aliases, choices, defaults, and deprecations.
 
-The observed implementation uses `createProgramParser()` and
+The illustrative implementation uses `createProgramParser()` and
 `generateManPageAsync()`. Verify their signatures against the installed
 prerelease before copying that pattern.
 
@@ -492,14 +492,15 @@ Use table-driven tests for every public term:
 
 ## Sources and freshness
 
-- Normative source: `productionized-cli-pattern-guidebook-v1.2.md`, reviewed 2026-07-22.
-- Normative ecosystem audit: `cli-guidelines-audit-and-expansion(1).md`, reviewed 2026-07-17.
-- Observed implementation: current Kaiju CLI Optique migration and earlier `live-browser-cli(41).zip/clis/main` evidence.
+- Portable guidance: [CLI architecture](architecture.md) and the
+  [CLI policy audit](../../../guides/cli-guidelines-audit-and-expansion.md).
+- Historical source scope: CLI integration reviews from 2026-07-17 and
+  2026-07-22, adapted here into anonymized examples.
 - Official project documentation: <https://optique.dev/>, discovery pointer for current APIs; re-verify against the installed package exports.
 - Official source: <https://github.com/dahlia/optique>, discovery pointer for package/version history and implementation details.
 - Official Optique documentation and changelog were rechecked on 2026-08-19. Stable 1.2.1 fixes shell-completion descriptions; unstable 1.3 material must not be treated as released behavior.
 
 Freshness status: package names and architectural capabilities are grounded in
-the attached sources plus the 2026-08-19 official Optique verification. Exact
+the historical integration review plus the recorded 2026-08-19 official Optique review. Exact
 examples remain version-bound evidence. Inspect the current official docs,
 installed types, and lockfile before implementation.

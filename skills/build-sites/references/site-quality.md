@@ -1,9 +1,10 @@
 # Site quality gates
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 Use this reference to define acceptance criteria for public sites and documentation. Quality is a set of observable route contracts, not a Lighthouse score or attractive screenshot.
@@ -62,7 +63,7 @@ Every page needs:
 
 Automated accessibility checks cannot validate focus strategy, announcement quality, alt usefulness, or whether a custom widget implements its keyboard contract. Inspect the accessibility tree and perform keyboard/screen-reader smoke tests.
 
-Native HTML can eliminate entire defect classes. The Kaiju homepage's `<details>` FAQ is preferable to an unused hydrated accordion when ordinary disclosure semantics are sufficient.
+Native HTML can eliminate entire defect classes. The marketing example's `<details>` FAQ is preferable to an unused hydrated accordion when ordinary disclosure semantics are sufficient.
 
 ## Content and discoverability
 
@@ -119,7 +120,7 @@ Test:
 
 Progressive enhancement means the primary task has a defined baseline, not that every flourish works without JavaScript. State the baseline per route.
 
-The Kaiju depth scene keeps a static image when WebGL initialization fails. This is the correct ownership shape for decorative enhancement: content and calls to action remain Astro HTML.
+The illustrative depth scene keeps a static image when WebGL initialization fails. This is the correct ownership shape for decorative enhancement: content and calls to action remain Astro HTML.
 
 ## Security and privacy
 
@@ -185,7 +186,7 @@ Report passed, failed, blocked, and not-run separately. Never translate a local 
 
 ## Sources and freshness
 
-- Uploaded `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, a product application archive, and `thunderstrike-blog(4).zip`, reviewed 2026-07-17.
+- Historical source scope: marketing, documentation, application, and runtime CMS reviews from 2026-07-17, adapted into anonymized quality examples.
 - Modern Web Guidance accessibility, forms, security, and deferred-rendering guides retrieved 2026-07-17.
 - Astro view-transition accessibility: https://docs.astro.build/en/guides/view-transitions/ (reviewed 2026-07-17).
 - Performance thresholds, browser support, and deployment behavior are environment-sensitive. Use the project's declared targets and measured baselines.

@@ -81,7 +81,7 @@ Library code may use hierarchical LogTape categories and structured properties:
 ```ts
 import { getLogger, lazy } from "@logtape/logtape";
 
-const logger = getLogger(["kaiju", "analysis"]);
+const logger = getLogger(["project", "analysis"]);
 
 logger.debug("Compiled {ruleCount} rules", {
   ruleCount,

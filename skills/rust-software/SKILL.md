@@ -44,7 +44,8 @@ claimed host. Keep an unmet required host explicit and investigate the conflict.
 | Unsafe operations and invariants | [Unsafe](references/unsafe.md) |
 | Native ABI and consumer ownership | [C ABI](references/ffi-c.md), [C++](references/ffi-cpp.md), [C#](references/ffi-dotnet.md) |
 | API shape, functions, methods and traits | [Idioms](references/idioms.md) |
-| Data-oriented storage and ASTs | [AST/layout](references/ast-layout.md) |
+| Data-oriented algorithms, storage and access patterns | [Data-oriented design](references/data-oriented-design.md), [Oxc/Deno patterns](references/ast-layout.md) |
+| Interpreting layout, ownership or upstream evidence | [Layout evidence and limits](references/layout-evidence.md) |
 | Dependency choice and build/target cost | [Dependencies](references/dependencies.md), [byte kernels](references/dependencies-bytes.md) |
 | Byte, encoding, serialization and parallelism candidates | [Text and buffers](references/candidate-text-bytes.md), [Serde and Rayon](references/candidate-serde-rayon.md) |
 | Correctness, regression, fuzzing and safety proof | [Testing](references/testing.md) |
@@ -71,6 +72,11 @@ safe Rust first. Make copies, retention, error semantics and cleanup intentional
 Use standard Rust/Cargo conventions for Rust-owned work. Keep dependencies small
 but justify quality from exact source, features and measurements.
 
+For layout or allocation work, map fields, passes and lifetimes before choosing
+containers. Compare equal semantics and separate layout, ownership and allocator
+changes. Include construction, complete-record work and post-request retention;
+a faster narrow scan alone cannot decide the product design.
+
 Prove optimized output against an independent oracle before comparing speed.
 Exercise tails, chunk splits, limits and failures. Measure the costs the product
 pays, including memory, binary size and build time when relevant. Keep native,
@@ -89,7 +95,8 @@ Validate the actual packaged artifact, not only the working tree.
 
 Use [task](assets/task-record.md), [support](assets/support-matrix.md),
 [dependency](assets/dependency-card.md) and [review](assets/review-record.md)
-records when useful. Follow the [CI adoption plan](assets/ci-plan.md) to wire gates. Retain
+records when useful. Use the [layout record](assets/layout-record.md) for data design.
+Follow the [CI adoption plan](assets/ci-plan.md) to wire gates. Retain
 source/versions, raw attempts, explicit limits and the next unresolved question.
 Report an anchor: observation, evidence scope, product meaning and next decision.
 Before interruption or handoff, update [continuity](references/continuity.md).

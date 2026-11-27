@@ -1,9 +1,10 @@
 # Better Auth in Solid and TanStack Start applications
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 ## Contents
@@ -24,9 +25,9 @@ new adoption.
 
 ## Evidence and version gate
 
-The uploaded Kaiju repository uses Better Auth 1.6.x with separate packages/plugins for API keys, OAuth provider, passkeys, organization, JWT, magic link, Drizzle, TanStack Start cookies, and Polar webhooks. Exact options and import paths are versioned. Inspect the installed lockfile, official docs, and plugin types before copying configuration.
+The historical auth-integration example used Better Auth 1.6.x with separate packages/plugins for API keys, OAuth provider, passkeys, organization, JWT, magic link, Drizzle, TanStack Start cookies, and Polar webhooks. Exact options and import paths are versioned. Inspect the installed lockfile, official docs, and plugin types before copying configuration.
 
-The attached `better-auth.zip` is a user application/integration repository, not the upstream Better Auth monorepo. Its patterns are evidence of one composition, not proof of all Better Auth behavior.
+The anonymized example describes one application integration. Use upstream Better Auth documentation and the installed plugin types to establish supported provider behavior.
 
 ## Server/client architecture
 
@@ -249,6 +250,6 @@ Cache auth instances only at a scope safe for the deployment runtime. Hot-reload
 ## Sources and freshness
 
 - Primary: [Better Auth documentation](https://www.better-auth.com/docs/), verified 2026-07-17 for public server/client, adapter, session, organization, and plugin concepts.
-- Attachments: `better-auth.zip` and `kaiju-site-scope(17).zip/apps/frontend`, inspected 2026-07-17 for one Better Auth 1.6.x composition and Solid/TanStack consumption.
+- Historical source scope: a Better Auth 1.6.x integration and Solid/TanStack consumers reviewed 2026-07-17, adapted into anonymized examples.
 
 The attachment is a user integration, not upstream Better Auth. Plugin option names, generated schema, cookie adapters, Polar behavior, and import paths are version-sensitive; unobserved private APIs remain unverified.

@@ -175,8 +175,8 @@ Verify the page as a publication artifact, not only as a component:
   compilers, local SVG collections, accessibility, and bundle control.
 - [fonts.md](references/fonts.md): Astro Fonts, Fontsource, local/variable
   fonts, privacy, preload, fallback metrics, and layout shift.
-- [casebook.md](references/casebook.md): Kaiju and ThunderStrike source-backed
-  patterns, counterexamples, and evidence classification.
+- [casebook.md](references/casebook.md): anonymized site architecture examples,
+  counterexamples, and evidence classification.
 
 Do not infer browser-extension support or application behavior from a site
 repository name. Route stateful product work to `build-web-apps`.

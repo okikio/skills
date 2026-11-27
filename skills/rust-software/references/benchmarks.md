@@ -42,6 +42,10 @@ workload revision, and hardware class. Criterion can automatically compare data
 already in its output directory. A native baseline must not silently become the
 baseline for a WASI or browser run with a different measurement contract.
 
+For [data-layout comparisons](data-oriented-design.md), isolate pointer layout,
+string ownership and allocator choice. Pair narrow scans with complete lifetime
+costs, and report retained memory independently from timed allocation activity.
+
 ## Verify the selected harness in this project
 
 Run a small representative operation on each required host before adopting a

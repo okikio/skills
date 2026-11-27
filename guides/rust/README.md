@@ -46,6 +46,7 @@ pays: latency, memory, transfer, artifact size, build work, and operation count.
 | --- | --- |
 | Understand mandatory behavior and unresolved conflicts | [Policy](policy.md) |
 | Decide what the current observations prove | [Evidence](evidence.md) |
+| Choose data representation from access, lifetime and measurements | [Data-oriented design](data-oriented-design.md) |
 | Connect rules to an existing package graph and CI | [Adoption](adoption.md) |
 | Choose exact Rust implementation techniques | [Rust skill](../../skills/rust-software/SKILL.md) |
 | Apply the method through project procedures | [Rust handbook](../../handbook/rust/README.md) |

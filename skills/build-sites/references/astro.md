@@ -1,9 +1,10 @@
 # Astro site architecture and runtime manual
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 Use this reference for Astro routes, layouts, content, endpoints, middleware, adapters, islands, view transitions, images, fonts, and generated documents. Verify the installed Astro major and integration versions before applying configuration: several uploaded projects use Astro 6 or 7 and experimental options.
@@ -73,7 +74,7 @@ export const prerender = true;
 <MarketingHome />
 ```
 
-The Kaiju marketing project uses server output but prerenders its homepage. The Kaiju docs app uses static output and generates API reference routes. A hybrid application's auth pages use `prerender = false` because server capability/session data is request-time.
+In the marketing example, server output supports a prerendered homepage. In the documentation example, static output generates API reference routes. A hybrid application's auth pages use `prerender = false` because server capability/session data is request-time.
 
 Choose the adapter from the deployment runtime and features. Verify environment access, streaming, image service, sessions, server islands, headers, filesystem assumptions, and startup behavior. An auto-adapter reduces configuration only if its detection result and production behavior are tested.
 
@@ -138,7 +139,7 @@ Framework components without `client:*` render HTML but no client JavaScript. Se
 
 `client:visible` does not suspend a running island after it leaves the viewport. Continuous canvas/animation work needs its own visibility policy.
 
-Use native HTML or a page script instead of an island when practical. The Kaiju homepage's active FAQ is `<details>`; its unused Solid accordion is not a reason to hydrate.
+Use native HTML or a page script instead of an island when practical. The marketing example's active FAQ is `<details>`; its unused Solid accordion is not a reason to hydrate.
 
 `server:defer` creates a server island. It needs an adapter, a layout-stable fallback, and a cache/auth design. It is useful for personalized fragments inside otherwise cacheable pages. Do not put critical SEO or primary content behind a deferred request without a deliberate product decision.
 
@@ -174,7 +175,7 @@ Verify final deployed headers, since the adapter/host may change them.
 
 `<ClientRouter />` enables Astro client-side navigation and route announcement. It respects reduced motion for transition animations. Every page still needs a useful `<title>` because the announcer prefers it.
 
-Initialization attached to `astro:page-load` can run repeatedly. Use delegation or replace previous listeners with an `AbortController`. The Kaiju BaseHead script adds handlers to every hash/external link on every page load without cleanup; teach agents to diagnose that duplication rather than reproduce it.
+Initialization attached to `astro:page-load` can run repeatedly. Use delegation or replace previous listeners with an `AbortController`. A counterexample `BaseHead` script adds handlers to every hash/external link on each page load without cleanup. Diagnose that duplication and assign listener cleanup to the script's owner.
 
 Do not globally intercept all hash links unless you preserve:
 
@@ -190,7 +191,7 @@ Forms participate in ClientRouter navigation. If a form requires full browser be
 
 ## Static documentation and OpenAPI
 
-The Kaiju docs app demonstrates a valuable architecture:
+The documentation example illustrates this ownership model:
 
 ```text
 service-owned endpoint/schema factory
@@ -274,5 +275,5 @@ Review this ownership table:
 - Astro directives: https://docs.astro.build/en/reference/directives-reference/ (reviewed 2026-07-17).
 - Astro server islands: https://docs.astro.build/en/guides/server-islands/ (reviewed 2026-07-17).
 - Astro view transitions: https://docs.astro.build/en/guides/view-transitions/ (reviewed 2026-07-17).
-- Uploaded evidence reviewed 2026-07-17: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, a product application archive, `thunderstrike-blog(4).zip`.
+- Historical source scope: marketing, documentation, hybrid application, and runtime CMS reviews from 2026-07-17, adapted here into anonymized examples.
 - Astro 6/7, auto-adapters, Emdash, and experimental config are version-sensitive. Inspect installed source/docs before implementing.

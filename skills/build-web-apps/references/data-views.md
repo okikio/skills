@@ -1,9 +1,10 @@
 # Data views, URL state, tables, virtualization, and selection
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 Use this reference for search, filters, sorting, faceting, pagination, tables, cards, charts, infinite lists, virtualized views, bulk selection, and mutations. Separate domain/query semantics from presentation state.
@@ -55,7 +56,7 @@ Large datasets normally execute sort/filter/page on the server. A headless table
 
 ## Validated URL and canonical query identity
 
-The Kaiju product search route demonstrates the intended chain:
+The illustrative product search route follows this ownership chain:
 
 ```text
 URL search
@@ -162,7 +163,7 @@ type Selection =
 
 Bulk request sends an explicit versioned policy. The server revalidates tenant, current query, record eligibility, limits, and actor authorization. Counts shown to the user must correspond to the same scope.
 
-The Kaiju search UI keeps selected company ids local and labels its checkbox “Select page,” which honestly describes current-page behavior. Selection persists across page changes because ids are stored; product policy should decide whether that is intended and show scope/count clearly.
+The illustrative search UI keeps selected company ids local and labels its checkbox “Select page,” which honestly describes current-page behavior. Selection persists across page changes because ids are stored; product policy should decide whether that is intended and show scope/count clearly.
 
 ## Pagination, infinite loading, and virtualization
 
@@ -258,8 +259,8 @@ Loading skeletons should preserve expected geometry and not claim data. Empty st
 
 ## Sources and freshness
 
-- Uploaded `kaiju-site-scope(17).zip` TanStack Solid Router/Query search route and UI, reviewed 2026-07-17.
-- Uploaded a product application archive React table/virtualizer and view code, reviewed 2026-07-17.
+- Historical source scope: TanStack Solid Router/Query search and React
+  table/virtualizer reviews from 2026-07-17, adapted into anonymized examples.
 - TanStack Router search params: https://tanstack.com/router/latest/docs/guide/search-params (reviewed 2026-07-17).
 - TanStack Router Query integration: https://tanstack.com/router/latest/docs/integrations/query (reviewed 2026-07-17).
 - TanStack Table virtualization: https://tanstack.com/table/latest/docs/guide/virtualization (reviewed 2026-07-17).

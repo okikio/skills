@@ -11830,6 +11830,158 @@
         "Traces Rust ownership, borrowing, errors, async cancellation and cleanup across real interfaces, including generated bindings or foreign runtimes when those are required.",
         "Validates the final artifact and declared target matrix with relevant formatting, lint, tests, builds, feature or dependency checks and real consumer behavior; records unsupported or unavailable execution honestly."
       ]
+    },
+    {
+      "id": "cap-rust-data-design-guide",
+      "skill": "rust-software",
+      "reference": "references/shared/guides/rust/data-oriented-design.md",
+      "capability": "Make data design answer a product question",
+      "ownership": "rust-software owns this decision; guides/rust/data-oriented-design.md is the single authored document. Installed shared copies inherit that owner.",
+      "status": "normative",
+      "sourceIds": [
+        "portable-rust-data-design-guide"
+      ],
+      "evalIds": [
+        "rust-data-layout-train",
+        "rust-data-layout-seen",
+        "rust-data-layout-held-out",
+        "rust-data-retention-train",
+        "rust-data-retention-seen",
+        "rust-data-retention-held-out"
+      ],
+      "decisionQuestions": [
+        "Which observed comparison can justify this representation for the actual operation, lifetime and declared hosts?",
+        "What is independently established, and which source, workload or host claim still needs a bounded probe?"
+      ],
+      "failureSignatures": [
+        "A narrow scan, upstream architecture or synthetic fixture is reported as a complete product improvement.",
+        "Layout, text ownership, allocation strategy or lifecycle boundaries change together without an interpretable control.",
+        "A lower allocation count or capacity is treated as proof of lower latency, RSS or Wasm linear memory."
+      ],
+      "exclusions": [
+        "Do not impose Wasm, a dependency, private evidence or a fixed research cadence on a project that did not select it.",
+        "Registered cases and structural checks do not establish executed model quality or a measured product improvement."
+      ],
+      "verification": [
+        "Maps complete operations, fields, passes, mutation, limits, ownership and retained results before choosing a representation.",
+        "Preserves independent complete-output and lifecycle checks while isolating the mechanisms under comparison.",
+        "Measures relevant complete lifetime and post-spike retention, with precise memory units and separate target/host baselines.",
+        "Separates inspected source, executed artifact, independent expectations and connected-consumer evidence; preserves failures and a concrete next decision."
+      ]
+    },
+    {
+      "id": "cap-rust-data-design-procedure",
+      "skill": "rust-software",
+      "reference": "references/data-oriented-design.md",
+      "capability": "Organize data around the complete operation and its lifetime",
+      "ownership": "rust-software owns this decision; skills/rust-software/references/data-oriented-design.md is the single authored document. Installed shared copies inherit that owner.",
+      "status": "normative",
+      "sourceIds": [
+        "portable-rust-data-design-procedure"
+      ],
+      "evalIds": [
+        "rust-data-layout-train",
+        "rust-data-layout-seen",
+        "rust-data-layout-held-out",
+        "rust-data-retention-train",
+        "rust-data-retention-seen",
+        "rust-data-retention-held-out",
+        "rust-layout-evidence-train",
+        "rust-layout-evidence-seen",
+        "rust-layout-evidence-held-out"
+      ],
+      "decisionQuestions": [
+        "Which observed comparison can justify this representation for the actual operation, lifetime and declared hosts?",
+        "What is independently established, and which source, workload or host claim still needs a bounded probe?"
+      ],
+      "failureSignatures": [
+        "A narrow scan, upstream architecture or synthetic fixture is reported as a complete product improvement.",
+        "Layout, text ownership, allocation strategy or lifecycle boundaries change together without an interpretable control.",
+        "A lower allocation count or capacity is treated as proof of lower latency, RSS or Wasm linear memory."
+      ],
+      "exclusions": [
+        "Do not impose Wasm, a dependency, private evidence or a fixed research cadence on a project that did not select it.",
+        "Registered cases and structural checks do not establish executed model quality or a measured product improvement."
+      ],
+      "verification": [
+        "Maps complete operations, fields, passes, mutation, limits, ownership and retained results before choosing a representation.",
+        "Preserves independent complete-output and lifecycle checks while isolating the mechanisms under comparison.",
+        "Measures relevant complete lifetime and post-spike retention, with precise memory units and separate target/host baselines.",
+        "Separates inspected source, executed artifact, independent expectations and connected-consumer evidence; preserves failures and a concrete next decision."
+      ]
+    },
+    {
+      "id": "cap-rust-layout-evidence",
+      "skill": "rust-software",
+      "reference": "references/layout-evidence.md",
+      "capability": "Interpret layout and ownership evidence within its actual scope",
+      "ownership": "rust-software owns this decision; skills/rust-software/references/layout-evidence.md is the single authored document. Installed shared copies inherit that owner.",
+      "status": "normative",
+      "sourceIds": [
+        "portable-rust-layout-evidence"
+      ],
+      "evalIds": [
+        "rust-layout-evidence-train",
+        "rust-layout-evidence-seen",
+        "rust-layout-evidence-held-out"
+      ],
+      "decisionQuestions": [
+        "Which observed comparison can justify this representation for the actual operation, lifetime and declared hosts?",
+        "What is independently established, and which source, workload or host claim still needs a bounded probe?"
+      ],
+      "failureSignatures": [
+        "A narrow scan, upstream architecture or synthetic fixture is reported as a complete product improvement.",
+        "Layout, text ownership, allocation strategy or lifecycle boundaries change together without an interpretable control.",
+        "A lower allocation count or capacity is treated as proof of lower latency, RSS or Wasm linear memory."
+      ],
+      "exclusions": [
+        "Do not impose Wasm, a dependency, private evidence or a fixed research cadence on a project that did not select it.",
+        "Registered cases and structural checks do not establish executed model quality or a measured product improvement."
+      ],
+      "verification": [
+        "Records inspected source and executed package/artifact identities independently, including features and supported host scope.",
+        "Distinguishes a source-derived representation, a parser/visitor check and a connected product or semantic-engine claim.",
+        "Retains equal work and full-output proof, meaningful memory definitions, raw attempts and the actual confirmation scope.",
+        "Rejects unqualified speed or memory rankings and proposes the smallest comparison that can resolve the decision."
+      ]
+    },
+    {
+      "id": "cap-rust-data-design-handbook",
+      "skill": "rust-software",
+      "reference": "references/shared/handbook/rust/data-design.md",
+      "capability": "Apply the data-design procedure in the existing project task",
+      "ownership": "rust-software owns this decision; handbook/rust/data-design.md is the single authored document. Installed shared copies inherit that owner.",
+      "status": "normative",
+      "sourceIds": [
+        "portable-rust-data-design-handbook"
+      ],
+      "evalIds": [
+        "rust-data-layout-train",
+        "rust-data-layout-seen",
+        "rust-data-layout-held-out",
+        "rust-data-retention-train",
+        "rust-data-retention-seen",
+        "rust-data-retention-held-out"
+      ],
+      "decisionQuestions": [
+        "Which observed comparison can justify this representation for the actual operation, lifetime and declared hosts?",
+        "What is independently established, and which source, workload or host claim still needs a bounded probe?"
+      ],
+      "failureSignatures": [
+        "A narrow scan, upstream architecture or synthetic fixture is reported as a complete product improvement.",
+        "Layout, text ownership, allocation strategy or lifecycle boundaries change together without an interpretable control.",
+        "A lower allocation count or capacity is treated as proof of lower latency, RSS or Wasm linear memory."
+      ],
+      "exclusions": [
+        "Do not impose Wasm, a dependency, private evidence or a fixed research cadence on a project that did not select it.",
+        "Registered cases and structural checks do not establish executed model quality or a measured product improvement."
+      ],
+      "verification": [
+        "Maps complete operations, fields, passes, mutation, limits, ownership and retained results before choosing a representation.",
+        "Preserves independent complete-output and lifecycle checks while isolating the mechanisms under comparison.",
+        "Measures relevant complete lifetime and post-spike retention, with precise memory units and separate target/host baselines.",
+        "Separates inspected source, executed artifact, independent expectations and connected-consumer evidence; preserves failures and a concrete next decision."
+      ]
     }
   ]
 }

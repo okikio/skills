@@ -9,6 +9,7 @@ Skills: `rust-software`, `plan-changes`, `build-devtools`, `benchmark-code`, `ve
 | What must work, and where? | [Declare the contract](contract.md) |
 | What experiment can resolve the next design choice? | [Test the question](questions.md) |
 | How are memory, streams and foreign resources kept correct? | [Ownership](ownership.md) |
+| Which representation fits the operation and its lifetime? | [Data design](data-design.md) |
 | How can build and CI cost change without skipping behavior? | [Builds and CI](ci.md) |
 | What evidence and continuation make delivery usable? | [Delivery](delivery.md) |
 

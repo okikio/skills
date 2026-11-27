@@ -352,13 +352,13 @@ Keep blocked checks distinct from failed checks.
 
 ## Sources and freshness
 
-- Normative architecture: `productionized-cli-pattern-guidebook-v1.1(1).md`, reviewed 2026-07-17.
-- Normative CLI audit: `cli-guidelines-audit-and-expansion(1).md`, reviewed 2026-07-17.
-- Normative config merge contract: `kaiju-config-resolution-handoff(2).md`, reviewed 2026-07-17.
-- Observed implementation and counterexamples: `live-browser-cli(41).zip`, reviewed 2026-07-17.
+- Portable guidance: [architecture](architecture.md), [configuration](config.md),
+  and the [CLI policy audit](../../../guides/cli-guidelines-audit-and-expansion.md).
+- Historical source scope: CLI and configuration reviews from 2026-07-17,
+  adapted into anonymized integration examples and counterexamples.
 - Official project pointers: <https://optique.dev/>, <https://logtape.org/>, and <https://unjs.io/>.
 
 Freshness status: sequences describe ownership and verification invariants, not
-proof that the attached CLI implements every stage. Re-run the source trace and
+proof that an example or the active CLI implements every stage. Re-run the source trace and
 installed-artifact checks for the current repository revision and dependency
 versions before making a completion claim.

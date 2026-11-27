@@ -1,9 +1,10 @@
 # Astro Fonts API and Fontsource
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 ## Contents
@@ -154,7 +155,7 @@ Astro local variable font:
 }
 ```
 
-Do not declare a broad range the file does not contain. Do not serve TTF by default when a WOFF2 build is available. The uploaded Kaiju configuration uses a `.ttf` local source; treat conversion/licensing/visual regression as an improvement opportunity, not a silent rewrite.
+Do not declare a broad range the file does not contain. Do not serve TTF by default when a WOFF2 build is available. For an existing `.ttf` local source, check conversion support, licensing, and visual regression before selecting another format.
 
 ## Privacy and external providers
 
@@ -261,6 +262,6 @@ Avoid loading a large family solely for one word if a vector/asset or existing f
 ## Sources and freshness
 
 - Primary: [Astro Fonts guide](https://docs.astro.build/en/guides/fonts/) and [Fontsource documentation](https://fontsource.org/docs/), verified 2026-07-17.
-- Attachments: `kaiju-website(6).zip`, `kaiju-site-scope(17).zip`, `thunderstrike-blog(4).zip`, and a product application archive, inspected 2026-07-17 for real Astro/provider/CSS usage.
+- Historical source scope: Astro, font-provider, and CSS usage reviews from 2026-07-17, adapted here into anonymized configuration examples.
 
 Astro Fonts is a stable top-level configuration surface in current Astro and was added in Astro 6. Older Astro 5 material used an experimental flag and is not a current configuration example. Provider metadata still changes independently, so recheck the installed Astro and Fontsource versions, font licenses, generated CSS, and network behavior.

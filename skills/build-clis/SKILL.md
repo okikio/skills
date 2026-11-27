@@ -222,8 +222,8 @@ resource. Do not let handlers call the full resolver again.
   nypm, Magicast, giget, changelogen, automd, rc9, or std-env implementation.
 - [integration.md](references/integration.md): worked end-to-end sequences that
   join parsing, source resolution, logging, execution, recovery, and release.
-- [casebook.md](references/casebook.md): load for codebase-grounded Kaiju
-  traces and portable CLI policy maps covering command-language governance,
+- [casebook.md](references/casebook.md): load for anonymized CLI trace
+  examples and portable policy maps covering command-language governance,
   human versus machine output, dangerous-operation plans, standard streams,
   secrets, paging, consentful config edits, telemetry, root program resources,
   sparse adapters, config/provenance, browser/Common Crawl/WARC/domains flows,

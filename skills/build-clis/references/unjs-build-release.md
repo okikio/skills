@@ -336,10 +336,10 @@ type UserPreferences = {
   color?: "auto" | "always" | "never"
 }
 
-const current = readUserConfig<UserPreferences>({ name: ".kaijurc" })
+const current = readUserConfig<UserPreferences>({ name: ".projectrc" })
 const updated = updateUserConfig<UserPreferences>(
   { ...current, color: "never" },
-  { name: ".kaijurc" },
+  { name: ".projectrc" },
 )
 ```
 
@@ -459,8 +459,8 @@ Primary sources inspected 2026-07-17:
   changelogen 0.6.2, automd 0.4.3, giget 3.3.0, magicast 0.5.3, rc9 3.0.1,
   and std-env 4.2.0;
 - official repositories under <https://github.com/unjs>;
-- `live-browser-cli(41).zip` package manifests and lockfile as repository
-  evidence, not proof that every package is installed or used.
+- Historical CLI manifests and lockfile, reviewed 2026-07-17 and represented
+  here by anonymized examples. A lockfile entry does not prove active use.
 
 The npm tarball URLs and integrity values are recorded in `evals/sources.json`.
 Recheck installed declarations before using a different version. In particular,

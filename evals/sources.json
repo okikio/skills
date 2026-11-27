@@ -847,6 +847,58 @@
         "deno.jsonc"
       ],
       "notes": "Source inspection establishes source contracts, not usable registry release availability. Consumer resolver, exact artifact and supported-host checks remain required."
+    },
+    {
+      "id": "portable-rust-data-design-guide",
+      "artifact": "guides/rust/data-oriented-design.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Portable product questions, operation mapping and complete lifecycle evidence for Rust data design",
+      "verifiedDate": "2026-11-27",
+      "sha256": "bbd139ed5b34b9f2651d091dd2d3ed1ebd109f0b091c94f90ea34ed7827ee742",
+      "claimPaths": [
+        "guides/rust/data-oriented-design.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-rust-data-design-procedure",
+      "artifact": "skills/rust-software/references/data-oriented-design.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Field, pass and lifetime analysis; comparable representations; semantic oracles; bounded retention and required-host evidence",
+      "verifiedDate": "2026-11-27",
+      "sha256": "b1916007783bb08249ca3026d954810d6bc2f8596c70f8ec9891dd9ab2ce8135",
+      "claimPaths": [
+        "skills/rust-software/references/data-oriented-design.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-rust-layout-evidence",
+      "artifact": "skills/rust-software/references/layout-evidence.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Interpretation limits for source patterns, executed artifacts, layout comparisons and memory measurements",
+      "verifiedDate": "2026-11-27",
+      "sha256": "6735961c9c14e4de96a59e3f8d2976d09ea77a155919958997619a618dce1e1d",
+      "claimPaths": [
+        "skills/rust-software/references/layout-evidence.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-rust-data-design-handbook",
+      "artifact": "handbook/rust/data-design.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Project procedure connecting the data-design question, experiment, ownership checks, measurement and next customer-facing decision",
+      "verifiedDate": "2026-11-27",
+      "sha256": "d33fa2e5b7ec980b626e2bc6550e25f837af126de460ff03f41ba0832830012b",
+      "claimPaths": [
+        "handbook/rust/data-design.md"
+      ],
+      "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
     }
   ]
 }

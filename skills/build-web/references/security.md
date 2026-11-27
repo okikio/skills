@@ -1,9 +1,10 @@
 # Web security and connected-system trust handoffs
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 Use this reference for pages, forms, server functions, Astro endpoints, webhooks, auth routes, embeds, CMS rendering, file/media flows, and client-side navigation. A UI that renders correctly can still leak tenant data, secrets, or executable content.
@@ -69,7 +70,7 @@ Framework interpolation escapes text by default; raw HTML APIs change the contra
 4. Test script elements, event attributes, `javascript:` URLs, SVG/script combinations, malformed markup, and encoded payloads.
 5. Apply Content Security Policy as defense in depth, not a replacement for output encoding.
 
-The ThunderStrike CMS adapter's plain-text fallback escapes `&`, `<`, `>`, and quotes before creating HTML. That is evidence for a narrow fallback, not a complete Portable Text renderer. Full rich text requires mark, link, embed, and custom-block handling with explicit safe renderers.
+The illustrative CMS adapter's plain-text fallback escapes `&`, `<`, `>`, and quotes before creating HTML. That example covers a narrow fallback, not a complete Portable Text renderer. Full rich text requires mark, link, embed, and custom-block handling with explicit safe renderers.
 
 Do not render provider search snippets containing `<mark>` through a raw HTML sink without proving how all other tags/attributes were removed.
 
@@ -166,7 +167,7 @@ raw request bytes
 
 Do not parse/re-serialize before signature verification when the provider signs raw bytes. Store enough event identity to make retries safe.
 
-The uploaded ThunderStrike webhook is counterexample evidence because it logs the API key and complete environment, logs payload-derived PII, permits unknown fields broadly, and does not demonstrate provider signature verification. Its package mappings may be useful domain data after validation; the endpoint architecture is not reusable.
+An anonymized webhook counterexample logs an API key and the complete environment, logs payload-derived PII, permits unknown fields broadly, and lacks demonstrated provider signature verification. Its package mappings may be useful domain data after validation; the endpoint architecture is not reusable.
 
 Provider error messages may contain request data or internal identifiers. Map them to a stable public error and retain a redacted cause in structured diagnostics.
 
@@ -219,7 +220,7 @@ Distinguish 401 (authentication required/invalid), 403 (authenticated but forbid
 
 ## Sources and freshness
 
-- Uploaded evidence reviewed 2026-07-17: a product application archive, `kaiju-site-scope(17).zip`, `better-auth.zip`, `thunderstrike-blog(4).zip`.
+- Historical source scope: application, auth-integration, and runtime CMS reviews from 2026-07-17, adapted into anonymized security examples and counterexamples.
 - Modern Web Guidance security and forms guides retrieved 2026-07-17.
 - Better Auth details belong to `build-web-apps/references/auth.md`; verify current official documentation before using plugin-specific options.
 - Browser header support, cookie rules, auth provider behavior, and framework raw-HTML APIs change. Verify target runtime and installed versions. This reference does not replace a project-specific threat model.

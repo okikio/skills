@@ -60,6 +60,11 @@ GPU paths, or broad generic abstractions. Count runtime work, compile time,
 binary size, and maintenance costs that affect the decision. No abstraction
 label or benchmark from another workload establishes a local improvement.
 
+For data design, follow [the operation and lifetime procedure](data-oriented-design.md).
+Map fields and passes first. Isolate layout, string ownership and allocator
+effects; compare complete lifecycle cost and post-request retention as well as
+hot scans. Keep source-derived models distinct from the production representation.
+
 ## Make missing evidence visible
 
 Required target or host failures block the corresponding delivery claim.

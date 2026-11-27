@@ -29,6 +29,8 @@ For Rust work, read [rust-software](../skills/rust-software/SKILL.md) and the
 workers and tools. Require Wasm execution only when that host is part of the
 project contract. Keep resource limits, correctness and measurements explicit.
 This applies to review, planning, benchmarks and CI as well as implementation.
+For Rust data-layout or allocation decisions, read [data-oriented design](rust/data-oriented-design.md).
+Map operations and lifetimes, isolate mechanisms, and measure complete cost.
 
 The request gives you a starting skill, not the complete list. Once you have
 traced the entrypoint, imports and a real caller, compare the decisions you

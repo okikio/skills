@@ -1,9 +1,10 @@
 # Optique, c12, defu, LogTape, and Zod stack
 
-Historical project examples illustrate specific contracts. They do not require
-private source access, select this project's stack, or establish current upstream
-APIs. Use the active consumer, public primary sources and actual checks for a
-new adoption.
+These are anonymized illustrative examples adapted from historical project
+reviews. Local paths, identifiers, and commands describe example ownership;
+they do not establish maintained APIs or executed evidence for this project.
+Trace the active consumer, verify public package sources for the installed
+version, and run the relevant checks before adoption.
 
 
 ## Use this reference
@@ -299,10 +300,10 @@ complete schema
   -> Zod applies final defaults
 ```
 
-### Kaiju implementation anatomy
+### Illustrative implementation anatomy
 
-The Kaiju implementation has several small pieces. Keep them separate when
-porting the pattern.
+The anonymized implementation example has several small pieces. Map each
+responsibility to the active repository before adapting the pattern.
 
 | Piece | File-local role | Why it exists |
 |---|---|---|
@@ -312,7 +313,7 @@ porting the pattern.
 | `arrayOperationSchema(item)` | accepts plain array or one operation envelope | one authoring language for arrays |
 | `projectConfigAuthoringPatchSchema` | sparse file shape with operation-capable fields | config files are not runtime configs |
 | `projectConfigLayerSchema` | authoring patch plus c12 root control keys | `extends`, `$env`, `$development`, `$production`, `$test`, `$meta` are loader-stage only |
-| `projectConfigExportValueSchema` | object layer or array shorthand | root arrays mean several Kaiju patches, not c12 control layers |
+| `projectConfigExportValueSchema` | object layer or array shorthand | root arrays mean several application patches, not c12 control layers |
 | `replace()`, `append()`, `prepend()` | TypeScript helpers returning plain operation data | TS config ergonomics without runtime callbacks |
 | `isArray*Operation()` guards | runtime envelope detection | defu callback sees unknown values |
 | `resolveStandaloneOperations()` | recursively lowers operations with no inherited array | lowest-layer operations cannot be resolved by defu pair callbacks |
@@ -339,7 +340,7 @@ authoring schemas accept ergonomic source syntax
 
 ### Export and layer validation
 
-Kaiju accepts two root export shapes:
+The example accepts two root export shapes:
 
 ```ts
 export default {
@@ -362,7 +363,7 @@ export default [
 ];
 ```
 
-The root object may contain c12 control keys. Array elements are only Kaiju
+The root object may contain c12 control keys. Array elements are only application
 patch shorthand and intentionally cannot contain `extends`, `$env`, or named
 environment branches. That prevents a root array from becoming an ambiguous
 mini-loader language.
@@ -376,7 +377,7 @@ Validation occurs in two places:
 
 ### Pair-merger mechanics
 
-Kaiju's app merger is a defu callback with this orientation:
+The example's app merger is a defu callback with this orientation:
 
 ```text
 target[key] = inherited lower-precedence value
@@ -465,7 +466,7 @@ CLI:  append(["cli"]) over ["env","file"] -> ["env", "file", "cli"]
 
 ### Loaded config normalization
 
-After c12 returns, Kaiju normalizes as follows:
+After c12 returns, the example normalizes as follows:
 
 | Loaded value | Normalization |
 |---|---|
@@ -477,7 +478,7 @@ Then `resolveConfig()` builds:
 
 ```text
 filePatch = normalizeLoadedConfig(loaded.config)
-envPatch  = readEnvPatch(KAIJU_*)
+envPatch  = readEnvPatch(PROJECT_*)
 cliPatch  = projectConfigPatchSchema.parse(options.patch ?? {})
 merged    = mergeConfigInputs(cliPatch, envPatch, filePatch)
 sanitized = stripUnsupportedC12Keys(stripUndefinedValues(merged))
@@ -488,7 +489,7 @@ Only the final `projectConfigSchema.parse()` applies runtime defaults.
 
 ### Provenance overlay
 
-Kaiju records leaf-level provenance after final defaults are known:
+The example records leaf-level provenance after final defaults are known:
 
 ```text
 if CLI/env/file patch has the leaf path -> that layer wins
@@ -743,12 +744,12 @@ Ask these before editing:
 | Generated surfaces | help, completion shells, man pages, hidden aliases |
 | Package artifact | installed/compiled binary reaches each command |
 
-## Kaiju test evidence map
+## Example verification map
 
-Use this as the minimum shape of proof for another repository. Rename the tests
-to the local project, but keep the behavioral coverage.
+Use this map to select checks for the contracts the active repository adopts.
+The entries describe required observations, not executed results for that repository.
 
-| Invariant | Kaiju-style test evidence |
+| Invariant | Example observation |
 |---|---|
 | Leftmost input is highest precedence | `mergeConfigInputs({ outDir: "cli" }, { outDir: "env" }, { outDir: "file" })` returns `"cli"` |
 | Missing higher layers inherit lower values | empty CLI/env patches preserve file patch |
@@ -780,9 +781,9 @@ to the local project, but keep the behavioral coverage.
 | help-only defaults do not parse | `documentDefault()` docs include default while `parse([])` returns `undefined` |
 | Zod enum choices power suggestions | typos such as `standart`, `domian`, `reachabl` suggest nearest valid choice |
 | negatable flag is tri-state | absent, `--range-cache`, `--no-range-cache`, and conflict are tested |
-| LogTape category routing is structured | recorder sink sees category `["kaiju","test"]` and structured properties |
+| LogTape category routing is structured | recorder sink sees category `["project","test"]` and structured properties |
 | diagnostic redaction wraps sinks | password field becomes `[REDACTED]` in diagnostic file |
-| result route is raw stdout | `kaiju.result` has `parentSinks: "override"` and writes `result` string to stdout |
+| result route is raw stdout | `project.result` has `parentSinks: "override"` and writes `result` string to stdout |
 
 When reporting verification, separate:
 
@@ -810,14 +811,15 @@ When reporting verification, separate:
 
 ## Sources and freshness
 
-- Normative source: `productionized-cli-pattern-guidebook-v1.2.md`, reviewed 2026-07-22.
-- Observed implementation: historical Kaiju CLI Optique 1.2.0, c12 two-merger, LogTape resource-threading, and Zod default audit.
+- Portable contract guidance: [CLI architecture](architecture.md).
+- Historical source scope: a CLI review from 2026-07-22, adapted into anonymized
+  Optique 1.2.0, c12 two-merger, LogTape resource, and Zod default examples.
 - Official Optique 1.2 API docs: <https://jsr.io/@optique/core@1.2.0> and <https://jsr.io/@optique/discover@1.2.0>.
 - Official Zod v4 docs: <https://zod.dev/>.
 - Official c12 source: <https://github.com/unjs/c12>.
 - Official defu source: <https://github.com/unjs/defu>.
 - Official LogTape docs: <https://logtape.org/>.
 
-Historical source scope: Kaiju work and Optique 1.2 API docs were inspected
-on 2026-07-22. Re-check exact package exports and installed lockfile versions
-before copying code into a different repository.
+The recorded review of the example and Optique 1.2 API docs dates to
+2026-07-22. Verify exact package exports, installed lockfile versions, and current
+consumers before adapting the code.
