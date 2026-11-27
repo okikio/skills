@@ -899,6 +899,91 @@
         "handbook/rust/data-design.md"
       ],
       "notes": "Authored portable method. Source registration and evaluation coverage do not establish an executed model result, benchmark or product improvement."
+    },
+    {
+      "id": "portable-native-selection-contract",
+      "artifact": "handbook/engineering/native-tools.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Native workspace member selection, manifest task ownership and required-work coverage",
+      "verifiedDate": "2026-11-27",
+      "sha256": "acdd5485649cad029d1da7ea1e196abc8417b779f9a8d5efa5a63ba486d1e858",
+      "claimPaths": [
+        "handbook/engineering/native-tools.md",
+        "skills/deno-software/references/05-workspaces.md",
+        "skills/build-devtools/references/toolchains.md"
+      ],
+      "notes": "Authored portable contract. Case registration and structural checks do not establish model behavior or repository adoption."
+    },
+    {
+      "id": "portable-guidance-storage-contract",
+      "artifact": "guides/engineering-standards.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Maintained agent guidance, disposable investigation and durable verification ownership",
+      "verifiedDate": "2026-11-27",
+      "sha256": "0980f6ddc4536e53bc655317ac567e751a211d69eeb708b7d2f6eb5a5c77537d",
+      "claimPaths": [
+        "guides/engineering-standards.md",
+        "references/testing.md",
+        "skills/deno-software/references/03-repository-discovery.md",
+        "skills/refactor-code/references/implementer.md"
+      ],
+      "notes": "Authored portable contract. Case registration and structural checks do not establish model behavior or repository adoption."
+    },
+    {
+      "id": "portable-structure-contract",
+      "artifact": "guides/naming-and-folder-structure-guide.md",
+      "kind": "guidebook",
+      "status": "normative",
+      "role": "Contextual names, cohesive file responsibilities and native tool workspace owners",
+      "verifiedDate": "2026-11-27",
+      "sha256": "b62d1dfc95d204c0a1afaa69ed899d8ff7585d0d1f606539aff54778f4ad251e",
+      "claimPaths": [
+        "guides/naming-and-folder-structure-guide.md",
+        "handbook/architecture/files.md"
+      ],
+      "notes": "Authored portable contract. Case registration and structural checks do not establish model behavior or repository adoption."
+    },
+    {
+      "id": "deno-task-official",
+      "artifact": "https://docs.deno.com/runtime/reference/cli/task/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Workspace task member selection, working-directory selection and missing-task options",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
+    },
+    {
+      "id": "deno-test-official",
+      "artifact": "https://docs.deno.com/runtime/reference/cli/test/",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Test-name filtering and native file discovery, distinct from workspace task selection",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
+    },
+    {
+      "id": "pnpm-filtering-official",
+      "artifact": "https://pnpm.io/filtering",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Native package selectors and empty-selection failure option",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
+    },
+    {
+      "id": "pnpm-run-official",
+      "artifact": "https://pnpm.io/cli/run",
+      "kind": "official-docs",
+      "status": "observed-source",
+      "role": "Recursive script execution and skipped members without the requested script",
+      "verifiedDate": "2026-11-27",
+      "claimPaths": [],
+      "notes": "Documentation was inspected for the named contract. Repository pins, help and representative execution remain necessary before applying it."
     }
   ]
 }

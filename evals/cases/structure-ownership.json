@@ -1,0 +1,415 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "portable-native-selection-train",
+      "title": "Select a member through its manifest",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "train",
+      "prompt": "A Deno workspace has named packages in both packages/ and tools/. A Mise task removes the scope from a package name and assumes its directory is packages/<name>. One tool package has a different directory name. The package members already define their own check tasks. Plan the correction and its smallest meaningful checks, including an unmatched selector. The request allows package names or native directory selection; it does not require one spelling. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "build-devtools",
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-devtools/references/shared/handbook/engineering/native-tools.md",
+        "build-devtools/references/toolchains.md",
+        "deno-software/references/05-workspaces.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Uses the selected package tool and member manifests for discovery and execution; does not reconstruct package paths from names or introduce a duplicate dispatcher.",
+        "Distinguishes Deno task member selection from test-name filtering and treats names, supported patterns and paths as context-dependent choices.",
+        "Checks empty selection, missing required tasks, mixed task availability and failed work; does not infer complete coverage from a successful exit or an empty-selection flag alone.",
+        "Migrates real callers and CI with argument, dependency, failure and cleanup behavior before retiring the old implementation; keeps any demonstrated policy with its owner."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-native-selection-contract",
+        "deno-task-official",
+        "deno-test-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "native-selection",
+        "train"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-native-selection-valid-seen",
+      "title": "Check every required selected task",
+      "skill": "build-devtools",
+      "kind": "trajectory",
+      "split": "valid-seen",
+      "prompt": "A pnpm workspace uses a native filter for a package and its dependents. Its script exits successfully. Native output shows three selected packages, but only two ran check because the third has no check script. The task is required for all three. An engineer proposes adding --fail-if-no-match and calling the migration complete. Assess the proposal and give the concrete next actions. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "build-devtools"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-devtools/references/shared/handbook/engineering/native-tools.md",
+        "build-devtools/references/toolchains.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Uses the selected package tool and member manifests for discovery and execution; does not reconstruct package paths from names or introduce a duplicate dispatcher.",
+        "Uses supported pnpm package, dependency and dependent selectors without requiring a package-name spelling or reconstructing paths.",
+        "Checks empty selection, missing required tasks, mixed task availability and failed work; does not infer complete coverage from a successful exit or an empty-selection flag alone.",
+        "Establishes why the third package lacks its required task, gives the task its real owner and verifies selected-versus-executed coverage before calling the migration complete."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-native-selection-contract",
+        "pnpm-filtering-official",
+        "pnpm-run-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "native-selection",
+        "valid-seen"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-native-selection-transfer",
+      "title": "Preserve policy while removing discovery",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "transfer",
+      "prompt": "A mixed Deno and pnpm repository has a wrapper that finds packages, validates generated inputs and cancels child processes on interruption. Native member selection works for the pinned tools. The proposed replacement deletes the wrapper and adds deno test --filter with a package name. Identify the controlling changes, retained responsibilities and verification needed before removing the wrapper. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "build-devtools",
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-devtools/references/shared/handbook/engineering/native-tools.md",
+        "build-devtools/references/toolchains.md",
+        "deno-software/references/05-workspaces.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Uses the selected package tool and member manifests for discovery and execution; does not reconstruct package paths from names or introduce a duplicate dispatcher.",
+        "Distinguishes Deno task member selection from test-name filtering and treats names, supported patterns and paths as context-dependent choices.",
+        "Checks empty selection, missing required tasks, mixed task availability and failed work; does not infer complete coverage from a successful exit or an empty-selection flag alone.",
+        "Migrates real callers and CI with argument, dependency, failure and cleanup behavior before retiring the old implementation; keeps any demonstrated policy with its owner."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-native-selection-contract",
+        "deno-task-official",
+        "deno-test-official",
+        "pnpm-filtering-official",
+        "pnpm-run-official"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "native-selection",
+        "transfer"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-guidance-storage-train",
+      "title": "Preserve installed guidance during an audit",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "train",
+      "prompt": "A Deno library commits .agents/START.md, selected skills and shared references. Its existing .temp/ directory is ignored and excluded from packaging. During a refactor, an agent needs a one-off import trace and a reusable regression test. Decide where each belongs and what to check before handing off the change. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "refactor-code",
+        "test-code",
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "refactor-code/references/shared/guides/engineering-standards.md",
+        "refactor-code/references/implementer.md",
+        "test-code/references/shared/references/testing.md",
+        "deno-software/references/03-repository-discovery.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Identifies installed .agents guidance as maintained content and keeps disposable investigation in the existing approved ignored workspace.",
+        "Preserves durable regression tests and recurring tools with their real owners instead of classifying everything agent-created as disposable.",
+        "Checks Git exclusion, normal test discovery and package or build inputs for temporary files while preserving the actual maintained guidance contract.",
+        "Places the reusable regression test with its maintained test owner and verifies that the one-off trace cannot enter publication or ordinary test discovery."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-storage-contract"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "guidance-storage",
+        "train"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-guidance-storage-valid-seen",
+      "title": "Keep a validation workaround out of the package",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "valid-seen",
+      "prompt": "A Deno package review runs on a host without the package's required browser runtime. The repository has maintained .agents guidance and an approved ignored .analysis directory. A temporary host adaptation may help inspect part of the behavior. Explain the safe source changes, storage, evidence and remaining completion conditions. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "refactor-code",
+        "test-code",
+        "deno-software"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "refactor-code/references/shared/guides/engineering-standards.md",
+        "refactor-code/references/implementer.md",
+        "test-code/references/shared/references/testing.md",
+        "deno-software/references/03-repository-discovery.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Identifies installed .agents guidance as maintained content and keeps disposable investigation in the existing approved ignored workspace.",
+        "Preserves durable regression tests and recurring tools with their real owners instead of classifying everything agent-created as disposable.",
+        "Checks Git exclusion, normal test discovery and package or build inputs for temporary files while preserving the actual maintained guidance contract.",
+        "Keeps production imports and required native checks intact when a host adaptation can establish only partial evidence; records the unresolved runtime claim."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-storage-contract"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "guidance-storage",
+        "valid-seen"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-guidance-storage-transfer",
+      "title": "Classify existing validation ownership",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "transfer",
+      "prompt": "A repository stores maintained instructions and a recurring validation CLI under .agents/. A cleanup proposal deletes the whole directory as scratch and moves all regression tests into a new ignored directory. The project wants instructions preserved and recurring tooling moved to a real tool package. Plan the ownership migration and removal checks without losing durable behavior coverage. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "refactor-code",
+        "test-code",
+        "build-devtools"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "refactor-code/references/shared/guides/engineering-standards.md",
+        "refactor-code/references/implementer.md",
+        "test-code/references/shared/references/testing.md",
+        "build-devtools/references/toolchains.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Preserves maintained instructions and identifies the existing validation CLI and regression tests as durable owners; does not classify the entire .agents directory as scratch.",
+        "Preserves durable regression tests and recurring tools with their real owners instead of classifying everything agent-created as disposable.",
+        "Checks Git exclusion, normal test discovery and package or build inputs for temporary files while preserving the actual maintained guidance contract.",
+        "Moves the CLI implementation, dependencies, callers and required validation tasks together into the tool package, then checks that native discovery and regression coverage still execute the required work."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-guidance-storage-contract"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "guidance-storage",
+        "transfer"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-structure-ownership-train",
+      "title": "Review names by their consumers",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "train",
+      "prompt": "A package includes declarations/declaration-closure.ts, a published service-worker entrypoint, and a small button.tsx component. A proposed cleanup turns every dash into a directory separator and wraps every source file in its own folder. Describe the appropriate structure decisions and the evidence needed before renaming the public entrypoint. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "build-libraries",
+        "refactor-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/shared/guides/naming-and-folder-structure-guide.md",
+        "build-libraries/references/shared/handbook/architecture/files.md",
+        "refactor-code/references/implementer.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Reviews each name in its parent and consumer context; preserves genuine compound, framework, upstream or public contract names without applying a blanket dash replacement.",
+        "Evaluates the declaration owner and small component in their actual context; does not replace dashes mechanically or introduce one-file folders without a useful ownership boundary.",
+        "Traces public exports, consumer imports, generated declarations, documentation and tests before choosing whether and how to rename the service-worker entrypoint.",
+        "Plans removal and verification of old paths without silently retaining unrequested compatibility aliases."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-structure-contract"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "structure-ownership",
+        "train"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-structure-ownership-valid-seen",
+      "title": "Split independent work without scattering state",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "valid-seen",
+      "prompt": "A large file contains archive parsing, a browser storage adapter and a cohesive cancellation state machine. Tests combine unrelated parser fixtures and browser lifecycle setup. The requested refactor should make ownership and internal comments clear. Propose a concrete responsibility split and consumer migration, and explain which code may remain together. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "build-libraries",
+        "refactor-code"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/shared/guides/naming-and-folder-structure-guide.md",
+        "build-libraries/references/shared/handbook/architecture/files.md",
+        "refactor-code/references/implementer.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Splits independent responsibilities and runtime or fixture owners while keeping cohesive state transitions and useful local logic together; does not invent a universal line limit or one-file folders.",
+        "Assigns parser fixtures and browser lifecycle setup to their actual test owners and preserves meaningful behavior coverage across the move.",
+        "Explains significant internal invariants, cancellation and cleanup ownership where a reader needs them; comments do not narrate syntax.",
+        "Migrates imports, exports, discovery, task inputs, generated ownership, documentation and tests with the moved symbols, preserving relevant internal lifecycle comments and actual runtime consumers."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-structure-contract"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "structure-ownership",
+        "valid-seen"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    },
+    {
+      "id": "portable-structure-ownership-transfer",
+      "title": "Integrate a maintained tool package",
+      "skill": "composition",
+      "kind": "composition",
+      "split": "transfer",
+      "prompt": "A monorepo keeps a recurring content generator at tools/build-pages.ts. Someone adds tools/content/package.json but leaves the implementation and dependencies at the root; native workspace checks never discover the new package. Runtime page modules and generated output belong to an application package. Plan the complete tool-owner migration, file placement and verification. Use the relevant installed guidance. Treat the scenario as supplied facts; do not claim commands or edits were performed.",
+      "expectedSkills": [
+        "build-libraries",
+        "refactor-code",
+        "build-devtools"
+      ],
+      "forbiddenSkills": [],
+      "requiredReferences": [
+        "build-libraries/references/shared/guides/naming-and-folder-structure-guide.md",
+        "build-libraries/references/shared/handbook/architecture/files.md",
+        "refactor-code/references/implementer.md",
+        "build-devtools/references/toolchains.md"
+      ],
+      "forbiddenReferences": [],
+      "assertions": [
+        {
+          "kind": "regex",
+          "value": "\\S",
+          "flags": ""
+        }
+      ],
+      "rubric": [
+        "Gives maintained monorepo tools real member manifests, declared dependencies, callers and native check/test/build discovery; decorative manifests and loose container scripts are insufficient.",
+        "Keeps runtime page modules and generated output with the application while the recurring generator owns its implementation, dependency declarations and command contract.",
+        "Migrates root scripts, package callers, CI and generation inputs together; verifies selected package work and output ownership before removing the old path.",
+        "Migrates imports, exports, discovery, task inputs, generated ownership, documentation and tests with the moved symbols, preserving relevant internal lifecycle comments and actual runtime consumers."
+      ],
+      "oracleStrength": "trajectory-rubric",
+      "sourceIds": [
+        "portable-structure-contract"
+      ],
+      "evidenceStatus": "normative",
+      "tags": [
+        "portability",
+        "structure",
+        "structure-ownership",
+        "transfer"
+      ],
+      "rationale": "The scenario tests a maintained ownership or selection decision. A nonempty response checks integrity only; the rubric evaluates the decision and claimed evidence."
+    }
+  ]
+}

@@ -42,6 +42,12 @@ control the task; archived examples do not create authority.
 - Never run a broad formatter over Markdown. Make focused semantic patches and
   preserve unrelated wrapping, spacing and code blocks. Format changed code
   with the repository's tools and inspect the diff.
+- Keep installed `.agents/` guidance separate from disposable investigation.
+  Use the repository-approved ignored workspace for probes and scratch output;
+  keep durable tests with their owner. Follow the
+  [native-tool procedure](handbook/engineering/native-tools.md) before adding
+  package selection code, and the [structure guide](guides/naming-and-folder-structure-guide.md)
+  when moving files or splitting responsibilities.
 - Group commits by capability or behavior. Keep mechanical formatting separate
   from functional changes. Record the actual source and checks in review prose.
 
